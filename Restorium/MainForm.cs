@@ -55,6 +55,7 @@ namespace Restorium
             INI.Write("NameTag", "BBH", "Users");
             INI.Write("NameTag", "Burak", "Users");
             INI.Write("NameTag2", "BBH", "Users");
+            INI.Write("NameTag3", "BBH-Restorium", "Admins");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
