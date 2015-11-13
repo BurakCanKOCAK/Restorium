@@ -48,12 +48,21 @@ namespace Restorium
                 main.Show();
                 this.Hide();
             }
+            else if ((tbUserName.Text == "Admin") && (tbPassword.Text == "Password"))
+            {
+                tbPassword.BackColor = Color.Green;
+                tbUserName.BackColor = Color.Green;
+                Thread.Sleep(500);
+                MainForm main = new MainForm();
+                main.Show();
+                this.Hide();
+            }
             else
             {
                 tbPassword.BackColor = Color.Red;
                 tbUserName.BackColor = Color.Red;
                 MessageBox.Show("Lütfen kullanıcı adınızı ve şifrenizi kontrol edip tekrar deneyiniz!");
-                
+
             }   
 
         }
