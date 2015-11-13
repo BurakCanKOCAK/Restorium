@@ -30,12 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tp_Rehber = new System.Windows.Forms.TabPage();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tp_Stok = new System.Windows.Forms.TabPage();
-            this.dgView = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tp_Adisyon = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bMasaTasi = new System.Windows.Forms.Button();
             this.pbWifi = new System.Windows.Forms.PictureBox();
@@ -43,28 +39,32 @@
             this.bYeniMasa = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.bRezervasyon = new System.Windows.Forms.Button();
+            this.tp_Stok = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.bStokAra = new System.Windows.Forms.Button();
             this.bDuzenle = new System.Windows.Forms.Button();
             this.tbSearchKey = new System.Windows.Forms.TextBox();
+            this.dgView = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tp_Kasa = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tp_Rapor = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.tp_Rehber = new System.Windows.Forms.TabPage();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tp_Ayarlar = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
-            this.tp_Rehber.SuspendLayout();
-            this.tp_Stok.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Adisyon.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).BeginInit();
+            this.tp_Stok.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Kasa.SuspendLayout();
             this.tp_Rapor.SuspendLayout();
+            this.tp_Rehber.SuspendLayout();
             this.tp_Ayarlar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,67 +87,6 @@
             this.tabControl1.Size = new System.Drawing.Size(1014, 733);
             this.tabControl1.TabIndex = 0;
             // 
-            // tp_Rehber
-            // 
-            this.tp_Rehber.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
-            this.tp_Rehber.Controls.Add(this.panel5);
-            this.tp_Rehber.Location = new System.Drawing.Point(4, 28);
-            this.tp_Rehber.Name = "tp_Rehber";
-            this.tp_Rehber.Size = new System.Drawing.Size(1006, 701);
-            this.tp_Rehber.TabIndex = 5;
-            this.tp_Rehber.Text = "Rehber";
-            this.tp_Rehber.UseVisualStyleBackColor = true;
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.Data_Update);
-            // 
-            // tp_Stok
-            // 
-            this.tp_Stok.BackColor = System.Drawing.Color.Transparent;
-            this.tp_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tp_Stok.Controls.Add(this.panel3);
-            this.tp_Stok.Controls.Add(this.dgView);
-            this.tp_Stok.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tp_Stok.Location = new System.Drawing.Point(4, 28);
-            this.tp_Stok.Name = "tp_Stok";
-            this.tp_Stok.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Stok.Size = new System.Drawing.Size(1006, 701);
-            this.tp_Stok.TabIndex = 1;
-            this.tp_Stok.Text = "Stok";
-            // 
-            // dgView
-            // 
-            this.dgView.AllowUserToAddRows = false;
-            this.dgView.AllowUserToDeleteRows = false;
-            this.dgView.AllowUserToResizeColumns = false;
-            this.dgView.AllowUserToResizeRows = false;
-            this.dgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1});
-            this.dgView.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.dgView.Location = new System.Drawing.Point(0, 69);
-            this.dgView.Name = "dgView";
-            this.dgView.Size = new System.Drawing.Size(1006, 632);
-            this.dgView.TabIndex = 0;
-            // 
-            // Column1
-            // 
-            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column1.HeaderText = "Column1";
-            this.Column1.Items.AddRange(new object[] {
-            "a",
-            "b",
-            "c",
-            "d"});
-            this.Column1.Name = "Column1";
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
             // tp_Adisyon
             // 
             this.tp_Adisyon.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
@@ -161,6 +100,34 @@
             this.tp_Adisyon.TabIndex = 0;
             this.tp_Adisyon.Text = "Adisyon";
             this.tp_Adisyon.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.AutoScroll = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(11, 92);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 15;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(984, 375);
+            this.tableLayoutPanel1.TabIndex = 8;
             // 
             // panel1
             // 
@@ -250,6 +217,20 @@
             this.bRezervasyon.UseVisualStyleBackColor = false;
             this.bRezervasyon.Click += new System.EventHandler(this.bRezervasyon_Click);
             // 
+            // tp_Stok
+            // 
+            this.tp_Stok.BackColor = System.Drawing.Color.Transparent;
+            this.tp_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tp_Stok.Controls.Add(this.panel3);
+            this.tp_Stok.Controls.Add(this.dgView);
+            this.tp_Stok.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tp_Stok.Location = new System.Drawing.Point(4, 28);
+            this.tp_Stok.Name = "tp_Stok";
+            this.tp_Stok.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_Stok.Size = new System.Drawing.Size(1006, 701);
+            this.tp_Stok.TabIndex = 1;
+            this.tp_Stok.Text = "Stok";
+            // 
             // panel3
             // 
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -294,6 +275,36 @@
             this.tbSearchKey.Name = "tbSearchKey";
             this.tbSearchKey.Size = new System.Drawing.Size(227, 27);
             this.tbSearchKey.TabIndex = 2;
+            // 
+            // dgView
+            // 
+            this.dgView.AllowUserToAddRows = false;
+            this.dgView.AllowUserToDeleteRows = false;
+            this.dgView.AllowUserToResizeColumns = false;
+            this.dgView.AllowUserToResizeRows = false;
+            this.dgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1});
+            this.dgView.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.dgView.Location = new System.Drawing.Point(0, 69);
+            this.dgView.Name = "dgView";
+            this.dgView.Size = new System.Drawing.Size(1006, 632);
+            this.dgView.TabIndex = 0;
+            // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column1.HeaderText = "Column1";
+            this.Column1.Items.AddRange(new object[] {
+            "a",
+            "b",
+            "c",
+            "d"});
+            this.Column1.Name = "Column1";
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // tp_Kasa
             // 
@@ -343,6 +354,17 @@
             this.panel4.Size = new System.Drawing.Size(1010, 72);
             this.panel4.TabIndex = 10;
             // 
+            // tp_Rehber
+            // 
+            this.tp_Rehber.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Rehber.Controls.Add(this.panel5);
+            this.tp_Rehber.Location = new System.Drawing.Point(4, 28);
+            this.tp_Rehber.Name = "tp_Rehber";
+            this.tp_Rehber.Size = new System.Drawing.Size(1006, 701);
+            this.tp_Rehber.TabIndex = 5;
+            this.tp_Rehber.Text = "Rehber";
+            this.tp_Rehber.UseVisualStyleBackColor = true;
+            // 
             // panel5
             // 
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -378,33 +400,11 @@
             this.panel6.Size = new System.Drawing.Size(1010, 72);
             this.panel6.TabIndex = 12;
             // 
-            // tableLayoutPanel1
+            // timer1
             // 
-            this.tableLayoutPanel1.AutoScroll = true;
-            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(11, 92);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 15;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(984, 375);
-            this.tableLayoutPanel1.TabIndex = 8;
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.Data_Update);
             // 
             // MainForm
             // 
@@ -412,22 +412,22 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 730);
             this.Controls.Add(this.tabControl1);
-            this.MinimumSize = new System.Drawing.Size(1024, 769);
+            this.MinimumSize = new System.Drawing.Size(1024, 726);
             this.Name = "MainForm";
             this.Text = "Main";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControl1.ResumeLayout(false);
-            this.tp_Rehber.ResumeLayout(false);
-            this.tp_Stok.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Adisyon.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).EndInit();
+            this.tp_Stok.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Kasa.ResumeLayout(false);
             this.tp_Rapor.ResumeLayout(false);
+            this.tp_Rehber.ResumeLayout(false);
             this.tp_Ayarlar.ResumeLayout(false);
             this.ResumeLayout(false);
 
