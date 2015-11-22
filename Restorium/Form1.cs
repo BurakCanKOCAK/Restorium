@@ -39,26 +39,22 @@ namespace Restorium
         {
             if ((tbUserName.Text == "Admin") && (tbPassword.Text == "Password"))
             {
-                UserLog.UserName = "Burak";
-                UserLog.WConsole("Admin");
+                // Key : LoggedUser - Value : Admin - Section : Login
+                INI.Write("LoggedUser", "Admin", "Login");
+                // Key : LoggedDate - Value : Login Date - Section : Login
+                INI.Write("LoggedDate", DateTime.UtcNow.ToLocalTime().ToString(), "Login");
+                UserLog.UserName = "ADMIN";
+                UserLog.WConsole("Succesfully Logged In");
                 tbPassword.BackColor = Color.Green;
                 tbUserName.BackColor = Color.Green;
                 Thread.Sleep(500);
                 MainForm main = new MainForm();
                 main.Show();
                 this.Hide();
-            }
-            else if ((tbUserName.Text == "Admin") && (tbPassword.Text == "Password"))
+            }else
             {
-                tbPassword.BackColor = Color.Green;
-                tbUserName.BackColor = Color.Green;
-                Thread.Sleep(500);
-                MainForm main = new MainForm();
-                main.Show();
-                this.Hide();
-            }
-            else
-            {
+                UserLog.UserName = "Guest";
+                UserLog.WConsole("Invalid Password or Username");
                 tbPassword.BackColor = Color.Red;
                 tbUserName.BackColor = Color.Red;
                 MessageBox.Show("Lütfen kullanıcı adınızı ve şifrenizi kontrol edip tekrar deneyiniz!");
@@ -66,31 +62,43 @@ namespace Restorium
             }   
 
         }
-        public static bool SetStyle(Control c, ControlStyles Style, bool value)
-        {
-            bool retval = false;
-            Type typeTB = typeof(Control);
-            System.Reflection.MethodInfo misSetStyle = typeTB.GetMethod("SetStyle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            if (misSetStyle != null && c != null) { misSetStyle.Invoke(c, new object[] { Style, value }); retval = true; }
-            return retval;
-        }
-
+   
         private void key_press(object sender, KeyPressEventArgs e)
         {
         if (e.KeyChar == (char)Keys.Enter) 
             {
                 if ((tbUserName.Text == "Admin") && (tbPassword.Text == "Password"))
                 {
-                    UserLog.UserName = "Burak";
-                    UserLog.WConsole("Admin_With_Password");
+                    // Key : LoggedUser - Value : Admin - Section : Login
+                    INI.Write("LoggedUser", "Admin", "Login");
+                    // Key : LoggedDate - Value : Login Date - Section : Login
+                    INI.Write("LoggedDate", DateTime.UtcNow.ToLocalTime().ToString(), "Login");
+                    UserLog.UserName = "ADMIN";
+                    UserLog.WConsole("Succesfully Logged In (KeyPressed)");
                     MainForm main = new MainForm();
                     main.Show();
                     this.Hide();
                 }
-                else if(tbUserName.Text=="")
+                else if (tbUserName.Text == "")
                 {
-                    UserLog.UserName = "Burak";
-                    UserLog.WConsole("Admin_Pirate");
+                    // Key : LoggedUser - Value : Admin - Section : Login
+                    INI.Write("LoggedUser", "Admin", "Login");
+                    // Key : LoggedDate - Value : Login Date - Section : Login
+                    INI.Write("LoggedDate", DateTime.UtcNow.ToLocalTime().ToString(), "Login");
+                    UserLog.UserName = "ADMIN";
+                    UserLog.WConsole("Succesfully Logged In (Admin_Pirate)");
+                    MainForm main = new MainForm();
+                    main.Show();
+                    this.Hide();
+                }
+                else if (tbUserName.Text == "G")
+                {
+                    // Key : LoggedUser - Value : Admin - Section : Login
+                    INI.Write("LoggedUser", "Guest", "Login");
+                    // Key : LoggedDate - Value : Login Date - Section : Login
+                    INI.Write("LoggedDate", DateTime.UtcNow.ToLocalTime().ToString(), "Login");
+                    UserLog.UserName = "GUEST";
+                    UserLog.WConsole("Succesfully Logged In (Guest_Pirate)");
                     MainForm main = new MainForm();
                     main.Show();
                     this.Hide();

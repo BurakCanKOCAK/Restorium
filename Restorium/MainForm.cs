@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net.NetworkInformation;
 using System.Data.SqlClient;
+using System.Drawing;
 
 namespace Restorium
 {
@@ -32,37 +33,119 @@ namespace Restorium
     */
     public partial class MainForm : Form
     {
+        #region Variables 
         IniFile INI = new IniFile();
+        public static string[] personelNames = new string[100];
+        public static string[] menuItems = new string[500];
+        public static int stokCount;
+        public static int personelCount;
         private bool duzenlemeModu = false;
+        private bool personelDuzenlemeModu = false;
         int countOfTables = 1;
+        bool  tableFlag = false;
+        private Bitmap bitmap;
+        public static int iskontoRate;
+        public static string User;
+        #endregion
         public MainForm()
         {
             InitializeComponent();
+            User = INI.Read("LoggedUser", "Login");
             StokDataSet();
+            SettingsDataSet();
         }
-
-        private void bYeniMasa_Click(object sender, EventArgs e)
+        private void SettingsDataSet()
         {
-            tabControl1.SelectTab(tp_Stok);
-            UserLog.WConsole("-Deneme-");
-            string Ad = INI.Read("NameTag","Users");
-            UserLog.WConsole(Ad);
-        }
 
+            this.dgViewWaiter.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            getPersonelFromFile();
+            dgViewWaiter.AllowUserToAddRows = false;
+            dgViewWaiter.AllowUserToDeleteRows = false;
+            dgViewWaiter.AllowUserToOrderColumns = false;
+            dgViewWaiter.AllowDrop = false;
+            dgViewWaiter.ReadOnly = true;
+            dgViewWaiter.Refresh();
+            try
+            {
+                iskontoRate = Convert.ToInt16(INI.Read("Iskonto", "Settings"));
+                tbDefaultIskontoValue.Text = iskontoRate.ToString();
+            }catch
+            {
+                UserLog.WConsole("Atanmis bir iskonto degeri bulunamadi !");
+            }
+            if (User == "Admin")
+            {
+                dgViewWaiter.ForeColor = Color.Black;
+                bPersonelDuzenle.ForeColor = Color.Red;
+                tbDefaultIskontoValue.Enabled = true;
+            }
+            else
+            {
+                
+                dgViewWaiter.ForeColor = Color.Gray;
+                bPersonelDuzenle.ForeColor = Color.DarkGray;
+                bPersonelDuzenle.Enabled = false;
+                tbDefaultIskontoValue.Enabled = false;
+            }
+        }
+        private void bYeniMasa_Click(object sender, EventArgs e)
+        {//Yeni masa Acmak icin
+            using (var tableOpenForm = new TableOpenForm())
+            {
+                var result = tableOpenForm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string PersonelAdi = tableOpenForm.PersonelAdi;            
+                    string MasaNo = tableOpenForm.MasaNo;
+
+                        MessageBox.Show("Masa No :" + MasaNo+"\nPersonel Adi :" +PersonelAdi);
+                        Button b = new Button();
+                        b.Name = "masa" + MasaNo.ToString();
+                        b.Text = MasaNo.ToString(); ;
+                        b.AutoSize = true;
+                        b.ForeColor = Color.Black;
+                        b.BackColor = Color.Red;
+                        b.Size = new Size(80, 80);
+                        b.Click += new EventHandler(masa_click);
+                        //
+                        Button label = new Button();
+                        label.Size = new Size(80, 450);
+                        label.Text = "Bugun acilan " + countOfTables.ToString()+". Masa" + "\nGarson : "+PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString(); ;
+                        //label.Text = "Masa No : ";
+                        label.Name = "label" + countOfTables.ToString();
+                        label.AutoSize = true;
+                        label.BackColor = Color.LightGray;
+                        label.ForeColor = Color.DarkBlue;
+                        //
+                        if (tableFlag == false)
+                        {
+                            tableLayoutPanel1.Controls.Add(b, 0, countOfTables / 2);
+                            tableLayoutPanel1.Controls.Add(label, 1, countOfTables / 2);
+                            tableFlag = true;
+                        }
+                        else
+                        {
+                            tableLayoutPanel1.Controls.Add(b, 2, countOfTables / 2 - 1);
+                            tableLayoutPanel1.Controls.Add(label, 3, countOfTables / 2 - 1);
+                            tableFlag = false;
+                        }
+
+
+                        countOfTables++;
+
+
+                }
+            }
+
+        }
         private void bMasaTasi_Click(object sender, EventArgs e)
         {
-            UserLog.UserName = "BBH";
-            INI.Write("NameTag", "BBH", "Users");
-            INI.Write("NameTag", "Burak", "Users");
-            INI.Write("NameTag2", "BBH", "Users");
-            INI.Write("NameTag3", "BBH-Restorium", "BBH-Adminsss");
+            // Masa TASI
         }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
             lDate.Text = DateTime.UtcNow.ToLocalTime().ToString();
         }
-
         private void Data_Update(object sender, EventArgs e)
         {
             lDate.Text = DateTime.UtcNow.ToLocalTime().ToString();
@@ -90,134 +173,216 @@ namespace Restorium
                 return false;
             }
         }
+        #endregion    
+        #region STOK PROCESSES
+        private void StokDataSet()
+        {
+            dgView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            getStokFromFile();
+            if (User != "Admin" && User != "KidemliPersonel")
+            {
+                bDuzenle.ForeColor = Color.DarkGray;
+                bDuzenle.Enabled = false;
+            }
+               
+                DataTable dataTable = new DataTable();
+            this.dgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+        private void bDuzenle_Click(object sender, EventArgs e)
+        {
+            // SEKME : STOK  - GOREV : bDuzenle butonuna basildiginda tabloyu editable yapmak
+             
+                duzenlemeModu = !duzenlemeModu;
+                if (duzenlemeModu == true)
+                {
+                    dgView.AllowUserToAddRows = true;
+                    dgView.AllowUserToDeleteRows = true;
+                    dgView.AllowUserToOrderColumns = true;
+                    dgView.AllowDrop = true;
+                    dgView.ReadOnly = false;
+                    dgView.Refresh();
+                    bDuzenle.BackColor = Color.Green;
+                    bDuzenle.Text = "Duzenle(Acik)";
+                    dgView.SelectionMode = DataGridViewSelectionMode.CellSelect;
 
+            }
+                else
+                {
+                    dgView.AllowUserToAddRows = false;
+                    dgView.AllowUserToDeleteRows = false;
+                    dgView.AllowUserToOrderColumns = false;
+                    dgView.AllowDrop = false;
+                    dgView.ReadOnly = true;
+                    dgView.Refresh();
+                    bDuzenle.BackColor = Color.Silver;
+                    bDuzenle.Text = "Duzenle(Kapali)";
+                    dgView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                    saveStokToFile();
+                
+            }
+        }
         #endregion
+        #region STOK DATA SAVE / LOAD / SEARCH FROM FILE
+        private void saveStokToFile()
+        {
+            int stokCount = dgView.RowCount;
+            INI.DeleteSection("Stok");
+            INI.Write("stokCount", stokCount.ToString(), "Stok");
+            for (int i = 0; i < stokCount; i++)
+            {
+                INI.Write("id" + i.ToString(), dgView.Rows[i].Cells[0].Value.ToString(), "Stok");
+                INI.Write("aciklama" + i.ToString(), dgView.Rows[i].Cells[1].Value.ToString(), "Stok");
+                INI.Write("adet" + i.ToString(), dgView.Rows[i].Cells[2].Value.ToString(), "Stok");
+                INI.Write("birim" + i.ToString(), dgView.Rows[i].Cells[3].Value.ToString(), "Stok");
+                INI.Write("birimFiyat" + i.ToString(), dgView.Rows[i].Cells[4].Value.ToString(), "Stok");
+                INI.Write("paraBirimi" + i.ToString(), dgView.Rows[i].Cells[5].Value.ToString(), "Stok");
+               // UserLog.WConsole(dgView.Rows[i].Cells[6].Value.ToString());
+                if (dgView.Rows[i].Cells[6].Value.ToString() == "False")
+                {
+                    INI.Write("dinamikStokKontrolu" + i.ToString(), "False", "Stok");
+                }
+                else
+                {
+                    INI.Write("dinamikStokKontrolu" + i.ToString(), "True", "Stok");
+                }
 
-     
+            }
+            UserLog.WConsole("Stok Listesi Kaydetme Basarili");
+
+        }
+        private void getStokFromFile()
+        {//Dosyadan Stok Datasini alik gdView'a set eder
+            try
+            {
+                stokCount = Convert.ToInt32(INI.Read("stokCount", "Stok"));
+                UserLog.WConsole("Toplam Stok Urunu Sayisi : " + stokCount.ToString());
+                for (int i = 0; i < stokCount; i++)
+                {
+                    string id = INI.Read("id" + i.ToString(), "Stok");
+                    string aciklama = INI.Read("aciklama" + i.ToString(), "Stok");
+                    string adet = INI.Read("adet" + i.ToString(), "Stok");
+                    string birim = INI.Read("birim" + i.ToString(), "Stok");
+                    string birimFiyat = INI.Read("birimFiyat" + i.ToString(), "Stok");
+                    string paraBirimi = INI.Read("paraBirimi" + i.ToString(), "Stok");
+                    string  dinamikStokKontrolu = INI.Read("dinamikStokKontrolu" + i.ToString(), "Stok");
+                    menuItems[i] = aciklama;
+
+                    dgView.Rows.Add(id, aciklama, adet,birim,birimFiyat,paraBirimi,dinamikStokKontrolu);
+                    dgView.Refresh();
+                }
+                UserLog.WConsole("Dosyadan Stok Okuma Basarili !");
+
+            }
+            catch
+            {
+                UserLog.WConsole(" (HATA) Dosyadan Stok Okuma Hatasi !");
+            }
+
+        }
+        private void bStokAra_Click(object sender, EventArgs e)
+        {
+            //tbSearchKey'de yazani al ona gore DGView'de arama yap.
+        }       
+        #endregion
+        #region  Adisyon
+        private void bRezervasyon_Click(object sender, EventArgs e)
+        {
+            
+          
+
+        }
+        private void masa_click(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+            // Buton fonksiyonu
+            UserLog.WConsole(b.Name);
+
+        }
+        #endregion
+        #region PERSONEL PROCESSES
+        private void bPersonelDuzenle_Click(object sender, EventArgs e)
+        {
+
+            personelDuzenlemeModu = !personelDuzenlemeModu;
+            if (personelDuzenlemeModu ==true)
+            {
+                dgViewWaiter.AllowUserToAddRows = true;
+                dgViewWaiter.AllowUserToDeleteRows = true;
+                dgViewWaiter.AllowUserToOrderColumns = true;
+                dgViewWaiter.AllowDrop = false;
+                dgViewWaiter.ReadOnly = false;
+                dgViewWaiter.Refresh();
+                dgViewWaiter.SelectionMode = DataGridViewSelectionMode.CellSelect;
+                //dgViewWaiter.ForeColor = Color.Black;
+                bPersonelDuzenle.ForeColor = Color.Green;
+            }
+            else
+            {
+                dgViewWaiter.AllowUserToAddRows = false;
+                dgViewWaiter.AllowUserToDeleteRows = false;
+                dgViewWaiter.AllowUserToOrderColumns = false;
+                dgViewWaiter.AllowDrop = false;
+                dgViewWaiter.ReadOnly = true;
+                dgViewWaiter.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgViewWaiter.Refresh();
+                //dgViewWaiter.ForeColor = Color.Gray;
+                bPersonelDuzenle.ForeColor = Color.Red;
+                savePersonnelToFile();
+            }
+
+        }
+        private void savePersonnelToFile()
+        {//Personel Listesini duzenleme bitince dosyaya kaydeder.
+            int personelCount = dgViewWaiter.RowCount;
+            INI.DeleteSection("Personel");
+            INI.Write("personelCount", personelCount.ToString(), "Personel");
+            for (int i = 0; i < personelCount; i++)
+            {
+                INI.Write("id" + i.ToString(), dgViewWaiter.Rows[i].Cells[0].Value.ToString(), "Personel");
+                INI.Write("name" + i.ToString(), dgViewWaiter.Rows[i].Cells[1].Value.ToString(), "Personel");
+                INI.Write("work" + i.ToString(), dgViewWaiter.Rows[i].Cells[2].Value.ToString(), "Personel");
+            }
+            UserLog.WConsole("Personel Listesi Kaydetme Basarili");
+        }
+        private void getPersonelFromFile()
+        {//Personel listesini dosyadan ceker
+            dgViewWaiter.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            try
+            {
+                personelCount = Convert.ToInt32(INI.Read("personelCount", "Personel"));
+                UserLog.WConsole("Toplam Personel Sayisi : "+personelCount.ToString());
+                for (int i = 0; i < personelCount; i++)
+                {
+                  string id = INI.Read("id" + i.ToString(), "Personel");
+                  string name = INI.Read("name" + i.ToString(), "Personel");
+                  string work = INI.Read("work" + i.ToString(), "Personel");
+                  personelNames[i] = name;
+                  dgViewWaiter.Rows.Add(id, name, work);
+                  dgViewWaiter.Refresh();
+                }
+                UserLog.WConsole("Dosyadan Personel Okuma Basarili !");
+               
+            }
+            catch
+            {
+                UserLog.WConsole(" (HATA) Dosyadan Personel Okuma Hatasi !");
+            }
+        }
+        #endregion
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            // Print Function
+            
+        }
         private void MainForm_Minimize(object sender, FormClosingEventArgs e)
         {
             this.MinimizeBox = true;
         }
 
-        #region STOK PROCESSES
-        private void StokDataSet()
+        private void IskontoValueChanged(object sender, EventArgs e)
         {
-            //
-            DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("ID", typeof(string));        //  COLUMN 1
-            dataTable.Columns.Add("Aciklama", typeof(string));  //  COLUMN 2
-            dataTable.Columns.Add("Adet", typeof(int));         //  COLUMN 3
-            dgView.DataSource = dataTable;
-
-            DataGridViewComboBoxColumn dgvComboBoxColumn = new DataGridViewComboBoxColumn();    //  COLUMN 4
-            dgvComboBoxColumn.SortMode = DataGridViewColumnSortMode.Automatic;
-            dgvComboBoxColumn.HeaderText = "Birim";
-            dgvComboBoxColumn.Items.IndexOf("Birim");
-            dgvComboBoxColumn.Items.Add("Birim");
-            dgvComboBoxColumn.Items.Add("Porsiyon");
-            dgvComboBoxColumn.Items.Add("Kutu");
-            dgvComboBoxColumn.Items.Add("Kg");
-            dgvComboBoxColumn.Items.Add("Kasa");
-            dgvComboBoxColumn.Items.Add("Kucuk");
-            dgvComboBoxColumn.Items.Add("Buyuk");
-            dgView.Columns.Add(dgvComboBoxColumn);      
-
-            dataTable.Columns.Add("Birim Fiyat", typeof(string));   //  COLUMN 5
-            DataGridViewComboBoxColumn dgvComboBoxColumnFiyat = new DataGridViewComboBoxColumn();   //  COLUMN 6
-            dgvComboBoxColumnFiyat.SortMode = DataGridViewColumnSortMode.Automatic;
-            dgvComboBoxColumnFiyat.HeaderText = "Para Birimi";
-            dgvComboBoxColumnFiyat.Items.IndexOf("TL");
-            dgvComboBoxColumnFiyat.Items.Add("TL");
-            dgvComboBoxColumnFiyat.Items.Add("Dolar");
-            dgvComboBoxColumnFiyat.Items.Add("Euro");
-            dgvComboBoxColumnFiyat.Items.Add("GBP");
-            dgView.Columns.Add(dgvComboBoxColumnFiyat);
-
-            DataGridViewCheckBoxColumn dgvCheckBoxColumn = new DataGridViewCheckBoxColumn(); //  COLUMN 7
-            dgvCheckBoxColumn.HeaderText = "Dinamik Stok Kontrolu";
-            dgView.Columns.Add(dgvCheckBoxColumn);
-            //
-            this.dgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+          INI.Write("Iskonto",tbDefaultIskontoValue.Text.ToString(), "Settings");
+          iskontoRate = Convert.ToInt16(tbDefaultIskontoValue.Text);
         }
-
-        private void bDuzenle_Click(object sender, EventArgs e)
-        {
-            duzenlemeModu = !duzenlemeModu;
-            if (duzenlemeModu == true)
-            {
-                dgView.AllowUserToAddRows = true;
-                dgView.AllowUserToDeleteRows = true;
-                dgView.AllowUserToOrderColumns = true;
-                dgView.AllowDrop = true;
-                dgView.ReadOnly = false;
-                dgView.Refresh();
-                bDuzenle.BackColor = Color.Green;
-                bDuzenle.Text = "Duzenle(Acik)";
-            }
-            else
-            {
-                dgView.AllowUserToAddRows = false;
-                dgView.AllowUserToDeleteRows = false;
-                dgView.AllowUserToOrderColumns = false;
-                dgView.AllowDrop = false;
-                dgView.ReadOnly = true;
-                dgView.Refresh();
-                bDuzenle.BackColor = Color.Silver;
-                bDuzenle.Text = "Duzenle(Kapali)";
-            }
-        }
-
-        private void bStokAra_Click(object sender, EventArgs e)
-        {
-            //tbSearchKey'de yazani al ona gore DGView'de arama yap.
-        }
-
-        private void SaveToDatabase()
-        {
-            //Save DataGridView to DataBase
-        }
-
-        #endregion
-
-        private void bRezervasyon_Click(object sender, EventArgs e)
-        {
-            //flowLayoutPanel1.Controls.Clear();
-            /*
-            Button b = new Button();
-            b.Name = countOfTables.ToString();
-            b.Text = countOfTables.ToString();
-            b.AutoSize = true;
-            b.ForeColor = Color.Red;
-            //flowLayoutPanel2.Controls.Add(b);
-            //
-            Label label = new Label();
-            label.Text = "Masa No : " + countOfTables.ToString() + " | " + " Tutar = " + (countOfTables * 20).ToString() + "TL";
-            //label.Text = "Masa No : ";
-            label.Name = "LABEL" + countOfTables.ToString();
-            label.AutoSize = true;
-            label.BackColor = Color.LightGray;
-            label.ForeColor = Color.DarkBlue;
-            //flowLayoutPanel2.Controls.Add(label);
-            //
-            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
-            flowLayoutPanel.Name = "flowLayoutPanel" + countOfTables.ToString();
-            flowLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
-            flowLayoutPanel.Controls.Add(b);
-            flowLayoutPanel.Controls.Add(label);
-            flowLayoutPanel2.Controls.Add(flowLayoutPanel);
-            //
-            Label label2 = new Label();
-            label2.Text = "__________________________________________________";
-            label2.Name = "Split" + countOfTables.ToString();
-            label2.AutoSize = true;
-            label2.BackColor = Color.Gray;
-            label2.ForeColor = Color.Gold;
-            flowLayoutPanel2.Controls.Add(label2);
-            */
-            countOfTables++;
-
-        }
-
-        
     }
 }

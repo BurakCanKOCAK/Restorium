@@ -22,9 +22,15 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <TargetCulture>tr-TR</TargetCulture>
+    <ProductName>Restorium Restaurant Automation</ProductName>
+    <PublisherName>BBHM</PublisherName>
+    <SuiteName>Restorium</SuiteName>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -45,6 +51,27 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Graphicloads-Polygon-Restaurant.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>4CEC8511026FC8D24369E0CBC3C1CBFE87EE1C18</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Restorium_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -70,6 +97,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="LastChoosenTable.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +107,18 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IniFile.cs" />
+    <Compile Include="ShowListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowListForm.Designer.cs">
+      <DependentUpon>ShowListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TableOpenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TableOpenForm.Designer.cs">
+      <DependentUpon>TableOpenForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserLog.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -96,6 +136,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ShowListForm.resx">
+      <DependentUpon>ShowListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TableOpenForm.resx">
+      <DependentUpon>TableOpenForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="DataSet_Stok.xsc">
       <DependentUpon>DataSet_Stok.xsd</DependentUpon>
     </None>
@@ -107,6 +153,7 @@
     <None Include="DataSet_Stok.xss">
       <DependentUpon>DataSet_Stok.xsd</DependentUpon>
     </None>
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -116,6 +163,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Restorium_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Untitled-11.png" />
@@ -148,6 +196,8 @@
     <None Include="Resources\rehber.png" />
     <None Include="Resources\settings.png" />
     <None Include="Resources\settings2.png" />
+    <None Include="Resources\printer.png" />
+    <Content Include="Graphicloads-Polygon-Restaurant.ico" />
     <Content Include="Resources\Untitled-1.png" />
   </ItemGroup>
   <ItemGroup>

@@ -8,10 +8,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Restorium")]
 [assembly: AssemblyDescription("Restaurant Automation")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BBH")]
+[assembly: AssemblyCompany("BBHM")]
 [assembly: AssemblyProduct("Restorium")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("BBH")]
+[assembly: AssemblyTrademark("BBHM")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

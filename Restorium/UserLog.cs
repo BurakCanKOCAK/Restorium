@@ -12,8 +12,7 @@ namespace Restorium
         public static void WConsole(String logText)
         {
             //Console'a yazdırma fonksiyonu
-            Console.WriteLine("::"+logText+" Authantication Succesfull::");
-            Console.WriteLine(":::::" + UserName + "::::::::");
+            Console.WriteLine(":: User Log ("+UserName+") :: "+logText+" :: ");
         }
         public static void WFile(String logText)
         {
