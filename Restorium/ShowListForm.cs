@@ -104,5 +104,13 @@ namespace Restorium
             }
 
         }
+
+        private void key_press(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
     }
 }

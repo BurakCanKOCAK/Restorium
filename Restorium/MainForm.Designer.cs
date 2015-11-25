@@ -33,15 +33,13 @@
             this.tp_Adisyon = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.bMasaTasi = new System.Windows.Forms.Button();
             this.pbWifi = new System.Windows.Forms.PictureBox();
             this.lDate = new System.Windows.Forms.Label();
             this.bYeniMasa = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.bRezervasyon = new System.Windows.Forms.Button();
             this.tp_Stok = new System.Windows.Forms.TabPage();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.bStokAra = new System.Windows.Forms.Button();
             this.bDuzenle = new System.Windows.Forms.Button();
             this.tbSearchKey = new System.Windows.Forms.TextBox();
@@ -60,6 +58,18 @@
             this.tp_Rehber = new System.Windows.Forms.TabPage();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tp_Ayarlar = new System.Windows.Forms.TabPage();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tbGBP = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbDolar = new System.Windows.Forms.TextBox();
+            this.tbEuro = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbDefaultIskontoValue = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.bPersonelDuzenle = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dgViewWaiter = new System.Windows.Forms.DataGridView();
@@ -70,32 +80,20 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbDefaultIskontoValue = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbEuro = new System.Windows.Forms.TextBox();
-            this.tbDolar = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.tbGBP = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).BeginInit();
             this.tp_Stok.SuspendLayout();
-            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Kasa.SuspendLayout();
             this.tp_Rapor.SuspendLayout();
             this.tp_Rehber.SuspendLayout();
             this.tp_Ayarlar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
             this.panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -116,6 +114,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1014, 733);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // tp_Adisyon
             // 
@@ -145,22 +144,32 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Location = new System.Drawing.Point(11, 92);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 15;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowCount = 25;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(984, 598);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
@@ -171,28 +180,14 @@
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.BackgroundImage = global::Restorium.Properties.Resources._22;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.panel1.Controls.Add(this.bMasaTasi);
             this.panel1.Controls.Add(this.pbWifi);
             this.panel1.Controls.Add(this.lDate);
             this.panel1.Controls.Add(this.bYeniMasa);
-            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.bRezervasyon);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1010, 72);
             this.panel1.TabIndex = 7;
-            // 
-            // bMasaTasi
-            // 
-            this.bMasaTasi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bMasaTasi.BackColor = System.Drawing.Color.Yellow;
-            this.bMasaTasi.Location = new System.Drawing.Point(612, 14);
-            this.bMasaTasi.Name = "bMasaTasi";
-            this.bMasaTasi.Size = new System.Drawing.Size(115, 36);
-            this.bMasaTasi.TabIndex = 2;
-            this.bMasaTasi.Text = "Masa Taşı";
-            this.bMasaTasi.UseVisualStyleBackColor = false;
-            this.bMasaTasi.Click += new System.EventHandler(this.bMasaTasi_Click);
             // 
             // pbWifi
             // 
@@ -220,35 +215,25 @@
             // bYeniMasa
             // 
             this.bYeniMasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bYeniMasa.BackColor = System.Drawing.Color.SlateBlue;
-            this.bYeniMasa.Location = new System.Drawing.Point(474, 14);
+            this.bYeniMasa.BackColor = System.Drawing.Color.Red;
+            this.bYeniMasa.Location = new System.Drawing.Point(730, 14);
             this.bYeniMasa.Name = "bYeniMasa";
-            this.bYeniMasa.Size = new System.Drawing.Size(115, 36);
+            this.bYeniMasa.Size = new System.Drawing.Size(132, 36);
             this.bYeniMasa.TabIndex = 0;
-            this.bYeniMasa.Text = "Yeni Masa";
+            this.bYeniMasa.Text = "Yeni Masa (F4)";
             this.bYeniMasa.UseVisualStyleBackColor = false;
             this.bYeniMasa.Click += new System.EventHandler(this.bYeniMasa_Click);
-            // 
-            // button3
-            // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.button3.Location = new System.Drawing.Point(749, 14);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(115, 36);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Hesap";
-            this.button3.UseVisualStyleBackColor = false;
+            this.bYeniMasa.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // bRezervasyon
             // 
             this.bRezervasyon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bRezervasyon.BackColor = System.Drawing.Color.Tomato;
-            this.bRezervasyon.Location = new System.Drawing.Point(885, 14);
+            this.bRezervasyon.BackColor = System.Drawing.Color.Turquoise;
+            this.bRezervasyon.Location = new System.Drawing.Point(868, 14);
             this.bRezervasyon.Name = "bRezervasyon";
-            this.bRezervasyon.Size = new System.Drawing.Size(115, 36);
+            this.bRezervasyon.Size = new System.Drawing.Size(132, 36);
             this.bRezervasyon.TabIndex = 3;
-            this.bRezervasyon.Text = "Rezervasyon";
+            this.bRezervasyon.Text = "Rezervasyon (F5)";
             this.bRezervasyon.UseVisualStyleBackColor = false;
             this.bRezervasyon.Click += new System.EventHandler(this.bRezervasyon_Click);
             // 
@@ -267,6 +252,18 @@
             this.tp_Stok.TabIndex = 1;
             this.tp_Stok.Text = "Stok";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::Restorium.Properties.Resources.printer;
+            this.pictureBox1.Location = new System.Drawing.Point(6, 78);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(29, 28);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // panel3
             // 
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -281,18 +278,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1010, 72);
             this.panel3.TabIndex = 8;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::Restorium.Properties.Resources.printer;
-            this.pictureBox1.Location = new System.Drawing.Point(6, 78);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(29, 28);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // bStokAra
             // 
@@ -494,6 +479,120 @@
             this.tp_Ayarlar.Text = "Ayarlar";
             this.tp_Ayarlar.UseVisualStyleBackColor = true;
             // 
+            // panel7
+            // 
+            this.panel7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel7.Controls.Add(this.label8);
+            this.panel7.Controls.Add(this.tbGBP);
+            this.panel7.Controls.Add(this.label6);
+            this.panel7.Controls.Add(this.label7);
+            this.panel7.Controls.Add(this.tbDolar);
+            this.panel7.Controls.Add(this.tbEuro);
+            this.panel7.Controls.Add(this.label5);
+            this.panel7.Controls.Add(this.label4);
+            this.panel7.Controls.Add(this.label3);
+            this.panel7.Controls.Add(this.tbDefaultIskontoValue);
+            this.panel7.Controls.Add(this.label2);
+            this.panel7.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Italic);
+            this.panel7.Location = new System.Drawing.Point(11, 474);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(983, 214);
+            this.panel7.TabIndex = 16;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(386, 106);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(42, 23);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "GBP";
+            // 
+            // tbGBP
+            // 
+            this.tbGBP.Location = new System.Drawing.Point(327, 103);
+            this.tbGBP.Name = "tbGBP";
+            this.tbGBP.Size = new System.Drawing.Size(53, 30);
+            this.tbGBP.TabIndex = 10;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(258, 106);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(70, 23);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Dolar = ";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(134, 106);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(59, 23);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Euro =";
+            // 
+            // tbDolar
+            // 
+            this.tbDolar.Location = new System.Drawing.Point(199, 103);
+            this.tbDolar.Name = "tbDolar";
+            this.tbDolar.Size = new System.Drawing.Size(53, 30);
+            this.tbDolar.TabIndex = 7;
+            // 
+            // tbEuro
+            // 
+            this.tbEuro.Location = new System.Drawing.Point(75, 103);
+            this.tbEuro.Name = "tbEuro";
+            this.tbEuro.Size = new System.Drawing.Size(53, 30);
+            this.tbEuro.TabIndex = 5;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 106);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 23);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "1 TL  =  ";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(195, 56);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 23);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "%";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(130, 23);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Iskonto Orani :  ";
+            // 
+            // tbDefaultIskontoValue
+            // 
+            this.tbDefaultIskontoValue.Location = new System.Drawing.Point(140, 53);
+            this.tbDefaultIskontoValue.Name = "tbDefaultIskontoValue";
+            this.tbDefaultIskontoValue.Size = new System.Drawing.Size(53, 30);
+            this.tbDefaultIskontoValue.TabIndex = 1;
+            this.tbDefaultIskontoValue.TextChanged += new System.EventHandler(this.IskontoValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 23);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Ayarlar";
+            // 
             // bPersonelDuzenle
             // 
             this.bPersonelDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -580,120 +679,6 @@
             this.printDialog1.Document = this.printDocument1;
             this.printDialog1.UseEXDialog = true;
             // 
-            // panel7
-            // 
-            this.panel7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel7.Controls.Add(this.label8);
-            this.panel7.Controls.Add(this.tbGBP);
-            this.panel7.Controls.Add(this.label6);
-            this.panel7.Controls.Add(this.label7);
-            this.panel7.Controls.Add(this.tbDolar);
-            this.panel7.Controls.Add(this.tbEuro);
-            this.panel7.Controls.Add(this.label5);
-            this.panel7.Controls.Add(this.label4);
-            this.panel7.Controls.Add(this.label3);
-            this.panel7.Controls.Add(this.tbDefaultIskontoValue);
-            this.panel7.Controls.Add(this.label2);
-            this.panel7.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Italic);
-            this.panel7.Location = new System.Drawing.Point(11, 474);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(983, 214);
-            this.panel7.TabIndex = 16;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 23);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Ayarlar";
-            // 
-            // tbDefaultIskontoValue
-            // 
-            this.tbDefaultIskontoValue.Location = new System.Drawing.Point(140, 53);
-            this.tbDefaultIskontoValue.Name = "tbDefaultIskontoValue";
-            this.tbDefaultIskontoValue.Size = new System.Drawing.Size(53, 30);
-            this.tbDefaultIskontoValue.TabIndex = 1;
-            this.tbDefaultIskontoValue.TextChanged += new System.EventHandler(this.IskontoValueChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 56);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(130, 23);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Iskonto Orani :  ";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(195, 56);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 23);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "%";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 106);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 23);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "1 TL  =  ";
-            // 
-            // tbEuro
-            // 
-            this.tbEuro.Location = new System.Drawing.Point(75, 103);
-            this.tbEuro.Name = "tbEuro";
-            this.tbEuro.Size = new System.Drawing.Size(53, 30);
-            this.tbEuro.TabIndex = 5;
-            // 
-            // tbDolar
-            // 
-            this.tbDolar.Location = new System.Drawing.Point(199, 103);
-            this.tbDolar.Name = "tbDolar";
-            this.tbDolar.Size = new System.Drawing.Size(53, 30);
-            this.tbDolar.TabIndex = 7;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(134, 106);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(59, 23);
-            this.label7.TabIndex = 8;
-            this.label7.Text = "Euro =";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(258, 106);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 23);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Dolar = ";
-            // 
-            // tbGBP
-            // 
-            this.tbGBP.Location = new System.Drawing.Point(327, 103);
-            this.tbGBP.Name = "tbGBP";
-            this.tbGBP.Size = new System.Drawing.Size(53, 30);
-            this.tbGBP.TabIndex = 10;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(386, 106);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(42, 23);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "GBP";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -704,24 +689,25 @@
             this.Name = "MainForm";
             this.Text = "Main";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             this.tabControl1.ResumeLayout(false);
             this.tp_Adisyon.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).EndInit();
             this.tp_Stok.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Kasa.ResumeLayout(false);
             this.tp_Rapor.ResumeLayout(false);
             this.tp_Rehber.ResumeLayout(false);
             this.tp_Ayarlar.ResumeLayout(false);
             this.tp_Ayarlar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).EndInit();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -734,8 +720,6 @@
         private System.Windows.Forms.TabPage tp_Kasa;
         private System.Windows.Forms.Button bYeniMasa;
         private System.Windows.Forms.Button bRezervasyon;
-        private System.Windows.Forms.Button bMasaTasi;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TabPage tp_Ayarlar;
         private System.Windows.Forms.Label lDate;
         private System.Windows.Forms.Timer timer1;

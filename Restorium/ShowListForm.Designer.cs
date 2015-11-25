@@ -55,6 +55,7 @@
             this.tbSearch.Size = new System.Drawing.Size(193, 20);
             this.tbSearch.TabIndex = 1;
             this.tbSearch.TextChanged += new System.EventHandler(this.tSearchTextChanged);
+            this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // bAra
             // 
@@ -192,6 +193,7 @@
             this.dgViewWaiter.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgViewWaiter.Size = new System.Drawing.Size(718, 403);
             this.dgViewWaiter.TabIndex = 14;
+            this.dgViewWaiter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // ID_WAITER
             // 
@@ -230,6 +232,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Database";
             this.Load += new System.EventHandler(this.ShowListForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             ((System.ComponentModel.ISupportInitialize)(this.dgViewStok)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).EndInit();
             this.ResumeLayout(false);

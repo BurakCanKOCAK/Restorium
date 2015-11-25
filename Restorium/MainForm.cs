@@ -10,6 +10,7 @@ using System.Net.NetworkInformation;
 using System.Data.SqlClient;
 using System.Drawing;
 
+
 namespace Restorium
 {
     /*
@@ -37,6 +38,8 @@ namespace Restorium
         IniFile INI = new IniFile();
         public static string[] personelNames = new string[100];
         public static string[] menuItems = new string[500];
+        public static int[] tableNumbers = new int[200];
+        public static int tableCounter;
         public static int stokCount;
         public static int personelCount;
         private bool duzenlemeModu = false;
@@ -99,41 +102,39 @@ namespace Restorium
                     string MasaNo = tableOpenForm.MasaNo;
 
                         MessageBox.Show("Masa No :" + MasaNo+"\nPersonel Adi :" +PersonelAdi);
-                        Button b = new Button();
-                        b.Name = "masa" + MasaNo.ToString();
-                        b.Text = MasaNo.ToString(); ;
-                        b.AutoSize = true;
-                        b.ForeColor = Color.Black;
-                        b.BackColor = Color.Red;
-                        b.Size = new Size(80, 80);
-                        b.Click += new EventHandler(masa_click);
-                        //
-                        Button label = new Button();
-                        label.Size = new Size(80, 450);
-                        label.Text = "Bugun acilan " + countOfTables.ToString()+". Masa" + "\nGarson : "+PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString(); ;
-                        //label.Text = "Masa No : ";
-                        label.Name = "label" + countOfTables.ToString();
-                        label.AutoSize = true;
-                        label.BackColor = Color.LightGray;
-                        label.ForeColor = Color.DarkBlue;
-                        //
+                        //Button Left
+                        Button bLeft = new Button();
+                        bLeft.Name = "bLeft" + MasaNo.ToString();
+                        bLeft.Text = MasaNo.ToString(); ;
+                        bLeft.AutoSize = true;
+                        bLeft.ForeColor = Color.Black;
+                        bLeft.BackColor = Color.Red;
+                        bLeft.Size = new Size(80, 40);
+                        bLeft.Click += new EventHandler(masa_click);
+                    //Button Right
+                        Button bRight = new Button();
+                        bRight.Font = new Font(bRight.Font.FontFamily, 8);
+                        bRight.Size = new Size(450, 40);
+                        bRight.Text = "Bugun acilan " + countOfTables.ToString()+". Masa" + "\nGarson : "+PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString(); 
+                        bRight.Name = "bRight" + MasaNo.ToString();
+                        bRight.AutoSize = true;
+                        bRight.BackColor = Color.LightGray;
+                        bRight.ForeColor = Color.DarkBlue;
+                        //Masa Soldami Sagdami Olacak (Logic Function)
                         if (tableFlag == false)
                         {
-                            tableLayoutPanel1.Controls.Add(b, 0, countOfTables / 2);
-                            tableLayoutPanel1.Controls.Add(label, 1, countOfTables / 2);
+                            tableLayoutPanel1.Controls.Add(bLeft, 0, countOfTables / 2);
+                            tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
                             tableFlag = true;
                         }
                         else
                         {
-                            tableLayoutPanel1.Controls.Add(b, 2, countOfTables / 2 - 1);
-                            tableLayoutPanel1.Controls.Add(label, 3, countOfTables / 2 - 1);
+                            tableLayoutPanel1.Controls.Add(bLeft, 2, countOfTables / 2 - 1);
+                            tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
                             tableFlag = false;
                         }
-
-
-                        countOfTables++;
-
-
+                        //
+                        countOfTables++;  // countOfTables -> Bugun acilan kacinci masa oldugunu gosteriyor
                 }
             }
 
@@ -378,11 +379,111 @@ namespace Restorium
         {
             this.MinimizeBox = true;
         }
-
         private void IskontoValueChanged(object sender, EventArgs e)
         {
           INI.Write("Iskonto",tbDefaultIskontoValue.Text.ToString(), "Settings");
           iskontoRate = Convert.ToInt16(tbDefaultIskontoValue.Text);
+        }
+        private void key_press(object sender, KeyEventArgs e) //Key Press Handle Function
+        {
+            if (e.KeyCode == Keys.F4) //F4 -> NEW TABLE
+            {
+                UserLog.WConsole("<<F4 Pressed>> Opening Table ");
+                using (var tableOpenForm = new TableOpenForm())
+                {
+                    var result = tableOpenForm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        string PersonelAdi = tableOpenForm.PersonelAdi;
+                        string MasaNo = tableOpenForm.MasaNo;
+                        //Button - 
+                        MessageBox.Show("Masa No :" + MasaNo + "\nPersonel Adi :" + PersonelAdi);
+                        Button bLeft = new Button();
+                        bLeft.Name = "bLeft" + MasaNo.ToString();
+                        bLeft.Text = MasaNo.ToString(); ;
+                        bLeft.AutoSize = true;
+                        bLeft.ForeColor = Color.Black;
+                        bLeft.BackColor = Color.Red;
+                        bLeft.Size = new Size(80, 40);
+                        bLeft.Click += new EventHandler(masa_click);
+                        //Button
+                        Button bRight = new Button();
+                        bRight.Font = new Font(bRight.Font.FontFamily, 8);
+                        bRight.Size = new Size(450, 40);
+                        bRight.Text = "Bugun acilan " + countOfTables.ToString() + ". Masa" + "\nGarson : " + PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString(); 
+                        bRight.Name = "bRight" + MasaNo.ToString();
+                        bRight.AutoSize = true;
+                        bRight.BackColor = Color.LightGray;
+                        bRight.ForeColor = Color.DarkBlue;
+                        //
+                        if (tableFlag == false)
+                        {
+                            tableLayoutPanel1.Controls.Add(bLeft, 0, countOfTables / 2);
+                            tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
+                            tableFlag = true;
+                        }
+                        else
+                        {
+                            tableLayoutPanel1.Controls.Add(bLeft, 2, countOfTables / 2 - 1);
+                            tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
+                            tableFlag = false;
+                        }
+
+
+                        countOfTables++;
+
+
+                    }
+                }
+            }
+            if (e.KeyCode == Keys.F5) //F5 -> REZERVATION
+            {
+                UserLog.WConsole("<<F5 Pressed>> Reserving Table ");
+                using (var tableOpenForm = new TableOpenForm())
+                {
+                    var result = tableOpenForm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        string PersonelAdi = tableOpenForm.PersonelAdi;
+                        string MasaNo = tableOpenForm.MasaNo;
+                        //Button - 
+                        MessageBox.Show("Masa No :" + MasaNo + "\nPersonel Adi :" + PersonelAdi);
+                        Button bLeft = new Button();
+                        bLeft.Name = "bLeft" + MasaNo.ToString();
+                        bLeft.Text = MasaNo.ToString(); ;
+                        bLeft.AutoSize = true;
+                        bLeft.ForeColor = Color.Black;
+                        bLeft.BackColor = Color.Turquoise;
+                        bLeft.Size = new Size(80, 40);
+                        bLeft.Click += new EventHandler(masa_click);
+                        //Button
+                        Button bRight = new Button();
+                        bRight.Font = new Font(bRight.Font.FontFamily, 8);
+                        bRight.Size = new Size(450, 40);
+                        bRight.Text = "Bugun acilan " + countOfTables.ToString() + ". Masa" + "\nGarson : " + PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString();
+                        bRight.Name = "bRight" + MasaNo.ToString();
+                        bRight.AutoSize = true;
+                        bRight.BackColor = Color.LightGray;
+                        bRight.ForeColor = Color.DarkBlue;
+                        //
+                        if (tableFlag == false)
+                        {
+                            tableLayoutPanel1.Controls.Add(bLeft, 0, countOfTables / 2);
+                            tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
+                            tableFlag = true;
+                        }
+                        else
+                        {
+                            tableLayoutPanel1.Controls.Add(bLeft, 2, countOfTables / 2 - 1);
+                            tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
+                            tableFlag = false;
+                        }
+
+
+                        countOfTables++;
+                    }
+                }
+            }
         }
     }
 }

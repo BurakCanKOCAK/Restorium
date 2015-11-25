@@ -51,6 +51,7 @@
             this.bMasaAc.Text = "Masa Ac";
             this.bMasaAc.UseVisualStyleBackColor = true;
             this.bMasaAc.Click += new System.EventHandler(this.bMasaAc_Click);
+            this.bMasaAc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // bIptal
             // 
@@ -61,6 +62,7 @@
             this.bIptal.Text = "Iptal";
             this.bIptal.UseVisualStyleBackColor = true;
             this.bIptal.Click += new System.EventHandler(this.bIptal_Click);
+            this.bIptal.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // tbMasaNo
             // 
@@ -68,6 +70,7 @@
             this.tbMasaNo.Name = "tbMasaNo";
             this.tbMasaNo.Size = new System.Drawing.Size(224, 20);
             this.tbMasaNo.TabIndex = 2;
+            this.tbMasaNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // tbMusteri
             // 
@@ -75,6 +78,7 @@
             this.tbMusteri.Name = "tbMusteri";
             this.tbMusteri.Size = new System.Drawing.Size(224, 20);
             this.tbMusteri.TabIndex = 3;
+            this.tbMusteri.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // tbIskonto
             // 
@@ -82,14 +86,18 @@
             this.tbIskonto.Name = "tbIskonto";
             this.tbIskonto.Size = new System.Drawing.Size(60, 20);
             this.tbIskonto.TabIndex = 4;
+            this.tbIskonto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // tbPersonelAdi
             // 
+            this.tbPersonelAdi.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.tbPersonelAdi.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbPersonelAdi.Location = new System.Drawing.Point(173, 181);
             this.tbPersonelAdi.Name = "tbPersonelAdi";
             this.tbPersonelAdi.Size = new System.Drawing.Size(224, 20);
             this.tbPersonelAdi.TabIndex = 5;
             this.tbPersonelAdi.TextChanged += new System.EventHandler(this.tbPersonelAdi_TextChanged);
+            this.tbPersonelAdi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // label1
             // 
@@ -173,6 +181,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Yeni Masa";
             this.Load += new System.EventHandler(this.TableOpenForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             this.ResumeLayout(false);
             this.PerformLayout();
 

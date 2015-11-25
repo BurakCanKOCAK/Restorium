@@ -93,6 +93,7 @@
             this.Name = "UserLogin";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.UserLogin_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.key_press);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

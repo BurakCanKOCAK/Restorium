@@ -23,6 +23,16 @@ namespace Restorium
 
         private void TableOpenForm_Load(object sender, EventArgs e)
         {
+            //----------------------//
+            tbPersonelAdi.AutoCompleteMode = AutoCompleteMode.Suggest;
+            tbPersonelAdi.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            AutoCompleteStringCollection col = new AutoCompleteStringCollection();
+            for (int i = 0; i < MainForm.personelCount; i++)
+            {
+                col.Add(MainForm.personelNames[i]);
+            }
+            tbPersonelAdi.AutoCompleteCustomSource = col;
+            //----------------------//
             tbIskonto.Text = MainForm.iskontoRate.ToString();
             if (MainForm.User != "Admin" && MainForm.User != "KidemliPersonel")
             {
@@ -34,12 +44,31 @@ namespace Restorium
         {
             if (tbMasaNo.Text != "" && tbPersonelAdi.Text != "")
             {
-                this.MasaNo = tbMasaNo.Text;
-                this.PersonelAdi = tbPersonelAdi.Text;
-                this.Iskonto = tbIskonto.Text;
-                this.Musteri = tbMusteri.Text;
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                bool tableCheck = true;
+                for (int i = 0; i < MainForm.tableCounter; i++)
+                {
+                    UserLog.WConsole(MainForm.tableCounter.ToString());
+                    UserLog.WConsole(MainForm.tableNumbers[i].ToString());
+                    if (MainForm.tableNumbers[i].ToString() == tbMasaNo.Text)
+                    {
+                        MessageBox.Show("Bu masa zaten acik durumda !");
+                        tableCheck = false;
+                        UserLog.WConsole("IF");
+                        break;
+                    }
+                }
+                if(tableCheck==true)
+                { 
+                    UserLog.WConsole("FOR BITTI");
+                    this.MasaNo = tbMasaNo.Text;
+                    this.PersonelAdi = tbPersonelAdi.Text;
+                    this.Iskonto = tbIskonto.Text;
+                    this.Musteri = tbMusteri.Text;
+                    MainForm.tableNumbers[MainForm.tableCounter] =Convert.ToInt16(tbMasaNo.Text);
+                    MainForm.tableCounter++;
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
             }
             else
             {
@@ -69,18 +98,15 @@ namespace Restorium
 
         private void tbPersonelAdi_TextChanged(object sender, EventArgs e)
         {
-            TextBox personelADI = sender as TextBox;
-            if (personelADI != null)
+        ////
+        }
+
+        private void key_press(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
             {
-                personelADI.AutoCompleteMode = AutoCompleteMode.Suggest;
-                personelADI.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                AutoCompleteStringCollection col = new AutoCompleteStringCollection();
-                for (int i = 0; i < MainForm.personelCount; i++)
-                {
-                    col.Add(MainForm.personelNames[i]);
-                }
-                personelADI.AutoCompleteCustomSource = col;
-                
+                UserLog.WConsole("Table opening/reserving cancelled !");
+                this.Close();
             }
         }
     }
