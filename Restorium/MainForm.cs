@@ -69,7 +69,7 @@ namespace Restorium
                 tbDolar.Text = Dolar.ToString();
                 tbEuro.Text = Euro.ToString();
                 tbGBP.Text = GBP.ToString();
-                lExchange.Text = "1 TL = " + tbDolar.Text.ToString() + " $ = " + tbEuro.Text.ToString() + " € = " + tbGBP.Text.ToString() + " £";
+                lExchange.Text = "1 ₺ = " + tbDolar.Text.ToString() + " $ = " + tbEuro.Text.ToString() + " € = " + tbGBP.Text.ToString() + " £";
                 UserLog.WConsole("Doviz kurlari basariyla okundu !");
             }
             catch
@@ -512,16 +512,14 @@ namespace Restorium
             INI.Write("Dolar" , tbDolar.Text.ToString(), "Exchange");
             INI.Write("Euro" , tbEuro.Text.ToString(), "Exchange");
             INI.Write("GBP" ,tbGBP.Text.ToString(), "Exchange");
-            lExchange.Text = "1 TL = " + tbDolar.Text.ToString() + " $ = " + tbEuro.Text.ToString() + " € = " + tbGBP.Text.ToString() + " £";
+            lExchange.Text = "1 ₺ = " + tbDolar.Text.ToString() + " $ = " + tbEuro.Text.ToString() + " € = " + tbGBP.Text.ToString() + " £";
             UserLog.WConsole("Doviz kurlari basariyla kaydedildi !");
 
         }
-
         private void Shutdown(object sender, FormClosedEventArgs e)
         {
-            
+            Environment.Exit(0);
         }
-
         private void bCalculator_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process p = System.Diagnostics.Process.Start("calc.exe");
