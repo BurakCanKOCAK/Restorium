@@ -258,8 +258,9 @@ namespace Restorium
                 INI.Write("birim" + i.ToString(), dgView.Rows[i].Cells[3].Value.ToString(), "Stok");
                 INI.Write("birimFiyat" + i.ToString(), dgView.Rows[i].Cells[4].Value.ToString(), "Stok");
                 INI.Write("paraBirimi" + i.ToString(), dgView.Rows[i].Cells[5].Value.ToString(), "Stok");
-               // UserLog.WConsole(dgView.Rows[i].Cells[6].Value.ToString());
-                if (dgView.Rows[i].Cells[6].Value.ToString() == "False")
+                // UserLog.WConsole(dgView.Rows[i].Cells[6].Value.ToString());
+                bool checkBoxStatus = Convert.ToBoolean(dgView.Rows[i].Cells[6].EditedFormattedValue);
+                if (checkBoxStatus == false)
                 {
                     INI.Write("dinamikStokKontrolu" + i.ToString(), "False", "Stok");
                 }
@@ -309,10 +310,52 @@ namespace Restorium
         #region  Adisyon
         private void bRezervasyon_Click(object sender, EventArgs e)
         {
-            
-          
+            UserLog.WConsole("Reserving Table ");
+            using (var tableOpenForm = new TableOpenForm())
+            {
+                var result = tableOpenForm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string PersonelAdi = tableOpenForm.PersonelAdi;
+                    string MasaNo = tableOpenForm.MasaNo;
+                    //Button - 
+                    MessageBox.Show("Masa No :" + MasaNo + "\nPersonel Adi :" + PersonelAdi);
+                    Button bLeft = new Button();
+                    bLeft.Name = "bLeft" + MasaNo.ToString();
+                    bLeft.Text = MasaNo.ToString(); ;
+                    bLeft.AutoSize = true;
+                    bLeft.ForeColor = Color.Black;
+                    bLeft.BackColor = Color.Turquoise;
+                    bLeft.Size = new Size(80, 40);
+                    bLeft.Click += new EventHandler(masa_click);
+                    //Button
+                    Button bRight = new Button();
+                    bRight.Font = new Font(bRight.Font.FontFamily, 8);
+                    bRight.Size = new Size(450, 40);
+                    bRight.Text = "Bugun acilan " + countOfTables.ToString() + ". Masa" + "\nGarson : " + PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString();
+                    bRight.Name = "bRight" + MasaNo.ToString();
+                    bRight.AutoSize = true;
+                    bRight.BackColor = Color.LightGray;
+                    bRight.ForeColor = Color.DarkBlue;
+                    //
+                    if (tableFlag == false)
+                    {
+                        tableLayoutPanel1.Controls.Add(bLeft, 0, countOfTables / 2);
+                        tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
+                        tableFlag = true;
+                    }
+                    else
+                    {
+                        tableLayoutPanel1.Controls.Add(bLeft, 2, countOfTables / 2 - 1);
+                        tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
+                        tableFlag = false;
+                    }
 
-        }
+
+                    countOfTables++;
+                }
+            }
+          }
         private void masa_click(object sender, EventArgs e)
         {
             Button b = sender as Button;
@@ -355,7 +398,7 @@ namespace Restorium
         }
         private void savePersonnelToFile()
         {//Personel Listesini duzenleme bitince dosyaya kaydeder.
-            int personelCount = dgViewWaiter.RowCount;
+            personelCount = dgViewWaiter.RowCount;
             INI.DeleteSection("Personel");
             INI.Write("personelCount", personelCount.ToString(), "Personel");
             for (int i = 0; i < personelCount; i++)
@@ -363,8 +406,9 @@ namespace Restorium
                 INI.Write("id" + i.ToString(), dgViewWaiter.Rows[i].Cells[0].Value.ToString(), "Personel");
                 INI.Write("name" + i.ToString(), dgViewWaiter.Rows[i].Cells[1].Value.ToString(), "Personel");
                 INI.Write("work" + i.ToString(), dgViewWaiter.Rows[i].Cells[2].Value.ToString(), "Personel");
+                personelNames[i] = dgViewWaiter.Rows[i].Cells[1].Value.ToString();
             }
-            UserLog.WConsole("Personel Listesi Kaydetme Basarili");
+            UserLog.WConsole("Personel Listesi Kaydetme Basarili ("+ personelCount.ToString()+")");
         }
         private void getPersonelFromFile()
         {//Personel listesini dosyadan ceker

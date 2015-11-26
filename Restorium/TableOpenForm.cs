@@ -24,6 +24,8 @@ namespace Restorium
         private void TableOpenForm_Load(object sender, EventArgs e)
         {
             //----------------------//
+            UserLog.WConsole("TableOpenForm Started!!");
+            UserLog.WConsole("Personel Okundu  (" + MainForm.personelCount.ToString() + ")");
             tbPersonelAdi.AutoCompleteMode = AutoCompleteMode.Suggest;
             tbPersonelAdi.AutoCompleteSource = AutoCompleteSource.CustomSource;
             AutoCompleteStringCollection col = new AutoCompleteStringCollection();
@@ -89,9 +91,15 @@ namespace Restorium
                 showListForm.ListName = "Personel";
                 var result = showListForm.ShowDialog();
                 if (result == DialogResult.OK)
-                {
+                {   
+                    try
+                    { 
                      string PersonelAdi = showListForm.SelectedWaiter;
                      tbPersonelAdi.Text = PersonelAdi;
+                    }catch
+                    {
+                        MessageBox.Show("Personel secimi yapilmadi !");
+                    }
                 }
             }
         }
