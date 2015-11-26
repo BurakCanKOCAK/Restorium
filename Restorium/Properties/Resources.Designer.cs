@@ -133,6 +133,16 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Apps_Calculator_Metro_icon {
+            get {
+                object obj = ResourceManager.GetObject("Apps-Calculator-Metro-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap back_aliminium {
             get {
                 object obj = ResourceManager.GetObject("back_aliminium", resourceCulture);
@@ -146,6 +156,16 @@ namespace Restorium.Properties {
         internal static System.Drawing.Bitmap blue2 {
             get {
                 object obj = ResourceManager.GetObject("blue2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Calculator_icon__1_ {
+            get {
+                object obj = ResourceManager.GetObject("Calculator-icon (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

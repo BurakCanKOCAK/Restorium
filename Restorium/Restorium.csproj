@@ -198,6 +198,8 @@
     <None Include="Resources\settings2.png" />
     <None Include="Resources\printer.png" />
     <Content Include="Graphicloads-Polygon-Restaurant.ico" />
+    <None Include="Resources\Calculator-icon %281%29.png" />
+    <None Include="Resources\Apps-Calculator-Metro-icon.png" />
     <Content Include="Resources\Untitled-1.png" />
   </ItemGroup>
   <ItemGroup>

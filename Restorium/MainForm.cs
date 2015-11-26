@@ -54,9 +54,30 @@ namespace Restorium
         {
             InitializeComponent();
             User = INI.Read("LoggedUser", "Login");
+            SetExchangeValues();
             StokDataSet();
             SettingsDataSet();
         }
+
+        private void SetExchangeValues()
+        {
+            try
+            {
+                decimal Dolar = Convert.ToDecimal(INI.Read("Dolar", "Exchange"));
+                decimal Euro = Convert.ToDecimal(INI.Read("Euro", "Exchange"));
+                decimal GBP = Convert.ToDecimal(INI.Read("GBP", "Exchange"));
+                tbDolar.Text = Dolar.ToString();
+                tbEuro.Text = Euro.ToString();
+                tbGBP.Text = GBP.ToString();
+                lExchange.Text = "1 TL = " + tbDolar.Text.ToString() + " $ = " + tbEuro.Text.ToString() + " € = " + tbGBP.Text.ToString() + " £";
+                UserLog.WConsole("Doviz kurlari basariyla okundu !");
+            }
+            catch
+            {
+                UserLog.WConsole("Doviz kurlari okumada hata ! (Deger girilmemis!)");
+            }
+        }
+
         private void SettingsDataSet()
         {
 
@@ -484,6 +505,26 @@ namespace Restorium
                     }
                 }
             }
+        }
+
+        private void ExchangeValuesChanged(object sender, EventArgs e)
+        {
+            INI.Write("Dolar" , tbDolar.Text.ToString(), "Exchange");
+            INI.Write("Euro" , tbEuro.Text.ToString(), "Exchange");
+            INI.Write("GBP" ,tbGBP.Text.ToString(), "Exchange");
+            lExchange.Text = "1 TL = " + tbDolar.Text.ToString() + " $ = " + tbEuro.Text.ToString() + " € = " + tbGBP.Text.ToString() + " £";
+            UserLog.WConsole("Doviz kurlari basariyla kaydedildi !");
+
+        }
+
+        private void Shutdown(object sender, FormClosedEventArgs e)
+        {
+            
+        }
+
+        private void bCalculator_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process p = System.Diagnostics.Process.Start("calc.exe");
         }
     }
 }

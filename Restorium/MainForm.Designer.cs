@@ -29,20 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tp_Adisyon = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pbWifi = new System.Windows.Forms.PictureBox();
-            this.lDate = new System.Windows.Forms.Label();
-            this.bYeniMasa = new System.Windows.Forms.Button();
-            this.bRezervasyon = new System.Windows.Forms.Button();
             this.tp_Stok = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.bStokAra = new System.Windows.Forms.Button();
-            this.bDuzenle = new System.Windows.Forms.Button();
-            this.tbSearchKey = new System.Windows.Forms.TextBox();
             this.dgView = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ACIKLAMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,6 +40,23 @@
             this.BIRIM_FIYAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PARA_BIRIMI = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.DINAMIK_STOK_KONTROLU = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.tp_Adisyon = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.bCalculator = new System.Windows.Forms.Button();
+            this.lExchange = new System.Windows.Forms.Label();
+            this.pbWifi = new System.Windows.Forms.PictureBox();
+            this.lDate = new System.Windows.Forms.Label();
+            this.bYeniMasa = new System.Windows.Forms.Button();
+            this.bRezervasyon = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.bStokAra = new System.Windows.Forms.Button();
+            this.bDuzenle = new System.Windows.Forms.Button();
+            this.tbSearchKey = new System.Windows.Forms.TextBox();
             this.tp_Kasa = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tp_Rapor = new System.Windows.Forms.TabPage();
@@ -77,23 +83,25 @@
             this.WAITER = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GOREVI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.bCalculator_Settings = new System.Windows.Forms.Button();
+            this.bCalculator_Kasa = new System.Windows.Forms.Button();
+            this.bCalculator_Stok = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
+            this.tp_Stok.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Adisyon.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).BeginInit();
-            this.tp_Stok.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Kasa.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.tp_Rapor.SuspendLayout();
             this.tp_Rehber.SuspendLayout();
             this.tp_Ayarlar.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
+            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -116,127 +124,6 @@
             this.tabControl1.TabIndex = 0;
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
-            // tp_Adisyon
-            // 
-            this.tp_Adisyon.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
-            this.tp_Adisyon.Controls.Add(this.tableLayoutPanel1);
-            this.tp_Adisyon.Controls.Add(this.panel1);
-            this.tp_Adisyon.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tp_Adisyon.Location = new System.Drawing.Point(4, 28);
-            this.tp_Adisyon.Name = "tp_Adisyon";
-            this.tp_Adisyon.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Adisyon.Size = new System.Drawing.Size(1006, 701);
-            this.tp_Adisyon.TabIndex = 0;
-            this.tp_Adisyon.Text = "Adisyon";
-            this.tp_Adisyon.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.AutoScroll = true;
-            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(11, 92);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 25;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(984, 598);
-            this.tableLayoutPanel1.TabIndex = 8;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BackgroundImage = global::Restorium.Properties.Resources._22;
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.panel1.Controls.Add(this.pbWifi);
-            this.panel1.Controls.Add(this.lDate);
-            this.panel1.Controls.Add(this.bYeniMasa);
-            this.panel1.Controls.Add(this.bRezervasyon);
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1010, 72);
-            this.panel1.TabIndex = 7;
-            // 
-            // pbWifi
-            // 
-            this.pbWifi.BackColor = System.Drawing.Color.Transparent;
-            this.pbWifi.Image = global::Restorium.Properties.Resources.no_conection_256;
-            this.pbWifi.Location = new System.Drawing.Point(111, 10);
-            this.pbWifi.Name = "pbWifi";
-            this.pbWifi.Size = new System.Drawing.Size(22, 19);
-            this.pbWifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbWifi.TabIndex = 0;
-            this.pbWifi.TabStop = false;
-            // 
-            // lDate
-            // 
-            this.lDate.AutoSize = true;
-            this.lDate.BackColor = System.Drawing.Color.Transparent;
-            this.lDate.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lDate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lDate.Location = new System.Drawing.Point(106, 32);
-            this.lDate.Name = "lDate";
-            this.lDate.Size = new System.Drawing.Size(179, 26);
-            this.lDate.TabIndex = 6;
-            this.lDate.Text = "00/00/00 11:35:47";
-            // 
-            // bYeniMasa
-            // 
-            this.bYeniMasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bYeniMasa.BackColor = System.Drawing.Color.Red;
-            this.bYeniMasa.Location = new System.Drawing.Point(730, 14);
-            this.bYeniMasa.Name = "bYeniMasa";
-            this.bYeniMasa.Size = new System.Drawing.Size(132, 36);
-            this.bYeniMasa.TabIndex = 0;
-            this.bYeniMasa.Text = "Yeni Masa (F4)";
-            this.bYeniMasa.UseVisualStyleBackColor = false;
-            this.bYeniMasa.Click += new System.EventHandler(this.bYeniMasa_Click);
-            this.bYeniMasa.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
-            // 
-            // bRezervasyon
-            // 
-            this.bRezervasyon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bRezervasyon.BackColor = System.Drawing.Color.Turquoise;
-            this.bRezervasyon.Location = new System.Drawing.Point(868, 14);
-            this.bRezervasyon.Name = "bRezervasyon";
-            this.bRezervasyon.Size = new System.Drawing.Size(132, 36);
-            this.bRezervasyon.TabIndex = 3;
-            this.bRezervasyon.Text = "Rezervasyon (F5)";
-            this.bRezervasyon.UseVisualStyleBackColor = false;
-            this.bRezervasyon.Click += new System.EventHandler(this.bRezervasyon_Click);
-            // 
             // tp_Stok
             // 
             this.tp_Stok.BackColor = System.Drawing.Color.Transparent;
@@ -251,63 +138,6 @@
             this.tp_Stok.Size = new System.Drawing.Size(1006, 701);
             this.tp_Stok.TabIndex = 1;
             this.tp_Stok.Text = "Stok";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::Restorium.Properties.Resources.printer;
-            this.pictureBox1.Location = new System.Drawing.Point(6, 78);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(29, 28);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // panel3
-            // 
-            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel3.BackColor = System.Drawing.Color.Transparent;
-            this.panel3.BackgroundImage = global::Restorium.Properties.Resources.stok;
-            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.panel3.Controls.Add(this.bStokAra);
-            this.panel3.Controls.Add(this.bDuzenle);
-            this.panel3.Controls.Add(this.tbSearchKey);
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1010, 72);
-            this.panel3.TabIndex = 8;
-            // 
-            // bStokAra
-            // 
-            this.bStokAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bStokAra.Location = new System.Drawing.Point(956, 24);
-            this.bStokAra.Name = "bStokAra";
-            this.bStokAra.Size = new System.Drawing.Size(47, 27);
-            this.bStokAra.TabIndex = 3;
-            this.bStokAra.Text = "Ara";
-            this.bStokAra.UseVisualStyleBackColor = true;
-            this.bStokAra.Click += new System.EventHandler(this.bStokAra_Click);
-            // 
-            // bDuzenle
-            // 
-            this.bDuzenle.BackColor = System.Drawing.Color.Silver;
-            this.bDuzenle.Location = new System.Drawing.Point(125, 25);
-            this.bDuzenle.Name = "bDuzenle";
-            this.bDuzenle.Size = new System.Drawing.Size(144, 28);
-            this.bDuzenle.TabIndex = 1;
-            this.bDuzenle.Text = "Duzenle(Kapali)";
-            this.bDuzenle.UseVisualStyleBackColor = false;
-            this.bDuzenle.Click += new System.EventHandler(this.bDuzenle_Click);
-            // 
-            // tbSearchKey
-            // 
-            this.tbSearchKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSearchKey.Location = new System.Drawing.Point(712, 24);
-            this.tbSearchKey.Name = "tbSearchKey";
-            this.tbSearchKey.Size = new System.Drawing.Size(227, 27);
-            this.tbSearchKey.TabIndex = 2;
             // 
             // dgView
             // 
@@ -393,6 +223,226 @@
             this.DINAMIK_STOK_KONTROLU.ReadOnly = true;
             this.DINAMIK_STOK_KONTROLU.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.Data_Update);
+            // 
+            // printDocument1
+            // 
+            this.printDocument1.DocumentName = "Stok Raporu";
+            // 
+            // printDialog1
+            // 
+            this.printDialog1.AllowSomePages = true;
+            this.printDialog1.Document = this.printDocument1;
+            this.printDialog1.UseEXDialog = true;
+            // 
+            // tp_Adisyon
+            // 
+            this.tp_Adisyon.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Adisyon.Controls.Add(this.tableLayoutPanel1);
+            this.tp_Adisyon.Controls.Add(this.panel1);
+            this.tp_Adisyon.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tp_Adisyon.Location = new System.Drawing.Point(4, 28);
+            this.tp_Adisyon.Name = "tp_Adisyon";
+            this.tp_Adisyon.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_Adisyon.Size = new System.Drawing.Size(1006, 701);
+            this.tp_Adisyon.TabIndex = 0;
+            this.tp_Adisyon.Text = "Adisyon";
+            this.tp_Adisyon.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.AutoScroll = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(11, 92);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 25;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(984, 598);
+            this.tableLayoutPanel1.TabIndex = 8;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BackgroundImage = global::Restorium.Properties.Resources._22;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel1.Controls.Add(this.bCalculator);
+            this.panel1.Controls.Add(this.lExchange);
+            this.panel1.Controls.Add(this.pbWifi);
+            this.panel1.Controls.Add(this.lDate);
+            this.panel1.Controls.Add(this.bYeniMasa);
+            this.panel1.Controls.Add(this.bRezervasyon);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1010, 72);
+            this.panel1.TabIndex = 7;
+            // 
+            // bCalculator
+            // 
+            this.bCalculator.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bCalculator.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.bCalculator.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bCalculator.Location = new System.Drawing.Point(640, 14);
+            this.bCalculator.Name = "bCalculator";
+            this.bCalculator.Size = new System.Drawing.Size(39, 36);
+            this.bCalculator.TabIndex = 9;
+            this.bCalculator.UseVisualStyleBackColor = true;
+            this.bCalculator.Click += new System.EventHandler(this.bCalculator_Click);
+            // 
+            // lExchange
+            // 
+            this.lExchange.AutoSize = true;
+            this.lExchange.ForeColor = System.Drawing.Color.Yellow;
+            this.lExchange.Location = new System.Drawing.Point(161, 40);
+            this.lExchange.Name = "lExchange";
+            this.lExchange.Size = new System.Drawing.Size(176, 19);
+            this.lExchange.TabIndex = 7;
+            this.lExchange.Text = "TL - DOLAR - EURO - GBP";
+            // 
+            // pbWifi
+            // 
+            this.pbWifi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbWifi.BackColor = System.Drawing.Color.Transparent;
+            this.pbWifi.Image = global::Restorium.Properties.Resources.no_conection_256;
+            this.pbWifi.Location = new System.Drawing.Point(973, 21);
+            this.pbWifi.Name = "pbWifi";
+            this.pbWifi.Size = new System.Drawing.Size(22, 19);
+            this.pbWifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbWifi.TabIndex = 0;
+            this.pbWifi.TabStop = false;
+            // 
+            // lDate
+            // 
+            this.lDate.AutoSize = true;
+            this.lDate.BackColor = System.Drawing.Color.Transparent;
+            this.lDate.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lDate.ForeColor = System.Drawing.Color.Gold;
+            this.lDate.Location = new System.Drawing.Point(160, 14);
+            this.lDate.Name = "lDate";
+            this.lDate.Size = new System.Drawing.Size(179, 26);
+            this.lDate.TabIndex = 6;
+            this.lDate.Text = "00/00/00 11:35:47";
+            // 
+            // bYeniMasa
+            // 
+            this.bYeniMasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bYeniMasa.BackColor = System.Drawing.Color.Red;
+            this.bYeniMasa.Location = new System.Drawing.Point(685, 14);
+            this.bYeniMasa.Name = "bYeniMasa";
+            this.bYeniMasa.Size = new System.Drawing.Size(132, 36);
+            this.bYeniMasa.TabIndex = 0;
+            this.bYeniMasa.Text = "Yeni Masa (F4)";
+            this.bYeniMasa.UseVisualStyleBackColor = false;
+            this.bYeniMasa.Click += new System.EventHandler(this.bYeniMasa_Click);
+            this.bYeniMasa.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
+            // 
+            // bRezervasyon
+            // 
+            this.bRezervasyon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bRezervasyon.BackColor = System.Drawing.Color.Turquoise;
+            this.bRezervasyon.Location = new System.Drawing.Point(823, 14);
+            this.bRezervasyon.Name = "bRezervasyon";
+            this.bRezervasyon.Size = new System.Drawing.Size(132, 36);
+            this.bRezervasyon.TabIndex = 3;
+            this.bRezervasyon.Text = "Rezervasyon (F5)";
+            this.bRezervasyon.UseVisualStyleBackColor = false;
+            this.bRezervasyon.Click += new System.EventHandler(this.bRezervasyon_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::Restorium.Properties.Resources.printer;
+            this.pictureBox1.Location = new System.Drawing.Point(6, 78);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(29, 28);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // panel3
+            // 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.BackColor = System.Drawing.Color.Transparent;
+            this.panel3.BackgroundImage = global::Restorium.Properties.Resources.stok;
+            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel3.Controls.Add(this.bCalculator_Stok);
+            this.panel3.Controls.Add(this.bStokAra);
+            this.panel3.Controls.Add(this.bDuzenle);
+            this.panel3.Controls.Add(this.tbSearchKey);
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(1010, 72);
+            this.panel3.TabIndex = 8;
+            // 
+            // bStokAra
+            // 
+            this.bStokAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bStokAra.Location = new System.Drawing.Point(836, 19);
+            this.bStokAra.Name = "bStokAra";
+            this.bStokAra.Size = new System.Drawing.Size(64, 33);
+            this.bStokAra.TabIndex = 3;
+            this.bStokAra.Text = "Ara";
+            this.bStokAra.UseVisualStyleBackColor = true;
+            this.bStokAra.Click += new System.EventHandler(this.bStokAra_Click);
+            // 
+            // bDuzenle
+            // 
+            this.bDuzenle.BackColor = System.Drawing.Color.Silver;
+            this.bDuzenle.Location = new System.Drawing.Point(125, 25);
+            this.bDuzenle.Name = "bDuzenle";
+            this.bDuzenle.Size = new System.Drawing.Size(144, 28);
+            this.bDuzenle.TabIndex = 1;
+            this.bDuzenle.Text = "Duzenle(Kapali)";
+            this.bDuzenle.UseVisualStyleBackColor = false;
+            this.bDuzenle.Click += new System.EventHandler(this.bDuzenle_Click);
+            // 
+            // tbSearchKey
+            // 
+            this.tbSearchKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSearchKey.Location = new System.Drawing.Point(603, 22);
+            this.tbSearchKey.Name = "tbSearchKey";
+            this.tbSearchKey.Size = new System.Drawing.Size(227, 27);
+            this.tbSearchKey.TabIndex = 2;
+            // 
             // tp_Kasa
             // 
             this.tp_Kasa.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
@@ -412,6 +462,7 @@
             this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.BackgroundImage = global::Restorium.Properties.Resources.kasa1;
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel2.Controls.Add(this.bCalculator_Kasa);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1010, 72);
@@ -516,6 +567,7 @@
             this.tbGBP.Name = "tbGBP";
             this.tbGBP.Size = new System.Drawing.Size(53, 30);
             this.tbGBP.TabIndex = 10;
+            this.tbGBP.TextChanged += new System.EventHandler(this.ExchangeValuesChanged);
             // 
             // label6
             // 
@@ -541,6 +593,7 @@
             this.tbDolar.Name = "tbDolar";
             this.tbDolar.Size = new System.Drawing.Size(53, 30);
             this.tbDolar.TabIndex = 7;
+            this.tbDolar.TextChanged += new System.EventHandler(this.ExchangeValuesChanged);
             // 
             // tbEuro
             // 
@@ -548,6 +601,7 @@
             this.tbEuro.Name = "tbEuro";
             this.tbEuro.Size = new System.Drawing.Size(53, 30);
             this.tbEuro.TabIndex = 5;
+            this.tbEuro.TextChanged += new System.EventHandler(this.ExchangeValuesChanged);
             // 
             // label5
             // 
@@ -658,26 +712,47 @@
             this.panel6.BackColor = System.Drawing.Color.Transparent;
             this.panel6.BackgroundImage = global::Restorium.Properties.Resources.settings2;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel6.Controls.Add(this.bCalculator_Settings);
             this.panel6.Location = new System.Drawing.Point(0, 0);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(1010, 72);
             this.panel6.TabIndex = 12;
             // 
-            // timer1
+            // bCalculator_Settings
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.Data_Update);
+            this.bCalculator_Settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bCalculator_Settings.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.bCalculator_Settings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bCalculator_Settings.Location = new System.Drawing.Point(920, 16);
+            this.bCalculator_Settings.Name = "bCalculator_Settings";
+            this.bCalculator_Settings.Size = new System.Drawing.Size(39, 36);
+            this.bCalculator_Settings.TabIndex = 10;
+            this.bCalculator_Settings.UseVisualStyleBackColor = true;
+            this.bCalculator_Settings.Click += new System.EventHandler(this.bCalculator_Click);
             // 
-            // printDocument1
+            // bCalculator_Kasa
             // 
-            this.printDocument1.DocumentName = "Stok Raporu";
+            this.bCalculator_Kasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bCalculator_Kasa.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.bCalculator_Kasa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bCalculator_Kasa.Location = new System.Drawing.Point(920, 16);
+            this.bCalculator_Kasa.Name = "bCalculator_Kasa";
+            this.bCalculator_Kasa.Size = new System.Drawing.Size(39, 36);
+            this.bCalculator_Kasa.TabIndex = 10;
+            this.bCalculator_Kasa.UseVisualStyleBackColor = true;
+            this.bCalculator_Kasa.Click += new System.EventHandler(this.bCalculator_Click);
             // 
-            // printDialog1
+            // bCalculator_Stok
             // 
-            this.printDialog1.AllowSomePages = true;
-            this.printDialog1.Document = this.printDocument1;
-            this.printDialog1.UseEXDialog = true;
+            this.bCalculator_Stok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bCalculator_Stok.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.bCalculator_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bCalculator_Stok.Location = new System.Drawing.Point(920, 16);
+            this.bCalculator_Stok.Name = "bCalculator_Stok";
+            this.bCalculator_Stok.Size = new System.Drawing.Size(39, 36);
+            this.bCalculator_Stok.TabIndex = 11;
+            this.bCalculator_Stok.UseVisualStyleBackColor = true;
+            this.bCalculator_Stok.Click += new System.EventHandler(this.bCalculator_Click);
             // 
             // MainForm
             // 
@@ -685,22 +760,25 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 730);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1024, 726);
             this.Name = "MainForm";
-            this.Text = "Main";
+            this.Text = "Restorium";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Shutdown);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             this.tabControl1.ResumeLayout(false);
+            this.tp_Stok.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Adisyon.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).EndInit();
-            this.tp_Stok.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Kasa.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.tp_Rapor.ResumeLayout(false);
             this.tp_Rehber.ResumeLayout(false);
             this.tp_Ayarlar.ResumeLayout(false);
@@ -708,6 +786,7 @@
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).EndInit();
+            this.panel6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -765,5 +844,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox tbGBP;
+        private System.Windows.Forms.Label lExchange;
+        private System.Windows.Forms.Button bCalculator;
+        private System.Windows.Forms.Button bCalculator_Settings;
+        private System.Windows.Forms.Button bCalculator_Kasa;
+        private System.Windows.Forms.Button bCalculator_Stok;
     }
 }
