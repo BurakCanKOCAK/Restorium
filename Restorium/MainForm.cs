@@ -38,8 +38,19 @@ namespace Restorium
         IniFile INI = new IniFile();
         public static string[] personelNames = new string[100];
         public static string[] menuItems = new string[500];
-        public static int[] tableNumbers = new int[200];
-        public static int tableCounter;
+        public static string[] tableNumbers = new string[200];
+        public static int tableCounter=0;
+        public static int dailyTableCounter=0;
+        public static string[,] tableDetails = new string[6,300];
+        public static bool[] emptyTableList = new bool[200];
+        //       0       1          2      3         4                5        6             7  8  9  10
+        //    0  id      kacinci    tutar  personel  kac siparis(3)   iskonto  Musteri adi
+        //    1  1.id    2.id       3.id  
+        //    2  x tane  y tane     z tane
+        //    3 
+        //    4
+        //    5
+        //    6
         public static int stokCount;
         public static int personelCount;
         private bool duzenlemeModu = false;
@@ -77,7 +88,6 @@ namespace Restorium
                 UserLog.WConsole("Doviz kurlari okumada hata ! (Deger girilmemis!)");
             }
         }
-
         private void SettingsDataSet()
         {
 
@@ -119,43 +129,46 @@ namespace Restorium
                 var result = tableOpenForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
+                    dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
+                    tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
                     string PersonelAdi = tableOpenForm.PersonelAdi;            
                     string MasaNo = tableOpenForm.MasaNo;
 
-                        MessageBox.Show("Masa No :" + MasaNo+"\nPersonel Adi :" +PersonelAdi);
+                        //MessageBox.Show("Masa No :" + MasaNo+"\nPersonel Adi :" +PersonelAdi);
                         //Button Left
                         Button bLeft = new Button();
                         bLeft.Name = "bLeft" + MasaNo.ToString();
-                        bLeft.Text = MasaNo.ToString(); ;
+                        bLeft.Text = MasaNo.ToString() + "\n(" + dailyTableCounter.ToString() + ")";
                         bLeft.AutoSize = true;
                         bLeft.ForeColor = Color.Black;
                         bLeft.BackColor = Color.Red;
-                        bLeft.Size = new Size(80, 40);
+                        bLeft.Size = new Size(80, 80);
                         bLeft.Click += new EventHandler(masa_click);
-                    //Button Right
-                        Button bRight = new Button();
+                        //Button Right
+                        /*Button bRight = new Button();
                         bRight.Font = new Font(bRight.Font.FontFamily, 8);
                         bRight.Size = new Size(450, 40);
-                        bRight.Text = "Bugun acilan " + countOfTables.ToString()+". Masa" + "\nGarson : "+PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString(); 
+                        bRight.Text = "Bugun acilan " + dailyTableCounter.ToString()+". Masa" + "\nGarson : "+PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString(); 
                         bRight.Name = "bRight" + MasaNo.ToString();
                         bRight.AutoSize = true;
                         bRight.BackColor = Color.LightGray;
-                        bRight.ForeColor = Color.DarkBlue;
+                        bRight.ForeColor = Color.DarkBlue;*/
                         //Masa Soldami Sagdami Olacak (Logic Function)
                         if (tableFlag == false)
                         {
-                            tableLayoutPanel1.Controls.Add(bLeft, 0, countOfTables / 2);
-                            tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
+                            UserLog.WConsole(TableOpenForm.lastTablePlace.ToString());
+                            tableLayoutPanel1.Controls.Add(bLeft, (TableOpenForm.lastTablePlace % 5), ((TableOpenForm.lastTablePlace-1)/5));
+                           // tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
                             tableFlag = true;
                         }
                         else
                         {
-                            tableLayoutPanel1.Controls.Add(bLeft, 2, countOfTables / 2 - 1);
-                            tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
+                            UserLog.WConsole(countOfTables.ToString());
+                            tableLayoutPanel1.Controls.Add(bLeft, (TableOpenForm.lastTablePlace%5), (TableOpenForm.lastTablePlace-1)/5);
+                           // tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
                             tableFlag = false;
                         }
-                        //
-                        countOfTables++;  // countOfTables -> Bugun acilan kacinci masa oldugunu gosteriyor
+                    //                 
                 }
             }
 
@@ -217,7 +230,7 @@ namespace Restorium
                 duzenlemeModu = !duzenlemeModu;
                 if (duzenlemeModu == true)
                 {
-                    dgView.AllowUserToAddRows = true;
+                    //dgView.AllowUserToAddRows = true;
                     dgView.AllowUserToDeleteRows = true;
                     dgView.AllowUserToOrderColumns = true;
                     dgView.AllowDrop = true;
@@ -230,7 +243,7 @@ namespace Restorium
             }
                 else
                 {
-                    dgView.AllowUserToAddRows = false;
+                    //dgView.AllowUserToAddRows = false;
                     dgView.AllowUserToDeleteRows = false;
                     dgView.AllowUserToOrderColumns = false;
                     dgView.AllowDrop = false;
@@ -259,14 +272,14 @@ namespace Restorium
                 INI.Write("birimFiyat" + i.ToString(), dgView.Rows[i].Cells[4].Value.ToString(), "Stok");
                 INI.Write("paraBirimi" + i.ToString(), dgView.Rows[i].Cells[5].Value.ToString(), "Stok");
                 // UserLog.WConsole(dgView.Rows[i].Cells[6].Value.ToString());
-                bool checkBoxStatus = Convert.ToBoolean(dgView.Rows[i].Cells[6].EditedFormattedValue);
+                bool checkBoxStatus = Convert.ToBoolean(dgView.Rows[i].Cells[6].Value);
                 if (checkBoxStatus == false)
                 {
-                    INI.Write("dinamikStokKontrolu" + i.ToString(), "False", "Stok");
+                    INI.Write("dinamikStokKontrolu" + i.ToString(), "false", "Stok");
                 }
                 else
                 {
-                    INI.Write("dinamikStokKontrolu" + i.ToString(), "True", "Stok");
+                    INI.Write("dinamikStokKontrolu" + i.ToString(), "true", "Stok");
                 }
 
             }
@@ -287,10 +300,16 @@ namespace Restorium
                     string birim = INI.Read("birim" + i.ToString(), "Stok");
                     string birimFiyat = INI.Read("birimFiyat" + i.ToString(), "Stok");
                     string paraBirimi = INI.Read("paraBirimi" + i.ToString(), "Stok");
-                    string  dinamikStokKontrolu = INI.Read("dinamikStokKontrolu" + i.ToString(), "Stok");
+                    string dinamikStokKontrolu = INI.Read("dinamikStokKontrolu" + i.ToString(), "Stok");
                     menuItems[i] = aciklama;
-
-                    dgView.Rows.Add(id, aciklama, adet,birim,birimFiyat,paraBirimi,dinamikStokKontrolu);
+                    if (dinamikStokKontrolu == "true")
+                    {
+                        dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Checked);
+                    }
+                    else
+                    {
+                        dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Unchecked);
+                    }
                     dgView.Refresh();
                 }
                 UserLog.WConsole("Dosyadan Stok Okuma Basarili !");
@@ -316,43 +335,45 @@ namespace Restorium
                 var result = tableOpenForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
+                    dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
+                    tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
                     string PersonelAdi = tableOpenForm.PersonelAdi;
                     string MasaNo = tableOpenForm.MasaNo;
-                    //Button - 
-                    MessageBox.Show("Masa No :" + MasaNo + "\nPersonel Adi :" + PersonelAdi);
+
+                    //MessageBox.Show("Masa No :" + MasaNo+"\nPersonel Adi :" +PersonelAdi);
+                    //Button Left
                     Button bLeft = new Button();
                     bLeft.Name = "bLeft" + MasaNo.ToString();
-                    bLeft.Text = MasaNo.ToString(); ;
+                    bLeft.Text = MasaNo.ToString() + "\n(" + dailyTableCounter.ToString() + ")";
                     bLeft.AutoSize = true;
                     bLeft.ForeColor = Color.Black;
-                    bLeft.BackColor = Color.Turquoise;
-                    bLeft.Size = new Size(80, 40);
+                    bLeft.BackColor = Color.Red;
+                    bLeft.Size = new Size(80, 80);
                     bLeft.Click += new EventHandler(masa_click);
-                    //Button
-                    Button bRight = new Button();
+                    //Button Right
+                    /*Button bRight = new Button();
                     bRight.Font = new Font(bRight.Font.FontFamily, 8);
                     bRight.Size = new Size(450, 40);
-                    bRight.Text = "Bugun acilan " + countOfTables.ToString() + ". Masa" + "\nGarson : " + PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString();
+                    bRight.Text = "Bugun acilan " + dailyTableCounter.ToString()+". Masa" + "\nGarson : "+PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString(); 
                     bRight.Name = "bRight" + MasaNo.ToString();
                     bRight.AutoSize = true;
                     bRight.BackColor = Color.LightGray;
-                    bRight.ForeColor = Color.DarkBlue;
-                    //
+                    bRight.ForeColor = Color.DarkBlue;*/
+                    //Masa Soldami Sagdami Olacak (Logic Function)
                     if (tableFlag == false)
                     {
-                        tableLayoutPanel1.Controls.Add(bLeft, 0, countOfTables / 2);
-                        tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
+                        UserLog.WConsole(TableOpenForm.lastTablePlace.ToString());
+                        tableLayoutPanel1.Controls.Add(bLeft, (TableOpenForm.lastTablePlace % 5), ((TableOpenForm.lastTablePlace - 1) / 5));
+                        // tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
                         tableFlag = true;
                     }
                     else
                     {
-                        tableLayoutPanel1.Controls.Add(bLeft, 2, countOfTables / 2 - 1);
-                        tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
+                        UserLog.WConsole(countOfTables.ToString());
+                        tableLayoutPanel1.Controls.Add(bLeft, (TableOpenForm.lastTablePlace % 5), (TableOpenForm.lastTablePlace - 1) / 5);
+                        // tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
                         tableFlag = false;
                     }
-
-
-                    countOfTables++;
                 }
             }
           }
@@ -361,6 +382,9 @@ namespace Restorium
             Button b = sender as Button;
             // Buton fonksiyonu
             UserLog.WConsole(b.Name);
+            string masaNoLocal = b.Name;
+            masaNoLocal = masaNoLocal.Replace("bLeft", "");
+            lMasaNo.Text = masaNoLocal; 
 
         }
         #endregion
@@ -459,45 +483,45 @@ namespace Restorium
                     var result = tableOpenForm.ShowDialog();
                     if (result == DialogResult.OK)
                     {
+                        dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
+                        tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
                         string PersonelAdi = tableOpenForm.PersonelAdi;
                         string MasaNo = tableOpenForm.MasaNo;
-                        //Button - 
-                        MessageBox.Show("Masa No :" + MasaNo + "\nPersonel Adi :" + PersonelAdi);
+
+                        //MessageBox.Show("Masa No :" + MasaNo+"\nPersonel Adi :" +PersonelAdi);
+                        //Button Left
                         Button bLeft = new Button();
                         bLeft.Name = "bLeft" + MasaNo.ToString();
-                        bLeft.Text = MasaNo.ToString(); ;
+                        bLeft.Text = MasaNo.ToString() + "\n(" + dailyTableCounter.ToString() + ")";
                         bLeft.AutoSize = true;
                         bLeft.ForeColor = Color.Black;
                         bLeft.BackColor = Color.Red;
-                        bLeft.Size = new Size(80, 40);
+                        bLeft.Size = new Size(80, 80);
                         bLeft.Click += new EventHandler(masa_click);
-                        //Button
-                        Button bRight = new Button();
+                        //Button Right
+                        /*Button bRight = new Button();
                         bRight.Font = new Font(bRight.Font.FontFamily, 8);
                         bRight.Size = new Size(450, 40);
-                        bRight.Text = "Bugun acilan " + countOfTables.ToString() + ". Masa" + "\nGarson : " + PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString(); 
+                        bRight.Text = "Bugun acilan " + dailyTableCounter.ToString()+". Masa" + "\nGarson : "+PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString(); 
                         bRight.Name = "bRight" + MasaNo.ToString();
                         bRight.AutoSize = true;
                         bRight.BackColor = Color.LightGray;
-                        bRight.ForeColor = Color.DarkBlue;
-                        //
+                        bRight.ForeColor = Color.DarkBlue;*/
+                        //Masa Soldami Sagdami Olacak (Logic Function)
                         if (tableFlag == false)
                         {
-                            tableLayoutPanel1.Controls.Add(bLeft, 0, countOfTables / 2);
-                            tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
+                            UserLog.WConsole(TableOpenForm.lastTablePlace.ToString());
+                            tableLayoutPanel1.Controls.Add(bLeft, (TableOpenForm.lastTablePlace % 5), ((TableOpenForm.lastTablePlace - 1) / 5));
+                            // tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
                             tableFlag = true;
                         }
                         else
                         {
-                            tableLayoutPanel1.Controls.Add(bLeft, 2, countOfTables / 2 - 1);
-                            tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
+                            UserLog.WConsole(countOfTables.ToString());
+                            tableLayoutPanel1.Controls.Add(bLeft, (TableOpenForm.lastTablePlace % 5), (TableOpenForm.lastTablePlace - 1) / 5);
+                            // tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
                             tableFlag = false;
                         }
-
-
-                        countOfTables++;
-
-
                     }
                 }
             }
@@ -509,48 +533,49 @@ namespace Restorium
                     var result = tableOpenForm.ShowDialog();
                     if (result == DialogResult.OK)
                     {
+                        dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
+                        tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
                         string PersonelAdi = tableOpenForm.PersonelAdi;
                         string MasaNo = tableOpenForm.MasaNo;
-                        //Button - 
-                        MessageBox.Show("Masa No :" + MasaNo + "\nPersonel Adi :" + PersonelAdi);
+
+                        //MessageBox.Show("Masa No :" + MasaNo+"\nPersonel Adi :" +PersonelAdi);
+                        //Button Left
                         Button bLeft = new Button();
                         bLeft.Name = "bLeft" + MasaNo.ToString();
-                        bLeft.Text = MasaNo.ToString(); ;
+                        bLeft.Text = MasaNo.ToString() + "\n(" + dailyTableCounter.ToString() + ")";
                         bLeft.AutoSize = true;
                         bLeft.ForeColor = Color.Black;
-                        bLeft.BackColor = Color.Turquoise;
-                        bLeft.Size = new Size(80, 40);
+                        bLeft.BackColor = Color.Red;
+                        bLeft.Size = new Size(80, 80);
                         bLeft.Click += new EventHandler(masa_click);
-                        //Button
-                        Button bRight = new Button();
+                        //Button Right
+                        /*Button bRight = new Button();
                         bRight.Font = new Font(bRight.Font.FontFamily, 8);
                         bRight.Size = new Size(450, 40);
-                        bRight.Text = "Bugun acilan " + countOfTables.ToString() + ". Masa" + "\nGarson : " + PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString();
+                        bRight.Text = "Bugun acilan " + dailyTableCounter.ToString()+". Masa" + "\nGarson : "+PersonelAdi + " | Tarih : " + DateTime.UtcNow.ToLocalTime().ToString(); 
                         bRight.Name = "bRight" + MasaNo.ToString();
                         bRight.AutoSize = true;
                         bRight.BackColor = Color.LightGray;
-                        bRight.ForeColor = Color.DarkBlue;
-                        //
+                        bRight.ForeColor = Color.DarkBlue;*/
+                        //Masa Soldami Sagdami Olacak (Logic Function)
                         if (tableFlag == false)
                         {
-                            tableLayoutPanel1.Controls.Add(bLeft, 0, countOfTables / 2);
-                            tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
+                            UserLog.WConsole(TableOpenForm.lastTablePlace.ToString());
+                            tableLayoutPanel1.Controls.Add(bLeft, (TableOpenForm.lastTablePlace % 5), ((TableOpenForm.lastTablePlace - 1) / 5));
+                            // tableLayoutPanel1.Controls.Add(bRight, 1, countOfTables / 2);
                             tableFlag = true;
                         }
                         else
                         {
-                            tableLayoutPanel1.Controls.Add(bLeft, 2, countOfTables / 2 - 1);
-                            tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
+                            UserLog.WConsole(countOfTables.ToString());
+                            tableLayoutPanel1.Controls.Add(bLeft, (TableOpenForm.lastTablePlace % 5), (TableOpenForm.lastTablePlace - 1) / 5);
+                            // tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
                             tableFlag = false;
                         }
-
-
-                        countOfTables++;
                     }
                 }
             }
         }
-
         private void ExchangeValuesChanged(object sender, EventArgs e)
         {
             INI.Write("Dolar" , tbDolar.Text.ToString(), "Exchange");
@@ -567,6 +592,40 @@ namespace Restorium
         private void bCalculator_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process p = System.Diagnostics.Process.Start("calc.exe");
+        } 
+        private void StokAdd_Click(object sender, EventArgs e)
+        {
+            using (var stokAdd = new StokAdd())
+            {
+                //stokAdd.ListName = "Personel";
+                var result = stokAdd.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    try
+                    {
+
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Personel secimi yapilmadi !");
+                    }
+                }
+            }
+        }
+        private void bTableClose_Click(object sender, EventArgs e)
+        {
+            string tableName = lMasaNo.Text;
+            for (int i = 0; i < tableCounter; i++)
+            {
+                if (tableNumbers[i] == tableName)
+                {
+                    tableNumbers[i] = "";
+                    emptyTableList[i] = false;
+                    tableName = "bLeft" + tableName;
+                    tableLayoutPanel1.Controls.RemoveByKey(tableName);
+                    tableCounter--;
+                }
+            }
         }
     }
 }

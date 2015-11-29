@@ -15,6 +15,8 @@ namespace Restorium
         public string Musteri{ get; set; }
         public string Iskonto { get; set; }
         public string PersonelAdi{ get; set; }
+        public static int lastTablePlace = 0;
+        
 
         public TableOpenForm()
         {
@@ -49,25 +51,24 @@ namespace Restorium
                 bool tableCheck = true;
                 for (int i = 0; i < MainForm.tableCounter; i++)
                 {
-                    UserLog.WConsole(MainForm.tableCounter.ToString());
-                    UserLog.WConsole(MainForm.tableNumbers[i].ToString());
                     if (MainForm.tableNumbers[i].ToString() == tbMasaNo.Text)
                     {
                         MessageBox.Show("Bu masa zaten acik durumda !");
                         tableCheck = false;
-                        UserLog.WConsole("IF");
                         break;
                     }
                 }
                 if(tableCheck==true)
-                { 
-                    UserLog.WConsole("FOR BITTI");
+                { //Masa Acma basarili
+                    //MainForm.tableDetails[MainForm.tableCounter, 1] = 
                     this.MasaNo = tbMasaNo.Text;
                     this.PersonelAdi = tbPersonelAdi.Text;
                     this.Iskonto = tbIskonto.Text;
                     this.Musteri = tbMusteri.Text;
-                    MainForm.tableNumbers[MainForm.tableCounter] =Convert.ToInt16(tbMasaNo.Text);
-                    MainForm.tableCounter++;
+                    UserLog.WConsole("Masa Acildi : "+tbMasaNo.Text);
+                    MainForm.tableNumbers[getEmptyQueue()] = tbMasaNo.Text;
+                    //MainForm.dailyTableCounter++;
+                    //MainForm.tableCounter++;
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
@@ -117,5 +118,23 @@ namespace Restorium
                 this.Close();
             }
         }
+        public int getEmptyQueue()
+        {
+            for (int i = 0; i < MainForm.tableCounter; i++)
+            {
+                if (MainForm.emptyTableList[i] != true)
+                {
+                    UserLog.WConsole("Bos olan masa indexi : " + i.ToString());
+                    MainForm.emptyTableList[i] = true;
+                    lastTablePlace = i;
+                    return i;
+                }
+            }
+            MainForm.emptyTableList[MainForm.tableCounter] = true;
+            lastTablePlace = MainForm.tableCounter;
+            UserLog.WConsole("Bos olan masa indexi : " + MainForm.tableCounter.ToString());
+            return MainForm.tableCounter;
+        }
+
     }
 }

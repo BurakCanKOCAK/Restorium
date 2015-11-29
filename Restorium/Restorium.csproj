@@ -91,6 +91,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet_Stok.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DebugMonitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DebugMonitor.Designer.cs">
+      <DependentUpon>DebugMonitor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +119,12 @@
     <Compile Include="ShowListForm.Designer.cs">
       <DependentUpon>ShowListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="StokAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StokAdd.Designer.cs">
+      <DependentUpon>StokAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="TableOpenForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +132,9 @@
       <DependentUpon>TableOpenForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UserLog.cs" />
+    <EmbeddedResource Include="DebugMonitor.resx">
+      <DependentUpon>DebugMonitor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,6 +153,9 @@
     </Compile>
     <EmbeddedResource Include="ShowListForm.resx">
       <DependentUpon>ShowListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StokAdd.resx">
+      <DependentUpon>StokAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TableOpenForm.resx">
       <DependentUpon>TableOpenForm.cs</DependentUpon>
@@ -200,6 +218,7 @@
     <Content Include="Graphicloads-Polygon-Restaurant.ico" />
     <None Include="Resources\Calculator-icon %281%29.png" />
     <None Include="Resources\Apps-Calculator-Metro-icon.png" />
+    <None Include="Resources\cart-add-icon.png" />
     <Content Include="Resources\Untitled-1.png" />
   </ItemGroup>
   <ItemGroup>

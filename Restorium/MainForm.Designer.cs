@@ -29,21 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tp_Stok = new System.Windows.Forms.TabPage();
-            this.dgView = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ACIKLAMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ADET = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BIRIM = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.BIRIM_FIYAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PARA_BIRIMI = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.DINAMIK_STOK_KONTROLU = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.tp_Adisyon = new System.Windows.Forms.TabPage();
+            this.gbTableDetails = new System.Windows.Forms.GroupBox();
+            this.lMasaNo = new System.Windows.Forms.Label();
+            this.lTableCounter = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bCalculator = new System.Windows.Forms.Button();
@@ -52,13 +45,25 @@
             this.lDate = new System.Windows.Forms.Label();
             this.bYeniMasa = new System.Windows.Forms.Button();
             this.bRezervasyon = new System.Windows.Forms.Button();
+            this.tp_Stok = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.bStokAdd = new System.Windows.Forms.Button();
+            this.bCalculator_Stok = new System.Windows.Forms.Button();
             this.bStokAra = new System.Windows.Forms.Button();
             this.bDuzenle = new System.Windows.Forms.Button();
             this.tbSearchKey = new System.Windows.Forms.TextBox();
+            this.dgView = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ACIKLAMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ADET = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BIRIM = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.BIRIM_FIYAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PARA_BIRIMI = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.DINAMIK_STOK_KONTROLU = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tp_Kasa = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.bCalculator_Kasa = new System.Windows.Forms.Button();
             this.tp_Rapor = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tp_Rehber = new System.Windows.Forms.TabPage();
@@ -84,16 +89,21 @@
             this.GOREVI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.bCalculator_Settings = new System.Windows.Forms.Button();
-            this.bCalculator_Kasa = new System.Windows.Forms.Button();
-            this.bCalculator_Stok = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.bTableClose = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
-            this.tp_Stok.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Adisyon.SuspendLayout();
+            this.gbTableDetails.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).BeginInit();
+            this.tp_Stok.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Kasa.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tp_Rapor.SuspendLayout();
@@ -102,6 +112,7 @@
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
             this.panel6.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -124,124 +135,10 @@
             this.tabControl1.TabIndex = 0;
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
-            // tp_Stok
-            // 
-            this.tp_Stok.BackColor = System.Drawing.Color.Transparent;
-            this.tp_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tp_Stok.Controls.Add(this.pictureBox1);
-            this.tp_Stok.Controls.Add(this.panel3);
-            this.tp_Stok.Controls.Add(this.dgView);
-            this.tp_Stok.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tp_Stok.Location = new System.Drawing.Point(4, 28);
-            this.tp_Stok.Name = "tp_Stok";
-            this.tp_Stok.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Stok.Size = new System.Drawing.Size(1006, 701);
-            this.tp_Stok.TabIndex = 1;
-            this.tp_Stok.Text = "Stok";
-            // 
-            // dgView
-            // 
-            this.dgView.AllowUserToAddRows = false;
-            this.dgView.AllowUserToDeleteRows = false;
-            this.dgView.AllowUserToResizeColumns = false;
-            this.dgView.AllowUserToResizeRows = false;
-            this.dgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.ACIKLAMA,
-            this.ADET,
-            this.BIRIM,
-            this.BIRIM_FIYAT,
-            this.PARA_BIRIMI,
-            this.DINAMIK_STOK_KONTROLU});
-            this.dgView.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.dgView.Location = new System.Drawing.Point(0, 69);
-            this.dgView.Name = "dgView";
-            this.dgView.ReadOnly = true;
-            this.dgView.Size = new System.Drawing.Size(1006, 632);
-            this.dgView.TabIndex = 0;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // ACIKLAMA
-            // 
-            this.ACIKLAMA.HeaderText = "ACIKLAMA";
-            this.ACIKLAMA.Name = "ACIKLAMA";
-            this.ACIKLAMA.ReadOnly = true;
-            // 
-            // ADET
-            // 
-            this.ADET.HeaderText = "ADET";
-            this.ADET.Name = "ADET";
-            this.ADET.ReadOnly = true;
-            // 
-            // BIRIM
-            // 
-            this.BIRIM.HeaderText = "BIRIM";
-            this.BIRIM.Items.AddRange(new object[] {
-            "Birim",
-            "Porsiyon",
-            "Kutu",
-            "kg",
-            "gr",
-            "Kasa",
-            "Buyuk",
-            "Kucuk"});
-            this.BIRIM.Name = "BIRIM";
-            this.BIRIM.ReadOnly = true;
-            this.BIRIM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // BIRIM_FIYAT
-            // 
-            this.BIRIM_FIYAT.HeaderText = "BIRIM FIYAT";
-            this.BIRIM_FIYAT.Name = "BIRIM_FIYAT";
-            this.BIRIM_FIYAT.ReadOnly = true;
-            // 
-            // PARA_BIRIMI
-            // 
-            this.PARA_BIRIMI.HeaderText = "PARA BIRIMI";
-            this.PARA_BIRIMI.Items.AddRange(new object[] {
-            "TL",
-            "EURO",
-            "DOLAR",
-            "GBP"});
-            this.PARA_BIRIMI.Name = "PARA_BIRIMI";
-            this.PARA_BIRIMI.ReadOnly = true;
-            this.PARA_BIRIMI.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // DINAMIK_STOK_KONTROLU
-            // 
-            this.DINAMIK_STOK_KONTROLU.HeaderText = "DINAMIK STOK KONTROLU";
-            this.DINAMIK_STOK_KONTROLU.Name = "DINAMIK_STOK_KONTROLU";
-            this.DINAMIK_STOK_KONTROLU.ReadOnly = true;
-            this.DINAMIK_STOK_KONTROLU.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.Data_Update);
-            // 
-            // printDocument1
-            // 
-            this.printDocument1.DocumentName = "Stok Raporu";
-            // 
-            // printDialog1
-            // 
-            this.printDialog1.AllowSomePages = true;
-            this.printDialog1.Document = this.printDocument1;
-            this.printDialog1.UseEXDialog = true;
-            // 
             // tp_Adisyon
             // 
             this.tp_Adisyon.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Adisyon.Controls.Add(this.gbTableDetails);
             this.tp_Adisyon.Controls.Add(this.tableLayoutPanel1);
             this.tp_Adisyon.Controls.Add(this.panel1);
             this.tp_Adisyon.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -253,47 +150,94 @@
             this.tp_Adisyon.Text = "Adisyon";
             this.tp_Adisyon.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel1
+            // gbTableDetails
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.gbTableDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbTableDetails.Controls.Add(this.groupBox1);
+            this.gbTableDetails.Controls.Add(this.lMasaNo);
+            this.gbTableDetails.Controls.Add(this.lTableCounter);
+            this.gbTableDetails.Controls.Add(this.label9);
+            this.gbTableDetails.Location = new System.Drawing.Point(530, 87);
+            this.gbTableDetails.Name = "gbTableDetails";
+            this.gbTableDetails.Size = new System.Drawing.Size(470, 603);
+            this.gbTableDetails.TabIndex = 9;
+            this.gbTableDetails.TabStop = false;
+            this.gbTableDetails.Text = "Masa Detaylari";
+            // 
+            // lMasaNo
+            // 
+            this.lMasaNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lMasaNo.AutoSize = true;
+            this.lMasaNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 50.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lMasaNo.ForeColor = System.Drawing.Color.Crimson;
+            this.lMasaNo.Location = new System.Drawing.Point(356, 19);
+            this.lMasaNo.Name = "lMasaNo";
+            this.lMasaNo.Size = new System.Drawing.Size(120, 76);
+            this.lMasaNo.TabIndex = 2;
+            this.lMasaNo.Text = "C1";
+            // 
+            // lTableCounter
+            // 
+            this.lTableCounter.AutoSize = true;
+            this.lTableCounter.Location = new System.Drawing.Point(6, 42);
+            this.lTableCounter.Name = "lTableCounter";
+            this.lTableCounter.Size = new System.Drawing.Size(21, 19);
+            this.lTableCounter.TabIndex = 1;
+            this.lTableCounter.Text = "...";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(117, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(1017, 19);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "_________________________________________________________________________________" +
+    "_____________________________________________";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tableLayoutPanel1.AutoScroll = true;
             this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(11, 92);
+            this.tableLayoutPanel1.ColumnCount = 5;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(11, 87);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 25;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(984, 598);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(512, 603);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // panel1
@@ -385,6 +329,21 @@
             this.bRezervasyon.UseVisualStyleBackColor = false;
             this.bRezervasyon.Click += new System.EventHandler(this.bRezervasyon_Click);
             // 
+            // tp_Stok
+            // 
+            this.tp_Stok.BackColor = System.Drawing.Color.Transparent;
+            this.tp_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tp_Stok.Controls.Add(this.pictureBox1);
+            this.tp_Stok.Controls.Add(this.panel3);
+            this.tp_Stok.Controls.Add(this.dgView);
+            this.tp_Stok.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tp_Stok.Location = new System.Drawing.Point(4, 28);
+            this.tp_Stok.Name = "tp_Stok";
+            this.tp_Stok.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_Stok.Size = new System.Drawing.Size(1006, 701);
+            this.tp_Stok.TabIndex = 1;
+            this.tp_Stok.Text = "Stok";
+            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
@@ -404,6 +363,7 @@
             this.panel3.BackColor = System.Drawing.Color.Transparent;
             this.panel3.BackgroundImage = global::Restorium.Properties.Resources.stok;
             this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel3.Controls.Add(this.bStokAdd);
             this.panel3.Controls.Add(this.bCalculator_Stok);
             this.panel3.Controls.Add(this.bStokAra);
             this.panel3.Controls.Add(this.bDuzenle);
@@ -413,10 +373,33 @@
             this.panel3.Size = new System.Drawing.Size(1010, 72);
             this.panel3.TabIndex = 8;
             // 
+            // bStokAdd
+            // 
+            this.bStokAdd.BackColor = System.Drawing.Color.LimeGreen;
+            this.bStokAdd.BackgroundImage = global::Restorium.Properties.Resources.cart_add_icon;
+            this.bStokAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bStokAdd.Location = new System.Drawing.Point(317, 15);
+            this.bStokAdd.Name = "bStokAdd";
+            this.bStokAdd.Size = new System.Drawing.Size(46, 40);
+            this.bStokAdd.TabIndex = 12;
+            this.bStokAdd.UseVisualStyleBackColor = false;
+            this.bStokAdd.Click += new System.EventHandler(this.StokAdd_Click);
+            // 
+            // bCalculator_Stok
+            // 
+            this.bCalculator_Stok.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.bCalculator_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bCalculator_Stok.Location = new System.Drawing.Point(369, 15);
+            this.bCalculator_Stok.Name = "bCalculator_Stok";
+            this.bCalculator_Stok.Size = new System.Drawing.Size(46, 40);
+            this.bCalculator_Stok.TabIndex = 11;
+            this.bCalculator_Stok.UseVisualStyleBackColor = true;
+            this.bCalculator_Stok.Click += new System.EventHandler(this.bCalculator_Click);
+            // 
             // bStokAra
             // 
             this.bStokAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bStokAra.Location = new System.Drawing.Point(836, 19);
+            this.bStokAra.Location = new System.Drawing.Point(931, 19);
             this.bStokAra.Name = "bStokAra";
             this.bStokAra.Size = new System.Drawing.Size(64, 33);
             this.bStokAra.TabIndex = 3;
@@ -427,9 +410,9 @@
             // bDuzenle
             // 
             this.bDuzenle.BackColor = System.Drawing.Color.Silver;
-            this.bDuzenle.Location = new System.Drawing.Point(125, 25);
+            this.bDuzenle.Location = new System.Drawing.Point(178, 15);
             this.bDuzenle.Name = "bDuzenle";
-            this.bDuzenle.Size = new System.Drawing.Size(144, 28);
+            this.bDuzenle.Size = new System.Drawing.Size(133, 40);
             this.bDuzenle.TabIndex = 1;
             this.bDuzenle.Text = "Duzenle(Kapali)";
             this.bDuzenle.UseVisualStyleBackColor = false;
@@ -438,10 +421,97 @@
             // tbSearchKey
             // 
             this.tbSearchKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSearchKey.Location = new System.Drawing.Point(603, 22);
+            this.tbSearchKey.Location = new System.Drawing.Point(698, 23);
             this.tbSearchKey.Name = "tbSearchKey";
             this.tbSearchKey.Size = new System.Drawing.Size(227, 27);
             this.tbSearchKey.TabIndex = 2;
+            // 
+            // dgView
+            // 
+            this.dgView.AllowUserToAddRows = false;
+            this.dgView.AllowUserToDeleteRows = false;
+            this.dgView.AllowUserToResizeColumns = false;
+            this.dgView.AllowUserToResizeRows = false;
+            this.dgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.ACIKLAMA,
+            this.ADET,
+            this.BIRIM,
+            this.BIRIM_FIYAT,
+            this.PARA_BIRIMI,
+            this.DINAMIK_STOK_KONTROLU});
+            this.dgView.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.dgView.Location = new System.Drawing.Point(0, 69);
+            this.dgView.Name = "dgView";
+            this.dgView.ReadOnly = true;
+            this.dgView.Size = new System.Drawing.Size(1006, 632);
+            this.dgView.TabIndex = 0;
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // ACIKLAMA
+            // 
+            this.ACIKLAMA.HeaderText = "ACIKLAMA";
+            this.ACIKLAMA.Name = "ACIKLAMA";
+            this.ACIKLAMA.ReadOnly = true;
+            // 
+            // ADET
+            // 
+            this.ADET.HeaderText = "ADET";
+            this.ADET.Name = "ADET";
+            this.ADET.ReadOnly = true;
+            // 
+            // BIRIM
+            // 
+            this.BIRIM.HeaderText = "BIRIM";
+            this.BIRIM.Items.AddRange(new object[] {
+            "Birim",
+            "Porsiyon",
+            "Kutu",
+            "kg",
+            "gr",
+            "Kasa",
+            "Buyuk",
+            "Kucuk"});
+            this.BIRIM.Name = "BIRIM";
+            this.BIRIM.ReadOnly = true;
+            this.BIRIM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // BIRIM_FIYAT
+            // 
+            this.BIRIM_FIYAT.HeaderText = "BIRIM FIYAT";
+            this.BIRIM_FIYAT.Name = "BIRIM_FIYAT";
+            this.BIRIM_FIYAT.ReadOnly = true;
+            // 
+            // PARA_BIRIMI
+            // 
+            this.PARA_BIRIMI.HeaderText = "PARA BIRIMI";
+            this.PARA_BIRIMI.Items.AddRange(new object[] {
+            "TL",
+            "EURO",
+            "DOLAR",
+            "GBP"});
+            this.PARA_BIRIMI.Name = "PARA_BIRIMI";
+            this.PARA_BIRIMI.ReadOnly = true;
+            this.PARA_BIRIMI.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // DINAMIK_STOK_KONTROLU
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Lime;
+            this.DINAMIK_STOK_KONTROLU.DefaultCellStyle = dataGridViewCellStyle1;
+            this.DINAMIK_STOK_KONTROLU.HeaderText = "DINAMIK STOK KONTROLU";
+            this.DINAMIK_STOK_KONTROLU.Name = "DINAMIK_STOK_KONTROLU";
+            this.DINAMIK_STOK_KONTROLU.ReadOnly = true;
+            this.DINAMIK_STOK_KONTROLU.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // tp_Kasa
             // 
@@ -467,6 +537,18 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1010, 72);
             this.panel2.TabIndex = 9;
+            // 
+            // bCalculator_Kasa
+            // 
+            this.bCalculator_Kasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bCalculator_Kasa.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.bCalculator_Kasa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bCalculator_Kasa.Location = new System.Drawing.Point(920, 16);
+            this.bCalculator_Kasa.Name = "bCalculator_Kasa";
+            this.bCalculator_Kasa.Size = new System.Drawing.Size(39, 36);
+            this.bCalculator_Kasa.TabIndex = 10;
+            this.bCalculator_Kasa.UseVisualStyleBackColor = true;
+            this.bCalculator_Kasa.Click += new System.EventHandler(this.bCalculator_Click);
             // 
             // tp_Rapor
             // 
@@ -730,29 +812,60 @@
             this.bCalculator_Settings.UseVisualStyleBackColor = true;
             this.bCalculator_Settings.Click += new System.EventHandler(this.bCalculator_Click);
             // 
-            // bCalculator_Kasa
+            // timer1
             // 
-            this.bCalculator_Kasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bCalculator_Kasa.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
-            this.bCalculator_Kasa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.bCalculator_Kasa.Location = new System.Drawing.Point(920, 16);
-            this.bCalculator_Kasa.Name = "bCalculator_Kasa";
-            this.bCalculator_Kasa.Size = new System.Drawing.Size(39, 36);
-            this.bCalculator_Kasa.TabIndex = 10;
-            this.bCalculator_Kasa.UseVisualStyleBackColor = true;
-            this.bCalculator_Kasa.Click += new System.EventHandler(this.bCalculator_Click);
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.Data_Update);
             // 
-            // bCalculator_Stok
+            // printDocument1
             // 
-            this.bCalculator_Stok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bCalculator_Stok.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
-            this.bCalculator_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.bCalculator_Stok.Location = new System.Drawing.Point(920, 16);
-            this.bCalculator_Stok.Name = "bCalculator_Stok";
-            this.bCalculator_Stok.Size = new System.Drawing.Size(39, 36);
-            this.bCalculator_Stok.TabIndex = 11;
-            this.bCalculator_Stok.UseVisualStyleBackColor = true;
-            this.bCalculator_Stok.Click += new System.EventHandler(this.bCalculator_Click);
+            this.printDocument1.DocumentName = "Stok Raporu";
+            // 
+            // printDialog1
+            // 
+            this.printDialog1.AllowSomePages = true;
+            this.printDialog1.Document = this.printDocument1;
+            this.printDialog1.UseEXDialog = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackColor = System.Drawing.Color.Gold;
+            this.groupBox1.Controls.Add(this.bTableClose);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.groupBox1.Location = new System.Drawing.Point(6, 503);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(459, 105);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Masa Islemleri";
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(111, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(1017, 19);
+            this.label10.TabIndex = 4;
+            this.label10.Text = "_________________________________________________________________________________" +
+    "_____________________________________________";
+            // 
+            // bTableClose
+            // 
+            this.bTableClose.Location = new System.Drawing.Point(6, 64);
+            this.bTableClose.Name = "bTableClose";
+            this.bTableClose.Size = new System.Drawing.Size(130, 30);
+            this.bTableClose.TabIndex = 5;
+            this.bTableClose.Text = "Masa Kapat";
+            this.bTableClose.UseVisualStyleBackColor = true;
+            this.bTableClose.Click += new System.EventHandler(this.bTableClose_Click);
             // 
             // MainForm
             // 
@@ -768,15 +881,17 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             this.tabControl1.ResumeLayout(false);
-            this.tp_Stok.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Adisyon.ResumeLayout(false);
+            this.gbTableDetails.ResumeLayout(false);
+            this.gbTableDetails.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).EndInit();
+            this.tp_Stok.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Kasa.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.tp_Rapor.ResumeLayout(false);
@@ -787,6 +902,8 @@
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).EndInit();
             this.panel6.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -816,13 +933,6 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ACIKLAMA;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ADET;
-        private System.Windows.Forms.DataGridViewComboBoxColumn BIRIM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BIRIM_FIYAT;
-        private System.Windows.Forms.DataGridViewComboBoxColumn PARA_BIRIMI;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn DINAMIK_STOK_KONTROLU;
         private System.Windows.Forms.DataGridView dgViewWaiter;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button bPersonelDuzenle;
@@ -849,5 +959,20 @@
         private System.Windows.Forms.Button bCalculator_Settings;
         private System.Windows.Forms.Button bCalculator_Kasa;
         private System.Windows.Forms.Button bCalculator_Stok;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ACIKLAMA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ADET;
+        private System.Windows.Forms.DataGridViewComboBoxColumn BIRIM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BIRIM_FIYAT;
+        private System.Windows.Forms.DataGridViewComboBoxColumn PARA_BIRIMI;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn DINAMIK_STOK_KONTROLU;
+        private System.Windows.Forms.Button bStokAdd;
+        private System.Windows.Forms.GroupBox gbTableDetails;
+        private System.Windows.Forms.Label lTableCounter;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lMasaNo;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button bTableClose;
     }
 }

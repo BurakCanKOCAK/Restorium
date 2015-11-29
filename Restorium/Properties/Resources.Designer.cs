@@ -173,6 +173,16 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cart_add_icon {
+            get {
+                object obj = ResourceManager.GetObject("cart-add-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap consult_icon {
             get {
                 object obj = ResourceManager.GetObject("consult-icon", resourceCulture);

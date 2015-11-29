@@ -13,6 +13,7 @@ namespace Restorium
         {
             //Console'a yazdırma fonksiyonu
             Console.WriteLine(":: User Log ("+UserName+") :: "+logText+" :: ");
+            
         }
         public static void WFile(String logText)
         {
