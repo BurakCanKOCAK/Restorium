@@ -156,6 +156,7 @@
             this.Name = "StokAdd";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Stok Girisi";
+            this.Load += new System.EventHandler(this.StokAdd_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

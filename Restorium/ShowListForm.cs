@@ -12,6 +12,7 @@ namespace Restorium
     public partial class ShowListForm : Form
     {
         public string ListName{ get; set; }
+        public string Selected_Meal_ID{ get; set; }
         public string SelectedWaiter{ get; set; }
         public string Selected_Meal{ get; set; }
         public static string[] PersonelNames =new string[100];
@@ -27,6 +28,9 @@ namespace Restorium
             {
 
                 this.DialogResult = DialogResult.OK;
+                int index = dgViewStok.CurrentRow.Index;
+                this.Selected_Meal = dgViewStok.Rows[index].Cells[1].Value.ToString();
+                this.Selected_Meal_ID = dgViewStok.Rows[index].Cells[0].Value.ToString();
                 this.Close();
             }
             else if(ListName=="Personel")

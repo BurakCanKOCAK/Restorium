@@ -29,11 +29,28 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tp_Stok = new System.Windows.Forms.TabPage();
+            this.dgView = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ACIKLAMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ADET = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BIRIM = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.BIRIM_FIYAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PARA_BIRIMI = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.DINAMIK_STOK_KONTROLU = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.tp_Adisyon = new System.Windows.Forms.TabPage();
             this.gbTableDetails = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.bTableClose = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
             this.lMasaNo = new System.Windows.Forms.Label();
             this.lTableCounter = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -45,7 +62,6 @@
             this.lDate = new System.Windows.Forms.Label();
             this.bYeniMasa = new System.Windows.Forms.Button();
             this.bRezervasyon = new System.Windows.Forms.Button();
-            this.tp_Stok = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.bStokAdd = new System.Windows.Forms.Button();
@@ -53,14 +69,6 @@
             this.bStokAra = new System.Windows.Forms.Button();
             this.bDuzenle = new System.Windows.Forms.Button();
             this.tbSearchKey = new System.Windows.Forms.TextBox();
-            this.dgView = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ACIKLAMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ADET = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BIRIM = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.BIRIM_FIYAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PARA_BIRIMI = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.DINAMIK_STOK_KONTROLU = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tp_Kasa = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.bCalculator_Kasa = new System.Windows.Forms.Button();
@@ -89,21 +97,27 @@
             this.GOREVI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.bCalculator_Settings = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.printDialog1 = new System.Windows.Forms.PrintDialog();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.bTableClose = new System.Windows.Forms.Button();
+            this.dgViewSiparis = new System.Windows.Forms.DataGridView();
+            this.lPersonel = new System.Windows.Forms.Label();
+            this.lIskonto = new System.Windows.Forms.Label();
+            this.lMusteriAdi = new System.Windows.Forms.Label();
+            this.ID_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ACIKLAMA_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ADET_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ARTIR_SIPARIS = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.AZALT_SIPARIS = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.TUTAR_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bSiparisEkle = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
+            this.tp_Stok.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).BeginInit();
-            this.tp_Stok.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Kasa.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tp_Rapor.SuspendLayout();
@@ -112,7 +126,7 @@
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
             this.panel6.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgViewSiparis)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -135,6 +149,124 @@
             this.tabControl1.TabIndex = 0;
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
+            // tp_Stok
+            // 
+            this.tp_Stok.BackColor = System.Drawing.Color.Transparent;
+            this.tp_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tp_Stok.Controls.Add(this.pictureBox1);
+            this.tp_Stok.Controls.Add(this.panel3);
+            this.tp_Stok.Controls.Add(this.dgView);
+            this.tp_Stok.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tp_Stok.Location = new System.Drawing.Point(4, 28);
+            this.tp_Stok.Name = "tp_Stok";
+            this.tp_Stok.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_Stok.Size = new System.Drawing.Size(1006, 701);
+            this.tp_Stok.TabIndex = 1;
+            this.tp_Stok.Text = "Stok";
+            // 
+            // dgView
+            // 
+            this.dgView.AllowUserToAddRows = false;
+            this.dgView.AllowUserToDeleteRows = false;
+            this.dgView.AllowUserToResizeColumns = false;
+            this.dgView.AllowUserToResizeRows = false;
+            this.dgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.ACIKLAMA,
+            this.ADET,
+            this.BIRIM,
+            this.BIRIM_FIYAT,
+            this.PARA_BIRIMI,
+            this.DINAMIK_STOK_KONTROLU});
+            this.dgView.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.dgView.Location = new System.Drawing.Point(0, 69);
+            this.dgView.Name = "dgView";
+            this.dgView.ReadOnly = true;
+            this.dgView.Size = new System.Drawing.Size(1006, 632);
+            this.dgView.TabIndex = 0;
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // ACIKLAMA
+            // 
+            this.ACIKLAMA.HeaderText = "ACIKLAMA";
+            this.ACIKLAMA.Name = "ACIKLAMA";
+            this.ACIKLAMA.ReadOnly = true;
+            // 
+            // ADET
+            // 
+            this.ADET.HeaderText = "ADET";
+            this.ADET.Name = "ADET";
+            this.ADET.ReadOnly = true;
+            // 
+            // BIRIM
+            // 
+            this.BIRIM.HeaderText = "BIRIM";
+            this.BIRIM.Items.AddRange(new object[] {
+            "Birim",
+            "Porsiyon",
+            "Kutu",
+            "kg",
+            "gr",
+            "Kasa",
+            "Buyuk",
+            "Kucuk"});
+            this.BIRIM.Name = "BIRIM";
+            this.BIRIM.ReadOnly = true;
+            this.BIRIM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // BIRIM_FIYAT
+            // 
+            this.BIRIM_FIYAT.HeaderText = "BIRIM FIYAT";
+            this.BIRIM_FIYAT.Name = "BIRIM_FIYAT";
+            this.BIRIM_FIYAT.ReadOnly = true;
+            // 
+            // PARA_BIRIMI
+            // 
+            this.PARA_BIRIMI.HeaderText = "PARA BIRIMI";
+            this.PARA_BIRIMI.Items.AddRange(new object[] {
+            "TL",
+            "EURO",
+            "DOLAR",
+            "GBP"});
+            this.PARA_BIRIMI.Name = "PARA_BIRIMI";
+            this.PARA_BIRIMI.ReadOnly = true;
+            this.PARA_BIRIMI.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // DINAMIK_STOK_KONTROLU
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Lime;
+            this.DINAMIK_STOK_KONTROLU.DefaultCellStyle = dataGridViewCellStyle3;
+            this.DINAMIK_STOK_KONTROLU.HeaderText = "DINAMIK STOK KONTROLU";
+            this.DINAMIK_STOK_KONTROLU.Name = "DINAMIK_STOK_KONTROLU";
+            this.DINAMIK_STOK_KONTROLU.ReadOnly = true;
+            this.DINAMIK_STOK_KONTROLU.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.Data_Update);
+            // 
+            // printDocument1
+            // 
+            this.printDocument1.DocumentName = "Stok Raporu";
+            // 
+            // printDialog1
+            // 
+            this.printDialog1.AllowSomePages = true;
+            this.printDialog1.Document = this.printDocument1;
+            this.printDialog1.UseEXDialog = true;
+            // 
             // tp_Adisyon
             // 
             this.tp_Adisyon.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
@@ -155,6 +287,11 @@
             this.gbTableDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbTableDetails.Controls.Add(this.bSiparisEkle);
+            this.gbTableDetails.Controls.Add(this.lMusteriAdi);
+            this.gbTableDetails.Controls.Add(this.lIskonto);
+            this.gbTableDetails.Controls.Add(this.lPersonel);
+            this.gbTableDetails.Controls.Add(this.dgViewSiparis);
             this.gbTableDetails.Controls.Add(this.groupBox1);
             this.gbTableDetails.Controls.Add(this.lMasaNo);
             this.gbTableDetails.Controls.Add(this.lTableCounter);
@@ -166,6 +303,44 @@
             this.gbTableDetails.TabStop = false;
             this.gbTableDetails.Text = "Masa Detaylari";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackColor = System.Drawing.Color.Gold;
+            this.groupBox1.Controls.Add(this.bTableClose);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.groupBox1.Location = new System.Drawing.Point(6, 503);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(459, 105);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Masa Islemleri";
+            // 
+            // bTableClose
+            // 
+            this.bTableClose.Location = new System.Drawing.Point(6, 64);
+            this.bTableClose.Name = "bTableClose";
+            this.bTableClose.Size = new System.Drawing.Size(130, 30);
+            this.bTableClose.TabIndex = 5;
+            this.bTableClose.Text = "Masa Kapat";
+            this.bTableClose.UseVisualStyleBackColor = true;
+            this.bTableClose.Click += new System.EventHandler(this.bTableClose_Click);
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(111, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(1257, 19);
+            this.label10.TabIndex = 4;
+            this.label10.Text = "_________________________________________________________________________________" +
+    "___________________________________________________________________________";
+            // 
             // lMasaNo
             // 
             this.lMasaNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -174,28 +349,28 @@
             this.lMasaNo.ForeColor = System.Drawing.Color.Crimson;
             this.lMasaNo.Location = new System.Drawing.Point(356, 19);
             this.lMasaNo.Name = "lMasaNo";
-            this.lMasaNo.Size = new System.Drawing.Size(120, 76);
+            this.lMasaNo.Size = new System.Drawing.Size(56, 76);
             this.lMasaNo.TabIndex = 2;
-            this.lMasaNo.Text = "C1";
+            this.lMasaNo.Text = "-";
             // 
             // lTableCounter
             // 
             this.lTableCounter.AutoSize = true;
             this.lTableCounter.Location = new System.Drawing.Point(6, 42);
             this.lTableCounter.Name = "lTableCounter";
-            this.lTableCounter.Size = new System.Drawing.Size(21, 19);
+            this.lTableCounter.Size = new System.Drawing.Size(14, 19);
             this.lTableCounter.TabIndex = 1;
-            this.lTableCounter.Text = "...";
+            this.lTableCounter.Text = "-";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(117, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(1017, 19);
+            this.label9.Size = new System.Drawing.Size(1257, 19);
             this.label9.TabIndex = 0;
             this.label9.Text = "_________________________________________________________________________________" +
-    "_____________________________________________";
+    "___________________________________________________________________________";
             // 
             // tableLayoutPanel1
             // 
@@ -329,21 +504,6 @@
             this.bRezervasyon.UseVisualStyleBackColor = false;
             this.bRezervasyon.Click += new System.EventHandler(this.bRezervasyon_Click);
             // 
-            // tp_Stok
-            // 
-            this.tp_Stok.BackColor = System.Drawing.Color.Transparent;
-            this.tp_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tp_Stok.Controls.Add(this.pictureBox1);
-            this.tp_Stok.Controls.Add(this.panel3);
-            this.tp_Stok.Controls.Add(this.dgView);
-            this.tp_Stok.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tp_Stok.Location = new System.Drawing.Point(4, 28);
-            this.tp_Stok.Name = "tp_Stok";
-            this.tp_Stok.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Stok.Size = new System.Drawing.Size(1006, 701);
-            this.tp_Stok.TabIndex = 1;
-            this.tp_Stok.Text = "Stok";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
@@ -425,93 +585,6 @@
             this.tbSearchKey.Name = "tbSearchKey";
             this.tbSearchKey.Size = new System.Drawing.Size(227, 27);
             this.tbSearchKey.TabIndex = 2;
-            // 
-            // dgView
-            // 
-            this.dgView.AllowUserToAddRows = false;
-            this.dgView.AllowUserToDeleteRows = false;
-            this.dgView.AllowUserToResizeColumns = false;
-            this.dgView.AllowUserToResizeRows = false;
-            this.dgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.ACIKLAMA,
-            this.ADET,
-            this.BIRIM,
-            this.BIRIM_FIYAT,
-            this.PARA_BIRIMI,
-            this.DINAMIK_STOK_KONTROLU});
-            this.dgView.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.dgView.Location = new System.Drawing.Point(0, 69);
-            this.dgView.Name = "dgView";
-            this.dgView.ReadOnly = true;
-            this.dgView.Size = new System.Drawing.Size(1006, 632);
-            this.dgView.TabIndex = 0;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // ACIKLAMA
-            // 
-            this.ACIKLAMA.HeaderText = "ACIKLAMA";
-            this.ACIKLAMA.Name = "ACIKLAMA";
-            this.ACIKLAMA.ReadOnly = true;
-            // 
-            // ADET
-            // 
-            this.ADET.HeaderText = "ADET";
-            this.ADET.Name = "ADET";
-            this.ADET.ReadOnly = true;
-            // 
-            // BIRIM
-            // 
-            this.BIRIM.HeaderText = "BIRIM";
-            this.BIRIM.Items.AddRange(new object[] {
-            "Birim",
-            "Porsiyon",
-            "Kutu",
-            "kg",
-            "gr",
-            "Kasa",
-            "Buyuk",
-            "Kucuk"});
-            this.BIRIM.Name = "BIRIM";
-            this.BIRIM.ReadOnly = true;
-            this.BIRIM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // BIRIM_FIYAT
-            // 
-            this.BIRIM_FIYAT.HeaderText = "BIRIM FIYAT";
-            this.BIRIM_FIYAT.Name = "BIRIM_FIYAT";
-            this.BIRIM_FIYAT.ReadOnly = true;
-            // 
-            // PARA_BIRIMI
-            // 
-            this.PARA_BIRIMI.HeaderText = "PARA BIRIMI";
-            this.PARA_BIRIMI.Items.AddRange(new object[] {
-            "TL",
-            "EURO",
-            "DOLAR",
-            "GBP"});
-            this.PARA_BIRIMI.Name = "PARA_BIRIMI";
-            this.PARA_BIRIMI.ReadOnly = true;
-            this.PARA_BIRIMI.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // DINAMIK_STOK_KONTROLU
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Lime;
-            this.DINAMIK_STOK_KONTROLU.DefaultCellStyle = dataGridViewCellStyle1;
-            this.DINAMIK_STOK_KONTROLU.HeaderText = "DINAMIK STOK KONTROLU";
-            this.DINAMIK_STOK_KONTROLU.Name = "DINAMIK_STOK_KONTROLU";
-            this.DINAMIK_STOK_KONTROLU.ReadOnly = true;
-            this.DINAMIK_STOK_KONTROLU.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // tp_Kasa
             // 
@@ -812,60 +885,106 @@
             this.bCalculator_Settings.UseVisualStyleBackColor = true;
             this.bCalculator_Settings.Click += new System.EventHandler(this.bCalculator_Click);
             // 
-            // timer1
+            // dgViewSiparis
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.Data_Update);
-            // 
-            // printDocument1
-            // 
-            this.printDocument1.DocumentName = "Stok Raporu";
-            // 
-            // printDialog1
-            // 
-            this.printDialog1.AllowSomePages = true;
-            this.printDialog1.Document = this.printDocument1;
-            this.printDialog1.UseEXDialog = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgViewSiparis.AllowUserToDeleteRows = false;
+            this.dgViewSiparis.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.BackColor = System.Drawing.Color.Gold;
-            this.groupBox1.Controls.Add(this.bTableClose);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.groupBox1.Location = new System.Drawing.Point(6, 503);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(459, 105);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Masa Islemleri";
+            this.dgViewSiparis.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgViewSiparis.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID_SIPARIS,
+            this.ACIKLAMA_SIPARIS,
+            this.ADET_SIPARIS,
+            this.ARTIR_SIPARIS,
+            this.AZALT_SIPARIS,
+            this.TUTAR_SIPARIS});
+            this.dgViewSiparis.Location = new System.Drawing.Point(0, 176);
+            this.dgViewSiparis.Name = "dgViewSiparis";
+            this.dgViewSiparis.Size = new System.Drawing.Size(470, 321);
+            this.dgViewSiparis.TabIndex = 4;
             // 
-            // label10
+            // lPersonel
             // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(111, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(1017, 19);
-            this.label10.TabIndex = 4;
-            this.label10.Text = "_________________________________________________________________________________" +
-    "_____________________________________________";
+            this.lPersonel.AutoSize = true;
+            this.lPersonel.Location = new System.Drawing.Point(6, 76);
+            this.lPersonel.Name = "lPersonel";
+            this.lPersonel.Size = new System.Drawing.Size(14, 19);
+            this.lPersonel.TabIndex = 5;
+            this.lPersonel.Text = "-";
             // 
-            // bTableClose
+            // lIskonto
             // 
-            this.bTableClose.Location = new System.Drawing.Point(6, 64);
-            this.bTableClose.Name = "bTableClose";
-            this.bTableClose.Size = new System.Drawing.Size(130, 30);
-            this.bTableClose.TabIndex = 5;
-            this.bTableClose.Text = "Masa Kapat";
-            this.bTableClose.UseVisualStyleBackColor = true;
-            this.bTableClose.Click += new System.EventHandler(this.bTableClose_Click);
+            this.lIskonto.AutoSize = true;
+            this.lIskonto.Location = new System.Drawing.Point(6, 109);
+            this.lIskonto.Name = "lIskonto";
+            this.lIskonto.Size = new System.Drawing.Size(14, 19);
+            this.lIskonto.TabIndex = 6;
+            this.lIskonto.Text = "-";
+            // 
+            // lMusteriAdi
+            // 
+            this.lMusteriAdi.AutoSize = true;
+            this.lMusteriAdi.Location = new System.Drawing.Point(6, 141);
+            this.lMusteriAdi.Name = "lMusteriAdi";
+            this.lMusteriAdi.Size = new System.Drawing.Size(14, 19);
+            this.lMusteriAdi.TabIndex = 7;
+            this.lMusteriAdi.Text = "-";
+            // 
+            // ID_SIPARIS
+            // 
+            this.ID_SIPARIS.FillWeight = 27F;
+            this.ID_SIPARIS.HeaderText = "ID";
+            this.ID_SIPARIS.Name = "ID_SIPARIS";
+            this.ID_SIPARIS.Width = 65;
+            // 
+            // ACIKLAMA_SIPARIS
+            // 
+            this.ACIKLAMA_SIPARIS.HeaderText = "Aciklama";
+            this.ACIKLAMA_SIPARIS.Name = "ACIKLAMA_SIPARIS";
+            // 
+            // ADET_SIPARIS
+            // 
+            this.ADET_SIPARIS.HeaderText = "Adet";
+            this.ADET_SIPARIS.Name = "ADET_SIPARIS";
+            // 
+            // ARTIR_SIPARIS
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = "+";
+            this.ARTIR_SIPARIS.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ARTIR_SIPARIS.FillWeight = 10F;
+            this.ARTIR_SIPARIS.HeaderText = "+";
+            this.ARTIR_SIPARIS.Name = "ARTIR_SIPARIS";
+            this.ARTIR_SIPARIS.Text = "+";
+            this.ARTIR_SIPARIS.Width = 30;
+            // 
+            // AZALT_SIPARIS
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.NullValue = "-";
+            this.AZALT_SIPARIS.DefaultCellStyle = dataGridViewCellStyle2;
+            this.AZALT_SIPARIS.FillWeight = 10F;
+            this.AZALT_SIPARIS.HeaderText = "-";
+            this.AZALT_SIPARIS.Name = "AZALT_SIPARIS";
+            this.AZALT_SIPARIS.Text = "-";
+            this.AZALT_SIPARIS.Width = 30;
+            // 
+            // TUTAR_SIPARIS
+            // 
+            this.TUTAR_SIPARIS.FillWeight = 25F;
+            this.TUTAR_SIPARIS.HeaderText = "Tutar";
+            this.TUTAR_SIPARIS.Name = "TUTAR_SIPARIS";
+            // 
+            // bSiparisEkle
+            // 
+            this.bSiparisEkle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bSiparisEkle.Location = new System.Drawing.Point(376, 141);
+            this.bSiparisEkle.Name = "bSiparisEkle";
+            this.bSiparisEkle.Size = new System.Drawing.Size(94, 30);
+            this.bSiparisEkle.TabIndex = 6;
+            this.bSiparisEkle.Text = "Siparis Ekle";
+            this.bSiparisEkle.UseVisualStyleBackColor = true;
+            this.bSiparisEkle.Click += new System.EventHandler(this.bSiparisEkle_Click);
             // 
             // MainForm
             // 
@@ -881,17 +1000,19 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             this.tabControl1.ResumeLayout(false);
+            this.tp_Stok.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Adisyon.ResumeLayout(false);
             this.gbTableDetails.ResumeLayout(false);
             this.gbTableDetails.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).EndInit();
-            this.tp_Stok.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Kasa.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.tp_Rapor.ResumeLayout(false);
@@ -902,8 +1023,7 @@
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).EndInit();
             this.panel6.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgViewSiparis)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -974,5 +1094,16 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button bTableClose;
+        private System.Windows.Forms.DataGridView dgViewSiparis;
+        private System.Windows.Forms.Label lPersonel;
+        private System.Windows.Forms.Label lIskonto;
+        private System.Windows.Forms.Label lMusteriAdi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID_SIPARIS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ACIKLAMA_SIPARIS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ADET_SIPARIS;
+        private System.Windows.Forms.DataGridViewButtonColumn ARTIR_SIPARIS;
+        private System.Windows.Forms.DataGridViewButtonColumn AZALT_SIPARIS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TUTAR_SIPARIS;
+        private System.Windows.Forms.Button bSiparisEkle;
     }
 }

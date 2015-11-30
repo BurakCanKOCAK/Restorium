@@ -15,5 +15,10 @@ namespace Restorium
         {
             InitializeComponent();
         }
+
+        private void StokAdd_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

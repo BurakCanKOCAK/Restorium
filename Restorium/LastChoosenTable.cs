@@ -12,5 +12,6 @@ namespace Restorium
         public static string Waiter;
         public static int iskonto;
         public static string musteriAdi;
+        public static bool reservation;
     }
 }
