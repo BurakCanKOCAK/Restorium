@@ -70,13 +70,12 @@ namespace Restorium
             SettingsDataSet();
             SiparisScreenInitialSet();
         }
-
         private void SiparisScreenInitialSet()
         {
             dgViewSiparis.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgViewSiparis.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgViewSiparis.ReadOnly = true;
         }
-
         private void SetExchangeValues()
         {
             try
@@ -448,7 +447,7 @@ namespace Restorium
             {
                 if (tableDetails[i * 3, 0] == masaNoLocal)
                 {
-                    
+                        LastChoosenTable.TableNumber = masaNoLocal;
                         lTableCounter.Text = "Bugun acilan "+tableDetails[i * 3, 1]+". masa";
                         if (tableDetails[i * 3, 7] == "R")
                         {
@@ -772,20 +771,94 @@ namespace Restorium
                 var result = showListForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    for (int i = 0; i < dgViewSiparis.Rows.Count; i++)
+                    int countOFRows = dgViewSiparis.Rows.Count;
+                    int existedRow = dgViewSiparis.Rows.Count;
+                    ///// Searching for the existance of selected meal id
+                    for (int i = 0; i < countOFRows; i++)
                     {
-                        if (dgViewSiparis.Rows[i].Cells[0].Value == showListForm.Selected_Meal_ID)
+                        string id = "";
+                        try
                         {
-                            dgViewSiparis.Rows[i].Cells[2].Value=Convert.ToInt16(dgViewSiparis.Rows[i].Cells[2].Value)+1;
+                            id = dgViewSiparis.Rows[i].Cells[0].Value.ToString();
+                            id = id.Replace(" ", "");
                         }
-                        else
+                        catch
                         {
-                            dgViewSiparis.Rows[i].Cells[0].Value = showListForm.Selected_Meal_ID;
-                            dgViewSiparis.Rows[i].Cells[1].Value = showListForm.Selected_Meal;
-                            dgViewSiparis.Rows[i].Cells[2].Value = "1";
+                            //throw exception
+                        }
+                        if (id == showListForm.Selected_Meal_ID)
+                        {
+                            existedRow = i;
+                            break;
                         }
                     }
-                    UserLog.WConsole(showListForm.Selected_Meal);
+                    ///// IF Meal id exist on the list +1 or add new row
+                    if (existedRow!=dgViewSiparis.Rows.Count)
+                        {
+                            UserLog.WConsole(showListForm.Selected_Meal_ID + " (" + showListForm.Selected_Meal + ")" + " nolu siparis guncelleniyor..");
+                            int countOfElement = Convert.ToInt16(dgViewSiparis.Rows[existedRow].Cells[2].Value);
+                            UserLog.WConsole(countOfElement.ToString());
+                            dgViewSiparis.Rows[existedRow].Cells[2].Value=(countOfElement+1).ToString();
+                            dgViewSiparis.Rows[existedRow].Cells[5].Value = (Convert.ToInt16(dgViewSiparis.Rows[existedRow].Cells[5].Value) + Convert.ToInt16(showListForm.Selected_Meal_Price)).ToString();
+                            dgViewSiparis.Refresh();
+                        }
+                        else 
+                        {
+                            UserLog.WConsole(showListForm.Selected_Meal_ID + " ("+ showListForm.Selected_Meal+")"+ " nolu siparis listeye ekleniyor..");
+                            string mealID = showListForm.Selected_Meal_ID;
+                            string meal = showListForm.Selected_Meal;
+                            string mealPrice = showListForm.Selected_Meal_Price;
+                            dgViewSiparis.AllowUserToAddRows = true;
+                            dgViewSiparis.Rows.Add(mealID,meal,"1",null,null,mealPrice);
+                            dgViewSiparis.AllowUserToAddRows = false;
+                            dgViewSiparis.Refresh();
+                        }
+                    //// End
+                }
+            }
+        }
+
+        private void dgViewSiparis_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 3) // Siparis miktarini 1 artir
+            {
+                //UserLog.WConsole(e.RowIndex.ToString());
+                int oldCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
+                dgViewSiparis.Rows[e.RowIndex].Cells[2].Value = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value) + 1).ToString();
+                int newCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
+                //tutar hesabi
+                dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = ((Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[5].Value) / oldCount) * newCount).ToString();
+            }
+            if (e.ColumnIndex == 4) // Siparis miktarini 1 azalt
+            {
+                UserLog.WConsole((e.RowIndex+1).ToString()+". siradaki urune tiklandi");
+                int adet =Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value);
+                if (adet != 1)
+                {
+                    int oldCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
+                    dgViewSiparis.Rows[e.RowIndex].Cells[2].Value = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value) - 1).ToString();
+                    int newCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
+                    //tutar hesabi
+                    dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = (((Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[5].Value)) / oldCount) * newCount).ToString();
+                }
+                else if (adet == 0)
+                {
+                    dgViewSiparis.Rows.Remove(dgViewSiparis.Rows[e.RowIndex]);
+                    dgViewSiparis.Refresh();
+                }
+                else
+                {
+                    //dgViewSiparis.AllowUserToDeleteRows = true;
+                    //dgViewSiparis.Refresh();
+                    try
+                    {
+                        dgViewSiparis.Rows.Remove(dgViewSiparis.Rows[e.RowIndex]);
+                        dgViewSiparis.Refresh();
+                    }
+                    catch
+                    {
+                        UserLog.WConsole("Siparis listendeki " + e.RowIndex + 1 + ". eleman silinirken sorun olustu !");
+                    }
                 }
             }
         }

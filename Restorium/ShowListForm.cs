@@ -13,6 +13,7 @@ namespace Restorium
     {
         public string ListName{ get; set; }
         public string Selected_Meal_ID{ get; set; }
+        public string Selected_Meal_Price {get;  set; }
         public string SelectedWaiter{ get; set; }
         public string Selected_Meal{ get; set; }
         public static string[] PersonelNames =new string[100];
@@ -31,6 +32,7 @@ namespace Restorium
                 int index = dgViewStok.CurrentRow.Index;
                 this.Selected_Meal = dgViewStok.Rows[index].Cells[1].Value.ToString();
                 this.Selected_Meal_ID = dgViewStok.Rows[index].Cells[0].Value.ToString();
+                this.Selected_Meal_Price = dgViewStok.Rows[index].Cells[4].Value.ToString();
                 this.Close();
             }
             else if(ListName=="Personel")
