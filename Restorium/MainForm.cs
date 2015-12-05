@@ -200,6 +200,9 @@ namespace Restorium
                            // tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
                             tableFlag = false;
                         }
+                    LastChoosenTable.TableNumber = MasaNo.ToString();
+                    bSiparisEkle.Enabled = true;
+                    bTableClose.Enabled = true;
                     //                 
                 }
             }
@@ -432,6 +435,9 @@ namespace Restorium
                         // tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
                         tableFlag = false;
                     }
+                    LastChoosenTable.TableNumber = MasaNo.ToString();
+                    bSiparisEkle.Enabled = true;
+                    bTableClose.Enabled = true;
                 }
             }
           }
@@ -626,6 +632,9 @@ namespace Restorium
                             // tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
                             tableFlag = false;
                         }
+                        LastChoosenTable.TableNumber = MasaNo.ToString();
+                        bSiparisEkle.Enabled = true;
+                        bTableClose.Enabled = true;
                     }
                 }
             }
@@ -701,6 +710,9 @@ namespace Restorium
                             // tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
                             tableFlag = false;
                         }
+                        LastChoosenTable.TableNumber = MasaNo.ToString();
+                        bSiparisEkle.Enabled = true;
+                        bTableClose.Enabled = true;
                     }
                 }
             }
@@ -759,6 +771,8 @@ namespace Restorium
                     lMusteriAdi.Text = "-";
                     lMasaNo.ForeColor = Color.Black;
                     tableCounter--;
+                    UserLog.WConsole(tableCounter.ToString());
+                    // tableDetails dizisinden de silinmeli
                 }
             }
         }
@@ -798,9 +812,15 @@ namespace Restorium
                             UserLog.WConsole(showListForm.Selected_Meal_ID + " (" + showListForm.Selected_Meal + ")" + " nolu siparis guncelleniyor..");
                             int countOfElement = Convert.ToInt16(dgViewSiparis.Rows[existedRow].Cells[2].Value);
                             UserLog.WConsole(countOfElement.ToString());
+                        //Adet
                             dgViewSiparis.Rows[existedRow].Cells[2].Value=(countOfElement+1).ToString();
-                            dgViewSiparis.Rows[existedRow].Cells[5].Value = (Convert.ToInt16(dgViewSiparis.Rows[existedRow].Cells[5].Value) + Convert.ToInt16(showListForm.Selected_Meal_Price)).ToString();
+                        //Tutar
+                            string tutar = dgViewSiparis.Rows[existedRow].Cells[5].Value.ToString();  // 5 TL
+                            tutar = tutar.Replace(" TL", "");  // 5
+                            tutar = (Convert.ToInt16(tutar) + Convert.ToInt16(showListForm.Selected_Meal_Price)).ToString();  // 10
+                            dgViewSiparis.Rows[existedRow].Cells[5].Value = tutar + " TL"; 
                             dgViewSiparis.Refresh();
+                            saveAdisyonToTable();
                         }
                         else 
                         {
@@ -809,9 +829,11 @@ namespace Restorium
                             string meal = showListForm.Selected_Meal;
                             string mealPrice = showListForm.Selected_Meal_Price;
                             dgViewSiparis.AllowUserToAddRows = true;
-                            dgViewSiparis.Rows.Add(mealID,meal,"1",null,null,mealPrice);
+                        //Sutuna ilk degeri yazdirma
+                            dgViewSiparis.Rows.Add(mealID,meal,"1",null,null,mealPrice+" TL");
                             dgViewSiparis.AllowUserToAddRows = false;
                             dgViewSiparis.Refresh();
+                            saveAdisyonToTable();
                         }
                     //// End
                 }
@@ -823,11 +845,15 @@ namespace Restorium
             if (e.ColumnIndex == 3) // Siparis miktarini 1 artir
             {
                 //UserLog.WConsole(e.RowIndex.ToString());
+              
                 int oldCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
                 dgViewSiparis.Rows[e.RowIndex].Cells[2].Value = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value) + 1).ToString();
                 int newCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
                 //tutar hesabi
-                dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = ((Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[5].Value) / oldCount) * newCount).ToString();
+                string tutar = dgViewSiparis.Rows[e.RowIndex].Cells[5].Value.ToString(); // 5 TL
+                tutar=tutar.Replace(" TL", "");
+                tutar = ((Convert.ToInt16(tutar) / oldCount) * newCount).ToString();  // 10
+                dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = tutar + " TL";
             }
             if (e.ColumnIndex == 4) // Siparis miktarini 1 azalt
             {
@@ -839,7 +865,10 @@ namespace Restorium
                     dgViewSiparis.Rows[e.RowIndex].Cells[2].Value = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value) - 1).ToString();
                     int newCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
                     //tutar hesabi
-                    dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = (((Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[5].Value)) / oldCount) * newCount).ToString();
+                    string tutar = dgViewSiparis.Rows[e.RowIndex].Cells[5].Value.ToString(); // 5 TL
+                    tutar = tutar.Replace(" TL", "");
+                    tutar = (((Convert.ToInt16(tutar)) / oldCount) * newCount).ToString();
+                    dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = tutar + " TL";
                 }
                 else if (adet == 0)
                 {
@@ -861,6 +890,22 @@ namespace Restorium
                     }
                 }
             }
+            saveAdisyonToTable();
+        }
+
+        private void saveAdisyonToTable()
+        {
+            //Masaya kaydet
+            foreach (string names in tableNumbers)
+            {
+                if(names != null)
+                { 
+                //
+                UserLog.WConsole(names);
+                }
+            }
+
+            UserLog.WConsole(LastChoosenTable.TableNumber + " nolu masa siparisleri basariyla kaydedildi");
         }
     }
 }

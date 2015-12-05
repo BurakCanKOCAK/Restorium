@@ -189,6 +189,7 @@
             // bSiparisEkle
             // 
             this.bSiparisEkle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bSiparisEkle.Enabled = false;
             this.bSiparisEkle.Location = new System.Drawing.Point(376, 141);
             this.bSiparisEkle.Name = "bSiparisEkle";
             this.bSiparisEkle.Size = new System.Drawing.Size(94, 30);
@@ -314,6 +315,7 @@
             // 
             // bTableClose
             // 
+            this.bTableClose.Enabled = false;
             this.bTableClose.Location = new System.Drawing.Point(6, 64);
             this.bTableClose.Name = "bTableClose";
             this.bTableClose.Size = new System.Drawing.Size(130, 30);
