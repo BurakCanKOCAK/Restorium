@@ -109,6 +109,8 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.lToplamTutar = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
@@ -302,7 +304,9 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.BackColor = System.Drawing.Color.Gold;
+            this.groupBox1.BackColor = System.Drawing.Color.Gray;
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.lToplamTutar);
             this.groupBox1.Controls.Add(this.bTableClose);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -999,6 +1003,28 @@
             this.printDialog1.Document = this.printDocument1;
             this.printDialog1.UseEXDialog = true;
             // 
+            // lToplamTutar
+            // 
+            this.lToplamTutar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lToplamTutar.AutoSize = true;
+            this.lToplamTutar.BackColor = System.Drawing.Color.Transparent;
+            this.lToplamTutar.ForeColor = System.Drawing.Color.Gold;
+            this.lToplamTutar.Location = new System.Drawing.Point(396, 20);
+            this.lToplamTutar.Name = "lToplamTutar";
+            this.lToplamTutar.Size = new System.Drawing.Size(14, 19);
+            this.lToplamTutar.TabIndex = 6;
+            this.lToplamTutar.Text = "-";
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(283, 20);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(107, 19);
+            this.label11.TabIndex = 7;
+            this.label11.Text = "Toplam Tutar :";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1118,5 +1144,7 @@
         private System.Windows.Forms.DataGridViewButtonColumn ARTIR_SIPARIS;
         private System.Windows.Forms.DataGridViewButtonColumn AZALT_SIPARIS;
         private System.Windows.Forms.DataGridViewTextBoxColumn TUTAR_SIPARIS;
+        private System.Windows.Forms.Label lToplamTutar;
+        private System.Windows.Forms.Label label11;
     }
 }

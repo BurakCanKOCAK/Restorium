@@ -43,8 +43,8 @@ namespace Restorium
         public static int dailyTableCounter=0;
         public static string[,] tableDetails = new string[300,10];
         public static bool[] emptyTableList = new bool[200];
-        //       0       1          2      3         4                5        6             7  8  9  10
-        //    0  id      kacinci    tutar  personel  kac siparis(3)   iskonto  Musteri adi
+        //       0       1          2      3         4                5        6             7       8        9  10
+        //    0  id      kacinci    tutar  personel  kac siparis(3)   iskonto  Musteri adi  R or N   R. date
         //    1  1.id    2.id       3.id  
         //    2  x tane  y tane     z tane
         //    3 
@@ -135,6 +135,7 @@ namespace Restorium
                 var result = tableOpenForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
+                    clearSiparisTable();
                     UserLog.WConsole("Opening Table");
                     dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
                     tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
@@ -370,6 +371,7 @@ namespace Restorium
                 var result = tableOpenForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
+                    clearSiparisTable();
                     UserLog.WConsole("Reserving Table");
                     dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
                     tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
@@ -449,11 +451,14 @@ namespace Restorium
             string masaNoLocal = b.Name;
             masaNoLocal = masaNoLocal.Replace("bLeft", "");
             lMasaNo.Text = masaNoLocal;
+            bSiparisEkle.Enabled = true;
+            bTableClose.Enabled = true;
             for (int i = 0; i <= tableCounter; i++)
             {
                 if (tableDetails[i * 3, 0] == masaNoLocal)
                 {
                         LastChoosenTable.TableNumber = masaNoLocal;
+                        UserLog.WConsole(LastChoosenTable.TableNumber.ToString());
                         lTableCounter.Text = "Bugun acilan "+tableDetails[i * 3, 1]+". masa";
                         if (tableDetails[i * 3, 7] == "R")
                         {
@@ -469,8 +474,11 @@ namespace Restorium
                         UserLog.WConsole("Masa Detayi Ekrana Yazdirildi...");
                   }
             }
-
+            clearSiparisTable();
+            setSiparisListToTable();
         }
+
+
         #endregion
         #region PERSONEL PROCESSES
         private void bPersonelDuzenle_Click(object sender, EventArgs e)
@@ -567,6 +575,7 @@ namespace Restorium
                     var result = tableOpenForm.ShowDialog();
                     if (result == DialogResult.OK)
                     {
+                        clearSiparisTable();
                         UserLog.WConsole("<<F4 Pressed>> Opening Table ");
                         dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
                         tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
@@ -645,6 +654,7 @@ namespace Restorium
                     var result = tableOpenForm.ShowDialog();
                     if (result == DialogResult.OK)
                     {
+                        clearSiparisTable();
                         UserLog.WConsole("<<F5 Pressed>> Reserving Table ");
                         dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
                         tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
@@ -755,10 +765,12 @@ namespace Restorium
         }
         private void bTableClose_Click(object sender, EventArgs e)
         {
+            clearSiparisTable();
             string tableName = lMasaNo.Text;
-            for (int i = 0; i < tableCounter; i++)
+            int i = 0;
+            foreach (string tablenames in tableNumbers)
             {
-                if (tableNumbers[i] == tableName)
+                if (tableNumbers[i] == tableName) 
                 {
                     tableNumbers[i] = "";
                     emptyTableList[i] = false;
@@ -770,11 +782,18 @@ namespace Restorium
                     lTableCounter.Text = "-";
                     lMusteriAdi.Text = "-";
                     lMasaNo.ForeColor = Color.Black;
+                    LastChoosenTable.TableNumber = "";
                     tableCounter--;
-                    UserLog.WConsole(tableCounter.ToString());
+                    bSiparisEkle.Enabled = false;
+                    bTableClose.Enabled = false;
+                    UserLog.WConsole("Masa : "+tableName+ " kapatildi...");
+                    UserLog.WConsole("Acik masa sayisi ; "+tableCounter.ToString());
+                    lToplamTutar.Text = "-";
                     // tableDetails dizisinden de silinmeli
                 }
+                i++;
             }
+            
         }
 
         private void bSiparisEkle_Click(object sender, EventArgs e)
@@ -895,17 +914,82 @@ namespace Restorium
 
         private void saveAdisyonToTable()
         {
+            int toplamTutar = 0;
+            for (int i = 0; i < dgViewSiparis.RowCount; i++)
+            {
+                string tutar = dgViewSiparis.Rows[i].Cells[5].Value.ToString();
+                tutar = tutar.Replace(" TL", "");
+                toplamTutar = toplamTutar + Convert.ToInt16(tutar);
+                
+            }
+            lToplamTutar.Text = toplamTutar.ToString() + " TL";
             //Masaya kaydet
+            tableDetails[findTableOrder(LastChoosenTable.TableNumber)*3, 2] = toplamTutar.ToString(); // Tutar
+            tableDetails[findTableOrder(LastChoosenTable.TableNumber) *3, 4] = dgViewSiparis.RowCount.ToString(); // Toplam urun siparis cesidi
+            for (int i = 0; i < dgViewSiparis.RowCount; i++)
+            {
+                tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 1, i] = dgViewSiparis.Rows[i].Cells[0].Value.ToString(); // Urun id si
+                tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 2, i] = dgViewSiparis.Rows[i].Cells[2].Value.ToString(); // Urun adedi
+            }
+            UserLog.WConsole(LastChoosenTable.TableNumber + " nolu masa siparisleri basariyla kaydedildi");
+        }
+
+        private int findTableOrder(string tableNameInput)
+        {
+            int i = 0;
             foreach (string names in tableNumbers)
             {
-                if(names != null)
-                { 
-                //
-                UserLog.WConsole(names);
+                if (names == tableNameInput)
+                {
+                    return i;
+                }
+                i++;
+            }
+            return -1;
+        }
+        private void setSiparisListToTable()
+        {
+            UserLog.WConsole("Masanin listedeki sirasi : " + findTableOrder(LastChoosenTable.TableNumber));
+            UserLog.WConsole(tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 4]);
+            int siparisCount = Convert.ToInt16(tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 4]);
+            for (int i = 0; i < siparisCount; i++)
+            {
+                string mealID = tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 1, i].ToString();
+                string meal = findMeal(mealID);
+                int mealPrice = findMealPrice(mealID);
+                int countOfMeal = Convert.ToInt16(tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 2, i]);
+
+                dgViewSiparis.Rows.Add(mealID, meal, countOfMeal, null, null, mealPrice * countOfMeal + " TL");
+            }
+            lToplamTutar.Text = tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 2]+" TL";
+            dgViewSiparis.Refresh();
+        }
+        private void clearSiparisTable()
+        {
+            dgViewSiparis.Rows.Clear();
+            dgViewSiparis.Refresh();
+        }
+        private string findMeal(string mealID)
+        {
+            for (int i = 0; i < dgView.RowCount; i++)
+            {
+                if (dgView.Rows[i].Cells[0].Value.ToString() == mealID.ToString())
+                {
+                    return dgView.Rows[i].Cells[1].Value.ToString();
                 }
             }
-
-            UserLog.WConsole(LastChoosenTable.TableNumber + " nolu masa siparisleri basariyla kaydedildi");
+            return null;
+        }
+        private int findMealPrice(string mealID)
+        {
+            for (int i = 0; i < dgView.RowCount; i++)
+            {
+                if (dgView.Rows[i].Cells[0].Value.ToString() == mealID.ToString())
+                {
+                    return Convert.ToInt16(dgView.Rows[i].Cells[4].Value.ToString());
+                }
+            }
+            return 0;
         }
     }
 }
