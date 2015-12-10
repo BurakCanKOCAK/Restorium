@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tp_Adisyon = new System.Windows.Forms.TabPage();
@@ -42,13 +42,9 @@
             this.lIskonto = new System.Windows.Forms.Label();
             this.lPersonel = new System.Windows.Forms.Label();
             this.dgViewSiparis = new System.Windows.Forms.DataGridView();
-            this.ID_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ACIKLAMA_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ADET_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ARTIR_SIPARIS = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.AZALT_SIPARIS = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.TUTAR_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lToplamTutar = new System.Windows.Forms.Label();
             this.bTableClose = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.lMasaNo = new System.Windows.Forms.Label();
@@ -109,8 +105,13 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
-            this.lToplamTutar = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.ID_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ACIKLAMA_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ADET_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ARTIR_SIPARIS = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.AZALT_SIPARIS = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.TUTAR_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Birim_Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
@@ -239,66 +240,14 @@
             this.ADET_SIPARIS,
             this.ARTIR_SIPARIS,
             this.AZALT_SIPARIS,
-            this.TUTAR_SIPARIS});
+            this.TUTAR_SIPARIS,
+            this.Birim_Tutar});
             this.dgViewSiparis.Location = new System.Drawing.Point(0, 176);
             this.dgViewSiparis.Name = "dgViewSiparis";
             this.dgViewSiparis.ReadOnly = true;
             this.dgViewSiparis.Size = new System.Drawing.Size(470, 321);
             this.dgViewSiparis.TabIndex = 4;
             this.dgViewSiparis.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgViewSiparis_CellContentClick);
-            // 
-            // ID_SIPARIS
-            // 
-            dataGridViewCellStyle1.NullValue = " ";
-            this.ID_SIPARIS.DefaultCellStyle = dataGridViewCellStyle1;
-            this.ID_SIPARIS.FillWeight = 27F;
-            this.ID_SIPARIS.HeaderText = "ID";
-            this.ID_SIPARIS.Name = "ID_SIPARIS";
-            this.ID_SIPARIS.ReadOnly = true;
-            this.ID_SIPARIS.Width = 65;
-            // 
-            // ACIKLAMA_SIPARIS
-            // 
-            this.ACIKLAMA_SIPARIS.HeaderText = "Aciklama";
-            this.ACIKLAMA_SIPARIS.Name = "ACIKLAMA_SIPARIS";
-            this.ACIKLAMA_SIPARIS.ReadOnly = true;
-            // 
-            // ADET_SIPARIS
-            // 
-            this.ADET_SIPARIS.HeaderText = "Adet";
-            this.ADET_SIPARIS.Name = "ADET_SIPARIS";
-            this.ADET_SIPARIS.ReadOnly = true;
-            // 
-            // ARTIR_SIPARIS
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.NullValue = "+";
-            this.ARTIR_SIPARIS.DefaultCellStyle = dataGridViewCellStyle2;
-            this.ARTIR_SIPARIS.FillWeight = 10F;
-            this.ARTIR_SIPARIS.HeaderText = "+";
-            this.ARTIR_SIPARIS.Name = "ARTIR_SIPARIS";
-            this.ARTIR_SIPARIS.ReadOnly = true;
-            this.ARTIR_SIPARIS.Text = "+";
-            this.ARTIR_SIPARIS.Width = 30;
-            // 
-            // AZALT_SIPARIS
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.NullValue = "-";
-            this.AZALT_SIPARIS.DefaultCellStyle = dataGridViewCellStyle3;
-            this.AZALT_SIPARIS.FillWeight = 10F;
-            this.AZALT_SIPARIS.HeaderText = "-";
-            this.AZALT_SIPARIS.Name = "AZALT_SIPARIS";
-            this.AZALT_SIPARIS.ReadOnly = true;
-            this.AZALT_SIPARIS.Text = "-";
-            this.AZALT_SIPARIS.Width = 30;
-            // 
-            // TUTAR_SIPARIS
-            // 
-            this.TUTAR_SIPARIS.FillWeight = 25F;
-            this.TUTAR_SIPARIS.HeaderText = "Tutar";
-            this.TUTAR_SIPARIS.Name = "TUTAR_SIPARIS";
-            this.TUTAR_SIPARIS.ReadOnly = true;
             // 
             // groupBox1
             // 
@@ -316,6 +265,28 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Masa Islemleri";
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(283, 20);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(107, 19);
+            this.label11.TabIndex = 7;
+            this.label11.Text = "Toplam Tutar :";
+            // 
+            // lToplamTutar
+            // 
+            this.lToplamTutar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lToplamTutar.AutoSize = true;
+            this.lToplamTutar.BackColor = System.Drawing.Color.Transparent;
+            this.lToplamTutar.ForeColor = System.Drawing.Color.Gold;
+            this.lToplamTutar.Location = new System.Drawing.Point(396, 20);
+            this.lToplamTutar.Name = "lToplamTutar";
+            this.lToplamTutar.Size = new System.Drawing.Size(14, 19);
+            this.lToplamTutar.TabIndex = 6;
+            this.lToplamTutar.Text = "-";
             // 
             // bTableClose
             // 
@@ -1003,27 +974,67 @@
             this.printDialog1.Document = this.printDocument1;
             this.printDialog1.UseEXDialog = true;
             // 
-            // lToplamTutar
+            // ID_SIPARIS
             // 
-            this.lToplamTutar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lToplamTutar.AutoSize = true;
-            this.lToplamTutar.BackColor = System.Drawing.Color.Transparent;
-            this.lToplamTutar.ForeColor = System.Drawing.Color.Gold;
-            this.lToplamTutar.Location = new System.Drawing.Point(396, 20);
-            this.lToplamTutar.Name = "lToplamTutar";
-            this.lToplamTutar.Size = new System.Drawing.Size(14, 19);
-            this.lToplamTutar.TabIndex = 6;
-            this.lToplamTutar.Text = "-";
+            dataGridViewCellStyle1.NullValue = " ";
+            this.ID_SIPARIS.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ID_SIPARIS.FillWeight = 27F;
+            this.ID_SIPARIS.HeaderText = "ID";
+            this.ID_SIPARIS.Name = "ID_SIPARIS";
+            this.ID_SIPARIS.ReadOnly = true;
+            this.ID_SIPARIS.Width = 65;
             // 
-            // label11
+            // ACIKLAMA_SIPARIS
             // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(283, 20);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(107, 19);
-            this.label11.TabIndex = 7;
-            this.label11.Text = "Toplam Tutar :";
+            this.ACIKLAMA_SIPARIS.FillWeight = 110F;
+            this.ACIKLAMA_SIPARIS.HeaderText = "Aciklama";
+            this.ACIKLAMA_SIPARIS.Name = "ACIKLAMA_SIPARIS";
+            this.ACIKLAMA_SIPARIS.ReadOnly = true;
+            // 
+            // ADET_SIPARIS
+            // 
+            this.ADET_SIPARIS.FillWeight = 30F;
+            this.ADET_SIPARIS.HeaderText = "Adet";
+            this.ADET_SIPARIS.Name = "ADET_SIPARIS";
+            this.ADET_SIPARIS.ReadOnly = true;
+            // 
+            // ARTIR_SIPARIS
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.NullValue = "+";
+            this.ARTIR_SIPARIS.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ARTIR_SIPARIS.FillWeight = 10F;
+            this.ARTIR_SIPARIS.HeaderText = "+";
+            this.ARTIR_SIPARIS.Name = "ARTIR_SIPARIS";
+            this.ARTIR_SIPARIS.ReadOnly = true;
+            this.ARTIR_SIPARIS.Text = "+";
+            this.ARTIR_SIPARIS.Width = 30;
+            // 
+            // AZALT_SIPARIS
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.NullValue = "-";
+            this.AZALT_SIPARIS.DefaultCellStyle = dataGridViewCellStyle3;
+            this.AZALT_SIPARIS.FillWeight = 10F;
+            this.AZALT_SIPARIS.HeaderText = "-";
+            this.AZALT_SIPARIS.Name = "AZALT_SIPARIS";
+            this.AZALT_SIPARIS.ReadOnly = true;
+            this.AZALT_SIPARIS.Text = "-";
+            this.AZALT_SIPARIS.Width = 30;
+            // 
+            // TUTAR_SIPARIS
+            // 
+            this.TUTAR_SIPARIS.FillWeight = 20F;
+            this.TUTAR_SIPARIS.HeaderText = "Tutar";
+            this.TUTAR_SIPARIS.Name = "TUTAR_SIPARIS";
+            this.TUTAR_SIPARIS.ReadOnly = true;
+            // 
+            // Birim_Tutar
+            // 
+            this.Birim_Tutar.FillWeight = 20F;
+            this.Birim_Tutar.HeaderText = "Birim Tutar";
+            this.Birim_Tutar.Name = "Birim_Tutar";
+            this.Birim_Tutar.ReadOnly = true;
             // 
             // MainForm
             // 
@@ -1138,13 +1149,14 @@
         private System.Windows.Forms.Label lIskonto;
         private System.Windows.Forms.Label lMusteriAdi;
         private System.Windows.Forms.Button bSiparisEkle;
+        private System.Windows.Forms.Label lToplamTutar;
+        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID_SIPARIS;
         private System.Windows.Forms.DataGridViewTextBoxColumn ACIKLAMA_SIPARIS;
         private System.Windows.Forms.DataGridViewTextBoxColumn ADET_SIPARIS;
         private System.Windows.Forms.DataGridViewButtonColumn ARTIR_SIPARIS;
         private System.Windows.Forms.DataGridViewButtonColumn AZALT_SIPARIS;
         private System.Windows.Forms.DataGridViewTextBoxColumn TUTAR_SIPARIS;
-        private System.Windows.Forms.Label lToplamTutar;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Birim_Tutar;
     }
 }

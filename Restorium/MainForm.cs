@@ -445,9 +445,10 @@ namespace Restorium
           }
         private void masa_click(object sender, EventArgs e)
         {
+            UserLog.WConsole("<<< masa_click >>>");
             Button b = sender as Button;
             // Buton fonksiyonu
-            UserLog.WConsole(b.Name);
+            UserLog.WConsole("Masanin ID si : "+b.Name);
             string masaNoLocal = b.Name;
             masaNoLocal = masaNoLocal.Replace("bLeft", "");
             lMasaNo.Text = masaNoLocal;
@@ -458,7 +459,7 @@ namespace Restorium
                 if (tableDetails[i * 3, 0] == masaNoLocal)
                 {
                         LastChoosenTable.TableNumber = masaNoLocal;
-                        UserLog.WConsole(LastChoosenTable.TableNumber.ToString());
+                        UserLog.WConsole("Masanin Adi : \""+LastChoosenTable.TableNumber.ToString()+"\"");
                         lTableCounter.Text = "Bugun acilan "+tableDetails[i * 3, 1]+". masa";
                         if (tableDetails[i * 3, 7] == "R")
                         {
@@ -567,6 +568,7 @@ namespace Restorium
         }
         private void key_press(object sender, KeyEventArgs e) //Key Press Handle Function
         {
+            UserLog.WConsole("<<< key_press >>>");
             if (e.KeyCode == Keys.F4) //F4 -> NEW TABLE
             {
                
@@ -798,6 +800,7 @@ namespace Restorium
 
         private void bSiparisEkle_Click(object sender, EventArgs e)
         {
+            UserLog.WConsole("<<< bSiparisEkle_Click >>>");
             using (var showListForm = new ShowListForm())
             {
                 showListForm.ListName = "Stok";
@@ -836,7 +839,7 @@ namespace Restorium
                         //Tutar
                             string tutar = dgViewSiparis.Rows[existedRow].Cells[5].Value.ToString();  // 5 TL
                             tutar = tutar.Replace(" TL", "");  // 5
-                            tutar = (Convert.ToInt16(tutar) + Convert.ToInt16(showListForm.Selected_Meal_Price)).ToString();  // 10
+                            tutar = (Convert.ToDecimal(tutar) + Convert.ToDecimal(showListForm.Selected_Meal_Price)).ToString();  // 10
                             dgViewSiparis.Rows[existedRow].Cells[5].Value = tutar + " TL"; 
                             dgViewSiparis.Refresh();
                             saveAdisyonToTable();
@@ -846,10 +849,11 @@ namespace Restorium
                             UserLog.WConsole(showListForm.Selected_Meal_ID + " ("+ showListForm.Selected_Meal+")"+ " nolu siparis listeye ekleniyor..");
                             string mealID = showListForm.Selected_Meal_ID;
                             string meal = showListForm.Selected_Meal;
-                            string mealPrice = showListForm.Selected_Meal_Price;
+                            decimal mealPrice = showListForm.Selected_Meal_Price;
                             dgViewSiparis.AllowUserToAddRows = true;
                         //Sutuna ilk degeri yazdirma
-                            dgViewSiparis.Rows.Add(mealID,meal,"1",null,null,mealPrice+" TL");
+                            dgViewSiparis.Rows.Add(mealID,meal,"1",null,null,mealPrice.ToString()+" TL",mealPrice.ToString()+" TL");
+                            //UserLog.WConsole("Yemek fiyati : " + mealPrice.ToString());
                             dgViewSiparis.AllowUserToAddRows = false;
                             dgViewSiparis.Refresh();
                             saveAdisyonToTable();
@@ -864,14 +868,14 @@ namespace Restorium
             if (e.ColumnIndex == 3) // Siparis miktarini 1 artir
             {
                 //UserLog.WConsole(e.RowIndex.ToString());
-              
+                
                 int oldCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
                 dgViewSiparis.Rows[e.RowIndex].Cells[2].Value = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value) + 1).ToString();
                 int newCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
                 //tutar hesabi
                 string tutar = dgViewSiparis.Rows[e.RowIndex].Cells[5].Value.ToString(); // 5 TL
                 tutar=tutar.Replace(" TL", "");
-                tutar = ((Convert.ToInt16(tutar) / oldCount) * newCount).ToString();  // 10
+                tutar = ((Convert.ToDecimal(tutar) / oldCount) * newCount).ToString();  // 10
                 dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = tutar + " TL";
             }
             if (e.ColumnIndex == 4) // Siparis miktarini 1 azalt
@@ -886,7 +890,7 @@ namespace Restorium
                     //tutar hesabi
                     string tutar = dgViewSiparis.Rows[e.RowIndex].Cells[5].Value.ToString(); // 5 TL
                     tutar = tutar.Replace(" TL", "");
-                    tutar = (((Convert.ToInt16(tutar)) / oldCount) * newCount).ToString();
+                    tutar = (((Convert.ToDecimal(tutar)) / oldCount) * newCount).ToString();
                     dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = tutar + " TL";
                 }
                 else if (adet == 0)
@@ -914,17 +918,17 @@ namespace Restorium
 
         private void saveAdisyonToTable()
         {
-            int toplamTutar = 0;
+            decimal toplamTutar = 0;
             for (int i = 0; i < dgViewSiparis.RowCount; i++)
             {
                 string tutar = dgViewSiparis.Rows[i].Cells[5].Value.ToString();
                 tutar = tutar.Replace(" TL", "");
-                toplamTutar = toplamTutar + Convert.ToInt16(tutar);
+                toplamTutar = toplamTutar + Convert.ToDecimal(tutar);
                 
             }
             lToplamTutar.Text = toplamTutar.ToString() + " TL";
             //Masaya kaydet
-            tableDetails[findTableOrder(LastChoosenTable.TableNumber)*3, 2] = toplamTutar.ToString(); // Tutar
+            tableDetails[findTableOrder(LastChoosenTable.TableNumber)*3 , 2] = toplamTutar.ToString(); // Tutar
             tableDetails[findTableOrder(LastChoosenTable.TableNumber) *3, 4] = dgViewSiparis.RowCount.ToString(); // Toplam urun siparis cesidi
             for (int i = 0; i < dgViewSiparis.RowCount; i++)
             {
@@ -934,7 +938,7 @@ namespace Restorium
             UserLog.WConsole(LastChoosenTable.TableNumber + " nolu masa siparisleri basariyla kaydedildi");
         }
 
-        private int findTableOrder(string tableNameInput)
+        private int findTableOrder(string tableNameInput) // tableNameInput : masanin adi . BU fonksiyon masanin tableNumbers dizinsindeki sirasini doner
         {
             int i = 0;
             foreach (string names in tableNumbers)
@@ -947,29 +951,28 @@ namespace Restorium
             }
             return -1;
         }
-        private void setSiparisListToTable()
+        private void setSiparisListToTable() // LastChoosenTable.TableNumber degiskenine set edilmis masa detaylarini dgviewSiparis'e set eder
         {
             UserLog.WConsole("Masanin listedeki sirasi : " + findTableOrder(LastChoosenTable.TableNumber));
-            UserLog.WConsole(tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 4]);
+            UserLog.WConsole("tableDetails dan okunan sira : "+tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 4]);
             int siparisCount = Convert.ToInt16(tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 4]);
             for (int i = 0; i < siparisCount; i++)
             {
                 string mealID = tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 1, i].ToString();
                 string meal = findMeal(mealID);
-                int mealPrice = findMealPrice(mealID);
+                decimal mealPrice = findMealPrice(mealID);
                 int countOfMeal = Convert.ToInt16(tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 2, i]);
-
-                dgViewSiparis.Rows.Add(mealID, meal, countOfMeal, null, null, mealPrice * countOfMeal + " TL");
+                dgViewSiparis.Rows.Add(mealID, meal, countOfMeal, null, null, (mealPrice * countOfMeal).ToString() + " TL", findMealPrice(mealID).ToString() + " TL");
             }
             lToplamTutar.Text = tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 2]+" TL";
             dgViewSiparis.Refresh();
         }
-        private void clearSiparisTable()
+        private void clearSiparisTable() //dgviewSiparis listesini temizler
         {
             dgViewSiparis.Rows.Clear();
             dgViewSiparis.Refresh();
         }
-        private string findMeal(string mealID)
+        private string findMeal(string mealID)  // mealID : Yemegin stokda kayitli oldugu id . ID ile request edilen yemegin aciklama kisminda yazani doner.
         {
             for (int i = 0; i < dgView.RowCount; i++)
             {
@@ -980,13 +983,13 @@ namespace Restorium
             }
             return null;
         }
-        private int findMealPrice(string mealID)
+        private decimal findMealPrice(string mealID) // mealID : Yemegin stokda kayitli oldugu id . ID ile request edilen yemegin fiyat kisminda yazani doner.
         {
             for (int i = 0; i < dgView.RowCount; i++)
             {
                 if (dgView.Rows[i].Cells[0].Value.ToString() == mealID.ToString())
                 {
-                    return Convert.ToInt16(dgView.Rows[i].Cells[4].Value.ToString());
+                    return Convert.ToDecimal(dgView.Rows[i].Cells[4].Value.ToString());
                 }
             }
             return 0;
