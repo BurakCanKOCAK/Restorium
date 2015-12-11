@@ -112,6 +112,7 @@
             this.AZALT_SIPARIS = new System.Windows.Forms.DataGridViewButtonColumn();
             this.TUTAR_SIPARIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Birim_Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bActiveEt = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
@@ -197,7 +198,7 @@
             this.bSiparisEkle.Name = "bSiparisEkle";
             this.bSiparisEkle.Size = new System.Drawing.Size(94, 30);
             this.bSiparisEkle.TabIndex = 6;
-            this.bSiparisEkle.Text = "Siparis Ekle";
+            this.bSiparisEkle.Text = "Sipariş Ekle";
             this.bSiparisEkle.UseVisualStyleBackColor = true;
             this.bSiparisEkle.Click += new System.EventHandler(this.bSiparisEkle_Click);
             // 
@@ -230,6 +231,7 @@
             // 
             // dgViewSiparis
             // 
+            this.dgViewSiparis.AllowUserToAddRows = false;
             this.dgViewSiparis.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -254,6 +256,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.Gray;
+            this.groupBox1.Controls.Add(this.bActiveEt);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.lToplamTutar);
             this.groupBox1.Controls.Add(this.bTableClose);
@@ -1036,6 +1039,17 @@
             this.Birim_Tutar.Name = "Birim_Tutar";
             this.Birim_Tutar.ReadOnly = true;
             // 
+            // bActiveEt
+            // 
+            this.bActiveEt.Enabled = false;
+            this.bActiveEt.Location = new System.Drawing.Point(149, 64);
+            this.bActiveEt.Name = "bActiveEt";
+            this.bActiveEt.Size = new System.Drawing.Size(130, 30);
+            this.bActiveEt.TabIndex = 8;
+            this.bActiveEt.Text = "Masayi Ac";
+            this.bActiveEt.UseVisualStyleBackColor = true;
+            this.bActiveEt.Click += new System.EventHandler(this.bActiveEt_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1158,5 +1172,6 @@
         private System.Windows.Forms.DataGridViewButtonColumn AZALT_SIPARIS;
         private System.Windows.Forms.DataGridViewTextBoxColumn TUTAR_SIPARIS;
         private System.Windows.Forms.DataGridViewTextBoxColumn Birim_Tutar;
+        private System.Windows.Forms.Button bActiveEt;
     }
 }

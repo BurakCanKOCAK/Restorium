@@ -41,7 +41,8 @@ namespace Restorium
             if (MainForm.User != "Admin" && MainForm.User != "KidemliPersonel")
             {
                 tbIskonto.Enabled = false;
-            }   
+            }
+            tbMusteri.Text = "Müşteri";
         }
 
         private void bMasaAc_Click(object sender, EventArgs e)
