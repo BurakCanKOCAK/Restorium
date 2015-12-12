@@ -61,6 +61,7 @@ namespace Restorium
         public static int iskontoRate;
         public static string User;
         #endregion
+
         public MainForm()
         {
             InitializeComponent();
@@ -70,6 +71,7 @@ namespace Restorium
             SettingsDataSet();
             SiparisScreenInitialSet();
         }
+
         private void SiparisScreenInitialSet()
         {
             dgViewSiparis.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -77,6 +79,7 @@ namespace Restorium
             dgViewSiparis.ReadOnly = true;
             clearSiparisTable();
         }
+
         private void SetExchangeValues()
         {
             try
@@ -95,6 +98,7 @@ namespace Restorium
                 UserLog.WConsole("Doviz kurlari okumada hata ! (Deger girilmemis!)");
             }
         }
+
         private void SettingsDataSet()
         {
 
@@ -130,6 +134,7 @@ namespace Restorium
                 tbDefaultIskontoValue.Enabled = false;
             }
         }
+
         private void bYeniMasa_Click(object sender, EventArgs e)
         {//Yeni masa Acmak icin
             using (var tableOpenForm = new TableOpenForm())
@@ -211,12 +216,14 @@ namespace Restorium
             }
             if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
             {
+                bActiveEt.Visible = true;
                 bActiveEt.Enabled = true;
                 bSiparisEkle.Enabled = false;
                 bTableClose.Text = "R. Iptal";
             }
             else
             {
+                bActiveEt.Visible = false;
                 bActiveEt.Enabled = false;
                 bSiparisEkle.Enabled = true;
                 bTableClose.Text = "Masa Kapat";
@@ -224,14 +231,17 @@ namespace Restorium
             bTableClose.Enabled = true;
 
         }
+
         private void bMasaTasi_Click(object sender, EventArgs e)
         {
             // Masa TASI
         }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             lDate.Text = DateTime.UtcNow.ToLocalTime().ToString();
         }
+
         private void Data_Update(object sender, EventArgs e)
         {
             lDate.Text = DateTime.UtcNow.ToLocalTime().ToString();
@@ -247,6 +257,7 @@ namespace Restorium
             }
             GC.Collect();  //Duruma gore daha sonra kaldirilabilir ya da method degistirilebilir
         }
+       
         #region checking Systems
         private bool isConnectedToInternet()
         {
@@ -260,6 +271,7 @@ namespace Restorium
             }
         }
         #endregion    
+       
         #region STOK PROCESSES
         private void StokDataSet()
         {
@@ -274,6 +286,7 @@ namespace Restorium
             DataTable dataTable = new DataTable();
             this.dgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
+
         private void bDuzenle_Click(object sender, EventArgs e)
         {
             // SEKME : STOK  - GOREV : bDuzenle butonuna basildiginda tabloyu editable yapmak
@@ -308,6 +321,7 @@ namespace Restorium
             }
         }
         #endregion
+       
         #region STOK DATA SAVE / LOAD / SEARCH FROM FILE
         private void saveStokToFile()
         {
@@ -337,6 +351,7 @@ namespace Restorium
             UserLog.WConsole("Stok Listesi Kaydetme Basarili");
 
         }
+
         private void getStokFromFile()
         {//Dosyadan Stok Datasini alik gdView'a set eder
             try
@@ -372,11 +387,13 @@ namespace Restorium
             }
 
         }
+
         private void bStokAra_Click(object sender, EventArgs e)
         {
             //tbSearchKey'de yazani al ona gore DGView'de arama yap.
         }
         #endregion
+       
         #region  Adisyon
         private void bRezervasyon_Click(object sender, EventArgs e)
         {
@@ -459,18 +476,21 @@ namespace Restorium
             }
             if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
             {
+                bActiveEt.Visible = true;
                 bActiveEt.Enabled = true;
                 bSiparisEkle.Enabled = false;
                 bTableClose.Text = "R. Iptal";
             }
             else
             {
+                bActiveEt.Visible = false;
                 bActiveEt.Enabled = false;
                 bSiparisEkle.Enabled = true;
                 bTableClose.Text = "Masa Kapat";
             }
             bTableClose.Enabled = true;
         }
+
         private void masa_click(object sender, EventArgs e)
         {
             UserLog.WConsole("<<< masa_click >>>");
@@ -503,12 +523,14 @@ namespace Restorium
             }
             if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
             {
+                bActiveEt.Visible = true;
                 bActiveEt.Enabled = true;
                 bSiparisEkle.Enabled = false;
                 bTableClose.Text = "R. Iptal";
             }
             else
             {
+                bActiveEt.Visible = false;
                 bActiveEt.Enabled = false;
                 bSiparisEkle.Enabled = true;
                 bTableClose.Text = "Masa Kapat";
@@ -517,9 +539,8 @@ namespace Restorium
             clearSiparisTable();
             setSiparisListToTable();
         }
-
-
         #endregion
+        
         #region PERSONEL PROCESSES
         private void bPersonelDuzenle_Click(object sender, EventArgs e)
         {
@@ -552,6 +573,7 @@ namespace Restorium
             }
 
         }
+
         private void savePersonnelToFile()
         {//Personel Listesini duzenleme bitince dosyaya kaydeder.
             personelCount = dgViewWaiter.RowCount;
@@ -566,6 +588,7 @@ namespace Restorium
             }
             UserLog.WConsole("Personel Listesi Kaydetme Basarili (" + personelCount.ToString() + ")");
         }
+
         private void getPersonelFromFile()
         {//Personel listesini dosyadan ceker
             dgViewWaiter.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -591,20 +614,24 @@ namespace Restorium
             }
         }
         #endregion
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             // Print Function
 
         }
+
         private void MainForm_Minimize(object sender, FormClosingEventArgs e)
         {
             this.MinimizeBox = true;
         }
+
         private void IskontoValueChanged(object sender, EventArgs e)
         {
             INI.Write("Iskonto", tbDefaultIskontoValue.Text.ToString(), "Settings");
             iskontoRate = Convert.ToInt16(tbDefaultIskontoValue.Text);
         }
+
         private void key_press(object sender, KeyEventArgs e) //Key Press Handle Function
         {
             UserLog.WConsole("<<< key_press >>>");
@@ -685,12 +712,14 @@ namespace Restorium
                         LastChoosenTable.TableNumber = MasaNo.ToString();
                         if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
                         {
+                            bActiveEt.Visible = true;
                             bActiveEt.Enabled = true;
                             bSiparisEkle.Enabled = false;
                             bTableClose.Text = "R. Iptal";
                         }
                         else
                         {
+                            bActiveEt.Visible = false;
                             bActiveEt.Enabled = false;
                             bSiparisEkle.Enabled = true;
                             bTableClose.Text = "Masa Kapat";
@@ -775,12 +804,14 @@ namespace Restorium
                         LastChoosenTable.TableNumber = MasaNo.ToString();
                         if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
                         {
+                            bActiveEt.Visible = true;
                             bActiveEt.Enabled = true;
                             bSiparisEkle.Enabled = false;
                             bTableClose.Text = "R. Iptal";
                         }
                         else
                         {
+                            bActiveEt.Visible = false;
                             bActiveEt.Enabled = false;
                             bSiparisEkle.Enabled = true;
                             bTableClose.Text = "Masa Kapat";
@@ -790,6 +821,7 @@ namespace Restorium
                 }
             }
         }
+
         private void ExchangeValuesChanged(object sender, EventArgs e)
         {
             INI.Write("Dolar", tbDolar.Text.ToString(), "Exchange");
@@ -799,14 +831,17 @@ namespace Restorium
             UserLog.WConsole("Doviz kurlari basariyla kaydedildi !");
 
         }
+
         private void Shutdown(object sender, FormClosedEventArgs e)
         {
             Environment.Exit(0);
         }
+
         private void bCalculator_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process p = System.Diagnostics.Process.Start("calc.exe");
         }
+
         private void StokAdd_Click(object sender, EventArgs e)
         {
             using (var stokAdd = new StokAdd())
@@ -826,6 +861,7 @@ namespace Restorium
                 }
             }
         }
+
         private void bTableClose_Click(object sender, EventArgs e)
         {
             string title = "";
@@ -872,6 +908,8 @@ namespace Restorium
                     }
                     i++;
                 }
+                bActiveEt.Visible = false;
+                bActiveEt.Enabled = false;
             }
         }
 
@@ -1028,6 +1066,7 @@ namespace Restorium
             }
             return -1;
         }
+
         private void setSiparisListToTable() // LastChoosenTable.TableNumber degiskenine set edilmis masa detaylarini dgviewSiparis'e set eder
         {
             UserLog.WConsole("Masanin listedeki sirasi : " + findTableOrder(LastChoosenTable.TableNumber));
@@ -1044,11 +1083,13 @@ namespace Restorium
             lToplamTutar.Text = tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 2] + " TL";
             dgViewSiparis.Refresh();
         }
+
         private void clearSiparisTable() //dgviewSiparis listesini temizler
         {
             dgViewSiparis.Rows.Clear();
             dgViewSiparis.Refresh();
         }
+
         private string findMeal(string mealID)  // mealID : Yemegin stokda kayitli oldugu id . ID ile request edilen yemegin aciklama kisminda yazani doner.
         {
             for (int i = 0; i < dgView.RowCount; i++)
@@ -1060,6 +1101,7 @@ namespace Restorium
             }
             return null;
         }
+
         private decimal findMealPrice(string mealID) // mealID : Yemegin stokda kayitli oldugu id . ID ile request edilen yemegin fiyat kisminda yazani doner.
         {
             for (int i = 0; i < dgView.RowCount; i++)
@@ -1074,48 +1116,55 @@ namespace Restorium
 
         private void bActiveEt_Click(object sender, EventArgs e)
         {
-            tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] = "N";
-            int i = 0;
-            foreach (string tablenames in tableNumbers)
+            DialogResult dialogResult = MessageBox.Show("Masa Adi : " + lMasaNo.Text + "\n" + "Masayi acmak istediginize emin misiniz?", "Masa Acma Onayi", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                string tableName = lMasaNo.Text;
-                if (tableNumbers[i] == tableName)
+                tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] = "N";
+                int i = 0;
+                foreach (string tablenames in tableNumbers)
                 {
-                    tableName = "bLeft" + tableName;
-                    foreach (Control c in tableLayoutPanel1.Controls)
+                    string tableName = lMasaNo.Text;
+                    if (tableNumbers[i] == tableName)
                     {
-                        
-                        if (c is Button)
+                        tableName = "bLeft" + tableName;
+                        foreach (Control c in tableLayoutPanel1.Controls)
                         {
-                            Button ButtonControl = (Button)c;
-                            if (ButtonControl.Name.Equals(tableName))
-                            {
-                                ButtonControl.ForeColor = Color.Black;
-                                ButtonControl.BackColor = Color.Red;
-                                lMasaNo.ForeColor = Color.Red;
-                                UserLog.WConsole("Masa basariyla acildi");
 
+                            if (c is Button)
+                            {
+                                Button ButtonControl = (Button)c;
+                                if (ButtonControl.Name.Equals(tableName))
+                                {
+                                    ButtonControl.ForeColor = Color.Black;
+                                    ButtonControl.BackColor = Color.Red;
+                                    lMasaNo.ForeColor = Color.Red;
+                                    UserLog.WConsole("Masa basariyla acildi");
+
+                                }
                             }
                         }
+                        bSiparisEkle.Enabled = true;
+                        bActiveEt.Enabled = false;
                     }
-                    bSiparisEkle.Enabled = true;
-                    bActiveEt.Enabled = false;
+                    i++;
                 }
-                i++;
+                if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
+                {
+                    bActiveEt.Visible = true;
+                    bActiveEt.Enabled = true;
+                    bSiparisEkle.Enabled = false;
+                    bTableClose.Text = "R. Iptal";
+                }
+                else
+                {
+                    bActiveEt.Visible = false;
+                    bActiveEt.Enabled = false;
+                    bSiparisEkle.Enabled = true;
+                    bTableClose.Text = "Masa Kapat";
+                }
+                bTableClose.Enabled = true;
             }
-            if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
-            {
-                bActiveEt.Enabled = true;
-                bSiparisEkle.Enabled = false;
-                bTableClose.Text = "R. Iptal";
-            }
-            else
-            {
-                bActiveEt.Enabled = false;
-                bSiparisEkle.Enabled = true;
-                bTableClose.Text = "Masa Kapat";
-            }
-            bTableClose.Enabled = true;
         }
+
     }
 }

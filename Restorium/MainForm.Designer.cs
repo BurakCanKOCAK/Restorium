@@ -320,7 +320,7 @@
             this.lMasaNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lMasaNo.AutoSize = true;
             this.lMasaNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 50.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lMasaNo.ForeColor = System.Drawing.Color.Crimson;
+            this.lMasaNo.ForeColor = System.Drawing.Color.Black;
             this.lMasaNo.Location = new System.Drawing.Point(356, 19);
             this.lMasaNo.Name = "lMasaNo";
             this.lMasaNo.Size = new System.Drawing.Size(56, 76);
@@ -1048,6 +1048,7 @@
             this.bActiveEt.TabIndex = 8;
             this.bActiveEt.Text = "Masayi Ac";
             this.bActiveEt.UseVisualStyleBackColor = true;
+            this.bActiveEt.Visible = false;
             this.bActiveEt.Click += new System.EventHandler(this.bActiveEt_Click);
             // 
             // MainForm

@@ -26,7 +26,7 @@ namespace Restorium
         private void TableOpenForm_Load(object sender, EventArgs e)
         {
             //----------------------//
-            UserLog.WConsole("TableOpenForm Started!!");
+            UserLog.WConsole("<<< TableOpenForm (Form)>>>");
             UserLog.WConsole("Personel Okundu  (" + MainForm.personelCount.ToString() + ")");
             tbPersonelAdi.AutoCompleteMode = AutoCompleteMode.Suggest;
             tbPersonelAdi.AutoCompleteSource = AutoCompleteSource.CustomSource;
