@@ -32,13 +32,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tbID = new System.Windows.Forms.TextBox();
+            this.tbAciklama = new System.Windows.Forms.TextBox();
+            this.tbAdet = new System.Windows.Forms.TextBox();
+            this.tbBirimFiyat = new System.Windows.Forms.TextBox();
             this.cbBirim = new System.Windows.Forms.ComboBox();
             this.cbParaBirimi = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bStokAdd = new System.Windows.Forms.Button();
+            this.bCancel = new System.Windows.Forms.Button();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -81,37 +84,48 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "Birim Fiyat : ";
             // 
-            // textBox1
+            // tbID
             // 
-            this.textBox1.Location = new System.Drawing.Point(104, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 5;
+            this.tbID.Location = new System.Drawing.Point(104, 20);
+            this.tbID.Name = "tbID";
+            this.tbID.Size = new System.Drawing.Size(100, 20);
+            this.tbID.TabIndex = 5;
+            this.tbID.TextChanged += new System.EventHandler(this.IDSelectedFromList);
             // 
-            // textBox2
+            // tbAciklama
             // 
-            this.textBox2.Location = new System.Drawing.Point(104, 62);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 6;
+            this.tbAciklama.Location = new System.Drawing.Point(104, 62);
+            this.tbAciklama.Name = "tbAciklama";
+            this.tbAciklama.Size = new System.Drawing.Size(100, 20);
+            this.tbAciklama.TabIndex = 6;
+            this.tbAciklama.TextChanged += new System.EventHandler(this.AciklamaSelectedFromList);
             // 
-            // textBox3
+            // tbAdet
             // 
-            this.textBox3.Location = new System.Drawing.Point(104, 102);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 7;
+            this.tbAdet.Location = new System.Drawing.Point(104, 102);
+            this.tbAdet.Name = "tbAdet";
+            this.tbAdet.Size = new System.Drawing.Size(100, 20);
+            this.tbAdet.TabIndex = 7;
             // 
-            // textBox4
+            // tbBirimFiyat
             // 
-            this.textBox4.Location = new System.Drawing.Point(104, 138);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 8;
+            this.tbBirimFiyat.Location = new System.Drawing.Point(104, 138);
+            this.tbBirimFiyat.Name = "tbBirimFiyat";
+            this.tbBirimFiyat.Size = new System.Drawing.Size(100, 20);
+            this.tbBirimFiyat.TabIndex = 8;
             // 
             // cbBirim
             // 
             this.cbBirim.FormattingEnabled = true;
+            this.cbBirim.Items.AddRange(new object[] {
+            "Birim",
+            "Porsiyon",
+            "Kutu",
+            "kg",
+            "gr",
+            "Kasa",
+            "Buyuk",
+            "Kucuk"});
             this.cbBirim.Location = new System.Drawing.Point(211, 100);
             this.cbBirim.Name = "cbBirim";
             this.cbBirim.Size = new System.Drawing.Size(121, 21);
@@ -120,6 +134,11 @@
             // cbParaBirimi
             // 
             this.cbParaBirimi.FormattingEnabled = true;
+            this.cbParaBirimi.Items.AddRange(new object[] {
+            "TL",
+            "EURO",
+            "DOLAR",
+            "GBP"});
             this.cbParaBirimi.Location = new System.Drawing.Point(210, 138);
             this.cbParaBirimi.Name = "cbParaBirimi";
             this.cbParaBirimi.Size = new System.Drawing.Size(121, 21);
@@ -130,11 +149,33 @@
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.BackgroundImage = global::Restorium.Properties.Resources.red;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Controls.Add(this.bCancel);
+            this.panel1.Controls.Add(this.bStokAdd);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 184);
+            this.panel1.Location = new System.Drawing.Point(0, 192);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(450, 67);
+            this.panel1.Size = new System.Drawing.Size(450, 59);
             this.panel1.TabIndex = 11;
+            // 
+            // bStokAdd
+            // 
+            this.bStokAdd.Location = new System.Drawing.Point(25, 14);
+            this.bStokAdd.Name = "bStokAdd";
+            this.bStokAdd.Size = new System.Drawing.Size(95, 33);
+            this.bStokAdd.TabIndex = 0;
+            this.bStokAdd.Text = "Stok Ekle";
+            this.bStokAdd.UseVisualStyleBackColor = true;
+            this.bStokAdd.Click += new System.EventHandler(this.bStokAdd_Click);
+            // 
+            // bCancel
+            // 
+            this.bCancel.Location = new System.Drawing.Point(332, 14);
+            this.bCancel.Name = "bCancel";
+            this.bCancel.Size = new System.Drawing.Size(95, 33);
+            this.bCancel.TabIndex = 1;
+            this.bCancel.Text = "Iptal";
+            this.bCancel.UseVisualStyleBackColor = true;
+            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
             // StokAdd
             // 
@@ -144,10 +185,10 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cbParaBirimi);
             this.Controls.Add(this.cbBirim);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbBirimFiyat);
+            this.Controls.Add(this.tbAdet);
+            this.Controls.Add(this.tbAciklama);
+            this.Controls.Add(this.tbID);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -157,6 +198,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Stok Girisi";
             this.Load += new System.EventHandler(this.StokAdd_Load);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,12 +210,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tbID;
+        private System.Windows.Forms.TextBox tbAciklama;
+        private System.Windows.Forms.TextBox tbAdet;
+        private System.Windows.Forms.TextBox tbBirimFiyat;
         private System.Windows.Forms.ComboBox cbBirim;
         private System.Windows.Forms.ComboBox cbParaBirimi;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button bCancel;
+        private System.Windows.Forms.Button bStokAdd;
     }
 }

@@ -38,6 +38,18 @@ namespace Restorium
             tbPersonelAdi.AutoCompleteCustomSource = col;
             //----------------------//
             tbIskonto.Text = MainForm.iskontoRate.ToString();
+            if (LastChoosenTable.reservation == true) //Rezervasyon masasi aciliyorsa
+            {
+                gbRezervasyonSettings.Enabled = true;
+                gbRezervasyonSettings.Visible = true;
+            }
+            else
+            {
+                gbRezervasyonSettings.Enabled = false;
+                gbRezervasyonSettings.Visible = false;
+            }
+
+            // Izinler - Permissions
             if (MainForm.User != "Admin" && MainForm.User != "KidemliPersonel")
             {
                 tbIskonto.Enabled = false;
@@ -47,6 +59,15 @@ namespace Restorium
 
         private void bMasaAc_Click(object sender, EventArgs e)
         {
+            //**************************************************************************
+            //Rezervasyon olup olmamasina gore datayi MainForm daki TableDetails dizisine aktar
+            //***************************************************************************
+            //rDakika;
+            //rSaat;
+            //rLimitSaat;
+            //rLimitDakika;
+            //                  NowDateTime.UtcNow.ToLocalTime().ToShortTimeString().ToString();
+            //
             if (tbMasaNo.Text != "" && tbPersonelAdi.Text != "")
             {
                 bool tableCheck = true;
@@ -137,5 +158,9 @@ namespace Restorium
             return MainForm.tableCounter;
         }
 
+        private void Rezervasyon_Check(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -37,20 +37,24 @@ namespace Restorium
         #region Variables 
         IniFile INI = new IniFile();
         public static string[] personelNames = new string[100];
-        public static string[] menuItems = new string[500];
+        public static string[] menuAciklama = new string[500];
+        public static string[] menuID = new string[500];
+        public static decimal[] menuPrice = new decimal[500];
         public static string[] tableNumbers = new string[200];
         public static int tableCounter = 0;
         public static int dailyTableCounter = 0;
-        public static string[,] tableDetails = new string[300, 10];
         public static bool[] emptyTableList = new bool[200];
-        //       0       1          2      3         4                5        6             7       8        9  10
-        //    0  id      kacinci    tutar  personel  kac siparis(3)   iskonto  Musteri adi  R or N   R. date
+        public static string[,] tableDetails = new string[300, 10];
+        //       0       1          2       3          4                5         6             7            8         9        10
+        //    0  id      kacinci    tutar   personel   kac siparis(3)   iskonto   Musteri adi   "R" or "N"   R. date   R.Clock  Time of CloseTable
         //    1  1.id    2.id       3.id  
         //    2  x tane  y tane     z tane
         //    3 
         //    4
         //    5
         //    6
+        public static int reservedTableCount = 0;
+        public static string[,] reservationList = new string[100, 2];
         public static int stokCount;
         public static int personelCount;
         private bool duzenlemeModu = false;
@@ -139,6 +143,7 @@ namespace Restorium
         {//Yeni masa Acmak icin
             using (var tableOpenForm = new TableOpenForm())
             {
+                LastChoosenTable.reservation = false;
                 var result = tableOpenForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -367,7 +372,10 @@ namespace Restorium
                     string birimFiyat = INI.Read("birimFiyat" + i.ToString(), "Stok");
                     string paraBirimi = INI.Read("paraBirimi" + i.ToString(), "Stok");
                     string dinamikStokKontrolu = INI.Read("dinamikStokKontrolu" + i.ToString(), "Stok");
-                    menuItems[i] = aciklama;
+                    menuAciklama[i] = aciklama;
+                    menuID[i] = id;
+                    menuPrice[i] = Convert.ToDecimal(birimFiyat);
+
                     if (dinamikStokKontrolu == "true")
                     {
                         dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Checked);
@@ -400,9 +408,12 @@ namespace Restorium
 
             using (var tableOpenForm = new TableOpenForm())
             {
+                LastChoosenTable.reservation = true;
                 var result = tableOpenForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
+                    reservedTableCount++; // Reserve edilmis masa sayisini bir artir
+                    UserLog.WConsole("Rezerve edilmis toplam masa sayisi : " + reservedTableCount.ToString());
                     clearSiparisTable();
                     UserLog.WConsole("Reserving Table");
                     dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
@@ -640,6 +651,7 @@ namespace Restorium
 
                 using (var tableOpenForm = new TableOpenForm())
                 {
+                    LastChoosenTable.reservation = false;
                     var result = tableOpenForm.ShowDialog();
                     if (result == DialogResult.OK)
                     {
@@ -732,9 +744,12 @@ namespace Restorium
             {
                 using (var tableOpenForm = new TableOpenForm())
                 {
+                    LastChoosenTable.reservation = true;
                     var result = tableOpenForm.ShowDialog();
                     if (result == DialogResult.OK)
                     {
+                        reservedTableCount++; // reserve edilmis masa sayisini bir artirir
+                        UserLog.WConsole("Rezerve edilmis toplam masa sayisi : " + reservedTableCount.ToString());
                         clearSiparisTable();
                         UserLog.WConsole("<<F5 Pressed>> Reserving Table ");
                         dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
@@ -852,11 +867,11 @@ namespace Restorium
                 {
                     try
                     {
-
+                        dgView.Rows.Add(StokAdd.ID, StokAdd.Aciklama, StokAdd.Adet, StokAdd.Adet, StokAdd.BirimFiyat, StokAdd.ParaBirimi, CheckState.Unchecked);
                     }
                     catch
                     {
-                        MessageBox.Show("Personel secimi yapilmadi !");
+                        MessageBox.Show("Stok secimi yapilmadi !");
                     }
                 }
             }
@@ -1119,6 +1134,8 @@ namespace Restorium
             DialogResult dialogResult = MessageBox.Show("Masa Adi : " + lMasaNo.Text + "\n" + "Masayi acmak istediginize emin misiniz?", "Masa Acma Onayi", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
+                reservedTableCount--;
+                UserLog.WConsole("Kalan reserve edilmis masa sayisi : " + reservedTableCount.ToString());
                 tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] = "N";
                 int i = 0;
                 foreach (string tablenames in tableNumbers)
@@ -1166,5 +1183,30 @@ namespace Restorium
             }
         }
 
+        private void reservedTableStateChecker(object sender, EventArgs e)
+        {
+            for (int i = 0; i < reservedTableCount; i++)
+            {
+                string dateTimeNow = DateTime.UtcNow.ToLocalTime().ToShortTimeString();
+                string[] separatedHourAndMinute = dateTimeNow.Split(':');
+                // Hour Now : separatedHourAndMinute[0] 
+                // Minute Now : separatedHourAndMinute[1]
+                // rHour
+                // 8  -> Reservation Date
+                // 9  -> Reservation Time
+                // 10 -> Reservation Limit Time
+                //tableDetails dizisinden ilgili masanin reservasyon tarihini ve saatini cek
+                ////////////////////////////////////////////////////////////////////////////
+
+                string dateReservation = tableDetails[findTableOrder(reservationList[i, 0])*3, 8]; 
+                //string timeReservation = tableDetails[findTableOrder(reservationList[i, 0])*3, 9]; 
+                //string[] dateReservationHourandMinute = timeReservation.Split(':');  // Seperated reservation hour and minute
+
+                UserLog.WConsole(DateTime.UtcNow.ToLocalTime().ToShortDateString());
+                //if(DateTime.UtcNow.ToLocalTime().ToShortDateString()==)
+            }
+
+
+        }
     }
 }
