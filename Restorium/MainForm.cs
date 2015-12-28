@@ -865,13 +865,42 @@ namespace Restorium
                 var result = stokAdd.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    try
+                    bool stokFound = false;
+                    UserLog.WConsole("Adet Turu : " + StokAdd.AdetTuru.ToString());
+                    UserLog.WConsole("Para Birimi : " + StokAdd.ParaBirimi.ToString());
+                    //if there is same stock , update it .
+                    stokCount = Convert.ToInt32(INI.Read("stokCount", "Stok"));
+                    for (int i = 0; i < stokCount; i++)
                     {
-                        dgView.Rows.Add(StokAdd.ID, StokAdd.Aciklama, StokAdd.Adet, StokAdd.Adet, StokAdd.BirimFiyat, StokAdd.ParaBirimi, CheckState.Unchecked);
+                        if (StokAdd.ID == dgView.Rows[i].Cells[0].Value.ToString())
+                        {
+                            int countItem = Convert.ToInt16(dgView.Rows[i].Cells[2].Value.ToString());
+                            countItem += StokAdd.Adet;
+                            dgView.Rows[i].Cells[2].Value = countItem.ToString();
+                            //*******************************************************
+                            //Listedeki urunun sayisinin artirildigini log olarak yaz burada 
+                            //*******************************************************
+                            saveStokToFile();
+                            dgView.Refresh();
+                            MessageBox.Show("Listedeki stok guncellendi ( "+StokAdd.Aciklama.ToString()+" )\n"+"Eklenen urun adedi = "+ StokAdd.Adet+"\n"+"Toplam urun adedi = "+ countItem.ToString());
+                            stokFound = true;
+                            break;
+                        }
                     }
-                    catch
+                    if (stokFound == false)
                     {
-                        MessageBox.Show("Stok secimi yapilmadi !");
+                        try
+                        {
+                            dgView.Rows.Add(StokAdd.ID, StokAdd.Aciklama, StokAdd.Adet.ToString(), StokAdd.AdetTuru.ToString(), StokAdd.BirimFiyat.ToString(), StokAdd.ParaBirimi.ToString(), CheckState.Unchecked);
+                            // dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Checked);
+                            saveStokToFile();
+                            dgView.Refresh();
+                            MessageBox.Show("Yeni stok eklendi ! ( " + StokAdd.Aciklama.ToString() + " )\n"+"Eklenen Miktar = "+StokAdd.Adet.ToString()+"\nSatis Fiyati = "+ StokAdd.BirimFiyat.ToString());
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Stok secimi yapilmadi !");
+                        }
                     }
                 }
             }

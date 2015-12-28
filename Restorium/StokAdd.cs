@@ -26,8 +26,8 @@ namespace Restorium
 
         private void StokAdd_Load(object sender, EventArgs e)
         {
-            cbBirim.SelectedText = "Birim";
-            cbParaBirimi.SelectedText = "TL";
+            cbBirim.SelectedItem= "Birim";
+            cbParaBirimi.SelectedItem = "TL";
             //----------------------//
             UserLog.WConsole("<<< StokAdd (Form)>>>");
             tbID.AutoCompleteMode = AutoCompleteMode.Suggest;
@@ -106,9 +106,9 @@ namespace Restorium
                 Aciklama = tbAciklama.Text;
                 ID = tbID.Text;
                 BirimFiyat = Convert.ToDecimal(tbBirimFiyat.Text);
-                ParaBirimi = cbParaBirimi.SelectedText;
+                ParaBirimi = cbParaBirimi.SelectedItem.ToString(); //SORUN BURDA
                 Adet = Convert.ToInt16(tbAdet.Text);
-                AdetTuru = cbBirim.SelectedText;
+                AdetTuru = cbBirim.SelectedItem.ToString(); // SORUN BURDA
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
