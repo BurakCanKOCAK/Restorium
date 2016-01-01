@@ -931,6 +931,19 @@ namespace Restorium
                 {
                     if (tableNumbers[i] == tableName)
                     {
+
+                        ////////////////////////////////////////////////////////////////////////////////
+                        ////Tutar
+                        decimal kasaToplam = Convert.ToDecimal(lKasaToplam.Text);
+                        kasaToplam += Convert.ToDecimal(lToplamTutar.Text);
+                        lKasaToplam.Text = kasaToplam.ToString();
+                        ////Kasa Hareketleri
+                        this.lbKasaHareketleri.Text += " :: Masa Kapama :: " + System.DateTime.UtcNow + " :: " + "Masa : " + tableName.ToString() + " :: " +"Tutar : "+lToplamTutar.ToString()+" TL ::"+ " Personel : " + lPersonel.Text.ToString(); 
+                        this.lbKasaHareketleri.Text += Environment.NewLine;
+                        //this.lbKasaHareketleri.Text += ;
+                        ////////////////////////////////////////////////////////////////////////////////
+
+
                         tableNumbers[i] = "";
                         emptyTableList[i] = false;
                         tableName = "bLeft" + tableName;
@@ -946,13 +959,6 @@ namespace Restorium
                         bSiparisEkle.Enabled = false;
                         bTableClose.Enabled = false;
                         UserLog.WConsole("Masa : " + tableName + " kapatildi...");
-                        ////////////////////////////////////////////////////////////////////////////////
-                        //Kasa Hareketleri
-                        decimal kasaToplam = Convert.ToDecimal(lKasaToplam.Text);
-                        kasaToplam += Convert.ToDecimal(lToplamTutar.Text);
-                            this.lbKasaHareketleri.Text += Environment.NewLine;
-                        this.lbKasaHareketleri.Text += ;
-                        ////////////////////////////////////////////////////////////////////////////////
                         UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
                         lToplamTutar.Text = "-";
                         // tableDetails dizisinden de silinmeli
