@@ -934,11 +934,14 @@ namespace Restorium
 
                         ////////////////////////////////////////////////////////////////////////////////
                         ////Tutar
-                        decimal kasaToplam = Convert.ToDecimal(lKasaToplam.Text);
-                        kasaToplam += Convert.ToDecimal(lToplamTutar.Text);
-                        lKasaToplam.Text = kasaToplam.ToString();
+                        string masaToplam = lToplamTutar.Text.ToString();
+                        masaToplam = masaToplam.Replace(" TL", "");
+                        string kasaToplam = lKasaToplam.Text.ToString();
+                        kasaToplam = kasaToplam.Replace(" TL", "");
+                        lKasaToplam.Text = (Convert.ToDecimal(masaToplam)+ Convert.ToDecimal(kasaToplam)).ToString()+" TL";
+                        
                         ////Kasa Hareketleri
-                        this.lbKasaHareketleri.Text += " :: Masa Kapama :: " + System.DateTime.UtcNow + " :: " + "Masa : " + tableName.ToString() + " :: " +"Tutar : "+lToplamTutar.ToString()+" TL ::"+ " Personel : " + lPersonel.Text.ToString(); 
+                        this.lbKasaHareketleri.Text += " :: Masa Kapama :: "+ DateTime.UtcNow.ToLocalTime().ToString() + " :: " + "Masa : " + tableName.ToString() + " :: " +"Tutar : "+lToplamTutar.Text.ToString()+" :: "+ lPersonel.Text.ToString(); 
                         this.lbKasaHareketleri.Text += Environment.NewLine;
                         //this.lbKasaHareketleri.Text += ;
                         ////////////////////////////////////////////////////////////////////////////////

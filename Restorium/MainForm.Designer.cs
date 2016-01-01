@@ -1076,7 +1076,7 @@
             this.lKasaToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lKasaToplam.Size = new System.Drawing.Size(100, 41);
             this.lKasaToplam.TabIndex = 11;
-            this.lKasaToplam.Text = "0,0 TL";
+            this.lKasaToplam.Text = "0.0 TL";
             this.lKasaToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label13
