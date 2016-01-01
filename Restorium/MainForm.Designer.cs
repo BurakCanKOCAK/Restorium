@@ -51,6 +51,7 @@
             this.Birim_Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.bActiveEt = new System.Windows.Forms.Button();
+            this.lExchange = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.lToplamTutar = new System.Windows.Forms.Label();
             this.bTableClose = new System.Windows.Forms.Button();
@@ -61,7 +62,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bCalculator = new System.Windows.Forms.Button();
-            this.lExchange = new System.Windows.Forms.Label();
             this.pbWifi = new System.Windows.Forms.PictureBox();
             this.lDate = new System.Windows.Forms.Label();
             this.bYeniMasa = new System.Windows.Forms.Button();
@@ -114,6 +114,9 @@
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.timerReservation = new System.Windows.Forms.Timer(this.components);
+            this.lKasaToplam = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.lbKasaHareketleri = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
@@ -345,6 +348,17 @@
             this.bActiveEt.Visible = false;
             this.bActiveEt.Click += new System.EventHandler(this.bActiveEt_Click);
             // 
+            // lExchange
+            // 
+            this.lExchange.AutoSize = true;
+            this.lExchange.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold);
+            this.lExchange.ForeColor = System.Drawing.Color.Yellow;
+            this.lExchange.Location = new System.Drawing.Point(6, 23);
+            this.lExchange.Name = "lExchange";
+            this.lExchange.Size = new System.Drawing.Size(148, 17);
+            this.lExchange.TabIndex = 7;
+            this.lExchange.Text = "TL - DOLAR - EURO - GBP";
+            // 
             // label11
             // 
             this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -493,17 +507,6 @@
             this.bCalculator.TabIndex = 9;
             this.bCalculator.UseVisualStyleBackColor = true;
             this.bCalculator.Click += new System.EventHandler(this.bCalculator_Click);
-            // 
-            // lExchange
-            // 
-            this.lExchange.AutoSize = true;
-            this.lExchange.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold);
-            this.lExchange.ForeColor = System.Drawing.Color.Yellow;
-            this.lExchange.Location = new System.Drawing.Point(6, 23);
-            this.lExchange.Name = "lExchange";
-            this.lExchange.Size = new System.Drawing.Size(148, 17);
-            this.lExchange.TabIndex = 7;
-            this.lExchange.Text = "TL - DOLAR - EURO - GBP";
             // 
             // pbWifi
             // 
@@ -741,6 +744,9 @@
             // tp_Kasa
             // 
             this.tp_Kasa.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Kasa.Controls.Add(this.lbKasaHareketleri);
+            this.tp_Kasa.Controls.Add(this.label13);
+            this.tp_Kasa.Controls.Add(this.lKasaToplam);
             this.tp_Kasa.Controls.Add(this.panel2);
             this.tp_Kasa.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tp_Kasa.Location = new System.Drawing.Point(4, 28);
@@ -1059,6 +1065,47 @@
             this.timerReservation.Interval = 5000;
             this.timerReservation.Tick += new System.EventHandler(this.reservedTableStateChecker);
             // 
+            // lKasaToplam
+            // 
+            this.lKasaToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lKasaToplam.AutoSize = true;
+            this.lKasaToplam.Font = new System.Drawing.Font("Calibri", 25F, System.Drawing.FontStyle.Bold);
+            this.lKasaToplam.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lKasaToplam.Location = new System.Drawing.Point(895, 641);
+            this.lKasaToplam.Name = "lKasaToplam";
+            this.lKasaToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lKasaToplam.Size = new System.Drawing.Size(100, 41);
+            this.lKasaToplam.TabIndex = 11;
+            this.lKasaToplam.Text = "0,0 TL";
+            this.lKasaToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold);
+            this.label13.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label13.Location = new System.Drawing.Point(851, 612);
+            this.label13.Name = "label13";
+            this.label13.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label13.Size = new System.Drawing.Size(144, 29);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Kasa Toplam ";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lbKasaHareketleri
+            // 
+            this.lbKasaHareketleri.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbKasaHareketleri.Location = new System.Drawing.Point(11, 78);
+            this.lbKasaHareketleri.Multiline = true;
+            this.lbKasaHareketleri.Name = "lbKasaHareketleri";
+            this.lbKasaHareketleri.ReadOnly = true;
+            this.lbKasaHareketleri.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.lbKasaHareketleri.Size = new System.Drawing.Size(984, 531);
+            this.lbKasaHareketleri.TabIndex = 13;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1088,6 +1135,7 @@
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Kasa.ResumeLayout(false);
+            this.tp_Kasa.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.tp_Rapor.ResumeLayout(false);
             this.tp_Rehber.ResumeLayout(false);
@@ -1183,5 +1231,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Birim_Tutar;
         private System.Windows.Forms.Button bActiveEt;
         private System.Windows.Forms.Timer timerReservation;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lKasaToplam;
+        private System.Windows.Forms.TextBox lbKasaHareketleri;
     }
 }

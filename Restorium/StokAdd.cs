@@ -71,6 +71,7 @@ namespace Restorium
                 if (tbID.Text == MainForm.menuID[i])
                 {
                     tbAciklama.Text = MainForm.menuAciklama[i];
+                    tbBirimFiyat.Text = MainForm.menuPrice[i].ToString();
                     break;
                 }
                 else
@@ -89,6 +90,7 @@ namespace Restorium
                 if (tbAciklama.Text == MainForm.menuAciklama[i])
                 {
                     tbID.Text = MainForm.menuID[i];
+                    tbBirimFiyat.Text = MainForm.menuPrice[i].ToString();
                     break;
                 }
                 else
@@ -100,7 +102,7 @@ namespace Restorium
 
         private void bStokAdd_Click(object sender, EventArgs e)
         {
-            if (tbAciklama != null && tbAdet != null && tbBirimFiyat != null && tbID != null)
+            if (tbAciklama.Text != null && tbAdet.Text != null && tbBirimFiyat.Text != null && tbID.Text != null)
             {
                 //valid item
                 Aciklama = tbAciklama.Text;

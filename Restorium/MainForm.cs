@@ -946,6 +946,13 @@ namespace Restorium
                         bSiparisEkle.Enabled = false;
                         bTableClose.Enabled = false;
                         UserLog.WConsole("Masa : " + tableName + " kapatildi...");
+                        ////////////////////////////////////////////////////////////////////////////////
+                        //Kasa Hareketleri
+                        decimal kasaToplam = Convert.ToDecimal(lKasaToplam.Text);
+                        kasaToplam += Convert.ToDecimal(lToplamTutar.Text);
+                            this.lbKasaHareketleri.Text += Environment.NewLine;
+                        this.lbKasaHareketleri.Text += ;
+                        ////////////////////////////////////////////////////////////////////////////////
                         UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
                         lToplamTutar.Text = "-";
                         // tableDetails dizisinden de silinmeli
@@ -1039,7 +1046,7 @@ namespace Restorium
             }
             if (e.ColumnIndex == 4) // Siparis miktarini 1 azalt
             {
-                UserLog.WConsole((e.RowIndex + 1).ToString() + ". siradaki urune tiklandi");
+                UserLog.WConsole((e.RowIndex + 1).ToString() + ". siradaki urune tiklandi"); // Silinmeli
                 int adet = Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value);
                 if (adet != 1)
                 {
