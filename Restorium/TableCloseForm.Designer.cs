@@ -28,263 +28,373 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.odemeSekliToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nakitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.krediKartiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
+            this.cbGBP = new System.Windows.Forms.CheckBox();
+            this.cbDolar = new System.Windows.Forms.CheckBox();
+            this.cbEuro = new System.Windows.Forms.CheckBox();
+            this.cbTL = new System.Windows.Forms.CheckBox();
+            this.tbCari = new System.Windows.Forms.TextBox();
+            this.labelCari = new System.Windows.Forms.Label();
+            this.labelNakit = new System.Windows.Forms.Label();
+            this.tbNakit = new System.Windows.Forms.TextBox();
+            this.labelKredi = new System.Windows.Forms.Label();
+            this.tbKredi = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lTL = new System.Windows.Forms.Label();
+            this.lEuro = new System.Windows.Forms.Label();
+            this.lDolar = new System.Windows.Forms.Label();
+            this.lGBP = new System.Windows.Forms.Label();
+            this.bMasaKapat = new System.Windows.Forms.Button();
+            this.bIptal = new System.Windows.Forms.Button();
+            this.lIskontoOrani = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label15 = new System.Windows.Forms.Label();
+            this.lKalan = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.lTableName = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.Desktop;
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Location = new System.Drawing.Point(129, 88);
+            this.panel1.BackColor = System.Drawing.Color.Gold;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Controls.Add(this.cbGBP);
+            this.panel1.Controls.Add(this.cbDolar);
+            this.panel1.Controls.Add(this.cbEuro);
+            this.panel1.Controls.Add(this.cbTL);
+            this.panel1.Controls.Add(this.tbCari);
+            this.panel1.Controls.Add(this.labelCari);
+            this.panel1.Controls.Add(this.labelNakit);
+            this.panel1.Controls.Add(this.tbNakit);
+            this.panel1.Controls.Add(this.labelKredi);
+            this.panel1.Controls.Add(this.tbKredi);
+            this.panel1.Location = new System.Drawing.Point(0, 74);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(510, 49);
+            this.panel1.Size = new System.Drawing.Size(481, 80);
             this.panel1.TabIndex = 0;
             // 
-            // checkedListBox1
+            // cbGBP
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "Nakit",
-            "Kredi Karti",
-            "Cari"});
-            this.checkedListBox1.Location = new System.Drawing.Point(3, 88);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(120, 49);
-            this.checkedListBox1.TabIndex = 1;
+            this.cbGBP.AutoSize = true;
+            this.cbGBP.Location = new System.Drawing.Point(149, 3);
+            this.cbGBP.Name = "cbGBP";
+            this.cbGBP.Size = new System.Drawing.Size(32, 17);
+            this.cbGBP.TabIndex = 9;
+            this.cbGBP.Text = "£";
+            this.cbGBP.UseVisualStyleBackColor = true;
+            this.cbGBP.CheckStateChanged += new System.EventHandler(this.ExchangeCalculateGBP);
             // 
-            // menuStrip1
+            // cbDolar
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.odemeSekliToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(649, 24);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            this.cbDolar.AutoSize = true;
+            this.cbDolar.Location = new System.Drawing.Point(104, 3);
+            this.cbDolar.Name = "cbDolar";
+            this.cbDolar.Size = new System.Drawing.Size(32, 17);
+            this.cbDolar.TabIndex = 8;
+            this.cbDolar.Text = "$";
+            this.cbDolar.UseVisualStyleBackColor = true;
+            this.cbDolar.CheckStateChanged += new System.EventHandler(this.ExchangeCalculateDOLAR);
             // 
-            // odemeSekliToolStripMenuItem
+            // cbEuro
             // 
-            this.odemeSekliToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nakitToolStripMenuItem,
-            this.krediKartiToolStripMenuItem,
-            this.cariToolStripMenuItem});
-            this.odemeSekliToolStripMenuItem.Name = "odemeSekliToolStripMenuItem";
-            this.odemeSekliToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
-            this.odemeSekliToolStripMenuItem.Text = "Odeme Sekli";
+            this.cbEuro.AutoSize = true;
+            this.cbEuro.Location = new System.Drawing.Point(59, 3);
+            this.cbEuro.Name = "cbEuro";
+            this.cbEuro.Size = new System.Drawing.Size(32, 17);
+            this.cbEuro.TabIndex = 7;
+            this.cbEuro.Text = "€";
+            this.cbEuro.UseVisualStyleBackColor = true;
+            this.cbEuro.CheckStateChanged += new System.EventHandler(this.ExchangeCalculateEURO);
             // 
-            // nakitToolStripMenuItem
+            // cbTL
             // 
-            this.nakitToolStripMenuItem.Name = "nakitToolStripMenuItem";
-            this.nakitToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.nakitToolStripMenuItem.Text = "Nakit";
+            this.cbTL.AutoSize = true;
+            this.cbTL.Checked = true;
+            this.cbTL.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbTL.Location = new System.Drawing.Point(12, 3);
+            this.cbTL.Name = "cbTL";
+            this.cbTL.Size = new System.Drawing.Size(32, 17);
+            this.cbTL.TabIndex = 6;
+            this.cbTL.Text = "₺";
+            this.cbTL.UseVisualStyleBackColor = true;
+            this.cbTL.CheckStateChanged += new System.EventHandler(this.ExchangeCalculateTL);
             // 
-            // krediKartiToolStripMenuItem
+            // tbCari
             // 
-            this.krediKartiToolStripMenuItem.Name = "krediKartiToolStripMenuItem";
-            this.krediKartiToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.krediKartiToolStripMenuItem.Text = "Kredi Karti";
+            this.tbCari.Location = new System.Drawing.Point(344, 52);
+            this.tbCari.Name = "tbCari";
+            this.tbCari.Size = new System.Drawing.Size(124, 20);
+            this.tbCari.TabIndex = 4;
+            this.tbCari.TextChanged += new System.EventHandler(this.CalculateKalanTutar);
             // 
-            // cariToolStripMenuItem
+            // labelCari
             // 
-            this.cariToolStripMenuItem.Name = "cariToolStripMenuItem";
-            this.cariToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.cariToolStripMenuItem.Text = "Cari";
+            this.labelCari.AutoSize = true;
+            this.labelCari.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCari.Location = new System.Drawing.Point(341, 31);
+            this.labelCari.Name = "labelCari";
+            this.labelCari.Size = new System.Drawing.Size(53, 18);
+            this.labelCari.TabIndex = 5;
+            this.labelCari.Text = "Cari (₺)";
             // 
-            // numericUpDown1
+            // labelNakit
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(258, 229);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            23,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(36, 20);
-            this.numericUpDown1.TabIndex = 4;
+            this.labelNakit.AutoSize = true;
+            this.labelNakit.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelNakit.Location = new System.Drawing.Point(174, 31);
+            this.labelNakit.Name = "labelNakit";
+            this.labelNakit.Size = new System.Drawing.Size(62, 18);
+            this.labelNakit.TabIndex = 3;
+            this.labelNakit.Text = "Nakit (₺)";
             // 
-            // numericUpDown2
+            // tbNakit
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(300, 229);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            59,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(36, 20);
-            this.numericUpDown2.TabIndex = 5;
+            this.tbNakit.Location = new System.Drawing.Point(177, 52);
+            this.tbNakit.Name = "tbNakit";
+            this.tbNakit.Size = new System.Drawing.Size(124, 20);
+            this.tbNakit.TabIndex = 2;
+            this.tbNakit.TextChanged += new System.EventHandler(this.CalculateKalanTutar);
             // 
-            // dateTimePicker1
+            // labelKredi
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(343, 229);
-            this.dateTimePicker1.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 6;
-            this.dateTimePicker1.Value = new System.DateTime(2015, 12, 12, 0, 0, 0, 0);
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.asd);
+            this.labelKredi.AutoSize = true;
+            this.labelKredi.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelKredi.Location = new System.Drawing.Point(12, 31);
+            this.labelKredi.Name = "labelKredi";
+            this.labelKredi.Size = new System.Drawing.Size(94, 18);
+            this.labelKredi.TabIndex = 1;
+            this.labelKredi.Text = "Kredi Karti (₺)";
             // 
-            // toolTip1
+            // tbKredi
             // 
-            this.toolTip1.AutoPopDelay = 1000;
-            this.toolTip1.InitialDelay = 500;
-            this.toolTip1.IsBalloon = true;
-            this.toolTip1.ReshowDelay = 100;
-            this.toolTip1.ShowAlways = true;
-            this.toolTip1.ToolTipTitle = "Rezervasyon gununu seciniz";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(343, 268);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "label1";
+            this.tbKredi.Location = new System.Drawing.Point(12, 52);
+            this.tbKredi.Name = "tbKredi";
+            this.tbKredi.Size = new System.Drawing.Size(124, 20);
+            this.tbKredi.TabIndex = 0;
+            this.tbKredi.TextChanged += new System.EventHandler(this.CalculateKalanTutar);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
-            this.label2.Location = new System.Drawing.Point(320, 28);
+            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label2.Location = new System.Drawing.Point(237, 1);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 31);
+            this.label2.Size = new System.Drawing.Size(29, 31);
             this.label2.TabIndex = 8;
-            this.label2.Text = "TL";
+            this.label2.Text = "₺";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
-            this.label3.Location = new System.Drawing.Point(379, 28);
+            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label3.Location = new System.Drawing.Point(237, 32);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 31);
+            this.label3.Size = new System.Drawing.Size(29, 31);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Euro";
+            this.label3.Text = "€";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
-            this.label4.Location = new System.Drawing.Point(456, 28);
+            this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label4.Location = new System.Drawing.Point(364, 1);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(79, 31);
+            this.label4.Size = new System.Drawing.Size(29, 31);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Dolar";
+            this.label4.Text = "$";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
-            this.label5.Location = new System.Drawing.Point(541, 28);
+            this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label5.Location = new System.Drawing.Point(365, 32);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 31);
+            this.label5.Size = new System.Drawing.Size(29, 31);
             this.label5.TabIndex = 11;
-            this.label5.Text = "GBP";
+            this.label5.Text = "£";
             // 
-            // label6
+            // lTL
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label6.Location = new System.Drawing.Point(340, 59);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(19, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "10";
+            this.lTL.AutoSize = true;
+            this.lTL.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.lTL.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.lTL.Location = new System.Drawing.Point(272, 12);
+            this.lTL.Name = "lTL";
+            this.lTL.Size = new System.Drawing.Size(15, 20);
+            this.lTL.TabIndex = 12;
+            this.lTL.Text = "-";
             // 
-            // label7
+            // lEuro
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label7.Location = new System.Drawing.Point(422, 59);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(13, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "3";
+            this.lEuro.AutoSize = true;
+            this.lEuro.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.lEuro.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.lEuro.Location = new System.Drawing.Point(272, 42);
+            this.lEuro.Name = "lEuro";
+            this.lEuro.Size = new System.Drawing.Size(15, 20);
+            this.lEuro.TabIndex = 13;
+            this.lEuro.Text = "-";
             // 
-            // label8
+            // lDolar
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label8.Location = new System.Drawing.Point(506, 59);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(13, 13);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "4";
+            this.lDolar.AutoSize = true;
+            this.lDolar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.lDolar.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.lDolar.Location = new System.Drawing.Point(400, 12);
+            this.lDolar.Name = "lDolar";
+            this.lDolar.Size = new System.Drawing.Size(15, 20);
+            this.lDolar.TabIndex = 14;
+            this.lDolar.Text = "-";
             // 
-            // label9
+            // lGBP
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label9.Location = new System.Drawing.Point(580, 59);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(13, 13);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "2";
+            this.lGBP.AutoSize = true;
+            this.lGBP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.lGBP.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.lGBP.Location = new System.Drawing.Point(400, 45);
+            this.lGBP.Name = "lGBP";
+            this.lGBP.Size = new System.Drawing.Size(15, 20);
+            this.lGBP.TabIndex = 15;
+            this.lGBP.Text = "-";
             // 
-            // textBox1
+            // bMasaKapat
             // 
-            this.textBox1.Location = new System.Drawing.Point(3, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 0;
+            this.bMasaKapat.Location = new System.Drawing.Point(12, 197);
+            this.bMasaKapat.Name = "bMasaKapat";
+            this.bMasaKapat.Size = new System.Drawing.Size(112, 44);
+            this.bMasaKapat.TabIndex = 16;
+            this.bMasaKapat.Text = "Masa Kapat";
+            this.bMasaKapat.UseVisualStyleBackColor = true;
+            this.bMasaKapat.Click += new System.EventHandler(this.bMasaKapat_Click);
+            // 
+            // bIptal
+            // 
+            this.bIptal.Location = new System.Drawing.Point(361, 197);
+            this.bIptal.Name = "bIptal";
+            this.bIptal.Size = new System.Drawing.Size(112, 44);
+            this.bIptal.TabIndex = 17;
+            this.bIptal.Text = " Iptal";
+            this.bIptal.UseVisualStyleBackColor = true;
+            this.bIptal.Click += new System.EventHandler(this.bIptal_Click);
+            // 
+            // lIskontoOrani
+            // 
+            this.lIskontoOrani.AutoSize = true;
+            this.lIskontoOrani.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lIskontoOrani.Location = new System.Drawing.Point(170, 6);
+            this.lIskontoOrani.Name = "lIskontoOrani";
+            this.lIskontoOrani.Size = new System.Drawing.Size(26, 18);
+            this.lIskontoOrani.TabIndex = 6;
+            this.lIskontoOrani.Text = "0%";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.BackgroundImage = global::Restorium.Properties.Resources._2;
+            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel2.Controls.Add(this.label15);
+            this.panel2.Controls.Add(this.lKalan);
+            this.panel2.Controls.Add(this.label13);
+            this.panel2.Controls.Add(this.lIskontoOrani);
+            this.panel2.Location = new System.Drawing.Point(0, 160);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(481, 31);
+            this.panel2.TabIndex = 6;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(70, 6);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(97, 18);
+            this.label15.TabIndex = 19;
+            this.label15.Text = "Iskonto Orani :";
+            // 
+            // lKalan
+            // 
+            this.lKalan.AutoSize = true;
+            this.lKalan.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lKalan.Location = new System.Drawing.Point(402, 6);
+            this.lKalan.Name = "lKalan";
+            this.lKalan.Size = new System.Drawing.Size(37, 18);
+            this.lKalan.TabIndex = 7;
+            this.lKalan.Text = "0.0 ₺";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(358, 6);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(49, 18);
+            this.label13.TabIndex = 6;
+            this.label13.Text = "Kalan :";
+            // 
+            // lTableName
+            // 
+            this.lTableName.AutoSize = true;
+            this.lTableName.BackColor = System.Drawing.SystemColors.Control;
+            this.lTableName.Font = new System.Drawing.Font("Microsoft Sans Serif", 38.25F, System.Drawing.FontStyle.Bold);
+            this.lTableName.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.lTableName.Location = new System.Drawing.Point(17, 6);
+            this.lTableName.Name = "lTableName";
+            this.lTableName.Size = new System.Drawing.Size(43, 59);
+            this.lTableName.TabIndex = 19;
+            this.lTableName.Text = "-";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Restorium.Properties.Resources.Calculator_icon__1_;
+            this.pictureBox1.Location = new System.Drawing.Point(131, 198);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(91, 43);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 20;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseClicked);
             // 
             // TableCloseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(649, 310);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.checkedListBox1);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(482, 253);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.lTableName);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.bIptal);
+            this.Controls.Add(this.bMasaKapat);
+            this.Controls.Add(this.lGBP);
+            this.Controls.Add(this.lDolar);
+            this.Controls.Add(this.lEuro);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lTL);
+            this.Controls.Add(this.label4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "TableCloseForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "TableCloseForm";
+            this.Text = "Masa Kapama";
+            this.Load += new System.EventHandler(this.TableCloseForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -293,25 +403,32 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem odemeSekliToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem nakitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem krediKartiToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cariToolStripMenuItem;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label lTL;
+        private System.Windows.Forms.Label labelCari;
+        private System.Windows.Forms.TextBox tbCari;
+        private System.Windows.Forms.Label labelNakit;
+        private System.Windows.Forms.TextBox tbNakit;
+        private System.Windows.Forms.Label labelKredi;
+        private System.Windows.Forms.TextBox tbKredi;
+        private System.Windows.Forms.Label lEuro;
+        private System.Windows.Forms.Label lDolar;
+        private System.Windows.Forms.Label lGBP;
+        private System.Windows.Forms.Button bMasaKapat;
+        private System.Windows.Forms.Button bIptal;
+        private System.Windows.Forms.Label lIskontoOrani;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lKalan;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label lTableName;
+        private System.Windows.Forms.CheckBox cbGBP;
+        private System.Windows.Forms.CheckBox cbDolar;
+        private System.Windows.Forms.CheckBox cbEuro;
+        private System.Windows.Forms.CheckBox cbTL;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

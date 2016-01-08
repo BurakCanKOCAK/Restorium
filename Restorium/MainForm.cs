@@ -910,67 +910,87 @@ namespace Restorium
         {
             string title = "";
             string text = "";
+            string tableName = lMasaNo.Text;
+            ////////////////////////
+            ////////////////////////
             if (bTableClose.Text == "Masa Kapat")
+            //Normal Masa Ise
             {
-                text = "Kapatmak istediginize emin misiniz?";
-                title = "Masa Kapatma Uyarisi";
-                
-            } else
-            {
-                text = "Rezervasyonu iptal etmek istediginize emin misiniz?";
-                title = "Rezervasyon Iptal Uyarisi";
-            }
-
-            DialogResult dialogResult = MessageBox.Show("Masa Adi : " + lMasaNo.Text + "\n"+text, title, MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                clearSiparisTable();
-                string tableName = lMasaNo.Text;
-                int i = 0;
-                foreach (string tablenames in tableNumbers)
+                using (var tableClose = new TableCloseForm())
                 {
-                    if (tableNumbers[i] == tableName)
+                    //stokAdd.ListName = "Personel";
+                    var result = tableClose.ShowDialog();
+                    if (result == DialogResult.OK)
                     {
-
-                        ////////////////////////////////////////////////////////////////////////////////
-                        ////Tutar
                         string masaToplam = lToplamTutar.Text.ToString();
                         masaToplam = masaToplam.Replace(" TL", "");
                         string kasaToplam = lKasaToplam.Text.ToString();
                         kasaToplam = kasaToplam.Replace(" TL", "");
-                        lKasaToplam.Text = (Convert.ToDecimal(masaToplam)+ Convert.ToDecimal(kasaToplam)).ToString()+" TL";
-                        
-                        ////Kasa Hareketleri
-                        this.lbKasaHareketleri.Text += " :: Masa Kapama :: "+ DateTime.UtcNow.ToLocalTime().ToString() + " :: " + "Masa : " + tableName.ToString() + " :: " +"Tutar : "+lToplamTutar.Text.ToString()+" :: "+ lPersonel.Text.ToString(); 
-                        this.lbKasaHareketleri.Text += Environment.NewLine;
-                        //this.lbKasaHareketleri.Text += ;
+                        lKasaToplam.Text = (Convert.ToDecimal(masaToplam) + Convert.ToDecimal(kasaToplam)).ToString() + " TL";
+
+                        ///////////////////////////////
+                        //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
+                        // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
+                        //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
+                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), "-", "-", "-", "-");
+                        dgvKasa.Refresh();
                         ////////////////////////////////////////////////////////////////////////////////
-
-
-                        tableNumbers[i] = "";
-                        emptyTableList[i] = false;
-                        tableName = "bLeft" + tableName;
-                        tableLayoutPanel1.Controls.RemoveByKey(tableName);
-                        lIskonto.Text = "-";
-                        lPersonel.Text = "-";
-                        lMasaNo.Text = "-";
-                        lTableCounter.Text = "-";
-                        lMusteriAdi.Text = "-";
-                        lMasaNo.ForeColor = Color.Black;
-                        LastChoosenTable.TableNumber = "";
-                        tableCounter--;
-                        bSiparisEkle.Enabled = false;
-                        bTableClose.Enabled = false;
-                        UserLog.WConsole("Masa : " + tableName + " kapatildi...");
-                        UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
-                        lToplamTutar.Text = "-";
-                        // tableDetails dizisinden de silinmeli
                     }
-                    i++;
                 }
-                bActiveEt.Visible = false;
-                bActiveEt.Enabled = false;
             }
+            ////////////////////////
+            ////////////////////////
+            else
+            // Rezervasyon Masasi Ise
+            {
+                text = "Rezervasyonu iptal etmek istediginize emin misiniz?";
+                title = "Rezervasyon Iptal Uyarisi";
+                DialogResult dialogResult = MessageBox.Show("Masa Adi : " + lMasaNo.Text + "\n" + text, title, MessageBoxButtons.YesNo);
+                //
+                if (dialogResult == DialogResult.Yes)
+                {
+                    clearSiparisTable();
+                    int i = 0;
+                    foreach (string tablenames in tableNumbers)
+                    {
+                        if (tableNumbers[i] == tableName)
+                        {
+
+                            ////////////////////////////////////////////////////////////////////////////////
+                            //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
+                            // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
+                            //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
+                            dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Rezervasyon Iptal", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), "-", "-", "-", "-");
+                            dgvKasa.Refresh();
+                            ////////////////////////////////////////////////////////////////////////////////
+
+                            tableNumbers[i] = "";
+                            emptyTableList[i] = false;
+                            tableName = "bLeft" + tableName;
+                            tableLayoutPanel1.Controls.RemoveByKey(tableName);
+                            lIskonto.Text = "-";
+                            lPersonel.Text = "-";
+                            lMasaNo.Text = "-";
+                            lTableCounter.Text = "-";
+                            lMusteriAdi.Text = "-";
+                            lMasaNo.ForeColor = Color.Black;
+                            LastChoosenTable.TableNumber = "";
+                            tableCounter--;
+                            bSiparisEkle.Enabled = false;
+                            bTableClose.Enabled = false;
+                            UserLog.WConsole("Masa : " + tableName + " kapatildi...");
+                            UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
+                            lToplamTutar.Text = "-";
+                            // tableDetails dizisinden de silinmeli
+                        }
+                        i++;
+                    }
+                    bActiveEt.Visible = false;
+                    bActiveEt.Enabled = false;
+                }         
+            }
+            ////////////////////////
+            ////////////////////////
         }
 
         private void bSiparisEkle_Click(object sender, EventArgs e)
