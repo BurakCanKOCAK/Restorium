@@ -21,6 +21,7 @@ namespace Restorium
         public static string  lastClosedTableTime;
         public static string  lastClosedTableWaiter;
         public static int     lastClosedTableIskontoOrani;
+        public static decimal lastClosedTableTutar;
         public static decimal DefinedEuro;
         public static decimal DefinedDolar;
         public static decimal DefinedGBP;

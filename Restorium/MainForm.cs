@@ -91,6 +91,11 @@ namespace Restorium
                 decimal Dolar = Convert.ToDecimal(INI.Read("Dolar", "Exchange"));
                 decimal Euro = Convert.ToDecimal(INI.Read("Euro", "Exchange"));
                 decimal GBP = Convert.ToDecimal(INI.Read("GBP", "Exchange"));
+
+                LastChoosenTable.DefinedDolar = Dolar;
+                LastChoosenTable.DefinedEuro = Euro;
+                LastChoosenTable.DefinedGBP = GBP;
+
                 tbDolar.Text = Dolar.ToString();
                 tbEuro.Text = Euro.ToString();
                 tbGBP.Text = GBP.ToString();
@@ -511,6 +516,7 @@ namespace Restorium
             string masaNoLocal = b.Name;
             masaNoLocal = masaNoLocal.Replace("bLeft", "");
             lMasaNo.Text = masaNoLocal;
+            
             for (int i = 0; i <= tableCounter; i++)
             {
                 if (tableDetails[i * 3, 0] == masaNoLocal)
@@ -527,6 +533,7 @@ namespace Restorium
                         lMasaNo.ForeColor = Color.Red;
                     }
                     lPersonel.Text = "Personel : " + tableDetails[i * 3, 3];
+                    LastChoosenTable.iskonto = Convert.ToInt16(tableDetails[i * 3, 5]);
                     lIskonto.Text = "Iskonto Orani : " + tableDetails[i * 3, 5] + "%";
                     lMusteriAdi.Text = "Musteri : " + tableDetails[i * 3, 6];
                     UserLog.WConsole("Masa Detayi Ekrana Yazdirildi...");
@@ -842,6 +849,16 @@ namespace Restorium
             INI.Write("Dolar", tbDolar.Text.ToString(), "Exchange");
             INI.Write("Euro", tbEuro.Text.ToString(), "Exchange");
             INI.Write("GBP", tbGBP.Text.ToString(), "Exchange");
+            try
+            {
+                LastChoosenTable.DefinedDolar = Convert.ToDecimal(tbDolar.Text.ToString());
+                LastChoosenTable.DefinedEuro = Convert.ToDecimal(tbEuro.Text.ToString());
+                LastChoosenTable.DefinedGBP = Convert.ToDecimal(tbGBP.Text.ToString());
+            }
+            catch
+            {
+                UserLog.WConsole("Doviz Degerlerini LastChoosenTable'a Kaydetmede Hata !");
+            }
             lExchange.Text = "1 ₺ = " + tbDolar.Text.ToString() + " $ = " + tbEuro.Text.ToString() + " € = " + tbGBP.Text.ToString() + " £";
             UserLog.WConsole("Doviz kurlari basariyla kaydedildi !");
 
@@ -911,6 +928,14 @@ namespace Restorium
             string title = "";
             string text = "";
             string tableName = lMasaNo.Text;
+            string masaToplam = lToplamTutar.Text.ToString();
+            masaToplam = masaToplam.Replace(" TL", "");
+            LastChoosenTable.lastClosedTableTutar = Convert.ToDecimal(masaToplam);             //Tutar
+            LastChoosenTable.lastClosedTableName = tableName;                                  //Table Name
+            LastChoosenTable.lastClosedTableWaiter = lPersonel.Text.Replace("Personel :", ""); //Personel
+            LastChoosenTable.lastClosedTableIskontoOrani = LastChoosenTable.iskonto;           //Iskonto Rate
+
+
             ////////////////////////
             ////////////////////////
             if (bTableClose.Text == "Masa Kapat")
@@ -922,18 +947,17 @@ namespace Restorium
                     var result = tableClose.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        string masaToplam = lToplamTutar.Text.ToString();
-                        masaToplam = masaToplam.Replace(" TL", "");
+                        ////Kasa Islemleri     ---------------------------------------------------------
                         string kasaToplam = lKasaToplam.Text.ToString();
                         kasaToplam = kasaToplam.Replace(" TL", "");
                         lKasaToplam.Text = (Convert.ToDecimal(masaToplam) + Convert.ToDecimal(kasaToplam)).ToString() + " TL";
-
                         ///////////////////////////////
                         //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
                         // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
                         //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
                         dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), "-", "-", "-", "-");
                         dgvKasa.Refresh();
+                        ////Kasa Islemleri END ---------------------------------------------------------
                         ////////////////////////////////////////////////////////////////////////////////
                     }
                 }

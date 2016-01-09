@@ -251,7 +251,7 @@
             this.lDolar.AutoSize = true;
             this.lDolar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.lDolar.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.lDolar.Location = new System.Drawing.Point(400, 12);
+            this.lDolar.Location = new System.Drawing.Point(401, 11);
             this.lDolar.Name = "lDolar";
             this.lDolar.Size = new System.Drawing.Size(15, 20);
             this.lDolar.TabIndex = 14;
@@ -262,7 +262,7 @@
             this.lGBP.AutoSize = true;
             this.lGBP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.lGBP.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.lGBP.Location = new System.Drawing.Point(400, 45);
+            this.lGBP.Location = new System.Drawing.Point(401, 42);
             this.lGBP.Name = "lGBP";
             this.lGBP.Size = new System.Drawing.Size(15, 20);
             this.lGBP.TabIndex = 15;

@@ -26,7 +26,17 @@ namespace Restorium
 
         private void TableCloseForm_Load(object sender, EventArgs e)
         {
-
+            //Masa Adi Set
+             lTableName.Text = LastChoosenTable.lastClosedTableName.ToString();
+            //Tutar Set
+             decimal tutarConvert = LastChoosenTable.lastClosedTableTutar;
+            UserLog.WConsole("Tutar : " + LastChoosenTable.lastClosedTableTutar.ToString());
+             lTL.Text    =  tutarConvert.ToString();
+             lDolar.Text = (tutarConvert * LastChoosenTable.DefinedDolar).ToString();
+             lEuro.Text  = (tutarConvert * LastChoosenTable.DefinedEuro).ToString();
+             lGBP.Text   = (tutarConvert * LastChoosenTable.DefinedGBP).ToString();
+            //Kalan Set
+            lKalan.Text = lTL.Text + " ₺";
         }
         
         private void MouseClicked(object sender, MouseEventArgs e)
@@ -80,7 +90,14 @@ namespace Restorium
 
         private void bMasaKapat_Click(object sender, EventArgs e)
         {
-            if (lKalan.Text == "0 TL")
+            if ( )
+            { }
+            else if ( )
+            { }
+
+
+
+            if (lKalan.Text == "0.00 ₺")
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();
