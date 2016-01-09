@@ -250,6 +250,7 @@ namespace Restorium
         private void MainForm_Load(object sender, EventArgs e)
         {
             lDate.Text = DateTime.UtcNow.ToLocalTime().ToString();
+            this.dgvKasa.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void Data_Update(object sender, EventArgs e)
@@ -959,7 +960,37 @@ namespace Restorium
                         dgvKasa.Refresh();
                         ////Kasa Islemleri END ---------------------------------------------------------
                         ////////////////////////////////////////////////////////////////////////////////
-                    }
+                            clearSiparisTable();
+                            int i = 0;
+                            foreach (string tablenames in tableNumbers)
+                            {
+                                if (tableNumbers[i] == tableName)
+                                {
+                                    tableNumbers[i] = "";
+                                    emptyTableList[i] = false;
+                                    tableName = "bLeft" + tableName;
+                                    tableLayoutPanel1.Controls.RemoveByKey(tableName);
+                                    lIskonto.Text = "-";
+                                    lPersonel.Text = "-";
+                                    lMasaNo.Text = "-";
+                                    lTableCounter.Text = "-";
+                                    lMusteriAdi.Text = "-";
+                                    lMasaNo.ForeColor = Color.Black;
+                                    LastChoosenTable.TableNumber = "";
+                                    tableCounter--;
+                                    bSiparisEkle.Enabled = false;
+                                    bTableClose.Enabled = false;
+                                    UserLog.WConsole("Masa : " + tableName + " kapatildi...");
+                                    UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
+                                    lToplamTutar.Text = "-";
+                                    // tableDetails dizisinden de silinmeli
+                                }
+                                i++;
+                            }
+                            bActiveEt.Visible = false;
+                            bActiveEt.Enabled = false;
+                            //////
+                        }
                 }
             }
             ////////////////////////

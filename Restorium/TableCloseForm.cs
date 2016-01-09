@@ -21,11 +21,71 @@ namespace Restorium
 
         private void CalculateKalanTutar(object sender, EventArgs e)
         {
+            if (cbTL.CheckState == CheckState.Checked)
+            {
+                decimal nakit = 0;
+                decimal kredi = 0;
+                decimal cari = 0;
+                //kredi
+                try
+                {
+                    kredi = Convert.ToDecimal(tbKredi.Text);
+                }
+                catch
+                {
+                    kredi = 0;
+                    //Kredi Entry Error//
+                }
+                //Nakit
+                try
+                {
+                    nakit = Convert.ToDecimal(tbNakit.Text);
+                }
+                catch
+                {
+                    nakit = 0;
+                    //Nakit Entry Error//
+                }
+                //Cari
+                try
+                {
+                    cari = Convert.ToDecimal(tbCari.Text);
+                }
+                catch
+                {
+                    cari = 0;
+                    //Cari Entry Error//
+                }
+                decimal toplam = nakit + cari + kredi;
+                if (Convert.ToString(toplam) == lTL.Text.ToString())
+                {
+                    bMasaKapat.Enabled = true;
+                    bMasaKapat.BackColor = Color.Green;
+                    lKalan.Text = (Convert.ToDecimal(lTL.Text) - toplam).ToString()+ " ₺";
+                }
+                else
+                {
+                    bMasaKapat.Enabled = false;
+                    bMasaKapat.BackColor = Color.Red;
+                    lKalan.Text = (Convert.ToDecimal(lTL.Text) - toplam).ToString() + " ₺";
+                }
+            }
+            else if (cbEuro.CheckState == CheckState.Checked)
+            {
+            }
+            else if (cbDolar.CheckState == CheckState.Checked)
+            {
+            }
+            else if (cbGBP.CheckState == CheckState.Checked)
+            {
+            }
 
         }
 
         private void TableCloseForm_Load(object sender, EventArgs e)
         {
+            bMasaKapat.Enabled = false;
+            bMasaKapat.BackColor = Color.Red;
             //Masa Adi Set
              lTableName.Text = LastChoosenTable.lastClosedTableName.ToString();
             //Tutar Set
@@ -41,7 +101,7 @@ namespace Restorium
         
         private void MouseClicked(object sender, MouseEventArgs e)
         {
-            pictureBox1.BackgroundImage = Properties.Resources.cart_add_icon;
+            pbCalculator.BackgroundImage = Properties.Resources.cart_add_icon;
         }
 
         private void ExchangeCalculateTL(object sender, EventArgs e)
@@ -90,14 +150,14 @@ namespace Restorium
 
         private void bMasaKapat_Click(object sender, EventArgs e)
         {
-            if ( )
-            { }
-            else if ( )
-            { }
+           // if ( )
+           // { }
+           // else if ( )
+           // { }
 
 
 
-            if (lKalan.Text == "0.00 ₺")
+            if (lKalan.Text == "0.0 ₺")
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -108,6 +168,11 @@ namespace Restorium
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void Calculator(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process p = System.Diagnostics.Process.Start("calc.exe");
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbGBP = new System.Windows.Forms.CheckBox();
             this.cbDolar = new System.Windows.Forms.CheckBox();
@@ -55,10 +56,11 @@
             this.lKalan = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.lTableName = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pbCalculator = new System.Windows.Forms.PictureBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCalculator)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -270,6 +272,7 @@
             // 
             // bMasaKapat
             // 
+            this.bMasaKapat.Enabled = false;
             this.bMasaKapat.Location = new System.Drawing.Point(12, 197);
             this.bMasaKapat.Name = "bMasaKapat";
             this.bMasaKapat.Size = new System.Drawing.Size(112, 44);
@@ -291,10 +294,10 @@
             // lIskontoOrani
             // 
             this.lIskontoOrani.AutoSize = true;
-            this.lIskontoOrani.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lIskontoOrani.Location = new System.Drawing.Point(170, 6);
+            this.lIskontoOrani.Font = new System.Drawing.Font("Calibri", 13.25F, System.Drawing.FontStyle.Bold);
+            this.lIskontoOrani.Location = new System.Drawing.Point(190, 6);
             this.lIskontoOrani.Name = "lIskontoOrani";
-            this.lIskontoOrani.Size = new System.Drawing.Size(26, 18);
+            this.lIskontoOrani.Size = new System.Drawing.Size(32, 22);
             this.lIskontoOrani.TabIndex = 6;
             this.lIskontoOrani.Text = "0%";
             // 
@@ -307,38 +310,38 @@
             this.panel2.Controls.Add(this.lKalan);
             this.panel2.Controls.Add(this.label13);
             this.panel2.Controls.Add(this.lIskontoOrani);
-            this.panel2.Location = new System.Drawing.Point(0, 160);
+            this.panel2.Location = new System.Drawing.Point(0, 152);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(481, 31);
+            this.panel2.Size = new System.Drawing.Size(481, 39);
             this.panel2.TabIndex = 6;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Font = new System.Drawing.Font("Calibri", 13.25F);
             this.label15.Location = new System.Drawing.Point(70, 6);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(97, 18);
+            this.label15.Size = new System.Drawing.Size(117, 22);
             this.label15.TabIndex = 19;
             this.label15.Text = "Iskonto Orani :";
             // 
             // lKalan
             // 
             this.lKalan.AutoSize = true;
-            this.lKalan.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lKalan.Location = new System.Drawing.Point(402, 6);
+            this.lKalan.Font = new System.Drawing.Font("Calibri", 13.25F, System.Drawing.FontStyle.Bold);
+            this.lKalan.Location = new System.Drawing.Point(399, 6);
             this.lKalan.Name = "lKalan";
-            this.lKalan.Size = new System.Drawing.Size(37, 18);
+            this.lKalan.Size = new System.Drawing.Size(46, 22);
             this.lKalan.TabIndex = 7;
             this.lKalan.Text = "0.0 ₺";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(358, 6);
+            this.label13.Font = new System.Drawing.Font("Calibri", 13.25F);
+            this.label13.Location = new System.Drawing.Point(334, 6);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(49, 18);
+            this.label13.Size = new System.Drawing.Size(59, 22);
             this.label13.TabIndex = 6;
             this.label13.Text = "Kalan :";
             // 
@@ -354,16 +357,22 @@
             this.lTableName.TabIndex = 19;
             this.lTableName.Text = "-";
             // 
-            // pictureBox1
+            // pbCalculator
             // 
-            this.pictureBox1.Image = global::Restorium.Properties.Resources.Calculator_icon__1_;
-            this.pictureBox1.Location = new System.Drawing.Point(131, 198);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(91, 43);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 20;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseClicked);
+            this.pbCalculator.Image = global::Restorium.Properties.Resources.Calculator_icon__1_;
+            this.pbCalculator.Location = new System.Drawing.Point(131, 198);
+            this.pbCalculator.Name = "pbCalculator";
+            this.pbCalculator.Size = new System.Drawing.Size(77, 43);
+            this.pbCalculator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbCalculator.TabIndex = 20;
+            this.pbCalculator.TabStop = false;
+            this.pbCalculator.Click += new System.EventHandler(this.Calculator);
+            this.pbCalculator.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseClicked);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.ShowAlways = true;
             // 
             // TableCloseForm
             // 
@@ -371,7 +380,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(482, 253);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pbCalculator);
             this.Controls.Add(this.lTableName);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.bIptal);
@@ -386,15 +395,18 @@
             this.Controls.Add(this.lTL);
             this.Controls.Add(this.label4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "TableCloseForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Masa Kapama";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.TableCloseForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCalculator)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -429,6 +441,7 @@
         private System.Windows.Forms.CheckBox cbDolar;
         private System.Windows.Forms.CheckBox cbEuro;
         private System.Windows.Forms.CheckBox cbTL;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbCalculator;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

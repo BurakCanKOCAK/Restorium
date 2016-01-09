@@ -83,6 +83,15 @@
             this.PARA_BIRIMI = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.DINAMIK_STOK_KONTROLU = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tp_Kasa = new System.Windows.Forms.TabPage();
+            this.dgvKasa = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Masa_Adi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cari = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nakit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Kredi_Karti = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label13 = new System.Windows.Forms.Label();
             this.lKasaToplam = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -116,15 +125,6 @@
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.timerReservation = new System.Windows.Forms.Timer(this.components);
-            this.dgvKasa = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Masa_Adi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cari = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nakit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Kredi_Karti = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
@@ -137,6 +137,7 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Kasa.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvKasa)).BeginInit();
             this.panel2.SuspendLayout();
             this.tp_Rapor.SuspendLayout();
             this.tp_Rehber.SuspendLayout();
@@ -144,7 +145,6 @@
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
             this.panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvKasa)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -386,9 +386,9 @@
             this.lToplamTutar.ForeColor = System.Drawing.Color.Gold;
             this.lToplamTutar.Location = new System.Drawing.Point(396, 20);
             this.lToplamTutar.Name = "lToplamTutar";
-            this.lToplamTutar.Size = new System.Drawing.Size(14, 19);
+            this.lToplamTutar.Size = new System.Drawing.Size(36, 19);
             this.lToplamTutar.TabIndex = 6;
-            this.lToplamTutar.Text = "-";
+            this.lToplamTutar.Text = "0 TL";
             // 
             // bTableClose
             // 
@@ -765,6 +765,82 @@
             this.tp_Kasa.Text = "Kasa";
             this.tp_Kasa.UseVisualStyleBackColor = true;
             // 
+            // dgvKasa
+            // 
+            this.dgvKasa.AllowUserToAddRows = false;
+            this.dgvKasa.AllowUserToDeleteRows = false;
+            this.dgvKasa.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvKasa.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvKasa.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.Masa_Adi,
+            this.dataGridViewTextBoxColumn3,
+            this.Cari,
+            this.Nakit,
+            this.Kredi_Karti,
+            this.Tutar});
+            this.dgvKasa.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.dgvKasa.Location = new System.Drawing.Point(3, 78);
+            this.dgvKasa.Name = "dgvKasa";
+            this.dgvKasa.ReadOnly = true;
+            this.dgvKasa.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvKasa.Size = new System.Drawing.Size(1000, 531);
+            this.dgvKasa.TabIndex = 15;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Zaman";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 110;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Yapilan Islem";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 180;
+            // 
+            // Masa_Adi
+            // 
+            this.Masa_Adi.HeaderText = "Masa Adi";
+            this.Masa_Adi.Name = "Masa_Adi";
+            this.Masa_Adi.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Personel";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 200;
+            // 
+            // Cari
+            // 
+            this.Cari.HeaderText = "Cari";
+            this.Cari.Name = "Cari";
+            this.Cari.ReadOnly = true;
+            // 
+            // Nakit
+            // 
+            this.Nakit.HeaderText = "Nakit";
+            this.Nakit.Name = "Nakit";
+            this.Nakit.ReadOnly = true;
+            // 
+            // Kredi_Karti
+            // 
+            this.Kredi_Karti.HeaderText = "Kredi Karti";
+            this.Kredi_Karti.Name = "Kredi_Karti";
+            this.Kredi_Karti.ReadOnly = true;
+            // 
+            // Tutar
+            // 
+            this.Tutar.HeaderText = "Tutar";
+            this.Tutar.Name = "Tutar";
+            this.Tutar.ReadOnly = true;
+            // 
             // label13
             // 
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1102,82 +1178,6 @@
             this.timerReservation.Interval = 5000;
             this.timerReservation.Tick += new System.EventHandler(this.reservedTableStateChecker);
             // 
-            // dgvKasa
-            // 
-            this.dgvKasa.AllowUserToAddRows = false;
-            this.dgvKasa.AllowUserToDeleteRows = false;
-            this.dgvKasa.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvKasa.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvKasa.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.Masa_Adi,
-            this.dataGridViewTextBoxColumn3,
-            this.Cari,
-            this.Nakit,
-            this.Kredi_Karti,
-            this.Tutar});
-            this.dgvKasa.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.dgvKasa.Location = new System.Drawing.Point(3, 78);
-            this.dgvKasa.Name = "dgvKasa";
-            this.dgvKasa.ReadOnly = true;
-            this.dgvKasa.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvKasa.Size = new System.Drawing.Size(1000, 531);
-            this.dgvKasa.TabIndex = 15;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Zaman";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 110;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Yapilan Islem";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 180;
-            // 
-            // Masa_Adi
-            // 
-            this.Masa_Adi.HeaderText = "Masa Adi";
-            this.Masa_Adi.Name = "Masa_Adi";
-            this.Masa_Adi.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Personel";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 200;
-            // 
-            // Cari
-            // 
-            this.Cari.HeaderText = "Cari";
-            this.Cari.Name = "Cari";
-            this.Cari.ReadOnly = true;
-            // 
-            // Nakit
-            // 
-            this.Nakit.HeaderText = "Nakit";
-            this.Nakit.Name = "Nakit";
-            this.Nakit.ReadOnly = true;
-            // 
-            // Kredi_Karti
-            // 
-            this.Kredi_Karti.HeaderText = "Kredi Karti";
-            this.Kredi_Karti.Name = "Kredi_Karti";
-            this.Kredi_Karti.ReadOnly = true;
-            // 
-            // Tutar
-            // 
-            this.Tutar.HeaderText = "Tutar";
-            this.Tutar.Name = "Tutar";
-            this.Tutar.ReadOnly = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1208,6 +1208,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Kasa.ResumeLayout(false);
             this.tp_Kasa.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvKasa)).EndInit();
             this.panel2.ResumeLayout(false);
             this.tp_Rapor.ResumeLayout(false);
             this.tp_Rehber.ResumeLayout(false);
@@ -1217,7 +1218,6 @@
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).EndInit();
             this.panel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvKasa)).EndInit();
             this.ResumeLayout(false);
 
         }
