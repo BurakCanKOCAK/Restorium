@@ -956,7 +956,7 @@ namespace Restorium
                         //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
                         // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
                         //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
-                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), "-", "-", "-", "-");
+                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.cari, LastChoosenTable.nakit, LastChoosenTable.krediKarti, lToplamTutar.Text);
                         dgvKasa.Refresh();
                         ////Kasa Islemleri END ---------------------------------------------------------
                         ////////////////////////////////////////////////////////////////////////////////
@@ -982,7 +982,7 @@ namespace Restorium
                                     bTableClose.Enabled = false;
                                     UserLog.WConsole("Masa : " + tableName + " kapatildi...");
                                     UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
-                                    lToplamTutar.Text = "-";
+                                    lToplamTutar.Text = "0 TL";
                                     // tableDetails dizisinden de silinmeli
                                 }
                                 i++;
@@ -1035,7 +1035,7 @@ namespace Restorium
                             bTableClose.Enabled = false;
                             UserLog.WConsole("Masa : " + tableName + " kapatildi...");
                             UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
-                            lToplamTutar.Text = "-";
+                            lToplamTutar.Text = "0 TL";
                             // tableDetails dizisinden de silinmeli
                         }
                         i++;

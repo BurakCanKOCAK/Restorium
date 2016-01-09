@@ -156,6 +156,9 @@ namespace Restorium
            // { }
             if (lKalan.Text == "0.0 ₺")
             {
+                LastChoosenTable.krediKarti = Convert.ToDecimal(tbKredi.Text);
+                LastChoosenTable.nakit = Convert.ToDecimal(tbNakit.Text);
+                LastChoosenTable.cari = Convert.ToDecimal(tbCari.Text);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
