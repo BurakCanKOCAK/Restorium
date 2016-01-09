@@ -154,9 +154,6 @@ namespace Restorium
            // { }
            // else if ( )
            // { }
-
-
-
             if (lKalan.Text == "0.0 ₺")
             {
                 this.DialogResult = DialogResult.OK;
