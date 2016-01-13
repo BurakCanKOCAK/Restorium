@@ -17,6 +17,7 @@ namespace Restorium
         public static decimal cari;
         public static decimal krediKarti;
         public static decimal nakit;
+        public static string paraBirimi;
         public static string  lastClosedTableName;
         public static string  lastClosedTableTime;
         public static string  lastClosedTableWaiter;

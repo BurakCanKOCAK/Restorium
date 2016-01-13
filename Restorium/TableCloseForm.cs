@@ -91,10 +91,10 @@ namespace Restorium
             //Tutar Set
              decimal tutarConvert = LastChoosenTable.lastClosedTableTutar;
             UserLog.WConsole("Tutar : " + LastChoosenTable.lastClosedTableTutar.ToString());
-             lTL.Text    =  tutarConvert.ToString();
-             lDolar.Text = (tutarConvert * LastChoosenTable.DefinedDolar).ToString();
-             lEuro.Text  = (tutarConvert * LastChoosenTable.DefinedEuro).ToString();
-             lGBP.Text   = (tutarConvert * LastChoosenTable.DefinedGBP).ToString();
+            lTL.Text    =  tutarConvert.ToString();
+            lDolar.Text = (tutarConvert * LastChoosenTable.DefinedDolar).ToString();
+            lEuro.Text  = (tutarConvert * LastChoosenTable.DefinedEuro).ToString();
+            lGBP.Text   = (tutarConvert * LastChoosenTable.DefinedGBP).ToString();
             //Kalan Set
             lKalan.Text = lTL.Text + " ₺";
         }
@@ -150,15 +150,60 @@ namespace Restorium
 
         private void bMasaKapat_Click(object sender, EventArgs e)
         {
-           // if ( )
-           // { }
-           // else if ( )
-           // { }
-            if (lKalan.Text == "0.0 ₺")
+            // if ( )
+            // { }
+            // else if ( )
+            // { }
+            string birim="";
+            if(cbTL.CheckState == CheckState.Checked)
+                {
+                birim = "TL";
+                }
+            else if(cbDolar.CheckState == CheckState.Checked)
+                {
+                birim = "Dolar";
+                }
+            else if(cbEuro.CheckState == CheckState.Checked)
+                {
+                birim = "Euro";
+                }
+            else
+                {
+                birim = "GBP";
+                }
+            //------------------------------------------------------------------------------------------------------//
+            if (lKalan.Text == "0.0 ₺" || lKalan.Text == "0.0 €" || lKalan.Text == "0.0 £" || lKalan.Text == "0.0 $")
             {
-                LastChoosenTable.krediKarti = Convert.ToDecimal(tbKredi.Text);
-                LastChoosenTable.nakit = Convert.ToDecimal(tbNakit.Text);
-                LastChoosenTable.cari = Convert.ToDecimal(tbCari.Text);
+                try
+                {
+                    LastChoosenTable.krediKarti = Convert.ToDecimal(tbKredi.Text);
+                }
+                catch {
+                    LastChoosenTable.krediKarti = 0;
+                }
+                //////
+                try
+                {
+                    LastChoosenTable.nakit = Convert.ToDecimal(tbNakit.Text);
+                }
+                catch {
+                    LastChoosenTable.nakit = 0;
+                }
+                //////
+                try
+                {
+                    LastChoosenTable.cari = Convert.ToDecimal(tbCari.Text);
+                }
+                catch
+                {
+                    LastChoosenTable.cari = 0;
+                }
+                UserLog.WConsole("************************************************");
+                UserLog.WConsole("<< Masa Odeme Alinarak Kapatildi >>");
+                UserLog.WConsole("Masa Adi : " + lTableName.Text);
+                UserLog.WConsole("Kredi : " + LastChoosenTable.krediKarti+ " | " + "Nakit : "+ LastChoosenTable.nakit +" | " + "Cari : "+ LastChoosenTable.cari );
+                UserLog.WConsole("Toplam Tutar : "+lTL.Text+ "TL");
+                UserLog.WConsole("************************************************");
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

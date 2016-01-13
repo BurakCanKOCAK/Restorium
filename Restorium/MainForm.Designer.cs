@@ -386,9 +386,9 @@
             this.lToplamTutar.ForeColor = System.Drawing.Color.Gold;
             this.lToplamTutar.Location = new System.Drawing.Point(396, 20);
             this.lToplamTutar.Name = "lToplamTutar";
-            this.lToplamTutar.Size = new System.Drawing.Size(36, 19);
+            this.lToplamTutar.Size = new System.Drawing.Size(29, 19);
             this.lToplamTutar.TabIndex = 6;
-            this.lToplamTutar.Text = "0 TL";
+            this.lToplamTutar.Text = "0 ₺";
             // 
             // bTableClose
             // 
@@ -864,9 +864,9 @@
             this.lKasaToplam.Location = new System.Drawing.Point(895, 641);
             this.lKasaToplam.Name = "lKasaToplam";
             this.lKasaToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lKasaToplam.Size = new System.Drawing.Size(100, 41);
+            this.lKasaToplam.Size = new System.Drawing.Size(86, 41);
             this.lKasaToplam.TabIndex = 11;
-            this.lKasaToplam.Text = "0.0 TL";
+            this.lKasaToplam.Text = "0.0 ₺";
             this.lKasaToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // panel2

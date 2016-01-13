@@ -930,13 +930,11 @@ namespace Restorium
             string text = "";
             string tableName = lMasaNo.Text;
             string masaToplam = lToplamTutar.Text.ToString();
-            masaToplam = masaToplam.Replace(" TL", "");
+            masaToplam = masaToplam.Replace(" ₺", "");
             LastChoosenTable.lastClosedTableTutar = Convert.ToDecimal(masaToplam);             //Tutar
             LastChoosenTable.lastClosedTableName = tableName;                                  //Table Name
             LastChoosenTable.lastClosedTableWaiter = lPersonel.Text.Replace("Personel :", ""); //Personel
             LastChoosenTable.lastClosedTableIskontoOrani = LastChoosenTable.iskonto;           //Iskonto Rate
-
-
             ////////////////////////
             ////////////////////////
             if (bTableClose.Text == "Masa Kapat")
@@ -950,13 +948,13 @@ namespace Restorium
                     {
                         ////Kasa Islemleri     ---------------------------------------------------------
                         string kasaToplam = lKasaToplam.Text.ToString();
-                        kasaToplam = kasaToplam.Replace(" TL", "");
-                        lKasaToplam.Text = (Convert.ToDecimal(masaToplam) + Convert.ToDecimal(kasaToplam)).ToString() + " TL";
+                        kasaToplam = kasaToplam.Replace(" ₺", "");
+                        lKasaToplam.Text = (Convert.ToDecimal(masaToplam) + Convert.ToDecimal(kasaToplam)).ToString() + " ₺";
                         ///////////////////////////////
                         //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
                         // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
                         //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
-                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.cari, LastChoosenTable.nakit, LastChoosenTable.krediKarti, lToplamTutar.Text);
+                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.cari + LastChoosenTable.paraBirimi , LastChoosenTable.nakit + LastChoosenTable.paraBirimi, LastChoosenTable.krediKarti+ LastChoosenTable.paraBirimi, lToplamTutar.Text+ LastChoosenTable.paraBirimi);
                         dgvKasa.Refresh();
                         ////Kasa Islemleri END ---------------------------------------------------------
                         ////////////////////////////////////////////////////////////////////////////////
@@ -982,7 +980,7 @@ namespace Restorium
                                     bTableClose.Enabled = false;
                                     UserLog.WConsole("Masa : " + tableName + " kapatildi...");
                                     UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
-                                    lToplamTutar.Text = "0 TL";
+                                    lToplamTutar.Text = "0 ₺";
                                     // tableDetails dizisinden de silinmeli
                                 }
                                 i++;
@@ -1035,7 +1033,7 @@ namespace Restorium
                             bTableClose.Enabled = false;
                             UserLog.WConsole("Masa : " + tableName + " kapatildi...");
                             UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
-                            lToplamTutar.Text = "0 TL";
+                            lToplamTutar.Text = "0 ₺";
                             // tableDetails dizisinden de silinmeli
                         }
                         i++;
@@ -1088,9 +1086,9 @@ namespace Restorium
                         dgViewSiparis.Rows[existedRow].Cells[2].Value = (countOfElement + 1).ToString();
                         //Tutar
                         string tutar = dgViewSiparis.Rows[existedRow].Cells[5].Value.ToString();  // 5 TL
-                        tutar = tutar.Replace(" TL", "");  // 5
+                        tutar = tutar.Replace(" ₺", "");  // 5
                         tutar = (Convert.ToDecimal(tutar) + Convert.ToDecimal(showListForm.Selected_Meal_Price)).ToString();  // 10
-                        dgViewSiparis.Rows[existedRow].Cells[5].Value = tutar + " TL";
+                        dgViewSiparis.Rows[existedRow].Cells[5].Value = tutar + " ₺";
                         dgViewSiparis.Refresh();
                         saveAdisyonToTable();
                     }
@@ -1102,7 +1100,7 @@ namespace Restorium
                         decimal mealPrice = showListForm.Selected_Meal_Price;
                         dgViewSiparis.AllowUserToAddRows = true;
                         //Sutuna ilk degeri yazdirma
-                        dgViewSiparis.Rows.Add(mealID, meal, "1", null, null, mealPrice.ToString() + " TL", mealPrice.ToString() + " TL");
+                        dgViewSiparis.Rows.Add(mealID, meal, "1", null, null, mealPrice.ToString() + " ₺", mealPrice.ToString() + " ₺");
                         //UserLog.WConsole("Yemek fiyati : " + mealPrice.ToString());
                         dgViewSiparis.AllowUserToAddRows = false;
                         dgViewSiparis.Refresh();
@@ -1124,9 +1122,9 @@ namespace Restorium
                 int newCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
                 //tutar hesabi
                 string tutar = dgViewSiparis.Rows[e.RowIndex].Cells[5].Value.ToString(); // 5 TL
-                tutar = tutar.Replace(" TL", "");
+                tutar = tutar.Replace(" ₺", "");
                 tutar = ((Convert.ToDecimal(tutar) / oldCount) * newCount).ToString();  // 10
-                dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = tutar + " TL";
+                dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = tutar + " ₺";
             }
             if (e.ColumnIndex == 4) // Siparis miktarini 1 azalt
             {
@@ -1139,9 +1137,9 @@ namespace Restorium
                     int newCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
                     //tutar hesabi
                     string tutar = dgViewSiparis.Rows[e.RowIndex].Cells[5].Value.ToString(); // 5 TL
-                    tutar = tutar.Replace(" TL", "");
+                    tutar = tutar.Replace(" ₺", "");
                     tutar = (((Convert.ToDecimal(tutar)) / oldCount) * newCount).ToString();
-                    dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = tutar + " TL";
+                    dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = tutar + " ₺";
                 }
                 else if (adet == 0)
                 {
@@ -1172,11 +1170,11 @@ namespace Restorium
             for (int i = 0; i < dgViewSiparis.RowCount; i++)
             {
                 string tutar = dgViewSiparis.Rows[i].Cells[5].Value.ToString();
-                tutar = tutar.Replace(" TL", "");
+                tutar = tutar.Replace(" ₺", "");
                 toplamTutar = toplamTutar + Convert.ToDecimal(tutar);
 
             }
-            lToplamTutar.Text = toplamTutar.ToString() + " TL";
+            lToplamTutar.Text = toplamTutar.ToString() + " ₺";
             //Masaya kaydet
             tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 2] = toplamTutar.ToString(); // Tutar
             tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 4] = dgViewSiparis.RowCount.ToString(); // Toplam urun siparis cesidi
@@ -1213,9 +1211,9 @@ namespace Restorium
                 string meal = findMeal(mealID);
                 decimal mealPrice = findMealPrice(mealID);
                 int countOfMeal = Convert.ToInt16(tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 2, i]);
-                dgViewSiparis.Rows.Add(mealID, meal, countOfMeal, null, null, (mealPrice * countOfMeal).ToString() + " TL", findMealPrice(mealID).ToString() + " TL");
+                dgViewSiparis.Rows.Add(mealID, meal, countOfMeal, null, null, (mealPrice * countOfMeal).ToString() + " ₺", findMealPrice(mealID).ToString() + " ₺");
             }
-            lToplamTutar.Text = tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 2] + " TL";
+            lToplamTutar.Text = tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 2] + " ₺";
             dgViewSiparis.Refresh();
         }
 
