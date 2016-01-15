@@ -58,7 +58,7 @@ namespace Restorium
                     //Cari Entry Error//
                 }
                 decimal toplam = nakit + cari + kredi;
-                if (Convert.ToString(toplam) == lTL.Text.ToString())
+                if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lTL.Text))
                 {
                     bMasaKapat.Enabled = true;
                     bMasaKapat.BackColor = Color.Green;
@@ -70,6 +70,7 @@ namespace Restorium
                     bMasaKapat.BackColor = Color.Red;
                     lKalan.Text = (Convert.ToDecimal(lTL.Text) - toplam).ToString() + " ₺";
                 }
+                checkLogicSituations();
             }
             #endregion
             #region Euro_Calculation
@@ -109,7 +110,7 @@ namespace Restorium
                     //Cari Entry Error//
                 }
                 decimal toplam = nakit + cari + kredi;
-                if (Convert.ToString(toplam) == lEuro.Text.ToString())
+                if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lEuro.Text))
                 {
                     bMasaKapat.Enabled = true;
                     bMasaKapat.BackColor = Color.Green;
@@ -121,22 +122,134 @@ namespace Restorium
                     bMasaKapat.BackColor = Color.Red;
                     lKalan.Text = (Convert.ToDecimal(lEuro.Text) - toplam).ToString() + " €";
                 }
+                checkLogicSituations();
             }
             #endregion
             #region Dolar_Calculation
             else if (cbDolar.CheckState == CheckState.Checked)
             {
+                decimal nakit = 0;
+                decimal kredi = 0;
+                decimal cari = 0;
+                //kredi
+                try
+                {
+                    kredi = Convert.ToDecimal(tbKredi.Text);
+                }
+                catch
+                {
+                    kredi = 0;
+                    //Kredi Entry Error//
+                }
+                //Nakit
+                try
+                {
+                    nakit = Convert.ToDecimal(tbNakit.Text);
+                }
+                catch
+                {
+                    nakit = 0;
+                    //Nakit Entry Error//
+                }
+                //Cari
+                try
+                {
+                    cari = Convert.ToDecimal(tbCari.Text);
+                }
+                catch
+                {
+                    cari = 0;
+                    //Cari Entry Error//
+                }
+                decimal toplam = nakit + cari + kredi;
+                if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lDolar.Text))
+                {
+                    bMasaKapat.Enabled = true;
+                    bMasaKapat.BackColor = Color.Green;
+                    lKalan.Text = (Convert.ToDecimal(lDolar.Text) - toplam).ToString() + " $";
+                }
+                else
+                {
+                    bMasaKapat.Enabled = false;
+                    bMasaKapat.BackColor = Color.Red;
+                    lKalan.Text = (Convert.ToDecimal(lDolar.Text) - toplam).ToString() + " $";
+                }
+                checkLogicSituations();
             }
             #endregion
             #region GBP_Calculation
             else if (cbGBP.CheckState == CheckState.Checked)
             {
+                decimal nakit = 0;
+                decimal kredi = 0;
+                decimal cari = 0;
+                //kredi
+                try
+                {
+                    kredi = Convert.ToDecimal(tbKredi.Text);
+                }
+                catch
+                {
+                    kredi = 0;
+                    //Kredi Entry Error//
+                }
+                //Nakit
+                try
+                {
+                    nakit = Convert.ToDecimal(tbNakit.Text);
+                }
+                catch
+                {
+                    nakit = 0;
+                    //Nakit Entry Error//
+                }
+                //Cari
+                try
+                {
+                    cari = Convert.ToDecimal(tbCari.Text);
+                }
+                catch
+                {
+                    cari = 0;
+                    //Cari Entry Error//
+                }
+                decimal toplam = nakit + cari + kredi;
+                if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lGBP.Text))
+                {
+                    bMasaKapat.Enabled = true;
+                    bMasaKapat.BackColor = Color.Green;
+                    lKalan.Text = (Convert.ToDecimal(lGBP.Text) - toplam).ToString() + " £";
+                }
+                else
+                {
+                    bMasaKapat.Enabled = false;
+                    bMasaKapat.BackColor = Color.Red;
+                    lKalan.Text = (Convert.ToDecimal(lGBP.Text) - toplam).ToString() + " £";
+                }
+                checkLogicSituations();
             }
             #endregion
         }
 
+        private void checkLogicSituations()
+        {
+            if (tbNakit.Text.Contains("-"))
+            {
+                tbNakit.Text = "";
+            }
+            else if (tbCari.Text.Contains("-"))
+            {
+                tbCari.Text = "";
+            }
+            else if (tbKredi.Text.Contains("-"))
+            {
+                tbKredi.Text = "";
+            }
+        }
+
         private void TableCloseForm_Load(object sender, EventArgs e)
         {
+
             bMasaKapat.Enabled = false;
             bMasaKapat.BackColor = Color.Red;
             //Masa Adi Set
@@ -144,10 +257,10 @@ namespace Restorium
             //Tutar Set
              decimal tutarConvert = LastChoosenTable.lastClosedTableTutar;
             UserLog.WConsole("Tutar : " + LastChoosenTable.lastClosedTableTutar.ToString());
-            lTL.Text    =  tutarConvert.ToString();
-            lDolar.Text = (tutarConvert * LastChoosenTable.DefinedDolar).ToString();
-            lEuro.Text  = (tutarConvert * LastChoosenTable.DefinedEuro).ToString();
-            lGBP.Text   = (tutarConvert * LastChoosenTable.DefinedGBP).ToString();
+            lTL.Text    = System.Math.Round(tutarConvert,2).ToString();
+            lDolar.Text = System.Math.Round((tutarConvert * LastChoosenTable.DefinedDolar),2).ToString();
+            lEuro.Text  = System.Math.Round((tutarConvert * LastChoosenTable.DefinedEuro),2).ToString();
+            lGBP.Text   = System.Math.Round((tutarConvert * LastChoosenTable.DefinedGBP),2).ToString();
             //Kalan Set
             lKalan.Text = lTL.Text + " ₺";
         }
@@ -165,6 +278,9 @@ namespace Restorium
                 cbEuro.CheckState = CheckState.Unchecked;
                 cbGBP.CheckState = CheckState.Unchecked;
             }
+            tbCari.Text = "";
+            tbKredi.Text = "";
+            tbNakit.Text = "";
             recalculateKalanTutar("TL");
          }
 
@@ -172,10 +288,14 @@ namespace Restorium
         {
             if (cbEuro.CheckState == CheckState.Checked)
             {
+                CalculateKalanTutar(null, null);
                 cbTL.CheckState = CheckState.Unchecked;
                 cbDolar.CheckState = CheckState.Unchecked;
                 cbGBP.CheckState = CheckState.Unchecked;
             }
+            tbCari.Text = "";
+            tbKredi.Text = "";
+            tbNakit.Text = "";
             recalculateKalanTutar("Euro");
         }
 
@@ -187,6 +307,9 @@ namespace Restorium
                 cbEuro.CheckState = CheckState.Unchecked;
                 cbGBP.CheckState = CheckState.Unchecked;
             }
+            tbCari.Text = "";
+            tbKredi.Text = "";
+            tbNakit.Text = "";
             recalculateKalanTutar("Dolar");
         }
 
@@ -198,6 +321,9 @@ namespace Restorium
                 cbEuro.CheckState = CheckState.Unchecked;
                 cbDolar.CheckState = CheckState.Unchecked;
             }
+                tbCari.Text = "";
+                tbKredi.Text = "";
+                tbNakit.Text = "";
             recalculateKalanTutar("GBP");
 
         }
@@ -207,23 +333,25 @@ namespace Restorium
             string birim="";
             if(cbTL.CheckState == CheckState.Checked)
                 {
-                birim = "TL";
+                birim = " ₺";
                 }
             else if(cbDolar.CheckState == CheckState.Checked)
                 {
-                birim = "Dolar";
+                birim = " $";
                 }
             else if(cbEuro.CheckState == CheckState.Checked)
                 {
-                birim = "Euro";
+                birim = " €";
                 }
             else
                 {
-                birim = "GBP";
+                birim = " £";
                 }
             LastChoosenTable.paraBirimi = birim;
             //------------------------------------------------------------------------------------------------------//
-            if (lKalan.Text == "0.0 ₺" || lKalan.Text == "0.0 €" || lKalan.Text == "0.0 £" || lKalan.Text == "0.0 $")
+            UserLog.WConsole("A1");
+            if (Convert.ToDecimal(lKalan.Text.Replace(birim, ""))==0)
+            //if (lKalan.Text == "0.0 ₺" || lKalan.Text == "0.0 €" || lKalan.Text == "0.0 £" || lKalan.Text == "0.0 $")
             {
                 try
                 {

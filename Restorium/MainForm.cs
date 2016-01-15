@@ -954,7 +954,7 @@ namespace Restorium
                         //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
                         // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
                         //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
-                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.cari + LastChoosenTable.paraBirimi , LastChoosenTable.nakit + LastChoosenTable.paraBirimi, LastChoosenTable.krediKarti+ LastChoosenTable.paraBirimi, lToplamTutar.Text+ LastChoosenTable.paraBirimi);
+                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.cari + LastChoosenTable.paraBirimi , LastChoosenTable.nakit + LastChoosenTable.paraBirimi, LastChoosenTable.krediKarti+ LastChoosenTable.paraBirimi, lToplamTutar.Text.Replace(" ₺","") + LastChoosenTable.paraBirimi);
                         dgvKasa.Refresh();
                         ////Kasa Islemleri END ---------------------------------------------------------
                         ////////////////////////////////////////////////////////////////////////////////
