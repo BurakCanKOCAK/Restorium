@@ -951,68 +951,85 @@ namespace Restorium
                         kasaToplam = kasaToplam.Replace(" ₺", "");
                         lKasaToplam.Text = (Convert.ToDecimal(masaToplam) + Convert.ToDecimal(kasaToplam)).ToString() + " ₺";
                         ///Nakit Toplam  -----------------------------------------------------------------------------
-                        string[] nakitDizi = lNakitToplam.Text.Split('/');
+                        string[] nakitDizi = lNakitToplam.Text.Split('+');
                         switch (LastChoosenTable.paraBirimi)
                         {
                             case " ₺":
                                 nakitDizi[0] = (Convert.ToDecimal(nakitDizi[0].Replace("₺", "")) + LastChoosenTable.nakit).ToString();
-                                lNakitToplam.Text = nakitDizi[0] + "₺ /" + nakitDizi[1] + "/" + nakitDizi[2] + "/" + nakitDizi[3];
+                                lNakitToplam.Text = nakitDizi[0] + "₺ +" + nakitDizi[1] + "+" + nakitDizi[2] + "+" + nakitDizi[3];
+                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.nakit)).ToString()+ "₺";
                                 break;
                             case " €":
                                 nakitDizi[1] = (Convert.ToDecimal(nakitDizi[1].Replace("€", "")) + LastChoosenTable.nakit).ToString();
-                                lNakitToplam.Text = nakitDizi[0] + "/ " + nakitDizi[1] + "€ /" + nakitDizi[2] + "/" + nakitDizi[3];
+                                lNakitToplam.Text = nakitDizi[0] + "+ " + nakitDizi[1] + "€ +" + nakitDizi[2] + "+" + nakitDizi[3];
+                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + (Convert.ToDecimal(LastChoosenTable.nakit) /LastChoosenTable.DefinedEuro)).ToString() + "₺";
                                 break;
                             case " $":
                                 nakitDizi[2] = (Convert.ToDecimal(nakitDizi[2].Replace("$", "")) + LastChoosenTable.nakit).ToString();
-                                lNakitToplam.Text = nakitDizi[0] + "/" + nakitDizi[1] + "/ " + nakitDizi[2] + "$ /" + nakitDizi[3];
+                                lNakitToplam.Text = nakitDizi[0] + "+" + nakitDizi[1] + "+ " + nakitDizi[2] + "$ +" + nakitDizi[3];
+                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.nakit) / LastChoosenTable.DefinedDolar).ToString() + "₺";
                                 break;
                             case " £":
                                 nakitDizi[3] = (Convert.ToDecimal(nakitDizi[3].Replace("£", "")) + LastChoosenTable.nakit).ToString();
-                                lNakitToplam.Text = nakitDizi[0] + "/" + nakitDizi[1] + "/" + nakitDizi[2] + "/ " + nakitDizi[3] + "£";
+                                lNakitToplam.Text = nakitDizi[0] + "+" + nakitDizi[1] + "+" + nakitDizi[2] + "+ " + nakitDizi[3] + "£";
+                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.nakit) / LastChoosenTable.DefinedGBP).ToString() + "₺";
                                 break;
 
                         }
                         ///Kredi Toplam -----------------------------------------------------------------------------
-                        string[] krediDizi = lKrediToplam.Text.Split('/');
+                        string[] krediDizi = lKrediToplam.Text.Split('+');
                         switch (LastChoosenTable.paraBirimi)
                         {
                             case " ₺":
                                 krediDizi[0] = (Convert.ToDecimal(krediDizi[0].Replace("₺", "")) + LastChoosenTable.krediKarti).ToString();
-                                lKrediToplam.Text = krediDizi[0] + "₺ /" + krediDizi[1] + "/" + krediDizi[2] + "/" + krediDizi[3];
+                                lKrediToplam.Text = krediDizi[0] + "₺ +" + krediDizi[1] + "+" + krediDizi[2] + "+" + krediDizi[3];
+                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.krediKarti)).ToString() + "₺";
                                 break;
                             case " €":
                                 krediDizi[1] = (Convert.ToDecimal(krediDizi[1].Replace("€", "")) + LastChoosenTable.krediKarti).ToString();
-                                lKrediToplam.Text = krediDizi[0] + "/ " + krediDizi[1] + "€ /" + krediDizi[2] + "/" + krediDizi[3];
+                                lKrediToplam.Text = krediDizi[0] + "+ " + krediDizi[1] + "€ +" + krediDizi[2] + "+" + krediDizi[3];
+                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.krediKarti) / LastChoosenTable.DefinedEuro).ToString() + "₺";
                                 break;
                             case " $":
                                 krediDizi[2] = (Convert.ToDecimal(krediDizi[2].Replace("$", "")) + LastChoosenTable.krediKarti).ToString();
-                                lKrediToplam.Text = krediDizi[0] + "/" + krediDizi[1] + "/ " + krediDizi[2] + "$ /" + krediDizi[3];
+                                lKrediToplam.Text = krediDizi[0] + "+" + krediDizi[1] + "+ " + krediDizi[2] + "$ +" + krediDizi[3];
+                                UserLog.WConsole("A");
+                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.krediKarti) / LastChoosenTable.DefinedDolar).ToString() + "₺";
+                                UserLog.WConsole("A1");
                                 break;
                             case " £":
                                 krediDizi[3] = (Convert.ToDecimal(krediDizi[3].Replace("£", "")) + LastChoosenTable.krediKarti).ToString();
-                                lKrediToplam.Text = krediDizi[0] + "/" + krediDizi[1] + "/" + krediDizi[2] + "/ " + krediDizi[3] + "£";
+                                lKrediToplam.Text = krediDizi[0] + "+" + krediDizi[1] + "+" + krediDizi[2] + "+ " + krediDizi[3] + "£";
+                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.krediKarti) / LastChoosenTable.DefinedGBP).ToString() + "₺";
                                 break;
 
                         }
                         ///Cari Toplam  -----------------------------------------------------------------------------
-                        string[] cariDizi = lCariToplam.Text.Split('/');
+                        string[] cariDizi = lCariToplam.Text.Split('+');
                         switch (LastChoosenTable.paraBirimi)
                         {
                             case " ₺":
                                 cariDizi[0] = (Convert.ToDecimal(cariDizi[0].Replace("₺", "")) + LastChoosenTable.cari).ToString();
-                                lCariToplam.Text = cariDizi[0] + "₺ /" + cariDizi[1] + "/" + cariDizi[2] + "/" + cariDizi[3];
+                                lCariToplam.Text = cariDizi[0] + "₺ +" + cariDizi[1] + "+" + cariDizi[2] + "+" + cariDizi[3];
+                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.cari)).ToString() + "₺";
                                 break;
                             case " €":
                                 cariDizi[1] = (Convert.ToDecimal(cariDizi[1].Replace("€", "")) + LastChoosenTable.cari).ToString();
-                                lCariToplam.Text = cariDizi[0] + "/ " + cariDizi[1] + "€ /" + cariDizi[2] + "/" + cariDizi[3];
+                                lCariToplam.Text = cariDizi[0] + "+ " + cariDizi[1] + "€ /" + cariDizi[2] + "+" + cariDizi[3];
+                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.cari) / LastChoosenTable.DefinedEuro).ToString() + "₺";
                                 break;
                             case " $":
-                                cariDizi[2] = (Convert.ToDecimal(cariDizi[2].Replace("$", "")) + LastChoosenTable.cari).ToString();
-                                lCariToplam.Text = cariDizi[0] + "/" + cariDizi[1] + "/ " + cariDizi[2] + "$ /" + cariDizi[3];
+                                UserLog.WConsole("AAAA");
+                                cariDizi[2] = (Convert.ToDecimal(cariDizi[2].Replace("$", "")) + LastChoosenTable.cari).ToString(); /// PATLAMA NOKTASI //
+                                lCariToplam.Text = cariDizi[0] + "+" + cariDizi[1] + "+ " + cariDizi[2] + "$ +" + cariDizi[3];
+                                UserLog.WConsole("A2");
+                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.cari) / LastChoosenTable.DefinedDolar).ToString() + "₺";
+                                UserLog.WConsole("A3");
                                 break;
                             case " £":
                                 cariDizi[3] = (Convert.ToDecimal(cariDizi[3].Replace("£", "")) + LastChoosenTable.cari).ToString();
-                                lCariToplam.Text = cariDizi[0] + "/" + cariDizi[1] + "/" + cariDizi[2] + "/ " + cariDizi[3] + "£";
+                                lCariToplam.Text = cariDizi[0] + "+" + cariDizi[1] + "+" + cariDizi[2] + "+ " + cariDizi[3] + "£";
+                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.cari) / LastChoosenTable.DefinedGBP).ToString() + "₺";
                                 break;
 
                         }

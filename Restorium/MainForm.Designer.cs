@@ -117,10 +117,6 @@
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.timerReservation = new System.Windows.Forms.Timer(this.components);
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Masa_Adi = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -129,9 +125,17 @@
             this.Kredi_Karti = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cari = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.lNakitToplamTL = new System.Windows.Forms.Label();
+            this.lKrediToplamTL = new System.Windows.Forms.Label();
+            this.lCariToplamTL = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.lNakitToplam = new System.Windows.Forms.Label();
             this.lKrediToplam = new System.Windows.Forms.Label();
             this.lCariToplam = new System.Windows.Forms.Label();
+            this.panel9 = new System.Windows.Forms.Panel();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
@@ -153,6 +157,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
             this.panel6.SuspendLayout();
             this.panel8.SuspendLayout();
+            this.panel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -380,21 +385,22 @@
             // 
             this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(283, 20);
+            this.label11.Location = new System.Drawing.Point(346, 20);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(107, 19);
+            this.label11.Size = new System.Drawing.Size(99, 19);
             this.label11.TabIndex = 7;
-            this.label11.Text = "Toplam Tutar :";
+            this.label11.Text = "Toplam Tutar";
             // 
             // lToplamTutar
             // 
             this.lToplamTutar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lToplamTutar.AutoSize = true;
             this.lToplamTutar.BackColor = System.Drawing.Color.Transparent;
+            this.lToplamTutar.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold);
             this.lToplamTutar.ForeColor = System.Drawing.Color.Gold;
-            this.lToplamTutar.Location = new System.Drawing.Point(396, 20);
+            this.lToplamTutar.Location = new System.Drawing.Point(345, 39);
             this.lToplamTutar.Name = "lToplamTutar";
-            this.lToplamTutar.Size = new System.Drawing.Size(29, 19);
+            this.lToplamTutar.Size = new System.Drawing.Size(42, 29);
             this.lToplamTutar.TabIndex = 6;
             this.lToplamTutar.Text = "0 ₺";
             // 
@@ -428,7 +434,7 @@
             this.lMasaNo.AutoSize = true;
             this.lMasaNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 50.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lMasaNo.ForeColor = System.Drawing.Color.Black;
-            this.lMasaNo.Location = new System.Drawing.Point(356, 19);
+            this.lMasaNo.Location = new System.Drawing.Point(324, 19);
             this.lMasaNo.Name = "lMasaNo";
             this.lMasaNo.Size = new System.Drawing.Size(56, 76);
             this.lMasaNo.TabIndex = 2;
@@ -761,6 +767,7 @@
             // tp_Kasa
             // 
             this.tp_Kasa.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Kasa.Controls.Add(this.panel9);
             this.tp_Kasa.Controls.Add(this.panel8);
             this.tp_Kasa.Controls.Add(this.dgvKasa);
             this.tp_Kasa.Controls.Add(this.label13);
@@ -805,7 +812,7 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold);
             this.label13.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label13.Location = new System.Drawing.Point(851, 612);
+            this.label13.Location = new System.Drawing.Point(842, 618);
             this.label13.Name = "label13";
             this.label13.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label13.Size = new System.Drawing.Size(144, 29);
@@ -819,7 +826,7 @@
             this.lKasaToplam.AutoSize = true;
             this.lKasaToplam.Font = new System.Drawing.Font("Calibri", 25F, System.Drawing.FontStyle.Bold);
             this.lKasaToplam.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lKasaToplam.Location = new System.Drawing.Point(895, 641);
+            this.lKasaToplam.Location = new System.Drawing.Point(840, 645);
             this.lKasaToplam.Name = "lKasaToplam";
             this.lKasaToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lKasaToplam.Size = new System.Drawing.Size(86, 41);
@@ -1136,63 +1143,6 @@
             this.timerReservation.Interval = 5000;
             this.timerReservation.Tick += new System.EventHandler(this.reservedTableStateChecker);
             // 
-            // panel8
-            // 
-            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel8.Controls.Add(this.lCariToplam);
-            this.panel8.Controls.Add(this.lKrediToplam);
-            this.panel8.Controls.Add(this.lNakitToplam);
-            this.panel8.Controls.Add(this.label15);
-            this.panel8.Controls.Add(this.label14);
-            this.panel8.Controls.Add(this.label12);
-            this.panel8.Location = new System.Drawing.Point(3, 612);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(424, 86);
-            this.panel8.TabIndex = 16;
-            // 
-            // label12
-            // 
-            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
-            this.label12.ForeColor = System.Drawing.Color.DarkRed;
-            this.label12.Location = new System.Drawing.Point(4, 60);
-            this.label12.Name = "label12";
-            this.label12.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label12.Size = new System.Drawing.Size(162, 23);
-            this.label12.TabIndex = 17;
-            this.label12.Text = "Cari Toplam              :";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label14
-            // 
-            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
-            this.label14.ForeColor = System.Drawing.Color.DarkOliveGreen;
-            this.label14.Location = new System.Drawing.Point(4, 31);
-            this.label14.Name = "label14";
-            this.label14.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label14.Size = new System.Drawing.Size(162, 23);
-            this.label14.TabIndex = 18;
-            this.label14.Text = "Kredi Karti Toplam :";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label15
-            // 
-            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
-            this.label15.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label15.Location = new System.Drawing.Point(4, 3);
-            this.label15.Name = "label15";
-            this.label15.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label15.Size = new System.Drawing.Size(162, 23);
-            this.label15.TabIndex = 19;
-            this.label15.Text = "Nakit Toplam           :";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "Zaman";
@@ -1244,56 +1194,173 @@
             this.Tutar.Name = "Tutar";
             this.Tutar.ReadOnly = true;
             // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.label12.ForeColor = System.Drawing.Color.DarkRed;
+            this.label12.Location = new System.Drawing.Point(1, 57);
+            this.label12.Name = "label12";
+            this.label12.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label12.Size = new System.Drawing.Size(162, 23);
+            this.label12.TabIndex = 17;
+            this.label12.Text = "Cari Toplam              :";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.label14.ForeColor = System.Drawing.Color.DarkOliveGreen;
+            this.label14.Location = new System.Drawing.Point(1, 28);
+            this.label14.Name = "label14";
+            this.label14.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label14.Size = new System.Drawing.Size(162, 23);
+            this.label14.TabIndex = 18;
+            this.label14.Text = "Kredi Karti Toplam :";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.label15.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label15.Location = new System.Drawing.Point(1, 0);
+            this.label15.Name = "label15";
+            this.label15.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label15.Size = new System.Drawing.Size(162, 23);
+            this.label15.TabIndex = 19;
+            this.label15.Text = "Nakit Toplam           :";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lNakitToplamTL
+            // 
+            this.lNakitToplamTL.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lNakitToplamTL.AutoSize = true;
+            this.lNakitToplamTL.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.lNakitToplamTL.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lNakitToplamTL.Location = new System.Drawing.Point(3, 0);
+            this.lNakitToplamTL.Name = "lNakitToplamTL";
+            this.lNakitToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lNakitToplamTL.Size = new System.Drawing.Size(34, 23);
+            this.lNakitToplamTL.TabIndex = 23;
+            this.lNakitToplamTL.Text = " 0₺";
+            // 
+            // lKrediToplamTL
+            // 
+            this.lKrediToplamTL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lKrediToplamTL.AutoSize = true;
+            this.lKrediToplamTL.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.lKrediToplamTL.ForeColor = System.Drawing.Color.OliveDrab;
+            this.lKrediToplamTL.Location = new System.Drawing.Point(7, 28);
+            this.lKrediToplamTL.Name = "lKrediToplamTL";
+            this.lKrediToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lKrediToplamTL.Size = new System.Drawing.Size(30, 23);
+            this.lKrediToplamTL.TabIndex = 24;
+            this.lKrediToplamTL.Text = "0₺";
+            this.lKrediToplamTL.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lCariToplamTL
+            // 
+            this.lCariToplamTL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lCariToplamTL.AutoSize = true;
+            this.lCariToplamTL.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.lCariToplamTL.ForeColor = System.Drawing.Color.Firebrick;
+            this.lCariToplamTL.Location = new System.Drawing.Point(7, 57);
+            this.lCariToplamTL.Name = "lCariToplamTL";
+            this.lCariToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lCariToplamTL.Size = new System.Drawing.Size(30, 23);
+            this.lCariToplamTL.TabIndex = 25;
+            this.lCariToplamTL.Text = "0₺";
+            this.lCariToplamTL.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // panel8
+            // 
+            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel8.Controls.Add(this.lCariToplam);
+            this.panel8.Controls.Add(this.lKrediToplam);
+            this.panel8.Controls.Add(this.lNakitToplam);
+            this.panel8.Controls.Add(this.label15);
+            this.panel8.Controls.Add(this.label14);
+            this.panel8.Controls.Add(this.label12);
+            this.panel8.Location = new System.Drawing.Point(3, 612);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(458, 86);
+            this.panel8.TabIndex = 16;
+            // 
             // lNakitToplam
             // 
-            this.lNakitToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lNakitToplam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lNakitToplam.AutoSize = true;
             this.lNakitToplam.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
             this.lNakitToplam.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lNakitToplam.Location = new System.Drawing.Point(172, 3);
+            this.lNakitToplam.Location = new System.Drawing.Point(169, 0);
             this.lNakitToplam.Name = "lNakitToplam";
             this.lNakitToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lNakitToplam.Size = new System.Drawing.Size(138, 23);
+            this.lNakitToplam.Size = new System.Drawing.Size(141, 23);
             this.lNakitToplam.TabIndex = 20;
-            this.lNakitToplam.Text = "0₺ / 0€ / 0$ / 0£";
+            this.lNakitToplam.Text = "0₺ + 0€ + 0$ + 0£";
             this.lNakitToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lKrediToplam
             // 
-            this.lKrediToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lKrediToplam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lKrediToplam.AutoSize = true;
             this.lKrediToplam.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
             this.lKrediToplam.ForeColor = System.Drawing.Color.OliveDrab;
-            this.lKrediToplam.Location = new System.Drawing.Point(172, 31);
+            this.lKrediToplam.Location = new System.Drawing.Point(169, 28);
             this.lKrediToplam.Name = "lKrediToplam";
             this.lKrediToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lKrediToplam.Size = new System.Drawing.Size(138, 23);
+            this.lKrediToplam.Size = new System.Drawing.Size(141, 23);
             this.lKrediToplam.TabIndex = 21;
-            this.lKrediToplam.Text = "0₺ / 0€ / 0$ / 0£";
+            this.lKrediToplam.Text = "0₺ + 0€ + 0$ + 0£";
             this.lKrediToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lCariToplam
             // 
-            this.lCariToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lCariToplam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lCariToplam.AutoSize = true;
             this.lCariToplam.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
             this.lCariToplam.ForeColor = System.Drawing.Color.Firebrick;
-            this.lCariToplam.Location = new System.Drawing.Point(172, 60);
+            this.lCariToplam.Location = new System.Drawing.Point(169, 57);
             this.lCariToplam.Name = "lCariToplam";
             this.lCariToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lCariToplam.Size = new System.Drawing.Size(138, 23);
+            this.lCariToplam.Size = new System.Drawing.Size(141, 23);
             this.lCariToplam.TabIndex = 22;
-            this.lCariToplam.Text = "0₺ / 0€ / 0$ / 0£";
+            this.lCariToplam.Text = "0₺ + 0€ + 0$ + 0£";
             this.lCariToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // panel9
+            // 
+            this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel9.Controls.Add(this.lCariToplamTL);
+            this.panel9.Controls.Add(this.lNakitToplamTL);
+            this.panel9.Controls.Add(this.lKrediToplamTL);
+            this.panel9.Location = new System.Drawing.Point(468, 612);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(199, 86);
+            this.panel9.TabIndex = 26;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 730);
+            this.ClientSize = new System.Drawing.Size(1008, 729);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1024, 726);
+            this.MinimumSize = new System.Drawing.Size(1024, 768);
             this.Name = "MainForm";
             this.Text = "Restorium";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Shutdown);
@@ -1328,6 +1395,8 @@
             this.panel6.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1417,10 +1486,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label lKasaToplam;
         private System.Windows.Forms.DataGridView dgvKasa;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Masa_Adi;
@@ -1429,8 +1494,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Kredi_Karti;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cari;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tutar;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Label lCariToplamTL;
+        private System.Windows.Forms.Label lNakitToplamTL;
+        private System.Windows.Forms.Label lKrediToplamTL;
+        private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label lCariToplam;
         private System.Windows.Forms.Label lKrediToplam;
         private System.Windows.Forms.Label lNakitToplam;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label12;
     }
 }
