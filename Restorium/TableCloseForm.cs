@@ -24,6 +24,9 @@ namespace Restorium
             #region TL_Calculation
             if (cbTL.CheckState == CheckState.Checked)
             {
+                labelKredi.Text = "Kredi Karti(₺)";
+                labelCari.Text = "Cari(₺)";
+                labelNakit.Text = "Nakit (₺)";
                 decimal nakit = 0;
                 decimal kredi = 0;
                 decimal cari = 0;
@@ -76,6 +79,9 @@ namespace Restorium
             #region Euro_Calculation
             else if (cbEuro.CheckState == CheckState.Checked)
             {
+                labelKredi.Text = "Kredi Karti(€)";
+                labelCari.Text = "Cari(€)";
+                labelNakit.Text = "Nakit (€)";
                 decimal nakit = 0;
                 decimal kredi = 0;
                 decimal cari = 0;
@@ -128,6 +134,9 @@ namespace Restorium
             #region Dolar_Calculation
             else if (cbDolar.CheckState == CheckState.Checked)
             {
+                labelKredi.Text = "Kredi Karti($)";
+                labelCari.Text = "Cari($)";
+                labelNakit.Text = "Nakit ($)";
                 decimal nakit = 0;
                 decimal kredi = 0;
                 decimal cari = 0;
@@ -180,6 +189,9 @@ namespace Restorium
             #region GBP_Calculation
             else if (cbGBP.CheckState == CheckState.Checked)
             {
+                labelKredi.Text = "Kredi Karti(£)";
+                labelCari.Text = "Cari(£)";
+                labelNakit.Text = "Nakit (£)";
                 decimal nakit = 0;
                 decimal kredi = 0;
                 decimal cari = 0;
@@ -278,6 +290,9 @@ namespace Restorium
                 cbEuro.CheckState = CheckState.Unchecked;
                 cbGBP.CheckState = CheckState.Unchecked;
             }
+            labelKredi.Text = "Kredi Karti (₺)";
+            labelCari.Text = "Cari (₺)";
+            labelNakit.Text = "Nakit (₺)";
             tbCari.Text = "";
             tbKredi.Text = "";
             tbNakit.Text = "";
@@ -293,6 +308,9 @@ namespace Restorium
                 cbDolar.CheckState = CheckState.Unchecked;
                 cbGBP.CheckState = CheckState.Unchecked;
             }
+            labelKredi.Text = "Kredi Karti (€)";
+            labelCari.Text = "Cari (€)";
+            labelNakit.Text = "Nakit (€)";
             tbCari.Text = "";
             tbKredi.Text = "";
             tbNakit.Text = "";
@@ -307,6 +325,9 @@ namespace Restorium
                 cbEuro.CheckState = CheckState.Unchecked;
                 cbGBP.CheckState = CheckState.Unchecked;
             }
+            labelKredi.Text = "Kredi Karti ($)";
+            labelCari.Text = "Cari ($)";
+            labelNakit.Text = "Nakit ($)";
             tbCari.Text = "";
             tbKredi.Text = "";
             tbNakit.Text = "";
@@ -321,9 +342,12 @@ namespace Restorium
                 cbEuro.CheckState = CheckState.Unchecked;
                 cbDolar.CheckState = CheckState.Unchecked;
             }
-                tbCari.Text = "";
-                tbKredi.Text = "";
-                tbNakit.Text = "";
+            labelKredi.Text = "Kredi Karti (£)";
+            labelCari.Text = "Cari (£)";
+            labelNakit.Text = "Nakit (£)";
+            tbCari.Text = "";
+            tbKredi.Text = "";
+            tbNakit.Text = "";
             recalculateKalanTutar("GBP");
 
         }
