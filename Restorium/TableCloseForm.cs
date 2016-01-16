@@ -65,12 +65,16 @@ namespace Restorium
                 {
                     bMasaKapat.Enabled = true;
                     bMasaKapat.BackColor = Color.Green;
+                    labelKalan.ForeColor = Color.GreenYellow;
+                    lKalan.ForeColor = Color.GreenYellow;
                     lKalan.Text = (Convert.ToDecimal(lTL.Text) - toplam).ToString()+ " ₺";
                 }
                 else
                 {
                     bMasaKapat.Enabled = false;
                     bMasaKapat.BackColor = Color.Red;
+                    labelKalan.ForeColor = Color.DarkRed;
+                    lKalan.ForeColor = Color.DarkRed;
                     lKalan.Text = (Convert.ToDecimal(lTL.Text) - toplam).ToString() + " ₺";
                 }
                 checkLogicSituations();
@@ -120,12 +124,16 @@ namespace Restorium
                 {
                     bMasaKapat.Enabled = true;
                     bMasaKapat.BackColor = Color.Green;
+                    labelKalan.ForeColor = Color.GreenYellow;
+                    lKalan.ForeColor = Color.GreenYellow;
                     lKalan.Text = (Convert.ToDecimal(lEuro.Text) - toplam).ToString() + " €";
                 }
                 else
                 {
                     bMasaKapat.Enabled = false;
                     bMasaKapat.BackColor = Color.Red;
+                    labelKalan.ForeColor = Color.DarkRed;
+                    lKalan.ForeColor = Color.DarkRed;
                     lKalan.Text = (Convert.ToDecimal(lEuro.Text) - toplam).ToString() + " €";
                 }
                 checkLogicSituations();
@@ -175,12 +183,16 @@ namespace Restorium
                 {
                     bMasaKapat.Enabled = true;
                     bMasaKapat.BackColor = Color.Green;
+                    labelKalan.ForeColor = Color.GreenYellow;
+                    lKalan.ForeColor = Color.GreenYellow;
                     lKalan.Text = (Convert.ToDecimal(lDolar.Text) - toplam).ToString() + " $";
                 }
                 else
                 {
                     bMasaKapat.Enabled = false;
                     bMasaKapat.BackColor = Color.Red;
+                    labelKalan.ForeColor = Color.DarkRed;
+                    lKalan.ForeColor = Color.DarkRed;
                     lKalan.Text = (Convert.ToDecimal(lDolar.Text) - toplam).ToString() + " $";
                 }
                 checkLogicSituations();
@@ -230,12 +242,16 @@ namespace Restorium
                 {
                     bMasaKapat.Enabled = true;
                     bMasaKapat.BackColor = Color.Green;
+                    labelKalan.ForeColor = Color.GreenYellow;
+                    lKalan.ForeColor = Color.GreenYellow;
                     lKalan.Text = (Convert.ToDecimal(lGBP.Text) - toplam).ToString() + " £";
                 }
                 else
                 {
                     bMasaKapat.Enabled = false;
                     bMasaKapat.BackColor = Color.Red;
+                    labelKalan.ForeColor = Color.DarkRed;
+                    lKalan.ForeColor = Color.DarkRed;
                     lKalan.Text = (Convert.ToDecimal(lGBP.Text) - toplam).ToString() + " £";
                 }
                 checkLogicSituations();
@@ -261,7 +277,6 @@ namespace Restorium
 
         private void TableCloseForm_Load(object sender, EventArgs e)
         {
-
             bMasaKapat.Enabled = false;
             bMasaKapat.BackColor = Color.Red;
             //Masa Adi Set
@@ -297,6 +312,8 @@ namespace Restorium
             tbKredi.Text = "";
             tbNakit.Text = "";
             recalculateKalanTutar("TL");
+            labelKalan.ForeColor = Color.Red;
+            lKalan.ForeColor = Color.Red;
          }
 
         private void ExchangeCalculateEURO(object sender, EventArgs e)
@@ -315,6 +332,8 @@ namespace Restorium
             tbKredi.Text = "";
             tbNakit.Text = "";
             recalculateKalanTutar("Euro");
+            labelKalan.ForeColor = Color.Red;
+            lKalan.ForeColor = Color.Red;
         }
 
         private void ExchangeCalculateDOLAR(object sender, EventArgs e)
@@ -332,6 +351,8 @@ namespace Restorium
             tbKredi.Text = "";
             tbNakit.Text = "";
             recalculateKalanTutar("Dolar");
+            labelKalan.ForeColor = Color.Red;
+            lKalan.ForeColor = Color.Red;
         }
 
         private void ExchangeCalculateGBP(object sender, EventArgs e)
@@ -349,6 +370,8 @@ namespace Restorium
             tbKredi.Text = "";
             tbNakit.Text = "";
             recalculateKalanTutar("GBP");
+            labelKalan.ForeColor = Color.Red;
+            lKalan.ForeColor = Color.Red;
 
         }
 

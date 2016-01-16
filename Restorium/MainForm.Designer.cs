@@ -84,14 +84,6 @@
             this.DINAMIK_STOK_KONTROLU = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tp_Kasa = new System.Windows.Forms.TabPage();
             this.dgvKasa = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Masa_Adi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cari = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nakit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Kredi_Karti = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label13 = new System.Windows.Forms.Label();
             this.lKasaToplam = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -125,6 +117,21 @@
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.timerReservation = new System.Windows.Forms.Timer(this.components);
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Masa_Adi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nakit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Kredi_Karti = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cari = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lNakitToplam = new System.Windows.Forms.Label();
+            this.lKrediToplam = new System.Windows.Forms.Label();
+            this.lCariToplam = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
@@ -145,6 +152,7 @@
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
             this.panel6.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -753,6 +761,7 @@
             // tp_Kasa
             // 
             this.tp_Kasa.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Kasa.Controls.Add(this.panel8);
             this.tp_Kasa.Controls.Add(this.dgvKasa);
             this.tp_Kasa.Controls.Add(this.label13);
             this.tp_Kasa.Controls.Add(this.lKasaToplam);
@@ -778,9 +787,9 @@
             this.dataGridViewTextBoxColumn2,
             this.Masa_Adi,
             this.dataGridViewTextBoxColumn3,
-            this.Cari,
             this.Nakit,
             this.Kredi_Karti,
+            this.Cari,
             this.Tutar});
             this.dgvKasa.Cursor = System.Windows.Forms.Cursors.Hand;
             this.dgvKasa.Location = new System.Drawing.Point(3, 78);
@@ -789,57 +798,6 @@
             this.dgvKasa.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvKasa.Size = new System.Drawing.Size(1000, 531);
             this.dgvKasa.TabIndex = 15;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Zaman";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 110;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Yapilan Islem";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 180;
-            // 
-            // Masa_Adi
-            // 
-            this.Masa_Adi.HeaderText = "Masa Adi";
-            this.Masa_Adi.Name = "Masa_Adi";
-            this.Masa_Adi.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Personel";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 200;
-            // 
-            // Cari
-            // 
-            this.Cari.HeaderText = "Cari";
-            this.Cari.Name = "Cari";
-            this.Cari.ReadOnly = true;
-            // 
-            // Nakit
-            // 
-            this.Nakit.HeaderText = "Nakit";
-            this.Nakit.Name = "Nakit";
-            this.Nakit.ReadOnly = true;
-            // 
-            // Kredi_Karti
-            // 
-            this.Kredi_Karti.HeaderText = "Kredi Karti";
-            this.Kredi_Karti.Name = "Kredi_Karti";
-            this.Kredi_Karti.ReadOnly = true;
-            // 
-            // Tutar
-            // 
-            this.Tutar.HeaderText = "Tutar";
-            this.Tutar.Name = "Tutar";
-            this.Tutar.ReadOnly = true;
             // 
             // label13
             // 
@@ -1178,6 +1136,156 @@
             this.timerReservation.Interval = 5000;
             this.timerReservation.Tick += new System.EventHandler(this.reservedTableStateChecker);
             // 
+            // panel8
+            // 
+            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel8.Controls.Add(this.lCariToplam);
+            this.panel8.Controls.Add(this.lKrediToplam);
+            this.panel8.Controls.Add(this.lNakitToplam);
+            this.panel8.Controls.Add(this.label15);
+            this.panel8.Controls.Add(this.label14);
+            this.panel8.Controls.Add(this.label12);
+            this.panel8.Location = new System.Drawing.Point(3, 612);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(424, 86);
+            this.panel8.TabIndex = 16;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.label12.ForeColor = System.Drawing.Color.DarkRed;
+            this.label12.Location = new System.Drawing.Point(4, 60);
+            this.label12.Name = "label12";
+            this.label12.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label12.Size = new System.Drawing.Size(162, 23);
+            this.label12.TabIndex = 17;
+            this.label12.Text = "Cari Toplam              :";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.label14.ForeColor = System.Drawing.Color.DarkOliveGreen;
+            this.label14.Location = new System.Drawing.Point(4, 31);
+            this.label14.Name = "label14";
+            this.label14.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label14.Size = new System.Drawing.Size(162, 23);
+            this.label14.TabIndex = 18;
+            this.label14.Text = "Kredi Karti Toplam :";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.label15.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label15.Location = new System.Drawing.Point(4, 3);
+            this.label15.Name = "label15";
+            this.label15.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label15.Size = new System.Drawing.Size(162, 23);
+            this.label15.TabIndex = 19;
+            this.label15.Text = "Nakit Toplam           :";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Zaman";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 110;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Yapilan Islem";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 180;
+            // 
+            // Masa_Adi
+            // 
+            this.Masa_Adi.HeaderText = "Masa Adi";
+            this.Masa_Adi.Name = "Masa_Adi";
+            this.Masa_Adi.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Personel";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 200;
+            // 
+            // Nakit
+            // 
+            this.Nakit.HeaderText = "Nakit";
+            this.Nakit.Name = "Nakit";
+            this.Nakit.ReadOnly = true;
+            // 
+            // Kredi_Karti
+            // 
+            this.Kredi_Karti.HeaderText = "Kredi Karti";
+            this.Kredi_Karti.Name = "Kredi_Karti";
+            this.Kredi_Karti.ReadOnly = true;
+            // 
+            // Cari
+            // 
+            this.Cari.HeaderText = "Cari";
+            this.Cari.Name = "Cari";
+            this.Cari.ReadOnly = true;
+            // 
+            // Tutar
+            // 
+            this.Tutar.HeaderText = "Tutar";
+            this.Tutar.Name = "Tutar";
+            this.Tutar.ReadOnly = true;
+            // 
+            // lNakitToplam
+            // 
+            this.lNakitToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lNakitToplam.AutoSize = true;
+            this.lNakitToplam.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.lNakitToplam.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lNakitToplam.Location = new System.Drawing.Point(172, 3);
+            this.lNakitToplam.Name = "lNakitToplam";
+            this.lNakitToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lNakitToplam.Size = new System.Drawing.Size(138, 23);
+            this.lNakitToplam.TabIndex = 20;
+            this.lNakitToplam.Text = "0₺ / 0€ / 0$ / 0£";
+            this.lNakitToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lKrediToplam
+            // 
+            this.lKrediToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lKrediToplam.AutoSize = true;
+            this.lKrediToplam.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.lKrediToplam.ForeColor = System.Drawing.Color.OliveDrab;
+            this.lKrediToplam.Location = new System.Drawing.Point(172, 31);
+            this.lKrediToplam.Name = "lKrediToplam";
+            this.lKrediToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lKrediToplam.Size = new System.Drawing.Size(138, 23);
+            this.lKrediToplam.TabIndex = 21;
+            this.lKrediToplam.Text = "0₺ / 0€ / 0$ / 0£";
+            this.lKrediToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lCariToplam
+            // 
+            this.lCariToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lCariToplam.AutoSize = true;
+            this.lCariToplam.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.lCariToplam.ForeColor = System.Drawing.Color.Firebrick;
+            this.lCariToplam.Location = new System.Drawing.Point(172, 60);
+            this.lCariToplam.Name = "lCariToplam";
+            this.lCariToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lCariToplam.Size = new System.Drawing.Size(138, 23);
+            this.lCariToplam.TabIndex = 22;
+            this.lCariToplam.Text = "0₺ / 0€ / 0$ / 0£";
+            this.lCariToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1218,6 +1326,8 @@
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).EndInit();
             this.panel6.ResumeLayout(false);
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1307,13 +1417,20 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label lKasaToplam;
         private System.Windows.Forms.DataGridView dgvKasa;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Masa_Adi;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cari;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nakit;
         private System.Windows.Forms.DataGridViewTextBoxColumn Kredi_Karti;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cari;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tutar;
+        private System.Windows.Forms.Label lCariToplam;
+        private System.Windows.Forms.Label lKrediToplam;
+        private System.Windows.Forms.Label lNakitToplam;
     }
 }

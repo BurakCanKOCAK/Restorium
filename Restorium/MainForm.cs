@@ -946,15 +946,97 @@ namespace Restorium
                     var result = tableClose.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        ////Kasa Islemleri     ---------------------------------------------------------
+                        ////Kasa Islemleri  (Genel Toplam)   ---------------------------------------------------------
                         string kasaToplam = lKasaToplam.Text.ToString();
                         kasaToplam = kasaToplam.Replace(" ₺", "");
                         lKasaToplam.Text = (Convert.ToDecimal(masaToplam) + Convert.ToDecimal(kasaToplam)).ToString() + " ₺";
-                        ///////////////////////////////
+                        ///Nakit Toplam  -----------------------------------------------------------------------------
+                        string[] nakitDizi = lNakitToplam.Text.Split('/');
+                        switch (LastChoosenTable.paraBirimi)
+                        {
+                            case " ₺":
+                                nakitDizi[0] = (Convert.ToDecimal(nakitDizi[0].Replace("₺", "")) + LastChoosenTable.nakit).ToString();
+                                lNakitToplam.Text = nakitDizi[0] + "₺ /" + nakitDizi[1] + "/" + nakitDizi[2] + "/" + nakitDizi[3];
+                                break;
+                            case " €":
+                                nakitDizi[1] = (Convert.ToDecimal(nakitDizi[1].Replace("€", "")) + LastChoosenTable.nakit).ToString();
+                                lNakitToplam.Text = nakitDizi[0] + "/ " + nakitDizi[1] + "€ /" + nakitDizi[2] + "/" + nakitDizi[3];
+                                break;
+                            case " $":
+                                nakitDizi[2] = (Convert.ToDecimal(nakitDizi[2].Replace("$", "")) + LastChoosenTable.nakit).ToString();
+                                lNakitToplam.Text = nakitDizi[0] + "/" + nakitDizi[1] + "/ " + nakitDizi[2] + "$ /" + nakitDizi[3];
+                                break;
+                            case " £":
+                                nakitDizi[3] = (Convert.ToDecimal(nakitDizi[3].Replace("£", "")) + LastChoosenTable.nakit).ToString();
+                                lNakitToplam.Text = nakitDizi[0] + "/" + nakitDizi[1] + "/" + nakitDizi[2] + "/ " + nakitDizi[3] + "£";
+                                break;
+
+                        }
+                        ///Kredi Toplam -----------------------------------------------------------------------------
+                        string[] krediDizi = lKrediToplam.Text.Split('/');
+                        switch (LastChoosenTable.paraBirimi)
+                        {
+                            case " ₺":
+                                krediDizi[0] = (Convert.ToDecimal(krediDizi[0].Replace("₺", "")) + LastChoosenTable.krediKarti).ToString();
+                                lKrediToplam.Text = krediDizi[0] + "₺ /" + krediDizi[1] + "/" + krediDizi[2] + "/" + krediDizi[3];
+                                break;
+                            case " €":
+                                krediDizi[1] = (Convert.ToDecimal(krediDizi[1].Replace("€", "")) + LastChoosenTable.krediKarti).ToString();
+                                lKrediToplam.Text = krediDizi[0] + "/ " + krediDizi[1] + "€ /" + krediDizi[2] + "/" + krediDizi[3];
+                                break;
+                            case " $":
+                                krediDizi[2] = (Convert.ToDecimal(krediDizi[2].Replace("$", "")) + LastChoosenTable.krediKarti).ToString();
+                                lKrediToplam.Text = krediDizi[0] + "/" + krediDizi[1] + "/ " + krediDizi[2] + "$ /" + krediDizi[3];
+                                break;
+                            case " £":
+                                krediDizi[3] = (Convert.ToDecimal(krediDizi[3].Replace("£", "")) + LastChoosenTable.krediKarti).ToString();
+                                lKrediToplam.Text = krediDizi[0] + "/" + krediDizi[1] + "/" + krediDizi[2] + "/ " + krediDizi[3] + "£";
+                                break;
+
+                        }
+                        ///Cari Toplam  -----------------------------------------------------------------------------
+                        string[] cariDizi = lCariToplam.Text.Split('/');
+                        switch (LastChoosenTable.paraBirimi)
+                        {
+                            case " ₺":
+                                cariDizi[0] = (Convert.ToDecimal(cariDizi[0].Replace("₺", "")) + LastChoosenTable.cari).ToString();
+                                lCariToplam.Text = cariDizi[0] + "₺ /" + cariDizi[1] + "/" + cariDizi[2] + "/" + cariDizi[3];
+                                break;
+                            case " €":
+                                cariDizi[1] = (Convert.ToDecimal(cariDizi[1].Replace("€", "")) + LastChoosenTable.cari).ToString();
+                                lCariToplam.Text = cariDizi[0] + "/ " + cariDizi[1] + "€ /" + cariDizi[2] + "/" + cariDizi[3];
+                                break;
+                            case " $":
+                                cariDizi[2] = (Convert.ToDecimal(cariDizi[2].Replace("$", "")) + LastChoosenTable.cari).ToString();
+                                lCariToplam.Text = cariDizi[0] + "/" + cariDizi[1] + "/ " + cariDizi[2] + "$ /" + cariDizi[3];
+                                break;
+                            case " £":
+                                cariDizi[3] = (Convert.ToDecimal(cariDizi[3].Replace("£", "")) + LastChoosenTable.cari).ToString();
+                                lCariToplam.Text = cariDizi[0] + "/" + cariDizi[1] + "/" + cariDizi[2] + "/ " + cariDizi[3] + "£";
+                                break;
+
+                        }
                         //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
                         // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
                         //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
-                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.cari + LastChoosenTable.paraBirimi , LastChoosenTable.nakit + LastChoosenTable.paraBirimi, LastChoosenTable.krediKarti+ LastChoosenTable.paraBirimi, lToplamTutar.Text.Replace(" ₺","") + LastChoosenTable.paraBirimi); 
+                        decimal sonMasaToplam = 0;
+                        switch (LastChoosenTable.paraBirimi)
+                        {
+                            case " ₺":
+                                sonMasaToplam = Convert.ToDecimal(masaToplam);
+                                break;
+                            case " €":
+                                sonMasaToplam = Convert.ToDecimal(masaToplam) * LastChoosenTable.DefinedEuro;
+                                break;
+                            case " $":
+                                sonMasaToplam = Convert.ToDecimal(masaToplam) * LastChoosenTable.DefinedDolar;
+                                break;
+                            case " £":
+                                sonMasaToplam = Convert.ToDecimal(masaToplam) * LastChoosenTable.DefinedGBP;
+                                break;
+
+                        }
+                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.nakit + LastChoosenTable.paraBirimi, LastChoosenTable.krediKarti + LastChoosenTable.paraBirimi, LastChoosenTable.cari + LastChoosenTable.paraBirimi , System.Math.Round(sonMasaToplam,2) + LastChoosenTable.paraBirimi); 
                         dgvKasa.Refresh();
                         ////Kasa Islemleri END ---------------------------------------------------------
                         ////////////////////////////////////////////////////////////////////////////////

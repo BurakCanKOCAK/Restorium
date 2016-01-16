@@ -54,7 +54,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
             this.lKalan = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.labelKalan = new System.Windows.Forms.Label();
             this.lTableName = new System.Windows.Forms.Label();
             this.pbCalculator = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -150,7 +150,7 @@
             // 
             this.labelNakit.AutoSize = true;
             this.labelNakit.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNakit.Location = new System.Drawing.Point(174, 31);
+            this.labelNakit.Location = new System.Drawing.Point(9, 31);
             this.labelNakit.Name = "labelNakit";
             this.labelNakit.Size = new System.Drawing.Size(62, 18);
             this.labelNakit.TabIndex = 3;
@@ -158,7 +158,7 @@
             // 
             // tbNakit
             // 
-            this.tbNakit.Location = new System.Drawing.Point(177, 52);
+            this.tbNakit.Location = new System.Drawing.Point(12, 52);
             this.tbNakit.Name = "tbNakit";
             this.tbNakit.Size = new System.Drawing.Size(124, 20);
             this.tbNakit.TabIndex = 2;
@@ -168,7 +168,7 @@
             // 
             this.labelKredi.AutoSize = true;
             this.labelKredi.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelKredi.Location = new System.Drawing.Point(12, 31);
+            this.labelKredi.Location = new System.Drawing.Point(174, 31);
             this.labelKredi.Name = "labelKredi";
             this.labelKredi.Size = new System.Drawing.Size(94, 18);
             this.labelKredi.TabIndex = 1;
@@ -176,7 +176,7 @@
             // 
             // tbKredi
             // 
-            this.tbKredi.Location = new System.Drawing.Point(12, 52);
+            this.tbKredi.Location = new System.Drawing.Point(177, 52);
             this.tbKredi.Name = "tbKredi";
             this.tbKredi.Size = new System.Drawing.Size(124, 20);
             this.tbKredi.TabIndex = 0;
@@ -308,7 +308,7 @@
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel2.Controls.Add(this.label15);
             this.panel2.Controls.Add(this.lKalan);
-            this.panel2.Controls.Add(this.label13);
+            this.panel2.Controls.Add(this.labelKalan);
             this.panel2.Controls.Add(this.lIskontoOrani);
             this.panel2.Location = new System.Drawing.Point(0, 152);
             this.panel2.Name = "panel2";
@@ -329,21 +329,23 @@
             // 
             this.lKalan.AutoSize = true;
             this.lKalan.Font = new System.Drawing.Font("Calibri", 13.25F, System.Drawing.FontStyle.Bold);
+            this.lKalan.ForeColor = System.Drawing.Color.DarkRed;
             this.lKalan.Location = new System.Drawing.Point(399, 6);
             this.lKalan.Name = "lKalan";
             this.lKalan.Size = new System.Drawing.Size(46, 22);
             this.lKalan.TabIndex = 7;
             this.lKalan.Text = "0.0 ₺";
             // 
-            // label13
+            // labelKalan
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Calibri", 13.25F);
-            this.label13.Location = new System.Drawing.Point(334, 6);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(59, 22);
-            this.label13.TabIndex = 6;
-            this.label13.Text = "Kalan :";
+            this.labelKalan.AutoSize = true;
+            this.labelKalan.Font = new System.Drawing.Font("Calibri", 13.25F);
+            this.labelKalan.ForeColor = System.Drawing.Color.DarkRed;
+            this.labelKalan.Location = new System.Drawing.Point(334, 6);
+            this.labelKalan.Name = "labelKalan";
+            this.labelKalan.Size = new System.Drawing.Size(59, 22);
+            this.labelKalan.TabIndex = 6;
+            this.labelKalan.Text = "Kalan :";
             // 
             // lTableName
             // 
@@ -433,7 +435,7 @@
         private System.Windows.Forms.Button bIptal;
         private System.Windows.Forms.Label lIskontoOrani;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label labelKalan;
         private System.Windows.Forms.Label lKalan;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lTableName;
