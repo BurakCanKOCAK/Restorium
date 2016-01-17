@@ -1015,7 +1015,7 @@ namespace Restorium
                                 break;
                             case " €":
                                 cariDizi[1] = (Convert.ToDecimal(cariDizi[1].Replace("€", "")) + LastChoosenTable.cari).ToString();
-                                lCariToplam.Text = cariDizi[0] + "+ " + cariDizi[1] + "€ /" + cariDizi[2] + "+" + cariDizi[3];
+                                lCariToplam.Text = cariDizi[0] + "+ " + cariDizi[1] + "€ +" + cariDizi[2] + "+" + cariDizi[3];
                                 lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.cari) / LastChoosenTable.DefinedEuro),2)).ToString() + "₺";
                                 break;
                             case " $":
