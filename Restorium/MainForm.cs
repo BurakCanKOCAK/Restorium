@@ -946,10 +946,6 @@ namespace Restorium
                     var result = tableClose.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        ////Kasa Islemleri  (Genel Toplam)   ---------------------------------------------------------
-                        string kasaToplam = lKasaToplam.Text.ToString();
-                        kasaToplam = kasaToplam.Replace(" ₺", "");
-                        lKasaToplam.Text = (Convert.ToDecimal(masaToplam) + Convert.ToDecimal(kasaToplam)).ToString() + " ₺";
                         ///Nakit Toplam  -----------------------------------------------------------------------------
                         string[] nakitDizi = lNakitToplam.Text.Split('+');
                         switch (LastChoosenTable.paraBirimi)
@@ -1033,6 +1029,8 @@ namespace Restorium
                                 break;
 
                         }
+                        ////Kasa Islemleri  (Genel Toplam)   ---------------------------------------------------------
+                        lKasaToplam.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺",""))+ Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""))+ Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""))).ToString() + " ₺";
                         //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
                         // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
                         //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
