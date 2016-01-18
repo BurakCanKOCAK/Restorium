@@ -33,14 +33,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tp_Adisyon = new System.Windows.Forms.TabPage();
@@ -149,6 +149,14 @@
             this.panel12 = new System.Windows.Forms.Panel();
             this.chartDaily = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartWeekly = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tcRapor = new System.Windows.Forms.TabControl();
+            this.tpGrafikler = new System.Windows.Forms.TabPage();
+            this.tbSpecificRapor = new System.Windows.Forms.TabPage();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.dtpReportDate = new System.Windows.Forms.DateTimePicker();
+            this.button1 = new System.Windows.Forms.Button();
+            this.cbRaporTercihi = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
@@ -166,6 +174,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvKasa)).BeginInit();
             this.panel2.SuspendLayout();
             this.tp_Rapor.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.tp_Rehber.SuspendLayout();
             this.tp_Ayarlar.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -175,6 +184,11 @@
             this.panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartWeekly)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.tcRapor.SuspendLayout();
+            this.tpGrafikler.SuspendLayout();
+            this.tbSpecificRapor.SuspendLayout();
+            this.panel13.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -1089,9 +1103,7 @@
             // tp_Rapor
             // 
             this.tp_Rapor.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
-            this.tp_Rapor.Controls.Add(this.panel12);
-            this.tp_Rapor.Controls.Add(this.panel11);
-            this.tp_Rapor.Controls.Add(this.panel10);
+            this.tp_Rapor.Controls.Add(this.tcRapor);
             this.tp_Rapor.Controls.Add(this.panel4);
             this.tp_Rapor.ImeMode = System.Windows.Forms.ImeMode.On;
             this.tp_Rapor.Location = new System.Drawing.Point(4, 28);
@@ -1108,6 +1120,7 @@
             this.panel4.BackColor = System.Drawing.Color.Transparent;
             this.panel4.BackgroundImage = global::Restorium.Properties.Resources.rapor2;
             this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel4.Controls.Add(this.pictureBox2);
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1010, 72);
@@ -1377,7 +1390,7 @@
             // 
             this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel10.Controls.Add(this.chartDaily);
-            this.panel10.Location = new System.Drawing.Point(3, 99);
+            this.panel10.Location = new System.Drawing.Point(0, 3);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(992, 177);
             this.panel10.TabIndex = 11;
@@ -1386,64 +1399,161 @@
             // 
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel11.Controls.Add(this.chartWeekly);
-            this.panel11.Location = new System.Drawing.Point(3, 308);
+            this.panel11.Location = new System.Drawing.Point(0, 212);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(992, 177);
             this.panel11.TabIndex = 12;
             // 
             // panel12
             // 
+            this.panel12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel12.Location = new System.Drawing.Point(3, 512);
+            this.panel12.Location = new System.Drawing.Point(0, 416);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(992, 177);
             this.panel12.TabIndex = 12;
             // 
             // chartDaily
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartDaily.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartDaily.Legends.Add(legend2);
+            this.chartDaily.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.chartDaily.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartDaily.Legends.Add(legend1);
             this.chartDaily.Location = new System.Drawing.Point(-2, -2);
             this.chartDaily.Name = "chartDaily";
             this.chartDaily.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Saatlik Kazanc";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Kazanc Ortalamasi";
-            this.chartDaily.Series.Add(series3);
-            this.chartDaily.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Saatlik Kazanc";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Kazanc Ortalamasi";
+            this.chartDaily.Series.Add(series1);
+            this.chartDaily.Series.Add(series2);
             this.chartDaily.Size = new System.Drawing.Size(992, 177);
             this.chartDaily.TabIndex = 0;
             this.chartDaily.Text = "chart1";
             // 
             // chartWeekly
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartWeekly.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartWeekly.Legends.Add(legend1);
+            this.chartWeekly.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea2.Name = "ChartArea1";
+            this.chartWeekly.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartWeekly.Legends.Add(legend2);
             this.chartWeekly.Location = new System.Drawing.Point(-2, -2);
             this.chartWeekly.Name = "chartWeekly";
             this.chartWeekly.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Gunluk Kazanc";
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Kazanc Ortalamasi";
-            this.chartWeekly.Series.Add(series1);
-            this.chartWeekly.Series.Add(series2);
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.Name = "Gunluk Kazanc";
+            series4.BorderWidth = 3;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Kazanc Ortalamasi";
+            this.chartWeekly.Series.Add(series3);
+            this.chartWeekly.Series.Add(series4);
             this.chartWeekly.Size = new System.Drawing.Size(992, 177);
             this.chartWeekly.TabIndex = 1;
             this.chartWeekly.Text = "chart1";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.Image = global::Restorium.Properties.Resources.printer;
+            this.pictureBox2.Location = new System.Drawing.Point(921, 18);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(41, 40);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
+            // 
+            // tcRapor
+            // 
+            this.tcRapor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcRapor.Controls.Add(this.tpGrafikler);
+            this.tcRapor.Controls.Add(this.tbSpecificRapor);
+            this.tcRapor.Location = new System.Drawing.Point(3, 78);
+            this.tcRapor.Name = "tcRapor";
+            this.tcRapor.SelectedIndex = 0;
+            this.tcRapor.Size = new System.Drawing.Size(1003, 620);
+            this.tcRapor.TabIndex = 13;
+            // 
+            // tpGrafikler
+            // 
+            this.tpGrafikler.Controls.Add(this.panel10);
+            this.tpGrafikler.Controls.Add(this.panel12);
+            this.tpGrafikler.Controls.Add(this.panel11);
+            this.tpGrafikler.Location = new System.Drawing.Point(4, 28);
+            this.tpGrafikler.Name = "tpGrafikler";
+            this.tpGrafikler.Padding = new System.Windows.Forms.Padding(3);
+            this.tpGrafikler.Size = new System.Drawing.Size(995, 588);
+            this.tpGrafikler.TabIndex = 0;
+            this.tpGrafikler.Text = "Grafikler";
+            this.tpGrafikler.UseVisualStyleBackColor = true;
+            // 
+            // tbSpecificRapor
+            // 
+            this.tbSpecificRapor.Controls.Add(this.panel13);
+            this.tbSpecificRapor.Location = new System.Drawing.Point(4, 28);
+            this.tbSpecificRapor.Name = "tbSpecificRapor";
+            this.tbSpecificRapor.Padding = new System.Windows.Forms.Padding(3);
+            this.tbSpecificRapor.Size = new System.Drawing.Size(995, 588);
+            this.tbSpecificRapor.TabIndex = 1;
+            this.tbSpecificRapor.Text = "Rapor Detayi";
+            this.tbSpecificRapor.UseVisualStyleBackColor = true;
+            // 
+            // panel13
+            // 
+            this.panel13.BackColor = System.Drawing.Color.Silver;
+            this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel13.Controls.Add(this.cbRaporTercihi);
+            this.panel13.Controls.Add(this.button1);
+            this.panel13.Controls.Add(this.dtpReportDate);
+            this.panel13.Location = new System.Drawing.Point(4, 6);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(988, 75);
+            this.panel13.TabIndex = 0;
+            // 
+            // dtpReportDate
+            // 
+            this.dtpReportDate.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpReportDate.Location = new System.Drawing.Point(715, 3);
+            this.dtpReportDate.Name = "dtpReportDate";
+            this.dtpReportDate.Size = new System.Drawing.Size(200, 27);
+            this.dtpReportDate.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(918, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(63, 27);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Ara";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // cbRaporTercihi
+            // 
+            this.cbRaporTercihi.FormattingEnabled = true;
+            this.cbRaporTercihi.Items.AddRange(new object[] {
+            "Saatlik Rapor Getir",
+            "Gunluk Rapor Getir",
+            "Haftalik Rapor Getir",
+            "Aylik Rapor Getir"});
+            this.cbRaporTercihi.Location = new System.Drawing.Point(492, 3);
+            this.cbRaporTercihi.Name = "cbRaporTercihi";
+            this.cbRaporTercihi.Size = new System.Drawing.Size(197, 27);
+            this.cbRaporTercihi.TabIndex = 2;
+            this.cbRaporTercihi.SelectedIndexChanged += new System.EventHandler(this.ReportSearchKeyChanged);
             // 
             // MainForm
             // 
@@ -1482,6 +1592,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvKasa)).EndInit();
             this.panel2.ResumeLayout(false);
             this.tp_Rapor.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.tp_Rehber.ResumeLayout(false);
             this.tp_Ayarlar.ResumeLayout(false);
             this.tp_Ayarlar.PerformLayout();
@@ -1493,6 +1604,11 @@
             this.panel11.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartWeekly)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.tcRapor.ResumeLayout(false);
+            this.tpGrafikler.ResumeLayout(false);
+            this.tbSpecificRapor.ResumeLayout(false);
+            this.panel13.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1606,5 +1722,13 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chartWeekly;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartDaily;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TabControl tcRapor;
+        private System.Windows.Forms.TabPage tpGrafikler;
+        private System.Windows.Forms.TabPage tbSpecificRapor;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.ComboBox cbRaporTercihi;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DateTimePicker dtpReportDate;
     }
 }

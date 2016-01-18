@@ -1423,5 +1423,28 @@ namespace Restorium
 
 
         }
+
+        private void ReportSearchKeyChanged(object sender, EventArgs e)
+        {
+            switch (cbRaporTercihi.SelectedIndex)
+            {
+                case 0://Saatlik Rapor
+                    dtpReportDate.Format = DateTimePickerFormat.Custom;
+                    dtpReportDate.CustomFormat = "HH";
+                    break;
+                case 1://Gunluk Rapor
+                    dtpReportDate.Format = DateTimePickerFormat.Custom;
+                    dtpReportDate.CustomFormat = "dddd'/'MMMM'/'yyyy";
+                    break;
+                case 2://Haftalik Rapor
+                    dtpReportDate.Format = DateTimePickerFormat.Long;
+                    break;
+                case 3://Aylik Rapor
+                    dtpReportDate.Format = DateTimePickerFormat.Custom;
+                    dtpReportDate.CustomFormat = "MMMM'/'yyyy";
+                    break;
+            }
+            
+        }
     }
 }
