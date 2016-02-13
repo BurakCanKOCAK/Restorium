@@ -1824,7 +1824,7 @@ namespace Restorium
                     if (hourlySum[n, 0] == m.ToString())
                     {
                         UserLog.WConsole("point :"+ hourlySum[n, 0]);
-                        chartDaily.Series["Saatlik Kazanc"].Points.AddXY(hourlySum[n, 0], hourlySum[n, 1]);
+                        chartDaily.Series["Saatlik Kazanc"].Points.AddXY(hourlySum[n, 0], hourlySum[n, 1].Replace(",","."));
                         hourlyFound = true;
                     }
                 }
@@ -1936,7 +1936,8 @@ namespace Restorium
         }
         //AYARLAR 
         //Dukkan kapanma saati ve gonderilecek maili ekle
-
+        //Iskonto uygulanmiyor
+        //Masaya siparis eklemek istendiginde acilan sayfadaki "iptal" tusu calismiyor
 
     }
 }
