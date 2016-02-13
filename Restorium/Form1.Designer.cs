@@ -69,8 +69,9 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = global::Restorium.Properties.Resources._580861_477789262242512_18934229_n;
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Image = global::Restorium.Properties.Resources.restaurant_icon;
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
             // 

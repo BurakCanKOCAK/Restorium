@@ -36,10 +36,12 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -114,8 +116,25 @@
             this.label13 = new System.Windows.Forms.Label();
             this.lKasaToplam = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.bPrintKasa = new System.Windows.Forms.Button();
+            this.bSendMailKasa = new System.Windows.Forms.Button();
             this.bCalculator_Kasa = new System.Windows.Forms.Button();
             this.tp_Rapor = new System.Windows.Forms.TabPage();
+            this.tcRapor = new System.Windows.Forms.TabControl();
+            this.tpGrafikler = new System.Windows.Forms.TabPage();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.chartDaily = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.chartWeekly = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tbSpecificRapor = new System.Windows.Forms.TabPage();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.label16 = new System.Windows.Forms.Label();
+            this.dtpReportDateEnd = new System.Windows.Forms.DateTimePicker();
+            this.cbRaporTercihi = new System.Windows.Forms.ComboBox();
+            this.bReportAra = new System.Windows.Forms.Button();
+            this.dtpReportDateStart = new System.Windows.Forms.DateTimePicker();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tp_Rehber = new System.Windows.Forms.TabPage();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -144,19 +163,10 @@
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.timerReservation = new System.Windows.Forms.Timer(this.components);
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.panel12 = new System.Windows.Forms.Panel();
-            this.chartDaily = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chartWeekly = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.tcRapor = new System.Windows.Forms.TabControl();
-            this.tpGrafikler = new System.Windows.Forms.TabPage();
-            this.tbSpecificRapor = new System.Windows.Forms.TabPage();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.dtpReportDate = new System.Windows.Forms.DateTimePicker();
-            this.button1 = new System.Windows.Forms.Button();
-            this.cbRaporTercihi = new System.Windows.Forms.ComboBox();
+            this.bPrintReport = new System.Windows.Forms.Button();
+            this.bSendMailReport = new System.Windows.Forms.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.tbMail = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
@@ -174,21 +184,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvKasa)).BeginInit();
             this.panel2.SuspendLayout();
             this.tp_Rapor.SuspendLayout();
+            this.tcRapor.SuspendLayout();
+            this.tpGrafikler.SuspendLayout();
+            this.panel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).BeginInit();
+            this.panel12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            this.panel11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartWeekly)).BeginInit();
+            this.tbSpecificRapor.SuspendLayout();
+            this.panel13.SuspendLayout();
             this.panel4.SuspendLayout();
             this.tp_Rehber.SuspendLayout();
             this.tp_Ayarlar.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
             this.panel6.SuspendLayout();
-            this.panel10.SuspendLayout();
-            this.panel11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartWeekly)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.tcRapor.SuspendLayout();
-            this.tpGrafikler.SuspendLayout();
-            this.tbSpecificRapor.SuspendLayout();
-            this.panel13.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -814,23 +825,24 @@
             // 
             // panel9
             // 
-            this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel9.Controls.Add(this.lCariToplamTL);
             this.panel9.Controls.Add(this.lNakitToplamTL);
             this.panel9.Controls.Add(this.lKrediToplamTL);
-            this.panel9.Location = new System.Drawing.Point(468, 612);
+            this.panel9.Location = new System.Drawing.Point(174, 612);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(199, 86);
+            this.panel9.Size = new System.Drawing.Size(166, 86);
             this.panel9.TabIndex = 26;
             // 
             // lCariToplamTL
             // 
-            this.lCariToplamTL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lCariToplamTL.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lCariToplamTL.AutoSize = true;
             this.lCariToplamTL.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
             this.lCariToplamTL.ForeColor = System.Drawing.Color.Firebrick;
-            this.lCariToplamTL.Location = new System.Drawing.Point(7, 57);
+            this.lCariToplamTL.Location = new System.Drawing.Point(12, 57);
             this.lCariToplamTL.Name = "lCariToplamTL";
             this.lCariToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lCariToplamTL.Size = new System.Drawing.Size(30, 23);
@@ -844,7 +856,7 @@
             this.lNakitToplamTL.AutoSize = true;
             this.lNakitToplamTL.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
             this.lNakitToplamTL.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lNakitToplamTL.Location = new System.Drawing.Point(3, 0);
+            this.lNakitToplamTL.Location = new System.Drawing.Point(8, 0);
             this.lNakitToplamTL.Name = "lNakitToplamTL";
             this.lNakitToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lNakitToplamTL.Size = new System.Drawing.Size(34, 23);
@@ -853,11 +865,11 @@
             // 
             // lKrediToplamTL
             // 
-            this.lKrediToplamTL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lKrediToplamTL.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lKrediToplamTL.AutoSize = true;
             this.lKrediToplamTL.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
             this.lKrediToplamTL.ForeColor = System.Drawing.Color.OliveDrab;
-            this.lKrediToplamTL.Location = new System.Drawing.Point(7, 28);
+            this.lKrediToplamTL.Location = new System.Drawing.Point(12, 28);
             this.lKrediToplamTL.Name = "lKrediToplamTL";
             this.lKrediToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lKrediToplamTL.Size = new System.Drawing.Size(30, 23);
@@ -878,7 +890,7 @@
             this.panel8.Controls.Add(this.label12);
             this.panel8.Location = new System.Drawing.Point(3, 612);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(458, 86);
+            this.panel8.Size = new System.Drawing.Size(337, 86);
             this.panel8.TabIndex = 16;
             // 
             // lCariToplam
@@ -1082,11 +1094,35 @@
             this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.BackgroundImage = global::Restorium.Properties.Resources.kasa1;
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel2.Controls.Add(this.bPrintKasa);
+            this.panel2.Controls.Add(this.bSendMailKasa);
             this.panel2.Controls.Add(this.bCalculator_Kasa);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1010, 72);
             this.panel2.TabIndex = 9;
+            // 
+            // bPrintKasa
+            // 
+            this.bPrintKasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bPrintKasa.BackgroundImage = global::Restorium.Properties.Resources.printer_icon;
+            this.bPrintKasa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bPrintKasa.Location = new System.Drawing.Point(802, 16);
+            this.bPrintKasa.Name = "bPrintKasa";
+            this.bPrintKasa.Size = new System.Drawing.Size(39, 36);
+            this.bPrintKasa.TabIndex = 28;
+            this.bPrintKasa.UseVisualStyleBackColor = true;
+            // 
+            // bSendMailKasa
+            // 
+            this.bSendMailKasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bSendMailKasa.BackgroundImage = global::Restorium.Properties.Resources.gmail_icon;
+            this.bSendMailKasa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bSendMailKasa.Location = new System.Drawing.Point(847, 16);
+            this.bSendMailKasa.Name = "bSendMailKasa";
+            this.bSendMailKasa.Size = new System.Drawing.Size(39, 36);
+            this.bSendMailKasa.TabIndex = 27;
+            this.bSendMailKasa.UseVisualStyleBackColor = true;
             // 
             // bCalculator_Kasa
             // 
@@ -1113,6 +1149,224 @@
             this.tp_Rapor.Text = "Rapor";
             this.tp_Rapor.UseVisualStyleBackColor = true;
             // 
+            // tcRapor
+            // 
+            this.tcRapor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcRapor.Controls.Add(this.tpGrafikler);
+            this.tcRapor.Controls.Add(this.tbSpecificRapor);
+            this.tcRapor.Location = new System.Drawing.Point(3, 78);
+            this.tcRapor.Name = "tcRapor";
+            this.tcRapor.SelectedIndex = 0;
+            this.tcRapor.Size = new System.Drawing.Size(1003, 620);
+            this.tcRapor.TabIndex = 13;
+            // 
+            // tpGrafikler
+            // 
+            this.tpGrafikler.Controls.Add(this.panel10);
+            this.tpGrafikler.Controls.Add(this.panel12);
+            this.tpGrafikler.Controls.Add(this.panel11);
+            this.tpGrafikler.Location = new System.Drawing.Point(4, 28);
+            this.tpGrafikler.Name = "tpGrafikler";
+            this.tpGrafikler.Padding = new System.Windows.Forms.Padding(3);
+            this.tpGrafikler.Size = new System.Drawing.Size(995, 588);
+            this.tpGrafikler.TabIndex = 0;
+            this.tpGrafikler.Text = "Grafikler";
+            this.tpGrafikler.UseVisualStyleBackColor = true;
+            // 
+            // panel10
+            // 
+            this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel10.Controls.Add(this.chartDaily);
+            this.panel10.Location = new System.Drawing.Point(0, -15);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(992, 203);
+            this.panel10.TabIndex = 11;
+            // 
+            // chartDaily
+            // 
+            this.chartDaily.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.chartDaily.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartDaily.Legends.Add(legend1);
+            this.chartDaily.Location = new System.Drawing.Point(-2, 13);
+            this.chartDaily.Name = "chartDaily";
+            this.chartDaily.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+            series1.BorderColor = System.Drawing.Color.Transparent;
+            series1.BorderWidth = 3;
+            series1.ChartArea = "ChartArea1";
+            series1.Color = System.Drawing.Color.Red;
+            series1.CustomProperties = "IsXAxisQuantitative=False, EmptyPointValue=Zero, LabelStyle=Bottom";
+            series1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series1.IsValueShownAsLabel = true;
+            series1.IsXValueIndexed = true;
+            series1.Label = "#VAL{D2}";
+            series1.LabelBackColor = System.Drawing.Color.Transparent;
+            series1.LabelToolTip = "#VAL{D2}";
+            series1.Legend = "Legend1";
+            series1.Name = "Saatlik Kazanc";
+            series1.YValuesPerPoint = 24;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartDaily.Series.Add(series1);
+            this.chartDaily.Size = new System.Drawing.Size(992, 177);
+            this.chartDaily.TabIndex = 2;
+            this.chartDaily.Text = "chart1";
+            this.chartDaily.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chartDaily_MouseMove);
+            // 
+            // panel12
+            // 
+            this.panel12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel12.Controls.Add(this.chart1);
+            this.panel12.Location = new System.Drawing.Point(0, 398);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(992, 177);
+            this.panel12.TabIndex = 12;
+            // 
+            // chart1
+            // 
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
+            this.chart1.Location = new System.Drawing.Point(-2, 0);
+            this.chart1.Name = "chart1";
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedArea;
+            series2.Legend = "Legend1";
+            series2.Name = "Aylik Kazanc";
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedArea;
+            series3.Legend = "Legend1";
+            series3.Name = "Kazanc Ortalamasi";
+            this.chart1.Series.Add(series2);
+            this.chart1.Series.Add(series3);
+            this.chart1.Size = new System.Drawing.Size(992, 177);
+            this.chart1.TabIndex = 2;
+            this.chart1.Text = "chart1";
+            // 
+            // panel11
+            // 
+            this.panel11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel11.Controls.Add(this.chartWeekly);
+            this.panel11.Location = new System.Drawing.Point(0, 194);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(992, 177);
+            this.panel11.TabIndex = 12;
+            // 
+            // chartWeekly
+            // 
+            this.chartWeekly.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea3.Name = "ChartArea1";
+            this.chartWeekly.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chartWeekly.Legends.Add(legend3);
+            this.chartWeekly.Location = new System.Drawing.Point(-2, -2);
+            this.chartWeekly.Name = "chartWeekly";
+            this.chartWeekly.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+            series4.BorderWidth = 3;
+            series4.ChartArea = "ChartArea1";
+            series4.CustomProperties = "LabelStyle=Bottom";
+            series4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold);
+            series4.IsValueShownAsLabel = true;
+            series4.IsXValueIndexed = true;
+            series4.LabelToolTip = "#VAL{D}";
+            series4.Legend = "Legend1";
+            series4.Name = "Gunluk Kazanc";
+            series4.YValuesPerPoint = 7;
+            this.chartWeekly.Series.Add(series4);
+            this.chartWeekly.Size = new System.Drawing.Size(992, 177);
+            this.chartWeekly.TabIndex = 1;
+            this.chartWeekly.Text = "chart1";
+            // 
+            // tbSpecificRapor
+            // 
+            this.tbSpecificRapor.Controls.Add(this.panel13);
+            this.tbSpecificRapor.Location = new System.Drawing.Point(4, 28);
+            this.tbSpecificRapor.Name = "tbSpecificRapor";
+            this.tbSpecificRapor.Padding = new System.Windows.Forms.Padding(3);
+            this.tbSpecificRapor.Size = new System.Drawing.Size(995, 588);
+            this.tbSpecificRapor.TabIndex = 1;
+            this.tbSpecificRapor.Text = "Rapor Detayi";
+            this.tbSpecificRapor.UseVisualStyleBackColor = true;
+            // 
+            // panel13
+            // 
+            this.panel13.BackColor = System.Drawing.Color.Silver;
+            this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel13.Controls.Add(this.label16);
+            this.panel13.Controls.Add(this.dtpReportDateEnd);
+            this.panel13.Controls.Add(this.cbRaporTercihi);
+            this.panel13.Controls.Add(this.bReportAra);
+            this.panel13.Controls.Add(this.dtpReportDateStart);
+            this.panel13.Location = new System.Drawing.Point(4, 6);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(988, 39);
+            this.panel13.TabIndex = 0;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Calibri", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(494, 3);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(18, 26);
+            this.label16.TabIndex = 4;
+            this.label16.Text = "-";
+            // 
+            // dtpReportDateEnd
+            // 
+            this.dtpReportDateEnd.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpReportDateEnd.Location = new System.Drawing.Point(527, 3);
+            this.dtpReportDateEnd.Name = "dtpReportDateEnd";
+            this.dtpReportDateEnd.Size = new System.Drawing.Size(200, 27);
+            this.dtpReportDateEnd.TabIndex = 3;
+            // 
+            // cbRaporTercihi
+            // 
+            this.cbRaporTercihi.FormattingEnabled = true;
+            this.cbRaporTercihi.Items.AddRange(new object[] {
+            "Belirli Bir Gun",
+            "Belirli Tarih Araligi"});
+            this.cbRaporTercihi.Location = new System.Drawing.Point(3, 3);
+            this.cbRaporTercihi.Name = "cbRaporTercihi";
+            this.cbRaporTercihi.Size = new System.Drawing.Size(242, 27);
+            this.cbRaporTercihi.TabIndex = 2;
+            this.cbRaporTercihi.SelectedIndexChanged += new System.EventHandler(this.ReportSearchKeyChanged);
+            // 
+            // bReportAra
+            // 
+            this.bReportAra.Location = new System.Drawing.Point(772, 2);
+            this.bReportAra.Name = "bReportAra";
+            this.bReportAra.Size = new System.Drawing.Size(149, 27);
+            this.bReportAra.TabIndex = 1;
+            this.bReportAra.Text = "Rapor Olustur";
+            this.bReportAra.UseVisualStyleBackColor = true;
+            this.bReportAra.Click += new System.EventHandler(this.bReportAra_Click);
+            // 
+            // dtpReportDateStart
+            // 
+            this.dtpReportDateStart.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpReportDateStart.Location = new System.Drawing.Point(279, 3);
+            this.dtpReportDateStart.Name = "dtpReportDateStart";
+            this.dtpReportDateStart.Size = new System.Drawing.Size(200, 27);
+            this.dtpReportDateStart.TabIndex = 0;
+            // 
             // panel4
             // 
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1120,7 +1374,8 @@
             this.panel4.BackColor = System.Drawing.Color.Transparent;
             this.panel4.BackgroundImage = global::Restorium.Properties.Resources.rapor2;
             this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.panel4.Controls.Add(this.pictureBox2);
+            this.panel4.Controls.Add(this.bPrintReport);
+            this.panel4.Controls.Add(this.bSendMailReport);
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1010, 72);
@@ -1169,6 +1424,8 @@
             this.panel7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel7.Controls.Add(this.tbMail);
+            this.panel7.Controls.Add(this.label17);
             this.panel7.Controls.Add(this.label8);
             this.panel7.Controls.Add(this.tbGBP);
             this.panel7.Controls.Add(this.label6);
@@ -1188,8 +1445,9 @@
             // 
             // label8
             // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(386, 106);
+            this.label8.Location = new System.Drawing.Point(920, 56);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(42, 23);
             this.label8.TabIndex = 11;
@@ -1197,7 +1455,8 @@
             // 
             // tbGBP
             // 
-            this.tbGBP.Location = new System.Drawing.Point(327, 103);
+            this.tbGBP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbGBP.Location = new System.Drawing.Point(861, 53);
             this.tbGBP.Name = "tbGBP";
             this.tbGBP.Size = new System.Drawing.Size(53, 30);
             this.tbGBP.TabIndex = 10;
@@ -1205,8 +1464,9 @@
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(258, 106);
+            this.label6.Location = new System.Drawing.Point(792, 56);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(70, 23);
             this.label6.TabIndex = 9;
@@ -1214,8 +1474,9 @@
             // 
             // label7
             // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(134, 106);
+            this.label7.Location = new System.Drawing.Point(668, 56);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(59, 23);
             this.label7.TabIndex = 8;
@@ -1223,7 +1484,8 @@
             // 
             // tbDolar
             // 
-            this.tbDolar.Location = new System.Drawing.Point(199, 103);
+            this.tbDolar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbDolar.Location = new System.Drawing.Point(733, 53);
             this.tbDolar.Name = "tbDolar";
             this.tbDolar.Size = new System.Drawing.Size(53, 30);
             this.tbDolar.TabIndex = 7;
@@ -1231,7 +1493,8 @@
             // 
             // tbEuro
             // 
-            this.tbEuro.Location = new System.Drawing.Point(75, 103);
+            this.tbEuro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbEuro.Location = new System.Drawing.Point(609, 53);
             this.tbEuro.Name = "tbEuro";
             this.tbEuro.Size = new System.Drawing.Size(53, 30);
             this.tbEuro.TabIndex = 5;
@@ -1239,8 +1502,9 @@
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 106);
+            this.label5.Location = new System.Drawing.Point(546, 56);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 23);
             this.label5.TabIndex = 4;
@@ -1386,174 +1650,45 @@
             this.timerReservation.Interval = 5000;
             this.timerReservation.Tick += new System.EventHandler(this.reservedTableStateChecker);
             // 
-            // panel10
+            // bPrintReport
             // 
-            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel10.Controls.Add(this.chartDaily);
-            this.panel10.Location = new System.Drawing.Point(0, 3);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(992, 177);
-            this.panel10.TabIndex = 11;
+            this.bPrintReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bPrintReport.BackgroundImage = global::Restorium.Properties.Resources.printer_icon;
+            this.bPrintReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bPrintReport.Location = new System.Drawing.Point(887, 16);
+            this.bPrintReport.Name = "bPrintReport";
+            this.bPrintReport.Size = new System.Drawing.Size(39, 36);
+            this.bPrintReport.TabIndex = 30;
+            this.bPrintReport.UseVisualStyleBackColor = true;
             // 
-            // panel11
+            // bSendMailReport
             // 
-            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel11.Controls.Add(this.chartWeekly);
-            this.panel11.Location = new System.Drawing.Point(0, 212);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(992, 177);
-            this.panel11.TabIndex = 12;
+            this.bSendMailReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bSendMailReport.BackgroundImage = global::Restorium.Properties.Resources.gmail_icon;
+            this.bSendMailReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bSendMailReport.Location = new System.Drawing.Point(932, 16);
+            this.bSendMailReport.Name = "bSendMailReport";
+            this.bSendMailReport.Size = new System.Drawing.Size(39, 36);
+            this.bSendMailReport.TabIndex = 29;
+            this.bSendMailReport.UseVisualStyleBackColor = true;
+            this.bSendMailReport.Click += new System.EventHandler(this.bSendMailReport_Click);
             // 
-            // panel12
+            // label17
             // 
-            this.panel12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel12.Location = new System.Drawing.Point(0, 416);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(992, 177);
-            this.panel12.TabIndex = 12;
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(8, 120);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(117, 23);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "Mail Adresi    :";
             // 
-            // chartDaily
+            // tbMail
             // 
-            this.chartDaily.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.chartDaily.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartDaily.Legends.Add(legend1);
-            this.chartDaily.Location = new System.Drawing.Point(-2, -2);
-            this.chartDaily.Name = "chartDaily";
-            this.chartDaily.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Saatlik Kazanc";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Kazanc Ortalamasi";
-            this.chartDaily.Series.Add(series1);
-            this.chartDaily.Series.Add(series2);
-            this.chartDaily.Size = new System.Drawing.Size(992, 177);
-            this.chartDaily.TabIndex = 0;
-            this.chartDaily.Text = "chart1";
-            // 
-            // chartWeekly
-            // 
-            this.chartWeekly.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.chartWeekly.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartWeekly.Legends.Add(legend2);
-            this.chartWeekly.Location = new System.Drawing.Point(-2, -2);
-            this.chartWeekly.Name = "chartWeekly";
-            this.chartWeekly.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series3.BorderWidth = 3;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.Name = "Gunluk Kazanc";
-            series4.BorderWidth = 3;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Kazanc Ortalamasi";
-            this.chartWeekly.Series.Add(series3);
-            this.chartWeekly.Series.Add(series4);
-            this.chartWeekly.Size = new System.Drawing.Size(992, 177);
-            this.chartWeekly.TabIndex = 1;
-            this.chartWeekly.Text = "chart1";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.Image = global::Restorium.Properties.Resources.printer;
-            this.pictureBox2.Location = new System.Drawing.Point(921, 18);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(41, 40);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 5;
-            this.pictureBox2.TabStop = false;
-            // 
-            // tcRapor
-            // 
-            this.tcRapor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tcRapor.Controls.Add(this.tpGrafikler);
-            this.tcRapor.Controls.Add(this.tbSpecificRapor);
-            this.tcRapor.Location = new System.Drawing.Point(3, 78);
-            this.tcRapor.Name = "tcRapor";
-            this.tcRapor.SelectedIndex = 0;
-            this.tcRapor.Size = new System.Drawing.Size(1003, 620);
-            this.tcRapor.TabIndex = 13;
-            // 
-            // tpGrafikler
-            // 
-            this.tpGrafikler.Controls.Add(this.panel10);
-            this.tpGrafikler.Controls.Add(this.panel12);
-            this.tpGrafikler.Controls.Add(this.panel11);
-            this.tpGrafikler.Location = new System.Drawing.Point(4, 28);
-            this.tpGrafikler.Name = "tpGrafikler";
-            this.tpGrafikler.Padding = new System.Windows.Forms.Padding(3);
-            this.tpGrafikler.Size = new System.Drawing.Size(995, 588);
-            this.tpGrafikler.TabIndex = 0;
-            this.tpGrafikler.Text = "Grafikler";
-            this.tpGrafikler.UseVisualStyleBackColor = true;
-            // 
-            // tbSpecificRapor
-            // 
-            this.tbSpecificRapor.Controls.Add(this.panel13);
-            this.tbSpecificRapor.Location = new System.Drawing.Point(4, 28);
-            this.tbSpecificRapor.Name = "tbSpecificRapor";
-            this.tbSpecificRapor.Padding = new System.Windows.Forms.Padding(3);
-            this.tbSpecificRapor.Size = new System.Drawing.Size(995, 588);
-            this.tbSpecificRapor.TabIndex = 1;
-            this.tbSpecificRapor.Text = "Rapor Detayi";
-            this.tbSpecificRapor.UseVisualStyleBackColor = true;
-            // 
-            // panel13
-            // 
-            this.panel13.BackColor = System.Drawing.Color.Silver;
-            this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel13.Controls.Add(this.cbRaporTercihi);
-            this.panel13.Controls.Add(this.button1);
-            this.panel13.Controls.Add(this.dtpReportDate);
-            this.panel13.Location = new System.Drawing.Point(4, 6);
-            this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(988, 75);
-            this.panel13.TabIndex = 0;
-            // 
-            // dtpReportDate
-            // 
-            this.dtpReportDate.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpReportDate.Location = new System.Drawing.Point(715, 3);
-            this.dtpReportDate.Name = "dtpReportDate";
-            this.dtpReportDate.Size = new System.Drawing.Size(200, 27);
-            this.dtpReportDate.TabIndex = 0;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(918, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(63, 27);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Ara";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // cbRaporTercihi
-            // 
-            this.cbRaporTercihi.FormattingEnabled = true;
-            this.cbRaporTercihi.Items.AddRange(new object[] {
-            "Saatlik Rapor Getir",
-            "Gunluk Rapor Getir",
-            "Haftalik Rapor Getir",
-            "Aylik Rapor Getir"});
-            this.cbRaporTercihi.Location = new System.Drawing.Point(492, 3);
-            this.cbRaporTercihi.Name = "cbRaporTercihi";
-            this.cbRaporTercihi.Size = new System.Drawing.Size(197, 27);
-            this.cbRaporTercihi.TabIndex = 2;
-            this.cbRaporTercihi.SelectedIndexChanged += new System.EventHandler(this.ReportSearchKeyChanged);
+            this.tbMail.Enabled = false;
+            this.tbMail.Location = new System.Drawing.Point(140, 117);
+            this.tbMail.Name = "tbMail";
+            this.tbMail.Size = new System.Drawing.Size(265, 30);
+            this.tbMail.TabIndex = 13;
             // 
             // MainForm
             // 
@@ -1592,6 +1727,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvKasa)).EndInit();
             this.panel2.ResumeLayout(false);
             this.tp_Rapor.ResumeLayout(false);
+            this.tcRapor.ResumeLayout(false);
+            this.tpGrafikler.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).EndInit();
+            this.panel12.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            this.panel11.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartWeekly)).EndInit();
+            this.tbSpecificRapor.ResumeLayout(false);
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.tp_Rehber.ResumeLayout(false);
             this.tp_Ayarlar.ResumeLayout(false);
@@ -1600,15 +1746,6 @@
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).EndInit();
             this.panel6.ResumeLayout(false);
-            this.panel10.ResumeLayout(false);
-            this.panel11.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartWeekly)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.tcRapor.ResumeLayout(false);
-            this.tpGrafikler.ResumeLayout(false);
-            this.tbSpecificRapor.ResumeLayout(false);
-            this.panel13.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1721,14 +1858,22 @@
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartWeekly;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartDaily;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.TabControl tcRapor;
         private System.Windows.Forms.TabPage tpGrafikler;
         private System.Windows.Forms.TabPage tbSpecificRapor;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.ComboBox cbRaporTercihi;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DateTimePicker dtpReportDate;
+        private System.Windows.Forms.Button bReportAra;
+        private System.Windows.Forms.DateTimePicker dtpReportDateStart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DateTimePicker dtpReportDateEnd;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button bSendMailKasa;
+        private System.Windows.Forms.Button bPrintKasa;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartDaily;
+        private System.Windows.Forms.Button bPrintReport;
+        private System.Windows.Forms.Button bSendMailReport;
+        private System.Windows.Forms.TextBox tbMail;
+        private System.Windows.Forms.Label label17;
     }
 }

@@ -203,6 +203,16 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap gmail_icon {
+            get {
+                object obj = ResourceManager.GetObject("gmail-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap kasa {
             get {
                 object obj = ResourceManager.GetObject("kasa", resourceCulture);
@@ -226,6 +236,16 @@ namespace Restorium.Properties {
         internal static System.Drawing.Bitmap login5 {
             get {
                 object obj = ResourceManager.GetObject("login5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mail_icon__1_ {
+            get {
+                object obj = ResourceManager.GetObject("mail-icon (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -293,6 +313,16 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap printer_icon {
+            get {
+                object obj = ResourceManager.GetObject("printer-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rapor {
             get {
                 object obj = ResourceManager.GetObject("rapor", resourceCulture);
@@ -326,6 +356,16 @@ namespace Restorium.Properties {
         internal static System.Drawing.Bitmap rehber {
             get {
                 object obj = ResourceManager.GetObject("rehber", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap restaurant_icon {
+            get {
+                object obj = ResourceManager.GetObject("restaurant-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
