@@ -136,10 +136,17 @@
             this.bReportAra = new System.Windows.Forms.Button();
             this.dtpReportDateStart = new System.Windows.Forms.DateTimePicker();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.bPrintReport = new System.Windows.Forms.Button();
+            this.bSendMailReport = new System.Windows.Forms.Button();
             this.tp_Rehber = new System.Windows.Forms.TabPage();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tp_Ayarlar = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.dtpDukkanKapanisTime = new System.Windows.Forms.DateTimePicker();
+            this.tbMail = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tbGBP = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -163,10 +170,8 @@
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.timerReservation = new System.Windows.Forms.Timer(this.components);
-            this.bPrintReport = new System.Windows.Forms.Button();
-            this.bSendMailReport = new System.Windows.Forms.Button();
-            this.label17 = new System.Windows.Forms.Label();
-            this.tbMail = new System.Windows.Forms.TextBox();
+            this.bAyarlarDuzenle = new System.Windows.Forms.Button();
+            this.cbAutoMail = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
@@ -1381,6 +1386,29 @@
             this.panel4.Size = new System.Drawing.Size(1010, 72);
             this.panel4.TabIndex = 10;
             // 
+            // bPrintReport
+            // 
+            this.bPrintReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bPrintReport.BackgroundImage = global::Restorium.Properties.Resources.printer_icon;
+            this.bPrintReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bPrintReport.Location = new System.Drawing.Point(887, 16);
+            this.bPrintReport.Name = "bPrintReport";
+            this.bPrintReport.Size = new System.Drawing.Size(39, 36);
+            this.bPrintReport.TabIndex = 30;
+            this.bPrintReport.UseVisualStyleBackColor = true;
+            // 
+            // bSendMailReport
+            // 
+            this.bSendMailReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bSendMailReport.BackgroundImage = global::Restorium.Properties.Resources.gmail_icon;
+            this.bSendMailReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bSendMailReport.Location = new System.Drawing.Point(932, 16);
+            this.bSendMailReport.Name = "bSendMailReport";
+            this.bSendMailReport.Size = new System.Drawing.Size(39, 36);
+            this.bSendMailReport.TabIndex = 29;
+            this.bSendMailReport.UseVisualStyleBackColor = true;
+            this.bSendMailReport.Click += new System.EventHandler(this.bSendMailReport_Click);
+            // 
             // tp_Rehber
             // 
             this.tp_Rehber.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
@@ -1424,6 +1452,11 @@
             this.panel7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel7.Controls.Add(this.cbAutoMail);
+            this.panel7.Controls.Add(this.bAyarlarDuzenle);
+            this.panel7.Controls.Add(this.label19);
+            this.panel7.Controls.Add(this.label18);
+            this.panel7.Controls.Add(this.dtpDukkanKapanisTime);
             this.panel7.Controls.Add(this.tbMail);
             this.panel7.Controls.Add(this.label17);
             this.panel7.Controls.Add(this.label8);
@@ -1443,20 +1476,71 @@
             this.panel7.Size = new System.Drawing.Size(983, 214);
             this.panel7.TabIndex = 16;
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label19.Location = new System.Drawing.Point(0, 143);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(372, 17);
+            this.label19.TabIndex = 16;
+            this.label19.Text = "---------------------------------------------------------------------------------" +
+    "----------";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label18.Location = new System.Drawing.Point(8, 121);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(128, 17);
+            this.label18.TabIndex = 15;
+            this.label18.Text = "Isyeri Kapanis Saati   :";
+            // 
+            // dtpDukkanKapanisTime
+            // 
+            this.dtpDukkanKapanisTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpDukkanKapanisTime.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.dtpDukkanKapanisTime.Location = new System.Drawing.Point(137, 112);
+            this.dtpDukkanKapanisTime.Name = "dtpDukkanKapanisTime";
+            this.dtpDukkanKapanisTime.ShowUpDown = true;
+            this.dtpDukkanKapanisTime.Size = new System.Drawing.Size(111, 30);
+            this.dtpDukkanKapanisTime.TabIndex = 14;
+            this.dtpDukkanKapanisTime.ValueChanged += new System.EventHandler(this.dtpDukkanKapanisTimeChanged);
+            // 
+            // tbMail
+            // 
+            this.tbMail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbMail.Enabled = false;
+            this.tbMail.Location = new System.Drawing.Point(137, 80);
+            this.tbMail.Name = "tbMail";
+            this.tbMail.Size = new System.Drawing.Size(265, 23);
+            this.tbMail.TabIndex = 13;
+            this.tbMail.TextChanged += new System.EventHandler(this.tbMailChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label17.Location = new System.Drawing.Point(8, 82);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(123, 17);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "Mail Adresi                :";
+            // 
             // label8
             // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(920, 56);
+            this.label8.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label8.Location = new System.Drawing.Point(323, 170);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(42, 23);
+            this.label8.Size = new System.Drawing.Size(32, 17);
             this.label8.TabIndex = 11;
             this.label8.Text = "GBP";
             // 
             // tbGBP
             // 
-            this.tbGBP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbGBP.Location = new System.Drawing.Point(861, 53);
+            this.tbGBP.Location = new System.Drawing.Point(264, 161);
             this.tbGBP.Name = "tbGBP";
             this.tbGBP.Size = new System.Drawing.Size(53, 30);
             this.tbGBP.TabIndex = 10;
@@ -1464,28 +1548,27 @@
             // 
             // label6
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(792, 56);
+            this.label6.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label6.Location = new System.Drawing.Point(217, 170);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 23);
+            this.label6.Size = new System.Drawing.Size(52, 17);
             this.label6.TabIndex = 9;
             this.label6.Text = "Dolar = ";
             // 
             // label7
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(668, 56);
+            this.label7.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label7.Location = new System.Drawing.Point(108, 170);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(59, 23);
+            this.label7.Size = new System.Drawing.Size(44, 17);
             this.label7.TabIndex = 8;
             this.label7.Text = "Euro =";
             // 
             // tbDolar
             // 
-            this.tbDolar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDolar.Location = new System.Drawing.Point(733, 53);
+            this.tbDolar.Location = new System.Drawing.Point(158, 161);
             this.tbDolar.Name = "tbDolar";
             this.tbDolar.Size = new System.Drawing.Size(53, 30);
             this.tbDolar.TabIndex = 7;
@@ -1493,8 +1576,7 @@
             // 
             // tbEuro
             // 
-            this.tbEuro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbEuro.Location = new System.Drawing.Point(609, 53);
+            this.tbEuro.Location = new System.Drawing.Point(49, 161);
             this.tbEuro.Name = "tbEuro";
             this.tbEuro.Size = new System.Drawing.Size(53, 30);
             this.tbEuro.TabIndex = 5;
@@ -1502,18 +1584,18 @@
             // 
             // label5
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(546, 56);
+            this.label5.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label5.Location = new System.Drawing.Point(8, 170);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 23);
+            this.label5.Size = new System.Drawing.Size(50, 17);
             this.label5.TabIndex = 4;
             this.label5.Text = "1 TL  =  ";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(195, 56);
+            this.label4.Location = new System.Drawing.Point(196, 40);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(24, 23);
             this.label4.TabIndex = 3;
@@ -1522,17 +1604,19 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 56);
+            this.label3.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label3.Location = new System.Drawing.Point(8, 46);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(130, 23);
+            this.label3.Size = new System.Drawing.Size(129, 17);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Iskonto Orani :  ";
+            this.label3.Text = "Iskonto Orani            :  ";
             // 
             // tbDefaultIskontoValue
             // 
-            this.tbDefaultIskontoValue.Location = new System.Drawing.Point(140, 53);
+            this.tbDefaultIskontoValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbDefaultIskontoValue.Location = new System.Drawing.Point(137, 40);
             this.tbDefaultIskontoValue.Name = "tbDefaultIskontoValue";
-            this.tbDefaultIskontoValue.Size = new System.Drawing.Size(53, 30);
+            this.tbDefaultIskontoValue.Size = new System.Drawing.Size(53, 23);
             this.tbDefaultIskontoValue.TabIndex = 1;
             this.tbDefaultIskontoValue.TextChanged += new System.EventHandler(this.IskontoValueChanged);
             // 
@@ -1548,6 +1632,7 @@
             // bPersonelDuzenle
             // 
             this.bPersonelDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bPersonelDuzenle.ForeColor = System.Drawing.Color.Red;
             this.bPersonelDuzenle.Location = new System.Drawing.Point(920, 78);
             this.bPersonelDuzenle.Name = "bPersonelDuzenle";
             this.bPersonelDuzenle.Size = new System.Drawing.Size(75, 28);
@@ -1650,45 +1735,30 @@
             this.timerReservation.Interval = 5000;
             this.timerReservation.Tick += new System.EventHandler(this.reservedTableStateChecker);
             // 
-            // bPrintReport
+            // bAyarlarDuzenle
             // 
-            this.bPrintReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bPrintReport.BackgroundImage = global::Restorium.Properties.Resources.printer_icon;
-            this.bPrintReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bPrintReport.Location = new System.Drawing.Point(887, 16);
-            this.bPrintReport.Name = "bPrintReport";
-            this.bPrintReport.Size = new System.Drawing.Size(39, 36);
-            this.bPrintReport.TabIndex = 30;
-            this.bPrintReport.UseVisualStyleBackColor = true;
+            this.bAyarlarDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bAyarlarDuzenle.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Italic);
+            this.bAyarlarDuzenle.ForeColor = System.Drawing.Color.Red;
+            this.bAyarlarDuzenle.Location = new System.Drawing.Point(902, 4);
+            this.bAyarlarDuzenle.Name = "bAyarlarDuzenle";
+            this.bAyarlarDuzenle.Size = new System.Drawing.Size(74, 28);
+            this.bAyarlarDuzenle.TabIndex = 17;
+            this.bAyarlarDuzenle.Text = "Duzenle";
+            this.bAyarlarDuzenle.UseVisualStyleBackColor = true;
+            this.bAyarlarDuzenle.Click += new System.EventHandler(this.bAyarlarDuzenle_Click);
             // 
-            // bSendMailReport
+            // cbAutoMail
             // 
-            this.bSendMailReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSendMailReport.BackgroundImage = global::Restorium.Properties.Resources.gmail_icon;
-            this.bSendMailReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bSendMailReport.Location = new System.Drawing.Point(932, 16);
-            this.bSendMailReport.Name = "bSendMailReport";
-            this.bSendMailReport.Size = new System.Drawing.Size(39, 36);
-            this.bSendMailReport.TabIndex = 29;
-            this.bSendMailReport.UseVisualStyleBackColor = true;
-            this.bSendMailReport.Click += new System.EventHandler(this.bSendMailReport_Click);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(8, 120);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(117, 23);
-            this.label17.TabIndex = 12;
-            this.label17.Text = "Mail Adresi    :";
-            // 
-            // tbMail
-            // 
-            this.tbMail.Enabled = false;
-            this.tbMail.Location = new System.Drawing.Point(140, 117);
-            this.tbMail.Name = "tbMail";
-            this.tbMail.Size = new System.Drawing.Size(265, 30);
-            this.tbMail.TabIndex = 13;
+            this.cbAutoMail.AutoSize = true;
+            this.cbAutoMail.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.cbAutoMail.Location = new System.Drawing.Point(292, 117);
+            this.cbAutoMail.Name = "cbAutoMail";
+            this.cbAutoMail.Size = new System.Drawing.Size(217, 21);
+            this.cbAutoMail.TabIndex = 18;
+            this.cbAutoMail.Text = "Otomatik gun sonu raporu gonder";
+            this.cbAutoMail.UseVisualStyleBackColor = true;
+            this.cbAutoMail.CheckedChanged += new System.EventHandler(this.cbAutoMailChanged);
             // 
             // MainForm
             // 
@@ -1875,5 +1945,10 @@
         private System.Windows.Forms.Button bSendMailReport;
         private System.Windows.Forms.TextBox tbMail;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.DateTimePicker dtpDukkanKapanisTime;
+        private System.Windows.Forms.Button bAyarlarDuzenle;
+        private System.Windows.Forms.CheckBox cbAutoMail;
     }
 }

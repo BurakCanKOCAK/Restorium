@@ -71,10 +71,14 @@ namespace Restorium
         public static int personelCount;
         private bool duzenlemeModu = false;
         private bool personelDuzenlemeModu = false;
+        private bool ayarlarDuzenlemeModu = false;
+        private bool mailSentFlag = false;
         int countOfTables = 1;
         bool tableFlag = false;
         private Bitmap bitmap;
         public static int iskontoRate;
+        public static DateTime dukkanKapanisSaati;
+        public static string eMail;
         public static string User;
         #endregion
 
@@ -82,7 +86,7 @@ namespace Restorium
         {
             if (DateTime.UtcNow.ToLocalTime().Month >= 2 )
             {
-                if (DateTime.UtcNow.ToLocalTime().Day > 16)
+                if (DateTime.UtcNow.ToLocalTime().Day > 28)
                 {
                     Environment.Exit(0);
                 }
@@ -133,6 +137,8 @@ namespace Restorium
 
         private void SettingsDataSet()
         {
+            dtpDukkanKapanisTime.Format = DateTimePickerFormat.Custom;
+            dtpDukkanKapanisTime.CustomFormat = "HH:mm";
 
             this.dgViewWaiter.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             getPersonelFromFile();
@@ -144,26 +150,69 @@ namespace Restorium
             dgViewWaiter.Refresh();
             try
             {
+                if (INI.Read("AutoMail", "Settings").ToString() == "Checked")
+                {
+                    cbAutoMail.Checked = true;
+                }
+                else
+                {
+                    cbAutoMail.Checked = false;
+                }
+            }
+            catch
+            {
+                UserLog.WConsole("(!)Kayitli AutoMail secenegi bulunamadi !");
+            }
+            try
+            {
+                eMail = (INI.Read("Email", "Settings")).ToString();
+                tbMail.Text = eMail;
+            }
+            catch
+            {
+                UserLog.WConsole("(!)Kayitli bir E-Mail adresi bulunamadi !");
+            }
+            try
+            {
+                dtpDukkanKapanisTime.Value = Convert.ToDateTime(INI.Read("DukkanKapanisSaati", "Settings"));
+            }
+            catch
+            {
+                UserLog.WConsole("(!)Dukkan kapanis saati kaydedilmemis !");
+            }
+            try
+            {
                 iskontoRate = Convert.ToInt16(INI.Read("Iskonto", "Settings"));
                 tbDefaultIskontoValue.Text = iskontoRate.ToString();
             }
             catch
             {
-                UserLog.WConsole("Atanmis bir iskonto degeri bulunamadi !");
+                UserLog.WConsole("(!)Atanmis bir iskonto degeri bulunamadi !");
             }
             if (User == "Admin")
             {
                 dgViewWaiter.ForeColor = Color.Black;
                 bPersonelDuzenle.ForeColor = Color.Red;
-                tbDefaultIskontoValue.Enabled = true;
-                tbMail.Enabled = true;
+                tbDefaultIskontoValue.Enabled = false;
+                tbMail.Enabled = false;
+                dtpDukkanKapanisTime.Enabled = false;
+                cbAutoMail.Enabled = false;
+                tbDolar.Enabled = false;
+                tbEuro.Enabled = false;
+                tbGBP.Enabled = false;
+                bAyarlarDuzenle.Enabled = true;
             }
             else
             {
-
                 dgViewWaiter.ForeColor = Color.Gray;
                 bPersonelDuzenle.ForeColor = Color.DarkGray;
                 bPersonelDuzenle.Enabled = false;
+                bAyarlarDuzenle.ForeColor = Color.DarkGray;
+                bAyarlarDuzenle.Enabled = false;
+
+                dtpDukkanKapanisTime.Enabled = false;
+                tbMail.Enabled = false;
+                cbAutoMail.Enabled = false;
                 tbDefaultIskontoValue.Enabled = false;
                 tbDolar.Enabled = false;
                 tbEuro.Enabled = false;
@@ -285,6 +334,24 @@ namespace Restorium
         {
             lDate.Text = DateTime.UtcNow.ToLocalTime().ToString();
             //WiFi Check
+            if (dtpDukkanKapanisTime.Checked == true)
+            {
+                //Dukkan kapanma saatini check et ve raporu gonder gun sonunu gerceklestir
+                if (dtpDukkanKapanisTime.Value.Hour == System.DateTime.Now.Hour && dtpDukkanKapanisTime.Value.Minute == System.DateTime.Now.Minute)
+                {
+                    UserLog.WConsole("a0 : " + mailSentFlag.ToString());
+                    if (mailSentFlag == false)
+                    {
+                        EndOfTheDayReportGenerate();
+                        UserLog.WConsole("a1 : " + mailSentFlag.ToString());
+                    }
+                }
+                else
+                { 
+                    mailSentFlag = false;
+                    UserLog.WConsole("a2 : " + mailSentFlag.ToString());
+                }
+            }
             if (isConnectedToInternet())
             {
                 pbWifi.Image = Properties.Resources.Network_Wifi_icon;
@@ -309,7 +376,26 @@ namespace Restorium
             }
             GC.Collect();  //Duruma gore daha sonra kaldirilabilir ya da method degistirilebilir
         }
-       
+
+        private void EndOfTheDayReportGenerate()
+        {
+            bool result = sendMail();
+            // Useless code starts
+            if (result==false)
+            {
+                MessageBox.Show("Mail gonderilirken sorun olustu !\nMail gonderimi basarisiz !");
+                mailSentFlag = false;
+                UserLog.WConsole("b1 : " + mailSentFlag.ToString());
+            }
+            else
+            {
+                MessageBox.Show("Mail Basariyla :\n" + tbMail.Text + "\nMail adresine gonderildi.");
+                mailSentFlag = true;
+                UserLog.WConsole("b2 : " + mailSentFlag.ToString());
+            }
+            // Useless code ends
+        }
+
         #region checking Systems
         private bool isConnectedToInternet()
         {
@@ -1488,7 +1574,7 @@ namespace Restorium
             
         }
 
-        private void GetReportyhgtgDetails(DateTime startingDate,int days)
+        private void GetReportDetails(DateTime startingDate,int days)
         {
 
             string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -1593,6 +1679,7 @@ namespace Restorium
             doc.DocumentElement.AppendChild(node);
             //save back
             doc.Save("ReportDatabase.xml");
+            UserLog.WConsole("Saving Data To XML is Succesfull !");
 
         }
 
@@ -1611,8 +1698,8 @@ namespace Restorium
                 foreach (XmlNode node in IslemList)
                     {                                                               
                         XmlElement IslemElement = (XmlElement)node;
-                        UserLog.WConsole(IslemElement.GetElementsByTagName("Nakit")[0].InnerText);
-                        UserLog.WConsole(System.DateTime.Now.AddDays(1).ToLongDateString());
+                        //UserLog.WConsole(IslemElement.GetElementsByTagName("Nakit")[0].InnerText);
+                        //UserLog.WConsole(System.DateTime.Now.AddDays(1).ToLongDateString());
                         if (IslemElement.GetElementsByTagName("Tarih")[0].InnerText == startingDate.ToLongDateString())
                         {
                          MessageBox.Show("AYNI GUN");
@@ -1727,10 +1814,12 @@ namespace Restorium
                 }
             }
 
+            /*
             for (int j = 0; j < i; j++)
             {
                 UserLog.WConsole(kasaToplamArray[j, 0] + " :::: " + kasaToplamArray[j, 1]);
             }
+            */
             UserLog.WConsole("Number of Recorded Days : " + i);
             databaseDayCounter = i;
             //Weekly Chart Ekrana Yazdir
@@ -1765,7 +1854,7 @@ namespace Restorium
             ////////////////////////////////////////////////////////////////////////////////////////////////
             int hourlyCounter = 0;
             bool dailyFlag = false;
-            UserLog.WConsole("Start Calculate Hourly Income...");
+            //UserLog.WConsole("Start Calculate Hourly Income...");
             foreach (XmlNode node in IslemList)
             {
                 try
@@ -1773,16 +1862,16 @@ namespace Restorium
                     XmlElement IslemElement = (XmlElement)node;
                     if (Convert.ToDateTime(System.DateTime.Now.ToLongDateString()) == Convert.ToDateTime(IslemElement.GetElementsByTagName("Tarih")[0].InnerText))
                     {
-                        UserLog.WConsole(IslemElement.GetElementsByTagName("Nakit")[0].InnerText);
-                        UserLog.WConsole(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText);
+                      //  UserLog.WConsole(IslemElement.GetElementsByTagName("Nakit")[0].InnerText);
+                      //  UserLog.WConsole(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText);
 
                         string sum = (Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText)).ToString();
-                        UserLog.WConsole(sum);
+                      //  UserLog.WConsole(sum);
                         string hour = (Convert.ToDateTime(IslemElement.GetElementsByTagName("Zaman")[0].InnerText).Hour).ToString();
                         if (dailyFlag == false)//first hour 
                         {
                             hourlySum[hourlyCounter, 1] = sum;
-                            UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter, 1]);
+                          //  UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter, 1]);
                             hourlySum[hourlyCounter, 0] = hour;
                             hourlyCounter++;
                             dailyFlag = true;
@@ -1792,12 +1881,12 @@ namespace Restorium
                             if (hourlySum[hourlyCounter - 1, 0] == hour) //Bi onceki kaitla ayni saat ise
                             {
                                 hourlySum[hourlyCounter - 1, 1] = (Convert.ToDecimal(hourlySum[hourlyCounter - 1, 1]) + Convert.ToDecimal(sum)).ToString();
-                                UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter-1, 1]);
+                            //    UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter-1, 1]);
                             }
                             else // bi onceki kayit ile farkli saatler ise
                             {
                                 hourlySum[hourlyCounter, 1] = sum;
-                                UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter, 1]);
+                            //    UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter, 1]);
                                 hourlySum[hourlyCounter, 0] = hour;
                                 hourlyCounter++;
                             }
@@ -1809,11 +1898,13 @@ namespace Restorium
                     UserLog.WConsole("Bugune ait kayit bulunamadi");
                 }
             }
-            UserLog.WConsole("Number of Hour Records : "+ hourlyCounter.ToString());
+            UserLog.WConsole("Number of Hour Records for Today : "+ hourlyCounter.ToString());
+            /*
             for (int m = 0; m < hourlyCounter; m++)
             {
                 UserLog.WConsole("saat : " + hourlySum[m, 0] + " | toplam : " + hourlySum[m, 1]);
             }
+            */
             ////////////////////////////////////////////////////////////////////////////////////////////////
             //Hourly Sum Chart Print
             bool hourlyFound = false;
@@ -1823,14 +1914,14 @@ namespace Restorium
                 {
                     if (hourlySum[n, 0] == m.ToString())
                     {
-                        UserLog.WConsole("point :"+ hourlySum[n, 0]);
+                        //UserLog.WConsole("point :"+ hourlySum[n, 0]);
                         chartDaily.Series["Saatlik Kazanc"].Points.AddXY(hourlySum[n, 0], hourlySum[n, 1].Replace(",","."));
                         hourlyFound = true;
                     }
                 }
                 if (hourlyFound == false)
                 {
-                    UserLog.WConsole("zero : "+m);
+                    //UserLog.WConsole("zero : "+m);
                     chartDaily.Series["Saatlik Kazanc"].Points.AddXY(m, 0);
                 }
                 hourlyFound = false;
@@ -1844,59 +1935,14 @@ namespace Restorium
 
         private void bSendMailReport_Click(object sender, EventArgs e)
         {
-            if (tbMail.Text != "" && tbMail.Text.Contains("@"))
+             bool result= sendMail();
+            if (!result)
             {
-
-                this.chartDaily.SaveImage("Daily_Chart.png", ChartImageFormat.Png);
-                this.chartWeekly.SaveImage("Weekly_Chart.png", ChartImageFormat.Png);
-
-                // dgvKasa to BitMap   :::::::::::::::::::::::::::::::::::::
-                int height = dgvKasa.Height;
-                dgvKasa.Height = (dgvKasa.RowCount+3) * dgvKasa.RowTemplate.Height;
-                //Create a Bitmap and draw the DataGridView on it.
-                Bitmap bitmap = new Bitmap(this.dgvKasa.Width, this.dgvKasa.Height);
-                dgvKasa.DrawToBitmap(bitmap, new Rectangle(0, 0, this.dgvKasa.Width, this.dgvKasa.Height));
-                //Resize DataGridView back to original height.
-                dgvKasa.Height = height;
-                //Save the Bitmap to folder.
-                bitmap.Save("Kasa.png");
-                // dgvKasa to BitMap End :::::::::::::::::::::::::::::::::::::
-
-                MailMessage msg = new MailMessage();
-                msg.From = new MailAddress("burak.c.kocak@gmail.com");
-                msg.To.Add("hozmen6024@gmail.com");
-                msg.To.Add("bilalertkn@gmail.com");
-                msg.To.Add("Mahone0619@gmail.com");
-                msg.To.Add("burak.c.kocak@gmail.com");
-                msg.Subject = "Restorium Daily Report " + DateTime.Now.ToString();
-                msg.Body = "Daily Report :" +System.DateTime.Now.ToLongDateString() +"   " + System.DateTime.Now.ToLocalTime().ToLongTimeString();
-                SmtpClient client = new SmtpClient();
-                client.Host = "smtp.live.com";
-                msg.Attachments.Add(new Attachment("Daily_Chart.png"));
-                msg.Attachments.Add(new Attachment("Weekly_Chart.png"));
-                msg.Attachments.Add(new Attachment("Kasa.png"));
-                client.Port = 25;
-                //client.Host = "smtp.gmail.com";
-                //client.Port = 587;
-                client.EnableSsl = true;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential("bbhmbbhm@outlook.com", "bilalburakhuseyinmahmut1");
-                client.Timeout = 20000;
-                try
-                {
-                    client.Send(msg);
-                UserLog.WConsole("Mail has been successfully sent!");
-                }
-                catch (Exception ex)
-                {
-                    UserLog.WConsole("Fail Has error" );
-                }
-                finally
-                {
-                    msg.Dispose();
-                }
-
+                MessageBox.Show("Mail gonderilirken sorun olustu !\nMail gonderimi basarisiz !");
+            }
+            else
+            {
+                MessageBox.Show("Mail Basariyla :\n" + tbMail.Text + "\nMail adresine gonderildi.");
             }
         }
 
@@ -1928,16 +1974,127 @@ namespace Restorium
                         {
                             tooltip.Show("X=" + prop.XValue + ", Y=" + prop.YValues[0], this.chartDaily,
                                             pos.X, pos.Y - 15);
-                            UserLog.WConsole("ASD");
                         }
                     }
                 }
             }
         }
+
+        private void bAyarlarDuzenle_Click(object sender, EventArgs e)
+        {
+            ayarlarDuzenlemeModu = !ayarlarDuzenlemeModu;
+            if (ayarlarDuzenlemeModu == true)
+            {
+                bAyarlarDuzenle.ForeColor = Color.Green;
+                tbDefaultIskontoValue.Enabled = true;
+                dtpDukkanKapanisTime.Enabled = true;
+                cbAutoMail.Enabled = true;
+                tbMail.Enabled = true;
+                tbDolar.Enabled = true;
+                tbEuro.Enabled = true;
+                tbGBP.Enabled = true;
+            }
+            else
+            {
+                bAyarlarDuzenle.ForeColor = Color.Red;
+                tbDefaultIskontoValue.Enabled = false;
+                dtpDukkanKapanisTime.Enabled = false;
+                cbAutoMail.Enabled = false;
+                tbMail.Enabled = false;
+                tbDolar.Enabled = false;
+                tbEuro.Enabled = false;
+                tbGBP.Enabled = false;
+            }
+        }
+
+        private void tbMailChanged(object sender, EventArgs e)
+        {
+            INI.Write("Email", tbMail.Text, "Settings");
+            UserLog.WConsole("Email adresi : " + tbMail.Text + " olarak kaydedildi");
+        }
+
+        private void dtpDukkanKapanisTimeChanged(object sender, EventArgs e)
+        {
+            INI.Write("DukkanKapanisSaati", dtpDukkanKapanisTime.Value.ToString(), "Settings");
+            UserLog.WConsole("Dukkan Kapanis Saati : " + dtpDukkanKapanisTime.Value.ToString()+" Olarak kaydedildi");
+        }
+
+        private void cbAutoMailChanged(object sender, EventArgs e)
+        {
+            INI.Write("AutoMail", cbAutoMail.CheckState.ToString(), "Settings");
+            UserLog.WConsole("AutoMail secenegi : " + cbAutoMail.CheckState.ToString() + " olarak degistirildi");
+        }
+        private bool sendMail()
+        {
+            if (tbMail.Text != "" && tbMail.Text.Contains("@"))
+            {
+
+                this.chartDaily.SaveImage("Daily_Chart.png", ChartImageFormat.Png);
+                this.chartWeekly.SaveImage("Weekly_Chart.png", ChartImageFormat.Png);
+
+                // dgvKasa to BitMap   :::::::::::::::::::::::::::::::::::::
+                int height = dgvKasa.Height;
+                dgvKasa.Height = (dgvKasa.RowCount + 3) * dgvKasa.RowTemplate.Height;
+                //Create a Bitmap and draw the DataGridView on it.
+                Bitmap bitmap = new Bitmap(this.dgvKasa.Width, this.dgvKasa.Height);
+                dgvKasa.DrawToBitmap(bitmap, new Rectangle(0, 0, this.dgvKasa.Width, this.dgvKasa.Height));
+                //Resize DataGridView back to original height.
+                dgvKasa.Height = height;
+                //Save the Bitmap to folder.
+                bitmap.Save("Kasa.png");
+                // dgvKasa to BitMap End :::::::::::::::::::::::::::::::::::::
+
+                MailMessage msg = new MailMessage();
+                msg.From = new MailAddress("burak.c.kocak@gmail.com");
+                //msg.To.Add("hozmen6024@gmail.com");
+                //msg.To.Add("bilalertkn@gmail.com");
+                //msg.To.Add("Mahone0619@gmail.com");
+                //msg.To.Add("burak.c.kocak@gmail.com");
+                msg.To.Add(tbMail.Text);
+                msg.Subject = "Restorium Daily Report " + DateTime.Now.ToString();
+                msg.Body = "Daily Report :" + System.DateTime.Now.ToLongDateString() + "   " + System.DateTime.Now.ToLocalTime().ToLongTimeString();
+                SmtpClient client = new SmtpClient();
+                client.Host = "smtp.live.com";
+                msg.Attachments.Add(new Attachment("Daily_Chart.png"));
+                msg.Attachments.Add(new Attachment("Weekly_Chart.png"));
+                msg.Attachments.Add(new Attachment("Kasa.png"));
+                client.Port = 25;
+                //client.Host = "smtp.gmail.com";
+                //client.Port = 587;
+                client.EnableSsl = true;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("bbhmbbhm@outlook.com", "bilalburakhuseyinmahmut1");
+                client.Timeout = 20000;
+                try
+                {
+                    client.Send(msg);
+                    UserLog.WConsole("Mail has been successfully sent! \nTo :" + tbMail.Text);
+                    msg.Dispose();
+                    mailSentFlag = true;
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    UserLog.WConsole("Fail Has error");
+                    msg.Dispose();
+                    mailSentFlag = false;
+                    return false;
+                }
+            }
+            return false;
+
+        }
         //AYARLAR 
         //Dukkan kapanma saati ve gonderilecek maili ekle
         //Iskonto uygulanmiyor
         //Masaya siparis eklemek istendiginde acilan sayfadaki "iptal" tusu calismiyor
+        //Program acildiginda gun bitimi gerceklesmediyse kaydedilen satislari kasaya yazdir
+        /////
+        //Android unity : find the person in a crowded place (idea)
+        //Android unity : daga tirmanma yarisi . en hizli olan kazanir
+        //How to videos 
+
 
     }
 }
