@@ -628,10 +628,9 @@ namespace Restorium
             {
                 bActiveEt.Visible = false;
                 bActiveEt.Enabled = false;
-                bSiparisEkle.Enabled = true;
                 bTableClose.Text = "Masa Kapat";
             }
-            bTableClose.Enabled = true;
+            
         }
 
         private void masa_click(object sender, EventArgs e)
@@ -872,10 +871,9 @@ namespace Restorium
                         {
                             bActiveEt.Visible = false;
                             bActiveEt.Enabled = false;
-                            bSiparisEkle.Enabled = true;
                             bTableClose.Text = "Masa Kapat";
                         }
-                        bTableClose.Enabled = true;
+                        
                     }
                 }
             }
@@ -967,10 +965,8 @@ namespace Restorium
                         {
                             bActiveEt.Visible = false;
                             bActiveEt.Enabled = false;
-                            bSiparisEkle.Enabled = true;
                             bTableClose.Text = "Masa Kapat";
                         }
-                        bTableClose.Enabled = true;
                     }
                 }
             }
