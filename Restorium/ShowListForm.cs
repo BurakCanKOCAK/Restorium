@@ -118,5 +118,11 @@ namespace Restorium
                 this.Close();
             }
         }
+
+        private void bCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
     }
 }

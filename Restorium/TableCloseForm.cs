@@ -294,7 +294,7 @@ namespace Restorium
         
         private void MouseClicked(object sender, MouseEventArgs e)
         {
-            pbCalculator.BackgroundImage = Properties.Resources.cart_add_icon;
+           // pbCalculator.BackgroundImage = Properties.Resources.cart_add_icon;
         }
 
         private void ExchangeCalculateTL(object sender, EventArgs e)

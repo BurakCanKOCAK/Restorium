@@ -84,6 +84,7 @@
             this.bCancel.TabIndex = 4;
             this.bCancel.Text = "Iptal";
             this.bCancel.UseVisualStyleBackColor = true;
+            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
             // dgViewStok
             // 

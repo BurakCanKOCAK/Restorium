@@ -312,10 +312,9 @@ namespace Restorium
             {
                 bActiveEt.Visible = false;
                 bActiveEt.Enabled = false;
-                bSiparisEkle.Enabled = true;
                 bTableClose.Text = "Masa Kapat";
             }
-            bTableClose.Enabled = true;
+            
 
         }
 
@@ -339,17 +338,17 @@ namespace Restorium
                 //Dukkan kapanma saatini check et ve raporu gonder gun sonunu gerceklestir
                 if (dtpDukkanKapanisTime.Value.Hour == System.DateTime.Now.Hour && dtpDukkanKapanisTime.Value.Minute == System.DateTime.Now.Minute)
                 {
-                    UserLog.WConsole("a0 : " + mailSentFlag.ToString());
+                  //  UserLog.WConsole("a0 : " + mailSentFlag.ToString());
                     if (mailSentFlag == false)
                     {
                         EndOfTheDayReportGenerate();
-                        UserLog.WConsole("a1 : " + mailSentFlag.ToString());
+                       // UserLog.WConsole("a1 : " + mailSentFlag.ToString());
                     }
                 }
                 else
                 { 
                     mailSentFlag = false;
-                    UserLog.WConsole("a2 : " + mailSentFlag.ToString());
+                   // UserLog.WConsole("a2 : " + mailSentFlag.ToString());
                 }
             }
             if (isConnectedToInternet())
@@ -644,9 +643,12 @@ namespace Restorium
             string masaNoLocal = b.Name;
             masaNoLocal = masaNoLocal.Replace("bLeft", "");
             lMasaNo.Text = masaNoLocal;
-            
+            //------------------------------------------------------------------
+            //MaxTableIndex adinda bi degisken tut  i->MaxTableIndex e kadar tarasin. (EDIT)
+            //------------------------------------------------------------------
             for (int i = 0; i <= tableCounter; i++)
             {
+                UserLog.WConsole(i + ".eleman :" + tableDetails[i * 3, 0]);
                 if (tableDetails[i * 3, 0] == masaNoLocal)
                 {
                     LastChoosenTable.TableNumber = masaNoLocal;
@@ -667,6 +669,8 @@ namespace Restorium
                     UserLog.WConsole("Masa Detayi Ekrana Yazdirildi...");
                 }
             }
+            //------------------------------------------------------------------
+            //------------------------------------------------------------------
             if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
             {
                 bActiveEt.Visible = true;
@@ -1183,6 +1187,8 @@ namespace Restorium
                             int i = 0;
                             foreach (string tablenames in tableNumbers)
                             {
+                            UserLog.WConsole(tablenames);
+                            UserLog.WConsole(emptyTableList[i].ToString());
                                 if (tableNumbers[i] == tableName)
                                 {
                                     tableNumbers[i] = "";
