@@ -69,6 +69,7 @@ namespace Restorium
         public static string[,] reservationList = new string[100, 2];
         public static int stokCount;
         public static int personelCount;
+        public static int maxCountOfTables;
         private bool duzenlemeModu = false;
         private bool personelDuzenlemeModu = false;
         private bool ayarlarDuzenlemeModu = false;
@@ -233,6 +234,10 @@ namespace Restorium
                     UserLog.WConsole("Opening Table");
                     dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
                     tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
+                    if (tableCounter >= maxCountOfTables)
+                    {
+                        maxCountOfTables = tableCounter;
+                    }
                     string PersonelAdi = tableOpenForm.PersonelAdi;
                     string MasaNo = tableOpenForm.MasaNo;
 
@@ -550,6 +555,10 @@ namespace Restorium
                     UserLog.WConsole("Reserving Table");
                     dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
                     tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
+                    if (tableCounter >= maxCountOfTables)
+                    {
+                        maxCountOfTables = tableCounter;
+                    }
                     string PersonelAdi = tableOpenForm.PersonelAdi;
                     string MasaNo = tableOpenForm.MasaNo;
 
@@ -645,7 +654,7 @@ namespace Restorium
             //------------------------------------------------------------------
             //MaxTableIndex adinda bi degisken tut  i->MaxTableIndex e kadar tarasin. (EDIT)
             //------------------------------------------------------------------
-            for (int i = 0; i <= tableCounter; i++)
+            for (int i = 0; i <= maxCountOfTables; i++)
             {
                 UserLog.WConsole(i + ".eleman :" + tableDetails[i * 3, 0]);
                 if (tableDetails[i * 3, 0] == masaNoLocal)
@@ -797,6 +806,10 @@ namespace Restorium
                         UserLog.WConsole("<<F4 Pressed>> Opening Table ");
                         dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
                         tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
+                        if (tableCounter >= maxCountOfTables)
+                        {
+                            maxCountOfTables = tableCounter;
+                        }
                         string PersonelAdi = tableOpenForm.PersonelAdi;
                         string MasaNo = tableOpenForm.MasaNo;
 
@@ -891,6 +904,10 @@ namespace Restorium
                         UserLog.WConsole("<<F5 Pressed>> Reserving Table ");
                         dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
                         tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
+                        if (tableCounter >= maxCountOfTables)
+                        {
+                            maxCountOfTables = tableCounter;
+                        }
                         string PersonelAdi = tableOpenForm.PersonelAdi;
                         string MasaNo = tableOpenForm.MasaNo;
 
@@ -2083,6 +2100,7 @@ namespace Restorium
                     mailSentFlag = false;
                     return false;
                 }
+
             }
             return false;
 
@@ -2092,6 +2110,8 @@ namespace Restorium
         //Iskonto uygulanmiyor
         //Masaya siparis eklemek istendiginde acilan sayfadaki "iptal" tusu calismiyor
         //Program acildiginda gun bitimi gerceklesmediyse kaydedilen satislari kasaya yazdir
+        //Masa tasima
+        //Masa icerigini degistirme
         /////
         //Android unity : find the person in a crowded place (idea)
         //Android unity : daga tirmanma yarisi . en hizli olan kazanir
