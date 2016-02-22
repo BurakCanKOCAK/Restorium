@@ -102,6 +102,7 @@ namespace Restorium
             // SaveDataToXml("Masa Kapama","",10,100,50,"Burak Can KOCAK", "A1","₺");
             // LoadDataFromXml(System.DateTime.Now, System.DateTime.Now);
             FirstLoadDataFromXml();
+            KasaLoad();
         }
 
         private void SiparisScreenInitialSet()
@@ -1194,14 +1195,15 @@ namespace Restorium
                         }
                         dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.nakit + LastChoosenTable.paraBirimi, LastChoosenTable.krediKarti + LastChoosenTable.paraBirimi, LastChoosenTable.cari + LastChoosenTable.paraBirimi , System.Math.Round(sonMasaToplam,2) + LastChoosenTable.paraBirimi); 
                         dgvKasa.Refresh();
+                        KasaSave();
                         ////Kasa Islemleri END ---------------------------------------------------------
                         ////////////////////////////////////////////////////////////////////////////////
                             clearSiparisTable();
                             int i = 0;
                             foreach (string tablenames in tableNumbers)
                             {
-                            UserLog.WConsole(tablenames);
-                            UserLog.WConsole(emptyTableList[i].ToString());
+                            //UserLog.WConsole(tablenames);
+                            //UserLog.WConsole(emptyTableList[i].ToString());
                                 if (tableNumbers[i] == tableName)
                                 {
                                     tableNumbers[i] = "";
@@ -1257,6 +1259,7 @@ namespace Restorium
                             //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
                             dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Rezervasyon Iptal", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), "-", "-", "-", "-");
                             dgvKasa.Refresh();
+                            KasaSave();
                             ////////////////////////////////////////////////////////////////////////////////
 
                             tableNumbers[i] = "";
@@ -1288,6 +1291,154 @@ namespace Restorium
             }
             ////////////////////////
             ////////////////////////
+        }
+
+        private void KasaSave()
+        {
+            try
+            {
+                int countNo = Convert.ToInt16(INI.Read("NoOfRows", "KasaDaily"));
+                for (int i = 0; i < countNo; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        INI.DeleteKey("Sat" + i + "Sut" + j , "KasaDaily");
+                    }
+                }
+                INI.DeleteSection("KasaDaily");
+                INI.DeleteKey("NoOfRows", "KasaDaily");
+                UserLog.WConsole("Kasa kasyitlari basariyla silindi");
+            }
+            catch
+            {
+                UserLog.WConsole("(!)Silinecek kasa kaydi bulunamadi");
+            }
+            try
+            { 
+                INI.Write("NoOfRows", dgvKasa.RowCount.ToString(), "KasaDaily");
+                for (int i = 0; i < dgvKasa.RowCount; i++)//satir
+                {
+                    for (int j = 0; j < 8; j++)//sutun
+                    {
+                        if (j > 3)
+                        {
+                            if (dgvKasa.Rows[i].Cells[j].Value.ToString().Contains("₺"))
+                            {
+                                INI.Write("Sat" + i + "Sut" + j , dgvKasa.Rows[i].Cells[j].Value.ToString().Replace("₺", "TL"), "KasaDaily");
+                            }
+                            else if (dgvKasa.Rows[i].Cells[j].Value.ToString().Contains("€"))
+                            {
+                                INI.Write("Sat" + i + "Sut" + j, dgvKasa.Rows[i].Cells[j].Value.ToString().Replace("€", "EURO"), "KasaDaily");
+                            }
+                            else if (dgvKasa.Rows[i].Cells[j].Value.ToString().Contains("$"))
+                            {
+                                INI.Write("Sat" + i + "Sut" + j, dgvKasa.Rows[i].Cells[j].Value.ToString().Replace("$", "DOLAR"), "KasaDaily");
+                            }
+                            else if (dgvKasa.Rows[i].Cells[j].Value.ToString().Contains("£"))
+                            {
+                                INI.Write("Sat" + i + "Sut" + j, dgvKasa.Rows[i].Cells[j].Value.ToString().Replace("£", "GBP"), "KasaDaily");
+                            }
+                        }
+                        else
+                        {
+                            INI.Write("Sat" + i + "Sut" + j, dgvKasa.Rows[i].Cells[j].Value.ToString(), "KasaDaily");
+                        }
+                    }
+                }
+                UserLog.WConsole("Kasa kaydedildi !");
+                }
+            catch
+            {
+                UserLog.WConsole("(!) Kasa kaydedilirken sorun olustu !");
+            }
+        }
+
+
+        private void KasaLoad()
+        {
+            string tarih, yapilanIslem, masaAdi, personel, nakit, kredi, cari, toplam;
+            dgvKasa.AllowUserToAddRows = true;
+            dgvKasa.Refresh();
+            DateTime date = Convert.ToDateTime(INI.Read("LoggedDate", "Login"));
+            if (date.Day == System.DateTime.Now.Day)
+            {
+                try
+                {
+                    int rowCount = Convert.ToInt16(INI.Read("NoOfRows", "KasaDaily"));
+                    for (int i = 0; i < rowCount; i++)
+                    {
+                        tarih = INI.Read("Sat" + i + "Sut0", "KasaDaily");
+                        yapilanIslem = INI.Read("Sat" + i + "Sut1", "KasaDaily");
+                        masaAdi = INI.Read("Sat" + i + "Sut2", "KasaDaily");
+                        personel = INI.Read("Sat" + i + "Sut3", "KasaDaily");
+                        nakit = INI.Read("Sat" + i + "Sut4", "KasaDaily");
+                        kredi= INI.Read("Sat" + i + "Sut5", "KasaDaily");
+                        cari= INI.Read("Sat" + i + "Sut6", "KasaDaily");
+                        toplam = INI.Read("Sat" + i + "Sut7", "KasaDaily");
+
+                        if (nakit.Contains("TL"))
+                        {
+                            nakit = nakit.Replace("TL", "₺");
+                            kredi= kredi.Replace("TL", "₺");
+                            cari = cari.Replace("TL", "₺");
+                            toplam= toplam.Replace("TL", "₺");
+                            lNakitToplamTL.Text =(Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", ""))).ToString()+ "₺";
+                            lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))).ToString() + "₺";
+                            lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("₺", ""))).ToString() + "₺";
+                            lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))).ToString() + "₺";
+                        }
+                        else if (nakit.Contains("EURO"))
+                        {
+                            nakit = nakit.Replace("EURO", "€");
+                            kredi = kredi.Replace("EURO", "€");
+                            cari = cari.Replace("EURO", "€");
+                            toplam = toplam.Replace("EURO", "€");
+                            lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
+                            lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
+                            lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
+                            lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("€", ""))/LastChoosenTable.DefinedEuro + Convert.ToDecimal(kredi.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
+                        }
+                        else if (nakit.Contains("DOLAR"))
+                        {
+                            nakit = nakit.Replace("DOLAR", "$");
+                            kredi = kredi.Replace("DOLAR", "$");
+                            cari = cari.Replace("DOLAR", "$");
+                            toplam = toplam.Replace("DOLAR", "$");
+                            lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
+                            lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
+                            lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
+                            lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("$", "")) / LastChoosenTable.DefinedDolar+ Convert.ToDecimal(kredi.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
+                        }
+                        else if (nakit.Contains("GBP"))
+                        {
+                            nakit = nakit.Replace("GBP", "£");
+                            kredi = kredi.Replace("GBP", "£");
+                            cari = cari.Replace("GBP", "£");
+                            toplam = toplam.Replace("GBP", "£");
+                            lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
+                            lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
+                            lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
+                            lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("£", "")) / LastChoosenTable.DefinedGBP + Convert.ToDecimal(kredi.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
+                        }
+                        dgvKasa.Rows.Add(tarih, yapilanIslem, masaAdi, personel, nakit, kredi, cari, toplam);
+                        //dgvKasa.Rows.Add("a","b","c","d","e","f","g","h");
+                        dgvKasa.Refresh();
+                    }
+                    UserLog.WConsole("Kasa Okuma Tamamlandi");
+                }
+                catch
+                {
+                    UserLog.WConsole("(!)Kasa Okurken Hata Olustu !");
+
+                }
+                dgvKasa.AllowUserToAddRows = false;
+                dgvKasa.Refresh();
+            }
+            else
+            {
+                UserLog.WConsole("Yeni gunun kasasiyla oturum acildi...");
+            }
+            dgvKasa.Refresh();
         }
 
         private void bSiparisEkle_Click(object sender, EventArgs e)
@@ -2105,8 +2256,8 @@ namespace Restorium
             return false;
 
         }
-        //AYARLAR 
-        //Dukkan kapanma saati ve gonderilecek maili ekle
+        //AYARLAR +
+        //Dukkan kapanma saati ve gonderilecek maili ekle+
         //Iskonto uygulanmiyor
         //Masaya siparis eklemek istendiginde acilan sayfadaki "iptal" tusu calismiyor
         //Program acildiginda gun bitimi gerceklesmediyse kaydedilen satislari kasaya yazdir
@@ -2116,7 +2267,7 @@ namespace Restorium
         //Android unity : find the person in a crowded place (idea)
         //Android unity : daga tirmanma yarisi . en hizli olan kazanir
         //How to videos 
-
+        //Android tiklama yarisi oyunu
 
     }
 }
