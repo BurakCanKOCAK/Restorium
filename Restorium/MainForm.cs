@@ -1356,12 +1356,12 @@ namespace Restorium
 
         private void KasaLoad()
         {
+            bool today = false;
             string tarih, yapilanIslem, masaAdi, personel, nakit, kredi, cari, toplam;
             dgvKasa.AllowUserToAddRows = true;
             dgvKasa.Refresh();
             DateTime date = Convert.ToDateTime(INI.Read("LoggedDate", "Login"));
-            if (date.Day == System.DateTime.Now.Day)
-            {
+            UserLog.WConsole(date.Day.ToString());
                 try
                 {
                     int rowCount = Convert.ToInt16(INI.Read("NoOfRows", "KasaDaily"));
@@ -1375,17 +1375,23 @@ namespace Restorium
                         kredi= INI.Read("Sat" + i + "Sut5", "KasaDaily");
                         cari= INI.Read("Sat" + i + "Sut6", "KasaDaily");
                         toplam = INI.Read("Sat" + i + "Sut7", "KasaDaily");
-
-                        if (nakit.Contains("TL"))
+                        if (Convert.ToDateTime(tarih).ToLongDateString() == System.DateTime.Now.ToLongDateString())
                         {
+                        today=true;
+                        }
+                        if (nakit.Contains("TL"))
+                            {
                             nakit = nakit.Replace("TL", "₺");
                             kredi= kredi.Replace("TL", "₺");
                             cari = cari.Replace("TL", "₺");
                             toplam= toplam.Replace("TL", "₺");
+                        if(today)
+                        { 
                             lNakitToplamTL.Text =(Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", ""))).ToString()+ "₺";
                             lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))).ToString() + "₺";
                             lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("₺", ""))).ToString() + "₺";
-                            lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))).ToString() + "₺";
+                        }
+                        lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))).ToString() + "₺";
                         }
                         else if (nakit.Contains("EURO"))
                         {
@@ -1393,10 +1399,12 @@ namespace Restorium
                             kredi = kredi.Replace("EURO", "€");
                             cari = cari.Replace("EURO", "€");
                             toplam = toplam.Replace("EURO", "€");
+                        if (today) { 
                             lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
                             lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
                             lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
-                            lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("€", ""))/LastChoosenTable.DefinedEuro + Convert.ToDecimal(kredi.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
+                        }
+                        lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("€", ""))/LastChoosenTable.DefinedEuro + Convert.ToDecimal(kredi.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
                         }
                         else if (nakit.Contains("DOLAR"))
                         {
@@ -1404,9 +1412,12 @@ namespace Restorium
                             kredi = kredi.Replace("DOLAR", "$");
                             cari = cari.Replace("DOLAR", "$");
                             toplam = toplam.Replace("DOLAR", "$");
+                        if (today)
+                        {
                             lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
                             lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
                             lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
+                        }
                             lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("$", "")) / LastChoosenTable.DefinedDolar+ Convert.ToDecimal(kredi.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
                         }
                         else if (nakit.Contains("GBP"))
@@ -1415,16 +1426,24 @@ namespace Restorium
                             kredi = kredi.Replace("GBP", "£");
                             cari = cari.Replace("GBP", "£");
                             toplam = toplam.Replace("GBP", "£");
+                        if (today)
+                        {
                             lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
                             lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
                             lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
+                        }
                             lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("£", "")) / LastChoosenTable.DefinedGBP + Convert.ToDecimal(kredi.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
                         }
-                        dgvKasa.Rows.Add(tarih, yapilanIslem, masaAdi, personel, nakit, kredi, cari, toplam);
-                        //dgvKasa.Rows.Add("a","b","c","d","e","f","g","h");
-                        dgvKasa.Refresh();
+                        if (today)
+                        {
+                            dgvKasa.Rows.Add(tarih, yapilanIslem, masaAdi, personel, nakit, kredi, cari, toplam);
+                            //dgvKasa.Rows.Add("a","b","c","d","e","f","g","h");
+                            dgvKasa.Refresh();
+                        }   
+                       
                     }
-                    UserLog.WConsole("Kasa Okuma Tamamlandi");
+                lBugunToplam.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""))).ToString() + "₺";
+                UserLog.WConsole("Kasa Okuma Tamamlandi");
                 }
                 catch
                 {
@@ -1433,11 +1452,6 @@ namespace Restorium
                 }
                 dgvKasa.AllowUserToAddRows = false;
                 dgvKasa.Refresh();
-            }
-            else
-            {
-                UserLog.WConsole("Yeni gunun kasasiyla oturum acildi...");
-            }
             dgvKasa.Refresh();
         }
 
@@ -2259,6 +2273,8 @@ namespace Restorium
         //AYARLAR +
         //Dukkan kapanma saati ve gonderilecek maili ekle+
         //Iskonto uygulanmiyor
+        //Bugunun kasa toplami ve bugune kadar ki kasa toplam ayri olarak gosterilmeli
+        //Kasadan para alindiginda kasaya (-) miktar girilebilmeli
         //Masaya siparis eklemek istendiginde acilan sayfadaki "iptal" tusu calismiyor
         //Program acildiginda gun bitimi gerceklesmediyse kaydedilen satislari kasaya yazdir
         //Masa tasima
