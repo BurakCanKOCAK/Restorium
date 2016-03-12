@@ -14,6 +14,7 @@ using System.Xml;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Net;
 using System.Net.Mail;
+using System.Globalization;
 
 namespace Restorium
 {
@@ -45,6 +46,7 @@ namespace Restorium
         public static string[] menuID = new string[500];
         public static decimal[] menuPrice = new decimal[500];
         public static string[] tableNumbers = new string[200];
+        int[] matchedIndexList = new int[5000];
         public static int tableCounter = 0;
         public static int dailyTableCounter = 0;
         public static int databaseDayCounter = 0;
@@ -70,10 +72,12 @@ namespace Restorium
         public static int stokCount;
         public static int personelCount;
         public static int maxCountOfTables;
+        public static int countSearchIndexList = 0;
         private bool duzenlemeModu = false;
         private bool personelDuzenlemeModu = false;
         private bool ayarlarDuzenlemeModu = false;
         private bool mailSentFlag = false;
+        private bool rehberDuzenleFlag = false;
         int countOfTables = 1;
         bool tableFlag = false;
         private Bitmap bitmap;
@@ -81,13 +85,14 @@ namespace Restorium
         public static DateTime dukkanKapanisSaati;
         public static string eMail;
         public static string User;
+
         #endregion
 
         public MainForm()
         {
             if (DateTime.UtcNow.ToLocalTime().Month >= 2 )
             {
-                if (DateTime.UtcNow.ToLocalTime().Day > 28)
+                if (DateTime.UtcNow.ToLocalTime().Day > 15)
                 {
                     Environment.Exit(0);
                 }
@@ -96,6 +101,7 @@ namespace Restorium
             User = INI.Read("LoggedUser", "Login");
             SetExchangeValues();
             StokDataSet();
+            RehberDataSet();
             SettingsDataSet();
             SiparisScreenInitialSet();
             cbRaporTercihi.SelectedIndex = 1;
@@ -103,6 +109,38 @@ namespace Restorium
             // LoadDataFromXml(System.DateTime.Now, System.DateTime.Now);
             FirstLoadDataFromXml();
             KasaLoad();
+        }
+
+        private void RehberDataSet()
+        {
+            dgvRehber.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvRehber.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvRehber.ReadOnly = true;
+            try
+            {
+                string column0, column1, column2, column3, column4, column5,column6,column7,column8;
+                int rowCount =Convert.ToInt16(INI.Read("NoOfRecords", "ContactList"));
+                for (int i = 0; i < rowCount; i++)
+                {
+                    //Each Row
+                    column0 = INI.Read("Sat" + i + "Sut0", "ContactList");
+                    column1 = INI.Read("Sat" + i + "Sut1", "ContactList");
+                    column2 = INI.Read("Sat" + i + "Sut2", "ContactList");
+                    column3 = INI.Read("Sat" + i + "Sut3", "ContactList");
+                    column4 = INI.Read("Sat" + i + "Sut4", "ContactList");
+                    column5 = INI.Read("Sat" + i + "Sut5", "ContactList");
+                    column6 = INI.Read("Sat" + i + "Sut6", "ContactList");
+                    column7 = INI.Read("Sat" + i + "Sut7", "ContactList");
+                    column8 = INI.Read("Sat" + i + "Sut8", "ContactList");
+                    dgvRehber.Rows.Add(column0, column1, column2, column3, column4, column5,column6,column7,column8);
+                    dgvRehber.Refresh();
+                }
+            }
+            catch
+            {
+                UserLog.WConsole("(!)Rehber Okunurken Hata Olustu !");
+            }
+            
         }
 
         private void SiparisScreenInitialSet()
@@ -181,6 +219,7 @@ namespace Restorium
             catch
             {
                 UserLog.WConsole("(!)Dukkan kapanis saati kaydedilmemis !");
+                dtpDukkanKapanisTime.Value = DateTime.Now.ToLocalTime().AddHours(-1);
             }
             try
             {
@@ -190,6 +229,7 @@ namespace Restorium
             catch
             {
                 UserLog.WConsole("(!)Atanmis bir iskonto degeri bulunamadi !");
+                tbDefaultIskontoValue.Text = "0";
             }
             if (User == "Admin")
             {
@@ -337,6 +377,7 @@ namespace Restorium
 
         private void Data_Update(object sender, EventArgs e)
         {
+            //Console.WriteLine("Debug : " + DebugMonitor.text);
             lDate.Text = DateTime.UtcNow.ToLocalTime().ToString();
             //WiFi Check
             if (dtpDukkanKapanisTime.Checked == true)
@@ -437,6 +478,7 @@ namespace Restorium
             duzenlemeModu = !duzenlemeModu;
             if (duzenlemeModu == true)
             {
+                bStokSil.Enabled = false;
                 //dgView.AllowUserToAddRows = true;
                 dgView.AllowUserToDeleteRows = true;
                 dgView.AllowUserToOrderColumns = true;
@@ -450,6 +492,7 @@ namespace Restorium
             }
             else
             {
+                bStokSil.Enabled = true;
                 //dgView.AllowUserToAddRows = false;
                 dgView.AllowUserToDeleteRows = false;
                 dgView.AllowUserToOrderColumns = false;
@@ -480,15 +523,31 @@ namespace Restorium
                 INI.Write("birimFiyat" + i.ToString(), dgView.Rows[i].Cells[4].Value.ToString(), "Stok");
                 INI.Write("paraBirimi" + i.ToString(), dgView.Rows[i].Cells[5].Value.ToString(), "Stok");
                 // UserLog.WConsole(dgView.Rows[i].Cells[6].Value.ToString());
-                bool checkBoxStatus = Convert.ToBoolean(dgView.Rows[i].Cells[6].Value);
-                if (checkBoxStatus == false)
+                //dinamikStokKontrolu
+                bool checkBoxStatusMenuUrunu = Convert.ToBoolean(dgView.Rows[i].Cells[7].Value);
+                if (checkBoxStatusMenuUrunu == false)
                 {
+                    INI.Write("menuUrunu" + i.ToString(), "false", "Stok");
                     INI.Write("dinamikStokKontrolu" + i.ToString(), "false", "Stok");
+                    dgView.Rows[i].Cells[7].Value = CheckState.Unchecked;
+                    dgView.Refresh();
                 }
                 else
                 {
-                    INI.Write("dinamikStokKontrolu" + i.ToString(), "true", "Stok");
+                    INI.Write("menuUrunu" + i.ToString(), "true", "Stok");
+                    bool checkBoxStatus = Convert.ToBoolean(dgView.Rows[i].Cells[6].Value);
+                    if (checkBoxStatus == false)
+                    {
+                        INI.Write("dinamikStokKontrolu" + i.ToString(), "false", "Stok");
+                    }
+                    else
+                    {
+                        INI.Write("dinamikStokKontrolu" + i.ToString(), "true", "Stok");
+                    }
                 }
+                
+                //menuUrunu
+               
 
             }
             UserLog.WConsole("Stok Listesi Kaydetme Basarili");
@@ -510,18 +569,34 @@ namespace Restorium
                     string birimFiyat = INI.Read("birimFiyat" + i.ToString(), "Stok");
                     string paraBirimi = INI.Read("paraBirimi" + i.ToString(), "Stok");
                     string dinamikStokKontrolu = INI.Read("dinamikStokKontrolu" + i.ToString(), "Stok");
+                    string menuUrunu = INI.Read("menuUrunu" + i.ToString(), "Stok");
                     menuAciklama[i] = aciklama;
                     menuID[i] = id;
                     menuPrice[i] = Convert.ToDecimal(birimFiyat);
 
                     if (dinamikStokKontrolu == "true")
                     {
-                        dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Checked);
+                        if (menuUrunu == "true")
+                        {
+                            dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Checked, CheckState.Checked);
+                        }
+                        else
+                        {
+                            dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Checked, CheckState.Unchecked);
+                        }
                     }
                     else
                     {
-                        dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Unchecked);
+                        if (menuUrunu == "true")
+                        {
+                            dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Unchecked, CheckState.Checked);
+                        }
+                        else
+                        {
+                            dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Unchecked, CheckState.Unchecked);
+                        }
                     }
+
                     dgView.Refresh();
                 }
                 UserLog.WConsole("Dosyadan Stok Okuma Basarili !");
@@ -537,6 +612,45 @@ namespace Restorium
         private void bStokAra_Click(object sender, EventArgs e)
         {
             //tbSearchKey'de yazani al ona gore DGView'de arama yap.
+          
+            string searchKey = tbSearchKey.Text.ToString();
+           
+            for(int i = 0; i < dgView.RowCount; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    if (dgView.Rows[i].Cells[j].Value.ToString().ToUpper().Contains(searchKey.ToUpper()))
+                    {
+                        matchedIndexList[countSearchIndexList] = i;
+                        countSearchIndexList++;
+                    }
+                }
+
+
+            }
+            /////
+            bool rowFoundFlag = false;
+            for (int i = dgView.RowCount-1; i >=0 ; i--)
+            {
+                for (int j = 0; j < countSearchIndexList; j++)
+                {
+                    if (i == matchedIndexList[j])
+                    {
+                        rowFoundFlag = true;
+                    }
+                }
+                ///
+                if (rowFoundFlag == false)
+                {
+                    UserLog.WConsole("a");
+                    dgView.Rows.RemoveAt(i);
+                    UserLog.WConsole("b");
+                }
+                rowFoundFlag = false;
+            }
+            dgView.Refresh();
+            ////
+
         }
         #endregion
        
@@ -742,7 +856,11 @@ namespace Restorium
             {
                 INI.Write("id" + i.ToString(), dgViewWaiter.Rows[i].Cells[0].Value.ToString(), "Personel");
                 INI.Write("name" + i.ToString(), dgViewWaiter.Rows[i].Cells[1].Value.ToString(), "Personel");
-                INI.Write("work" + i.ToString(), dgViewWaiter.Rows[i].Cells[2].Value.ToString(), "Personel");
+                INI.Write("address" + i.ToString(), dgViewWaiter.Rows[i].Cells[2].Value.ToString(), "Personel");
+                INI.Write("tckn" + i.ToString(), dgViewWaiter.Rows[i].Cells[3].Value.ToString(), "Personel");
+                INI.Write("tel" + i.ToString(), dgViewWaiter.Rows[i].Cells[4].Value.ToString(), "Personel");
+                INI.Write("mail" + i.ToString(), dgViewWaiter.Rows[i].Cells[5].Value.ToString(), "Personel");
+                INI.Write("work" + i.ToString(), dgViewWaiter.Rows[i].Cells[6].Value.ToString(), "Personel");
                 personelNames[i] = dgViewWaiter.Rows[i].Cells[1].Value.ToString();
             }
             UserLog.WConsole("Personel Listesi Kaydetme Basarili (" + personelCount.ToString() + ")");
@@ -759,9 +877,13 @@ namespace Restorium
                 {
                     string id = INI.Read("id" + i.ToString(), "Personel");
                     string name = INI.Read("name" + i.ToString(), "Personel");
+                    string address = INI.Read("address" + i.ToString(), "Personel");
+                    string tckn = INI.Read("tckn" + i.ToString(), "Personel");
+                    string tel = INI.Read("tel" + i.ToString(), "Personel");
+                    string mail = INI.Read("mail" + i.ToString(), "Personel");
                     string work = INI.Read("work" + i.ToString(), "Personel");
                     personelNames[i] = name;
-                    dgViewWaiter.Rows.Add(id, name, work);
+                    dgViewWaiter.Rows.Add(id, name,address,tckn,tel,mail, work);
                     dgViewWaiter.Refresh();
                 }
                 UserLog.WConsole("Dosyadan Personel Okuma Basarili !");
@@ -987,7 +1109,12 @@ namespace Restorium
                         }
                     }
                 }
+            }if (e.KeyCode == Keys.F1)
+            {
+                AboutBox about = new AboutBox();
+                about.Show();
             }
+
         }
 
         private void ExchangeValuesChanged(object sender, EventArgs e)
@@ -1032,8 +1159,15 @@ namespace Restorium
                     UserLog.WConsole("Adet Turu : " + StokAdd.AdetTuru.ToString());
                     UserLog.WConsole("Para Birimi : " + StokAdd.ParaBirimi.ToString());
                     //if there is same stock , update it .
-                    stokCount = Convert.ToInt32(INI.Read("stokCount", "Stok"));
-                    for (int i = 0; i < stokCount; i++)
+                    try
+                    {
+                        stokCount = Convert.ToInt32(INI.Read("stokCount", "Stok"));
+                    }
+                    catch
+                    {
+                        stokCount = 0;
+                    }
+                        for (int i = 0; i < stokCount; i++)
                     {
                         if (StokAdd.ID == dgView.Rows[i].Cells[0].Value.ToString())
                         {
@@ -1054,7 +1188,22 @@ namespace Restorium
                     {
                         try
                         {
-                            dgView.Rows.Add(StokAdd.ID, StokAdd.Aciklama, StokAdd.Adet.ToString(), StokAdd.AdetTuru.ToString(), StokAdd.BirimFiyat.ToString(), StokAdd.ParaBirimi.ToString(), CheckState.Unchecked);
+                            if (StokAdd.menuUrunu == true)
+                            {
+                                if (StokAdd.dinamikStokKontrolu == true)
+                                {
+                                    dgView.Rows.Add(StokAdd.ID, StokAdd.Aciklama, StokAdd.Adet.ToString(), StokAdd.AdetTuru.ToString(), StokAdd.BirimFiyat.ToString(), StokAdd.ParaBirimi.ToString(), CheckState.Checked, CheckState.Checked);
+                                }
+                                else
+                                {
+                                    dgView.Rows.Add(StokAdd.ID, StokAdd.Aciklama, StokAdd.Adet.ToString(), StokAdd.AdetTuru.ToString(), StokAdd.BirimFiyat.ToString(), StokAdd.ParaBirimi.ToString(), CheckState.Unchecked, CheckState.Checked);
+
+                                }
+                            }
+                            else
+                            {
+                                dgView.Rows.Add(StokAdd.ID, StokAdd.Aciklama, StokAdd.Adet.ToString(), StokAdd.AdetTuru.ToString(), StokAdd.BirimFiyat.ToString(), StokAdd.ParaBirimi.ToString(), CheckState.Unchecked, CheckState.Unchecked);
+                            }
                             // dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Checked);
                             saveStokToFile();
                             dgView.Refresh();
@@ -1172,29 +1321,46 @@ namespace Restorium
 
                         }
                         ////Kasa Islemleri  (Genel Toplam)   ---------------------------------------------------------
-                        lKasaToplam.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺",""))+ Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""))+ Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""))).ToString() + " ₺";
+                        lKasaToplam.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""))+ Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""))).ToString() + " ₺";
+                        lBugunToplam.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""))).ToString() + " ₺";
                         //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
                         // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
                         //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
                         decimal sonMasaToplam = 0;
+                        decimal tipToplam = 0;
                         switch (LastChoosenTable.paraBirimi)
                         {
                             case " ₺":
                                 sonMasaToplam = Convert.ToDecimal(masaToplam);
+                                tipToplam = LastChoosenTable.tip;
                                 break;
                             case " €":
                                 sonMasaToplam = Convert.ToDecimal(masaToplam) * LastChoosenTable.DefinedEuro;
+                                tipToplam = LastChoosenTable.tip* LastChoosenTable.DefinedEuro;
                                 break;
                             case " $":
                                 sonMasaToplam = Convert.ToDecimal(masaToplam) * LastChoosenTable.DefinedDolar;
+                                tipToplam = LastChoosenTable.tip * LastChoosenTable.DefinedDolar;
                                 break;
                             case " £":
                                 sonMasaToplam = Convert.ToDecimal(masaToplam) * LastChoosenTable.DefinedGBP;
+                                tipToplam = LastChoosenTable.tip * LastChoosenTable.DefinedGBP;
                                 break;
 
                         }
-                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.nakit + LastChoosenTable.paraBirimi, LastChoosenTable.krediKarti + LastChoosenTable.paraBirimi, LastChoosenTable.cari + LastChoosenTable.paraBirimi , System.Math.Round(sonMasaToplam,2) + LastChoosenTable.paraBirimi); 
+                        //Masa cost adding to Kasa
+                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.nakit + LastChoosenTable.paraBirimi, LastChoosenTable.krediKarti + LastChoosenTable.paraBirimi, LastChoosenTable.cari + LastChoosenTable.paraBirimi , System.Math.Round(sonMasaToplam,2) + LastChoosenTable.paraBirimi);
+                        SaveDataToXml("Masa Kapama", "Masa_Kapama_Aciklama", LastChoosenTable.nakit.ToString().Replace(".",","), LastChoosenTable.krediKarti.ToString().Replace(".", ","), LastChoosenTable.cari.ToString().Replace(".", ","), lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), LastChoosenTable.paraBirimi);
+                        FirstLoadDataFromXml();
+                        //Tip adding to Kasa
+                        if (LastChoosenTable.tip != 0)
+                        { 
+                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Tip", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), "0"+ LastChoosenTable.paraBirimi, "0"+ LastChoosenTable.paraBirimi, "0"+ LastChoosenTable.paraBirimi, System.Math.Round(LastChoosenTable.tip, 2) + LastChoosenTable.paraBirimi);
+                        SaveDataToXml("Tip", "Tip_Aciklama",LastChoosenTable.tip.ToString().Replace(".", ","), "0", "0", lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), LastChoosenTable.paraBirimi);
+                        FirstLoadDataFromXml();
+                        }
                         dgvKasa.Refresh();
+                        lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace("₺", "")) + System.Math.Round(tipToplam,2)).ToString() + " ₺";
                         KasaSave();
                         ////Kasa Islemleri END ---------------------------------------------------------
                         ////////////////////////////////////////////////////////////////////////////////
@@ -1220,8 +1386,8 @@ namespace Restorium
                                     tableCounter--;
                                     bSiparisEkle.Enabled = false;
                                     bTableClose.Enabled = false;
-                                    SaveDataToXml("Masa Kapama", "Masa_Kapama_Aciklama", LastChoosenTable.nakit, LastChoosenTable.krediKarti, LastChoosenTable.cari, lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), LastChoosenTable.paraBirimi);
-                                    FirstLoadDataFromXml();
+                                    //SaveDataToXml("Masa Kapama", "Masa_Kapama_Aciklama", LastChoosenTable.nakit, LastChoosenTable.krediKarti, LastChoosenTable.cari, lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), LastChoosenTable.paraBirimi);
+                                    //FirstLoadDataFromXml();
                                     UserLog.WConsole("Masa : " + tableName + " kapatildi...");
                                     UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
                                     lToplamTutar.Text = "0 ₺";
@@ -1276,7 +1442,7 @@ namespace Restorium
                             tableCounter--;
                             bSiparisEkle.Enabled = false;
                             bTableClose.Enabled = false;
-                            SaveDataToXml("Rezervasyon Kapama", "Rezervasyon_Aciklama", 0, 0, 0, lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), "₺");
+                            SaveDataToXml("Rezervasyon Kapama", "Rezervasyon_Aciklama", "0", "0", "0", lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), "₺");
                             FirstLoadDataFromXml();
                             UserLog.WConsole("Masa : " + tableName + " kapatildi...");
                             UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
@@ -1379,48 +1545,64 @@ namespace Restorium
                         {
                         today=true;
                         }
-                        if (nakit.Contains("TL"))
+                        if (toplam.Contains("TL"))
                             {
                             nakit = nakit.Replace("TL", "₺");
                             kredi= kredi.Replace("TL", "₺");
                             cari = cari.Replace("TL", "₺");
                             toplam= toplam.Replace("TL", "₺");
-                        if(today)
-                        { 
-                            lNakitToplamTL.Text =(Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", ""))).ToString()+ "₺";
-                            lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))).ToString() + "₺";
-                            lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("₺", ""))).ToString() + "₺";
+                            if(today)
+                            { 
+                                lNakitToplamTL.Text = System.Math.Round((Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", ""))),2).ToString()+ "₺";
+                                lKrediToplamTL.Text = System.Math.Round((Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))),2).ToString() + "₺";
+                                lCariToplamTL.Text = System.Math.Round((Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("₺", ""))),2).ToString() + "₺";
+                                lBugunToplam.Text = System.Math.Round((Convert.ToDecimal(lBugunToplam.Text.Replace("₺", ""))  + Convert.ToDecimal(toplam.Replace("₺", ""))), 2).ToString() + "₺";
+                            }
+                            if (yapilanIslem.Contains("Tip") == true)
+                            {
+                                lTipToplam.Text = System.Math.Round(Convert.ToDecimal(toplam.Replace("₺","")) +(Convert.ToDecimal(lTipToplam.Text.Replace("₺", ""))), 2).ToString() + "₺";
+                            }
+                            lKasaToplam.Text = System.Math.Round((Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))),2).ToString() + "₺";
                         }
-                        lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))).ToString() + "₺";
-                        }
-                        else if (nakit.Contains("EURO"))
+                        else if (toplam.Contains("EURO"))
                         {
-                            nakit = nakit.Replace("EURO", "€");
-                            kredi = kredi.Replace("EURO", "€");
-                            cari = cari.Replace("EURO", "€");
-                            toplam = toplam.Replace("EURO", "€");
-                        if (today) { 
-                            lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
-                            lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
-                            lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
+                                nakit = nakit.Replace("EURO", "€");
+                                kredi = kredi.Replace("EURO", "€");
+                                cari = cari.Replace("EURO", "€");
+                                toplam = toplam.Replace("EURO", "€");
+                            if (today)
+                            { 
+                                lNakitToplamTL.Text = System.Math.Round((Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("€", "")) /LastChoosenTable.DefinedEuro),2).ToString() + "₺";
+                                lKrediToplamTL.Text = System.Math.Round((Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("€", "")) /LastChoosenTable.DefinedEuro),2).ToString() + "₺";
+                                lCariToplamTL.Text = System.Math.Round((Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("€", "")) /LastChoosenTable.DefinedEuro),2).ToString() + "₺";
+                                lBugunToplam.Text = System.Math.Round((Convert.ToDecimal(lBugunToplam.Text.Replace("₺", "")) + Convert.ToDecimal(toplam.Replace("€", "")) / LastChoosenTable.DefinedEuro), 2).ToString() + "₺";
+                            }
+                            if (yapilanIslem == "Tip")
+                            {
+                                 lTipToplam.Text = System.Math.Round(Convert.ToDecimal(toplam.Replace("€", "")) /LastChoosenTable.DefinedEuro + (Convert.ToDecimal(lTipToplam.Text.Replace("₺", ""))), 2).ToString() + "₺";
+                            }
+                            lKasaToplam.Text = System.Math.Round((Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("€", "")) /LastChoosenTable.DefinedEuro + Convert.ToDecimal(kredi.Replace("€", "")) /LastChoosenTable.DefinedEuro),2).ToString() + "₺";
                         }
-                        lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("€", ""))/LastChoosenTable.DefinedEuro + Convert.ToDecimal(kredi.Replace("€", ""))/LastChoosenTable.DefinedEuro).ToString() + "₺";
-                        }
-                        else if (nakit.Contains("DOLAR"))
+                        else if (toplam.Contains("DOLAR"))
                         {
-                            nakit = nakit.Replace("DOLAR", "$");
-                            kredi = kredi.Replace("DOLAR", "$");
-                            cari = cari.Replace("DOLAR", "$");
-                            toplam = toplam.Replace("DOLAR", "$");
-                        if (today)
-                        {
-                            lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
-                            lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
-                            lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
+                                nakit = nakit.Replace("DOLAR", "$");
+                                kredi = kredi.Replace("DOLAR", "$");
+                                cari = cari.Replace("DOLAR", "$");
+                                toplam = toplam.Replace("DOLAR", "$");
+                            if (today)
+                            {
+                                lNakitToplamTL.Text = System.Math.Round((Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("$", "")) / LastChoosenTable.DefinedDolar),2).ToString() + "₺";
+                                lKrediToplamTL.Text = System.Math.Round((Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("$", "")) / LastChoosenTable.DefinedDolar),2).ToString() + "₺";
+                                lCariToplamTL.Text = System.Math.Round((Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("$", "")) / LastChoosenTable.DefinedDolar),2).ToString() + "₺";
+                                lBugunToplam.Text = System.Math.Round((Convert.ToDecimal(lBugunToplam.Text.Replace("₺", "")) + Convert.ToDecimal(toplam.Replace("$", "")) / LastChoosenTable.DefinedDolar), 2).ToString() + "₺";
+                            }
+                            if (yapilanIslem == "Tip")
+                            {
+                                lTipToplam.Text = System.Math.Round(Convert.ToDecimal(toplam.Replace("$", "")) / LastChoosenTable.DefinedDolar + (Convert.ToDecimal(lTipToplam.Text.Replace("₺", ""))), 2).ToString() + "₺";
+                            }
+                             lKasaToplam.Text = System.Math.Round((Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("$", "")) / LastChoosenTable.DefinedDolar+ Convert.ToDecimal(kredi.Replace("$", "")) / LastChoosenTable.DefinedDolar),2).ToString() + "₺";
                         }
-                            lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("$", "")) / LastChoosenTable.DefinedDolar+ Convert.ToDecimal(kredi.Replace("$", "")) / LastChoosenTable.DefinedDolar).ToString() + "₺";
-                        }
-                        else if (nakit.Contains("GBP"))
+                        else if (toplam.Contains("GBP"))
                         {
                             nakit = nakit.Replace("GBP", "£");
                             kredi = kredi.Replace("GBP", "£");
@@ -1428,18 +1610,23 @@ namespace Restorium
                             toplam = toplam.Replace("GBP", "£");
                         if (today)
                         {
-                            lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
-                            lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
-                            lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
+                            lNakitToplamTL.Text = System.Math.Round((Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("£", "")) / LastChoosenTable.DefinedGBP),2).ToString() + "₺";
+                            lKrediToplamTL.Text = System.Math.Round((Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("£", "")) / LastChoosenTable.DefinedGBP),2).ToString() + "₺";
+                            lCariToplamTL.Text = System.Math.Round((Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("£", "")) / LastChoosenTable.DefinedGBP),2).ToString() + "₺";
+                            lBugunToplam.Text = System.Math.Round((Convert.ToDecimal(lBugunToplam.Text.Replace("₺", "")) +Convert.ToDecimal(toplam.Replace("£", "")) / LastChoosenTable.DefinedGBP), 2).ToString() + "₺";
                         }
-                            lKasaToplam.Text = (Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("£", "")) / LastChoosenTable.DefinedGBP + Convert.ToDecimal(kredi.Replace("£", "")) / LastChoosenTable.DefinedGBP).ToString() + "₺";
+                        if (yapilanIslem == "Tip")
+                        {
+                            lTipToplam.Text = System.Math.Round(Convert.ToDecimal(toplam.Replace("£", "")) / LastChoosenTable.DefinedGBP + (Convert.ToDecimal(lTipToplam.Text.Replace("₺", ""))), 2).ToString() + "₺";
+                        }
+                        lKasaToplam.Text = System.Math.Round((Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("£", "")) / LastChoosenTable.DefinedGBP + Convert.ToDecimal(kredi.Replace("£", "")) / LastChoosenTable.DefinedGBP),2).ToString() + "₺";
                         }
                         if (today)
                         {
                             dgvKasa.Rows.Add(tarih, yapilanIslem, masaAdi, personel, nakit, kredi, cari, toplam);
                             //dgvKasa.Rows.Add("a","b","c","d","e","f","g","h");
                             dgvKasa.Refresh();
-                        }   
+                        }
                        
                     }
                 lBugunToplam.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""))).ToString() + "₺";
@@ -1776,6 +1963,7 @@ namespace Restorium
                 if (dtpReportDateStart.Value.Date <= System.DateTime.Now)
                 {
                     //Data Load
+                    //GetReportDetails()
                 }
                 else
                 {
@@ -1800,7 +1988,7 @@ namespace Restorium
             }
         }
 
-        private void SaveDataToXml(string islemTuru,string Aciklama,decimal Nakit,decimal KrediKarti,decimal Cari,string Personel,string masaAdi,string ParaBirimi)
+        private void SaveDataToXml(string islemTuru,string Aciklama,string Nakit,string KrediKarti,string Cari,string Personel,string masaAdi,string ParaBirimi)
         {
             //Template of Saving Scheme
             /* <Islem>
@@ -1818,60 +2006,71 @@ namespace Restorium
                <ParaBirimi></ParaBirimi>
              </Islem>  
              */
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load("Resources/ReportDatabase.xml");
+                //create node and add value
+                XmlNode node = doc.CreateNode(XmlNodeType.Element, "Islem", null);
+                //node.InnerText = "this is new node";
 
-            XmlDocument doc = new XmlDocument();
-            doc.Load("ReportDatabase.xml");
-            //create node and add value
-            XmlNode node = doc.CreateNode(XmlNodeType.Element, "Islem", null);
-            //node.InnerText = "this is new node";
-
-            //create title node
-            XmlNode subNodeTarih  = doc.CreateElement("Tarih");
-            XmlNode subNodeZaman = doc.CreateElement("Zaman");
-            XmlNode subNodeIslemTuru = doc.CreateElement("IslemTuru");
-            XmlNode subNodeAciklama = doc.CreateElement("Aciklama");
-            XmlNode subNodeNakit = doc.CreateElement("Nakit");
-            XmlNode subNodeKrediKarti = doc.CreateElement("KrediKarti");
-            XmlNode subNodeCari = doc.CreateElement("Cari");
-            XmlNode subNodePersonel = doc.CreateElement("Personel");
-            XmlNode subNodeMasaAdi = doc.CreateElement("MasaAdi");
-            XmlNode subNodeParaBirimi = doc.CreateElement("ParaBirimi");
-            //add value for child nodes
-            subNodeTarih.InnerText = System.DateTime.Now.ToLongDateString();
-            subNodeZaman.InnerText = System.DateTime.Now.ToShortTimeString();
-            //External Data (Outsource contents)
-            subNodeIslemTuru.InnerText = islemTuru;
-            subNodeAciklama.InnerText = Aciklama;
-            subNodeNakit.InnerText = Nakit.ToString();
-            subNodeKrediKarti.InnerText = KrediKarti.ToString();
-            subNodeCari.InnerText = Cari.ToString();
-            subNodePersonel.InnerText = Personel;
-            subNodeMasaAdi.InnerText = masaAdi;
-            subNodeParaBirimi.InnerText = ParaBirimi;
-            //add to parent node
-            node.AppendChild(subNodeTarih);//1
-            node.AppendChild(subNodeZaman);//2
-            node.AppendChild(subNodeIslemTuru);//3
-            node.AppendChild(subNodeAciklama);//4
-            node.AppendChild(subNodeNakit);//5
-            node.AppendChild(subNodeKrediKarti);//6
-            node.AppendChild(subNodeCari);//7
-            node.AppendChild(subNodePersonel);//8
-            node.AppendChild(subNodeMasaAdi);//9
-            node.AppendChild(subNodeParaBirimi);//10
-            //add to elements collection
-            doc.DocumentElement.AppendChild(node);
-            //save back
-            doc.Save("ReportDatabase.xml");
-            UserLog.WConsole("Saving Data To XML is Succesfull !");
-
+                //create title node
+                XmlNode subNodeTarih = doc.CreateElement("Tarih");
+                XmlNode subNodeZaman = doc.CreateElement("Zaman");
+                XmlNode subNodeIslemTuru = doc.CreateElement("IslemTuru");
+                XmlNode subNodeAciklama = doc.CreateElement("Aciklama");
+                XmlNode subNodeNakit = doc.CreateElement("Nakit");
+                XmlNode subNodeKrediKarti = doc.CreateElement("KrediKarti");
+                XmlNode subNodeCari = doc.CreateElement("Cari");
+                XmlNode subNodePersonel = doc.CreateElement("Personel");
+                XmlNode subNodeMasaAdi = doc.CreateElement("MasaAdi");
+                XmlNode subNodeParaBirimi = doc.CreateElement("ParaBirimi");
+                //add value for child nodes
+                subNodeTarih.InnerText = System.DateTime.Now.ToLongDateString();
+                subNodeZaman.InnerText = System.DateTime.Now.ToShortTimeString();
+                //External Data (Outsource contents)
+                subNodeIslemTuru.InnerText = islemTuru;
+                subNodeAciklama.InnerText = Aciklama;
+                subNodeNakit.InnerText = Nakit.ToString();
+                subNodeKrediKarti.InnerText = KrediKarti.ToString();
+                subNodeCari.InnerText = Cari.ToString();
+                subNodePersonel.InnerText = Personel;
+                subNodeMasaAdi.InnerText = masaAdi;
+                subNodeParaBirimi.InnerText = ParaBirimi;
+                //add to parent node
+                node.AppendChild(subNodeTarih);//1
+                node.AppendChild(subNodeZaman);//2
+                node.AppendChild(subNodeIslemTuru);//3
+                node.AppendChild(subNodeAciklama);//4
+                node.AppendChild(subNodeNakit);//5
+                node.AppendChild(subNodeKrediKarti);//6
+                node.AppendChild(subNodeCari);//7
+                node.AppendChild(subNodePersonel);//8
+                node.AppendChild(subNodeMasaAdi);//9
+                node.AppendChild(subNodeParaBirimi);//10
+                                                    //add to elements collection
+                doc.DocumentElement.AppendChild(node);
+                //save back
+                doc.Save("Resources/ReportDatabase.xml");
+                UserLog.WConsole("Saving Data To XML is Succesfull !");
+            }
+            catch
+            {
+                UserLog.WConsole("(!) XML Kaydedilirken Sorun Olustu !");
+            }
         }
 
         private void LoadDataFromXml(DateTime startingDate,DateTime endingDate)
         {
-
             XmlDocument doc = new XmlDocument();
-            doc.Load("ReportDatabase.xml");
+            try
+            {
+                doc.Load("Resources/ReportDatabase.xml");
+            }
+            catch
+            {
+                UserLog.WConsole("(!) XML Dosyasi Yuklenirken Hata Olustu !");
+            }
             XmlNodeList IslemList = doc.GetElementsByTagName("Islem");
             //////////////////////////////////////////////////////////
 
@@ -1918,67 +2117,30 @@ namespace Restorium
             chartDaily.Series["Saatlik Kazanc"].Points.Clear();
             chartWeekly.Series["Gunluk Kazanc"].Points.Clear();
             XmlDocument doc = new XmlDocument();
-            doc.Load("ReportDatabase.xml");
-            XmlNodeList IslemList = doc.GetElementsByTagName("Islem");
-            //////////////////////////////////////////////////////////
-
-            ///////////////Gun Gecisleri Burada Ilk Verilen Tarihe Gun Ekleme Yontemiyle Yapiliyor
-            //                int Day = startingDate.AddDays(i).Day;
-            //                int Month = startingDate.AddDays(i).Month;
-
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////Wekly Starts
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            int dayCount = 0;
-            bool firstReadFlag = false;
-            int i = 0;
-            foreach (XmlNode node in IslemList)
+            try
             {
-                XmlElement IslemElement = (XmlElement)node;
-                if (firstReadFlag == false)
+                doc.Load("Resources/ReportDatabase.xml");
+                XmlNodeList IslemList = doc.GetElementsByTagName("Islem");
+                //////////////////////////////////////////////////////////
+
+                ///////////////Gun Gecisleri Burada Ilk Verilen Tarihe Gun Ekleme Yontemiyle Yapiliyor
+                //                int Day = startingDate.AddDays(i).Day;
+                //                int Month = startingDate.AddDays(i).Month;
+
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////Wekly Starts
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                int dayCount = 0;
+                bool firstReadFlag = false;
+                int i = 0;
+                foreach (XmlNode node in IslemList)
                 {
-                    kasaToplamArray[i, 0] = IslemElement.GetElementsByTagName("Tarih")[0].InnerText; // i,0 => Tarih 
-                    decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText);
-                    switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
-                    {
-                        case "€":
-                            toplamKasa = toplamKasa * LastChoosenTable.DefinedEuro;
-                            break;
-                        case "$":
-                            toplamKasa = toplamKasa * LastChoosenTable.DefinedDolar;
-                            break;
-                        case "£":
-                            toplamKasa = toplamKasa * LastChoosenTable.DefinedGBP;
-                            break;
-                    }
-                    kasaToplamArray[i, 1] = toplamKasa.ToString();  // i,1 => Tutar
-                    i++;
-                    firstReadFlag = true;
-                }
-                else //Except for first read
-                {
-                    if (Convert.ToDateTime(kasaToplamArray[i - 1, 0]) == Convert.ToDateTime(IslemElement.GetElementsByTagName("Tarih")[0].InnerText)) //Ayni tarih devam ise
-                    {
-                        decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText);
-                        switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
-                        {
-                            case "€":
-                                toplamKasa = toplamKasa * LastChoosenTable.DefinedEuro;
-                                break;
-                            case "$":
-                                toplamKasa = toplamKasa * LastChoosenTable.DefinedDolar;
-                                break;
-                            case "£":
-                                toplamKasa = toplamKasa * LastChoosenTable.DefinedGBP;
-                                break;
-                        }
-                        kasaToplamArray[i - 1, 1] = (Convert.ToDecimal(kasaToplamArray[i - 1, 1]) + toplamKasa).ToString();  // i,0 => Tutar
-                    }
-                    else
+                    XmlElement IslemElement = (XmlElement)node;
+                    if (firstReadFlag == false)
                     {
                         kasaToplamArray[i, 0] = IslemElement.GetElementsByTagName("Tarih")[0].InnerText; // i,0 => Tarih 
-                        decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText);
+                        decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText.Replace(",",".")) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText.Replace(",", "."));
                         switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
                         {
                             case "€":
@@ -1993,128 +2155,173 @@ namespace Restorium
                         }
                         kasaToplamArray[i, 1] = toplamKasa.ToString();  // i,1 => Tutar
                         i++;
-
+                        firstReadFlag = true;
                     }
-                }
-            }
-
-            /*
-            for (int j = 0; j < i; j++)
-            {
-                UserLog.WConsole(kasaToplamArray[j, 0] + " :::: " + kasaToplamArray[j, 1]);
-            }
-            */
-            UserLog.WConsole("Number of Recorded Days : " + i);
-            databaseDayCounter = i;
-            //Weekly Chart Ekrana Yazdir
-            bool dayFoundFlag = false;
-            for (int pointCounter = 7; pointCounter > 0; pointCounter--)
-            {
-                for(int n=0;n<databaseDayCounter;n++)
-                {
-                    if (System.DateTime.Now.AddDays(-pointCounter).ToLongDateString() == kasaToplamArray[n, 0])
+                    else //Except for first read
                     {
-                        chartWeekly.Series["Gunluk Kazanc"].Points.AddXY(kasaToplamArray[n, 0], kasaToplamArray[n, 1]);
-                        dayFoundFlag = true;
-                    }
-                }
-                if (dayFoundFlag == false)
-                {
-                    chartWeekly.Series["Gunluk Kazanc"].Points.AddXY(System.DateTime.Now.AddDays(-pointCounter).ToLongDateString(), 0);
-                }
-                else
-                {
-                    dayFoundFlag = false;
-                }
-            }
-
-            UserLog.WConsole("Haftalik Rapor Basariyla Yazdirildi...!");
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////Weekly Ends
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////Hourly Starts
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            int hourlyCounter = 0;
-            bool dailyFlag = false;
-            //UserLog.WConsole("Start Calculate Hourly Income...");
-            foreach (XmlNode node in IslemList)
-            {
-                try
-                {
-                    XmlElement IslemElement = (XmlElement)node;
-                    if (Convert.ToDateTime(System.DateTime.Now.ToLongDateString()) == Convert.ToDateTime(IslemElement.GetElementsByTagName("Tarih")[0].InnerText))
-                    {
-                      //  UserLog.WConsole(IslemElement.GetElementsByTagName("Nakit")[0].InnerText);
-                      //  UserLog.WConsole(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText);
-
-                        string sum = (Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText)).ToString();
-                      //  UserLog.WConsole(sum);
-                        string hour = (Convert.ToDateTime(IslemElement.GetElementsByTagName("Zaman")[0].InnerText).Hour).ToString();
-                        if (dailyFlag == false)//first hour 
+                        if (Convert.ToDateTime(kasaToplamArray[i - 1, 0]) == Convert.ToDateTime(IslemElement.GetElementsByTagName("Tarih")[0].InnerText.ToString())) //Ayni tarih devam ise
                         {
-                            hourlySum[hourlyCounter, 1] = sum;
-                          //  UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter, 1]);
-                            hourlySum[hourlyCounter, 0] = hour;
-                            hourlyCounter++;
-                            dailyFlag = true;
-                        }
-                        else//other hours
-                        {
-                            if (hourlySum[hourlyCounter - 1, 0] == hour) //Bi onceki kaitla ayni saat ise
+                            decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText.Replace(",", ".")) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText.Replace(",", ".").ToString());
+                            switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
                             {
-                                hourlySum[hourlyCounter - 1, 1] = (Convert.ToDecimal(hourlySum[hourlyCounter - 1, 1]) + Convert.ToDecimal(sum)).ToString();
-                            //    UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter-1, 1]);
+                                case "€":
+                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedEuro;
+                                    break;
+                                case "$":
+                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedDolar;
+                                    break;
+                                case "£":
+                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedGBP;
+                                    break;
                             }
-                            else // bi onceki kayit ile farkli saatler ise
+                            kasaToplamArray[i - 1, 1] = (Convert.ToDecimal(kasaToplamArray[i - 1, 1]) + toplamKasa).ToString();  // i,0 => Tutar
+                        }
+                        else
+                        {
+                            kasaToplamArray[i, 0] = IslemElement.GetElementsByTagName("Tarih")[0].InnerText; // i,0 => Tarih 
+                            decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText.Replace(",", ".")) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText.Replace(",", "."));
+                            switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
+                            {
+                                case "€":
+                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedEuro;
+                                    break;
+                                case "$":
+                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedDolar;
+                                    break;
+                                case "£":
+                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedGBP;
+                                    break;
+                            }
+                            kasaToplamArray[i, 1] = toplamKasa.ToString();  // i,1 => Tutar
+                            i++;
+
+                        }
+                    }
+                }
+
+                /*
+                for (int j = 0; j < i; j++)
+                {
+                    UserLog.WConsole(kasaToplamArray[j, 0] + " :::: " + kasaToplamArray[j, 1]);
+                }
+                */
+                UserLog.WConsole("Number of Recorded Days : " + i);
+                databaseDayCounter = i;
+                //Weekly Chart Ekrana Yazdir
+                bool dayFoundFlag = false;
+                for (int pointCounter = 7; pointCounter > 0; pointCounter--)
+                {
+                    for (int n = 0; n < databaseDayCounter; n++)
+                    {
+                        if (System.DateTime.Now.AddDays(-pointCounter).ToLongDateString() == kasaToplamArray[n, 0])
+                        {
+                            chartWeekly.Series["Gunluk Kazanc"].Points.AddXY(kasaToplamArray[n, 0], kasaToplamArray[n, 1]);
+                            dayFoundFlag = true;
+                        }
+                    }
+                    if (dayFoundFlag == false)
+                    {
+                        chartWeekly.Series["Gunluk Kazanc"].Points.AddXY(System.DateTime.Now.AddDays(-pointCounter).ToLongDateString(), 0);
+                    }
+                    else
+                    {
+                        dayFoundFlag = false;
+                    }
+                }
+
+                UserLog.WConsole("Haftalik Rapor Basariyla Yazdirildi...!");
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////Weekly Ends
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////Hourly Starts
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                int hourlyCounter = 0;
+                bool dailyFlag = false;
+                //UserLog.WConsole("Start Calculate Hourly Income...");
+                foreach (XmlNode node in IslemList)
+                {
+                    try
+                    {
+                        XmlElement IslemElement = (XmlElement)node;
+                        if (Convert.ToDateTime(System.DateTime.Now.ToLongDateString()) == Convert.ToDateTime(IslemElement.GetElementsByTagName("Tarih")[0].InnerText))
+                        {
+                            //  UserLog.WConsole(IslemElement.GetElementsByTagName("Nakit")[0].InnerText);
+                            //  UserLog.WConsole(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText);
+
+                            string sum = (Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText.Replace(",", ".")) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText.Replace(",", "."))).ToString();
+                            //  UserLog.WConsole(sum);
+                            string hour = (Convert.ToDateTime(IslemElement.GetElementsByTagName("Zaman")[0].InnerText).Hour).ToString();
+                            if (dailyFlag == false)//first hour 
                             {
                                 hourlySum[hourlyCounter, 1] = sum;
-                            //    UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter, 1]);
+                                //  UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter, 1]);
                                 hourlySum[hourlyCounter, 0] = hour;
                                 hourlyCounter++;
+                                dailyFlag = true;
+                            }
+                            else//other hours
+                            {
+                                if (hourlySum[hourlyCounter - 1, 0] == hour) //Bi onceki kaitla ayni saat ise
+                                {
+                                    hourlySum[hourlyCounter - 1, 1] = (Convert.ToDecimal(hourlySum[hourlyCounter - 1, 1]) + Convert.ToDecimal(sum)).ToString();
+                                    //    UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter-1, 1]);
+                                }
+                                else // bi onceki kayit ile farkli saatler ise
+                                {
+                                    hourlySum[hourlyCounter, 1] = sum;
+                                    //    UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter, 1]);
+                                    hourlySum[hourlyCounter, 0] = hour;
+                                    hourlyCounter++;
+                                }
                             }
                         }
                     }
-                }
-                catch
-                {
-                    UserLog.WConsole("Bugune ait kayit bulunamadi");
-                }
-            }
-            UserLog.WConsole("Number of Hour Records for Today : "+ hourlyCounter.ToString());
-            /*
-            for (int m = 0; m < hourlyCounter; m++)
-            {
-                UserLog.WConsole("saat : " + hourlySum[m, 0] + " | toplam : " + hourlySum[m, 1]);
-            }
-            */
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            //Hourly Sum Chart Print
-            bool hourlyFound = false;
-            for (int m = 0; m < 24; m++)
-            {
-                for (int n = 0; n < hourlyCounter; n++)
-                {
-                    if (hourlySum[n, 0] == m.ToString())
+                    catch
                     {
-                        //UserLog.WConsole("point :"+ hourlySum[n, 0]);
-                        chartDaily.Series["Saatlik Kazanc"].Points.AddXY(hourlySum[n, 0], hourlySum[n, 1].Replace(",","."));
-                        hourlyFound = true;
+                        UserLog.WConsole("Bugune ait kayit bulunamadi");
                     }
                 }
-                if (hourlyFound == false)
+                UserLog.WConsole("Number of Hour Records for Today : " + hourlyCounter.ToString());
+                /*
+                for (int m = 0; m < hourlyCounter; m++)
                 {
-                    //UserLog.WConsole("zero : "+m);
-                    chartDaily.Series["Saatlik Kazanc"].Points.AddXY(m, 0);
+                    UserLog.WConsole("saat : " + hourlySum[m, 0] + " | toplam : " + hourlySum[m, 1]);
                 }
-                hourlyFound = false;
-            }
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////Hourly Finished
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            chartDaily.ChartAreas[0].AxisX.Interval = 1;
+                */
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                //Hourly Sum Chart Print
+                bool hourlyFound = false;
+                for (int m = 0; m < 24; m++)
+                {
+                    for (int n = 0; n < hourlyCounter; n++)
+                    {
+                        if (hourlySum[n, 0] == m.ToString())
+                        {
+                            //UserLog.WConsole("point :"+ hourlySum[n, 0]);
+                            chartDaily.Series["Saatlik Kazanc"].Points.AddXY(hourlySum[n, 0], hourlySum[n, 1].Replace(",", "."));
+                            hourlyFound = true;
+                        }
+                    }
+                    if (hourlyFound == false)
+                    {
+                        //UserLog.WConsole("zero : "+m);
+                        chartDaily.Series["Saatlik Kazanc"].Points.AddXY(m, 0);
+                    }
+                    hourlyFound = false;
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////Hourly Finished
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                chartDaily.ChartAreas[0].AxisX.Interval = 1;
 
+
+            }
+            catch
+            {
+                UserLog.WConsole("(!) XML Dosyasini Bulunamadi !");
+            }
         }
 
         private void bSendMailReport_Click(object sender, EventArgs e)
@@ -2270,6 +2477,204 @@ namespace Restorium
             return false;
 
         }
+
+        private void bSendMailKasa_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void kasadanTipDusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void bKayitEkle_Click(object sender, EventArgs e)
+        {
+            using (var contactAdd = new ContactAdd())
+            {
+                var result = contactAdd.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    dgvRehber.Rows.Add(ContactAdd.Column0, ContactAdd.Column1, ContactAdd.Column2, ContactAdd.Column3, ContactAdd.Column4, ContactAdd.Column5, ContactAdd.Column6, ContactAdd.Column7, ContactAdd.Column8);
+                    dgvRehber.Refresh();
+                    try
+                    {
+                        INI.Write("NoOfRecords", dgvRehber.Rows.Count.ToString(), "ContactList");
+                        for (int i = 0; i < dgvRehber.Rows.Count; i++)
+                        {
+                            INI.Write("Sat" + i + "Sut0", dgvRehber.Rows[i].Cells[0].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut1", dgvRehber.Rows[i].Cells[1].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut2", dgvRehber.Rows[i].Cells[2].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut3", dgvRehber.Rows[i].Cells[3].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut4", dgvRehber.Rows[i].Cells[4].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut5", dgvRehber.Rows[i].Cells[5].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut6", dgvRehber.Rows[i].Cells[6].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut7", dgvRehber.Rows[i].Cells[7].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut8", dgvRehber.Rows[i].Cells[8].Value.ToString(), "ContactList");
+                        }
+                    }
+                    catch
+                    {
+                        UserLog.WConsole("(!) Rehber Kaydedilirken Hata Olustu !");
+                    }
+                }
+            }
+        }
+
+        private void bKayitSil_Click(object sender, EventArgs e)
+        {
+            int rowIndex = dgvRehber.SelectedRows[0].Index;
+            DialogResult dialogResult = MessageBox.Show(dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[0].Value + "\n" + dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[1].Value + "\n"+ dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[2].Value + "\n"+ dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[3].Value + "\n"+ dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[4].Value + "\n"+ dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[5].Value + "\n"+ dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[6].Value + "\n"+ dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[7].Value + "\n"+ dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[8].Value + "\n" ,"Kaydi Sil ?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                dgvRehber.Rows.RemoveAt(this.dgvRehber.SelectedRows[0].Index);
+                dgvRehber.Refresh();
+                try
+                {
+                    for (int i = 0; i < Convert.ToInt16(INI.Read("NoOfRecords", "ContactList")); i++)
+                    {
+                        INI.DeleteKey("Sat" + i + "Sut0", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut1", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut2", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut3", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut4", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut5", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut6", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut7", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut8", "ContactList");
+                    }
+                    UserLog.WConsole("Inde : "+rowIndex.ToString()+" Yer Alan Kayit Rehberden Silindi");
+                }
+                catch
+                {
+                    UserLog.WConsole("(!) Rehberden Kayit Silinirken Hata Olustu !");
+                }
+                ///////////
+                // SAVE
+                ///////////
+                try
+                {
+                    INI.Write("NoOfRecords", dgvRehber.Rows.Count.ToString(), "ContactList");
+                    for (int i = 0; i < dgvRehber.Rows.Count; i++)
+                    {
+                        INI.Write("Sat" + i + "Sut0", dgvRehber.Rows[i].Cells[0].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut1", dgvRehber.Rows[i].Cells[1].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut2", dgvRehber.Rows[i].Cells[2].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut3", dgvRehber.Rows[i].Cells[3].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut4", dgvRehber.Rows[i].Cells[4].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut5", dgvRehber.Rows[i].Cells[5].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut6", dgvRehber.Rows[i].Cells[6].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut7", dgvRehber.Rows[i].Cells[7].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut8", dgvRehber.Rows[i].Cells[8].Value.ToString(), "ContactList");
+                    }
+                    UserLog.WConsole("Rehber Basariyla Kaydedildi !");
+                }
+                catch
+                {
+                    UserLog.WConsole("(!) Rehber Kaydedilirken Hata Olustu !");
+                }
+
+
+            }
+            }
+
+        private void bDuzenleRehber_Click(object sender, EventArgs e)
+        {
+            if (rehberDuzenleFlag == false)
+            {//duzenleme modu on
+                rehberDuzenleFlag = true;//Flag
+                dgvRehber.AllowUserToDeleteRows = true;
+                dgvRehber.AllowUserToOrderColumns = true;
+                dgvRehber.ReadOnly = false;
+                dgvRehber.Refresh();
+                bDuzenleRehber.BackColor = Color.YellowGreen;
+                dgvRehber.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            }
+            else
+            {//duzenleme modu off
+                rehberDuzenleFlag = false;//Flag
+                dgvRehber.AllowUserToDeleteRows = false;
+                dgvRehber.AllowUserToOrderColumns = false;
+                dgvRehber.AllowDrop = false;
+                dgvRehber.ReadOnly = true;
+                dgvRehber.Refresh();
+                bDuzenleRehber.BackColor = Color.LightSlateGray;
+                dgvRehber.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                try
+                {
+                    for (int i = 0; i < Convert.ToInt16(INI.Read("NoOfRecords", "ContactList")); i++)
+                    {
+                        INI.DeleteKey("Sat" + i + "Sut0", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut1", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut2", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut3", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut4", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut5", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut6", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut7", "ContactList");
+                        INI.DeleteKey("Sat" + i + "Sut8", "ContactList");
+                    }
+                }
+                catch
+                {
+                    UserLog.WConsole("(!) Rehberden Kayit Silinirken Hata Olustu !");
+                }
+                ///////////
+                // SAVE
+                ///////////
+                try
+                {
+                    INI.Write("NoOfRecords", dgvRehber.Rows.Count.ToString(), "ContactList");
+                    for (int i = 0; i < dgvRehber.Rows.Count; i++)
+                    {
+                        INI.Write("Sat" + i + "Sut0", dgvRehber.Rows[i].Cells[0].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut1", dgvRehber.Rows[i].Cells[1].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut2", dgvRehber.Rows[i].Cells[2].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut3", dgvRehber.Rows[i].Cells[3].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut4", dgvRehber.Rows[i].Cells[4].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut5", dgvRehber.Rows[i].Cells[5].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut6", dgvRehber.Rows[i].Cells[6].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut7", dgvRehber.Rows[i].Cells[7].Value.ToString(), "ContactList");
+                        INI.Write("Sat" + i + "Sut8", dgvRehber.Rows[i].Cells[8].Value.ToString(), "ContactList");
+                    }
+                    UserLog.WConsole("Rehber Basariyla Kaydedildi !");
+                }
+                catch
+                {
+                    UserLog.WConsole("(!) Rehber Kaydedilirken Hata Olustu !");
+                }
+
+            }
+        }
+
+        private void bStokSil_Click(object sender, EventArgs e)
+        {
+            if(this.dgView.SelectedRows.Count > 0 )
+            { 
+            int selectedRowIndex = dgView.SelectedRows[0].Index;
+            DialogResult dialogResult = MessageBox.Show("ID : "+dgView.Rows[selectedRowIndex].Cells[0].Value.ToString() + "\n" +"ACIKLAMA : "+ dgView.Rows[selectedRowIndex].Cells[1].Value.ToString() + "\n" + "ADET : "+dgView.Rows[selectedRowIndex].Cells[2].Value.ToString() + " " + dgView.Rows[selectedRowIndex].Cells[3].Value.ToString() + "\n" +"BIRIM FIYAT : "+ dgView.Rows[selectedRowIndex].Cells[4].Value.ToString() + " " + dgView.Rows[selectedRowIndex].Cells[5].Value.ToString(), "Ilgili Urunu Stoktan Silmek Istediginize Emin Misiniz ?", MessageBoxButtons.YesNo);
+            UserLog.WConsole(selectedRowIndex.ToString());
+            if (dialogResult == DialogResult.Yes)
+            {
+                try {
+                    dgView.AllowUserToDeleteRows = true;
+                    dgView.ReadOnly = false;
+                    dgView.Refresh();
+                    dgView.Rows.RemoveAt(dgView.Rows[selectedRowIndex].Index);
+                    dgView.Refresh();
+                    saveStokToFile();
+                    MessageBox.Show("Ilgili stok kaydi basariyla silindi !");
+                }
+                catch
+                {
+                    MessageBox.Show("Kayit silinirken hata olustu !");
+                }
+                dgView.AllowUserToDeleteRows = true;
+                dgView.ReadOnly = true;
+                dgView.Refresh();
+            }
+            }
+        }
         //AYARLAR +
         //Dukkan kapanma saati ve gonderilecek maili ekle+
         //Iskonto uygulanmiyor
@@ -2284,6 +2689,7 @@ namespace Restorium
         //Android unity : daga tirmanma yarisi . en hizli olan kazanir
         //How to videos 
         //Android tiklama yarisi oyunu
-
+        //*********************
+        //Rehber - Kayit duzenle (edit)
     }
 }

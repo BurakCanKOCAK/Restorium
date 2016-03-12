@@ -28,6 +28,10 @@ namespace Restorium
             //----------------------//
             UserLog.WConsole("<<< TableOpenForm (Form)>>>");
             UserLog.WConsole("Personel Okundu  (" + MainForm.personelCount.ToString() + ")");
+            rSaat.Format = DateTimePickerFormat.Custom;
+            rSaat.CustomFormat = "HH";
+            rDakika.Format = DateTimePickerFormat.Custom;
+            rDakika.CustomFormat = "mm";
             tbPersonelAdi.AutoCompleteMode = AutoCompleteMode.Suggest;
             tbPersonelAdi.AutoCompleteSource = AutoCompleteSource.CustomSource;
             AutoCompleteStringCollection col = new AutoCompleteStringCollection();

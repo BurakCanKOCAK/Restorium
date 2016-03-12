@@ -77,6 +77,10 @@ namespace Restorium
                     UserLog.WConsole("Succesfully Logged In (KeyPressed)");
                     MainForm main = new MainForm();
                     main.Show();
+
+                  //  DebugMonitor debug = new DebugMonitor();
+                  //  debug.Show();
+
                     this.Hide();
                 }
                 else if (tbUserName.Text == "")
@@ -89,6 +93,10 @@ namespace Restorium
                     UserLog.WConsole("Succesfully Logged In (Admin_Pirate)");
                     MainForm main = new MainForm();
                     main.Show();
+
+                  //  DebugMonitor debug = new DebugMonitor();
+                  //  debug.Show();
+
                     this.Hide();
                 }
                 else if (tbUserName.Text == "G")

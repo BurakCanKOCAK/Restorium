@@ -26,8 +26,8 @@
     <ProductName>Restorium Restaurant Automation</ProductName>
     <PublisherName>BBHM</PublisherName>
     <SuiteName>Restorium</SuiteName>
-    <ApplicationRevision>4</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.3.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -56,10 +56,10 @@
     <ApplicationIcon>Graphicloads-Polygon-Restaurant.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>4AD00EBE1F4C6D7CEA9A7EBCBDEDC81926045204</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>C4C3DD30F99FB0224D9EA00EF19992EED3E08EE6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Restorium_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Restorium_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -67,11 +67,9 @@
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -80,9 +78,14 @@
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -94,6 +97,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContactAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContactAdd.Designer.cs">
+      <DependentUpon>ContactAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataSet_Stok.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -146,6 +161,12 @@
       <DependentUpon>TableOpenForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UserLog.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContactAdd.resx">
+      <DependentUpon>ContactAdd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DebugMonitor.resx">
       <DependentUpon>DebugMonitor.cs</DependentUpon>
     </EmbeddedResource>
@@ -198,6 +219,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Restorium_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Untitled-11.png" />
@@ -235,26 +257,22 @@
     <None Include="Resources\Calculator-icon %281%29.png" />
     <None Include="Resources\Apps-Calculator-Metro-icon.png" />
     <None Include="Resources\cart-add-icon.png" />
-    <Content Include="ReportDatabase.xml">
+    <None Include="Resources\cart-remove-icon.png" />
+    <None Include="Resources\plus.png" />
+    <None Include="Resources\cross-3-icon.png" />
+    <None Include="Resources\plus-icon %281%29.png2.png" />
+    <Content Include="Resources\ReportDatabase.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\restaurant-icon.png" />
     <None Include="Resources\gmail-icon.png" />
     <None Include="Resources\mail-icon %281%29.png" />
     <None Include="Resources\printer-icon.png" />
+    <None Include="Resources\pencil-icon.png" />
+    <None Include="Resources\check-icon.png" />
     <Content Include="Resources\Untitled-1.png" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0,KB2468871">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29 and Update for .NET Framework 4 %28KB2468871%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>

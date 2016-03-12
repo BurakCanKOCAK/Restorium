@@ -18,7 +18,8 @@ namespace Restorium
         public static decimal BirimFiyat { get; set; }
         public static int Adet { get; set; }
         public static string AdetTuru { get; set; }
-
+        public static bool menuUrunu { get; set; }
+        public static bool dinamikStokKontrolu { get; set; }
         public StokAdd()
         {
             InitializeComponent();
@@ -102,29 +103,86 @@ namespace Restorium
 
         private void bStokAdd_Click(object sender, EventArgs e)
         {
-            if (tbAciklama.Text != null && tbAdet.Text != null && tbBirimFiyat.Text != null && tbID.Text != null)
+            
+            if (tbAciklama.Text != "" && tbAdet.Text != "" && tbBirimFiyat.Text != "" && tbID.Text != "")
             {
-                //valid item
-                Aciklama = tbAciklama.Text;
-                ID = tbID.Text;
-                BirimFiyat = Convert.ToDecimal(tbBirimFiyat.Text);
-                ParaBirimi = cbParaBirimi.SelectedItem.ToString(); //SORUN BURDA
-                Adet = Convert.ToInt16(tbAdet.Text);
-                AdetTuru = cbBirim.SelectedItem.ToString(); // SORUN BURDA
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                if (System.Text.RegularExpressions.Regex.IsMatch(tbAdet.Text, "[ ^ 0-9]") && System.Text.RegularExpressions.Regex.IsMatch(tbBirimFiyat.Text, "[ ^ 0-9]"))
+                {
+                    //valid item
+                    Aciklama = tbAciklama.Text;
+                    ID = tbID.Text;
+                    BirimFiyat = Convert.ToDecimal(tbBirimFiyat.Text);
+                    ParaBirimi = cbParaBirimi.SelectedItem.ToString(); //SORUN BURDA
+                    Adet = Convert.ToInt32(tbAdet.Text);
+                    AdetTuru = cbBirim.SelectedItem.ToString(); // SORUN BURDA
+                    if (cbMenuUrunu.CheckState == CheckState.Checked)
+                    {
+                        menuUrunu = true;
+                    }
+                    else
+                    {
+                        menuUrunu = false;
+                    }
+                    if (cbDynamicStokCheckEnabled.CheckState == CheckState.Checked)
+                    {
+                        dinamikStokKontrolu = true;
+                    }
+                    else
+                    {
+                        dinamikStokKontrolu = false;
+                    }
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Lutfen Adet ve Birim Fiyat Alanlarina Gecerli Karakter Giriniz !");
+                }
             }
             else
             {
                 //invalid item
                 MessageBox.Show("Lutfen butun alanlari doldurunuz !");
             }
+
         }
 
         private void bCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void StokCheckLogic(object sender, EventArgs e)
+        {
+
+        }
+
+        private void StokCheckLogicMenuCheckbox(object sender, EventArgs e)
+        {
+            if (cbMenuUrunu.CheckState == CheckState.Checked)
+            {
+                cbStokUrunu.CheckState = CheckState.Unchecked;
+                cbMenuUrunu.CheckState = CheckState.Checked;
+                cbDynamicStokCheckEnabled.Enabled = true;
+                cbDynamicStokCheckEnabled.CheckState = CheckState.Unchecked;
+            }
+            else
+            {
+                cbDynamicStokCheckEnabled.Enabled = false;
+                cbDynamicStokCheckEnabled.CheckState = CheckState.Unchecked;
+            }
+        }
+
+        private void StokCheckLogicStokUrunuCheckbox(object sender, EventArgs e)
+        {
+            if (cbStokUrunu.CheckState == CheckState.Checked)
+            {
+                cbMenuUrunu.CheckState = CheckState.Unchecked;
+                cbStokUrunu.CheckState = CheckState.Checked;
+                cbDynamicStokCheckEnabled.Enabled = false;
+                cbDynamicStokCheckEnabled.CheckState = CheckState.Unchecked;
+            }
         }
     }
 }

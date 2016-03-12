@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lTip = new System.Windows.Forms.Label();
+            this.cbTip = new System.Windows.Forms.CheckBox();
             this.cbGBP = new System.Windows.Forms.CheckBox();
             this.cbDolar = new System.Windows.Forms.CheckBox();
             this.cbEuro = new System.Windows.Forms.CheckBox();
@@ -67,6 +69,8 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Gold;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Controls.Add(this.lTip);
+            this.panel1.Controls.Add(this.cbTip);
             this.panel1.Controls.Add(this.cbGBP);
             this.panel1.Controls.Add(this.cbDolar);
             this.panel1.Controls.Add(this.cbEuro);
@@ -79,8 +83,29 @@
             this.panel1.Controls.Add(this.tbKredi);
             this.panel1.Location = new System.Drawing.Point(0, 74);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(481, 80);
+            this.panel1.Size = new System.Drawing.Size(481, 102);
             this.panel1.TabIndex = 0;
+            // 
+            // lTip
+            // 
+            this.lTip.AutoSize = true;
+            this.lTip.Location = new System.Drawing.Point(341, 23);
+            this.lTip.Name = "lTip";
+            this.lTip.Size = new System.Drawing.Size(31, 13);
+            this.lTip.TabIndex = 11;
+            this.lTip.Text = "Tip : ";
+            this.lTip.Visible = false;
+            // 
+            // cbTip
+            // 
+            this.cbTip.AutoSize = true;
+            this.cbTip.Location = new System.Drawing.Point(328, 3);
+            this.cbTip.Name = "cbTip";
+            this.cbTip.Size = new System.Drawing.Size(140, 17);
+            this.cbTip.TabIndex = 10;
+            this.cbTip.Text = "Para ustunu tip olarak al";
+            this.cbTip.UseVisualStyleBackColor = true;
+            this.cbTip.CheckStateChanged += new System.EventHandler(this.cbTipCheckStateChanged);
             // 
             // cbGBP
             // 
@@ -130,7 +155,7 @@
             // 
             // tbCari
             // 
-            this.tbCari.Location = new System.Drawing.Point(344, 52);
+            this.tbCari.Location = new System.Drawing.Point(344, 72);
             this.tbCari.Name = "tbCari";
             this.tbCari.Size = new System.Drawing.Size(124, 20);
             this.tbCari.TabIndex = 4;
@@ -140,7 +165,7 @@
             // 
             this.labelCari.AutoSize = true;
             this.labelCari.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCari.Location = new System.Drawing.Point(341, 31);
+            this.labelCari.Location = new System.Drawing.Point(341, 51);
             this.labelCari.Name = "labelCari";
             this.labelCari.Size = new System.Drawing.Size(53, 18);
             this.labelCari.TabIndex = 5;
@@ -150,7 +175,7 @@
             // 
             this.labelNakit.AutoSize = true;
             this.labelNakit.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNakit.Location = new System.Drawing.Point(9, 31);
+            this.labelNakit.Location = new System.Drawing.Point(9, 51);
             this.labelNakit.Name = "labelNakit";
             this.labelNakit.Size = new System.Drawing.Size(62, 18);
             this.labelNakit.TabIndex = 3;
@@ -158,7 +183,7 @@
             // 
             // tbNakit
             // 
-            this.tbNakit.Location = new System.Drawing.Point(12, 52);
+            this.tbNakit.Location = new System.Drawing.Point(12, 72);
             this.tbNakit.Name = "tbNakit";
             this.tbNakit.Size = new System.Drawing.Size(124, 20);
             this.tbNakit.TabIndex = 2;
@@ -168,7 +193,7 @@
             // 
             this.labelKredi.AutoSize = true;
             this.labelKredi.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelKredi.Location = new System.Drawing.Point(174, 31);
+            this.labelKredi.Location = new System.Drawing.Point(174, 51);
             this.labelKredi.Name = "labelKredi";
             this.labelKredi.Size = new System.Drawing.Size(94, 18);
             this.labelKredi.TabIndex = 1;
@@ -176,7 +201,7 @@
             // 
             // tbKredi
             // 
-            this.tbKredi.Location = new System.Drawing.Point(177, 52);
+            this.tbKredi.Location = new System.Drawing.Point(177, 72);
             this.tbKredi.Name = "tbKredi";
             this.tbKredi.Size = new System.Drawing.Size(124, 20);
             this.tbKredi.TabIndex = 0;
@@ -273,7 +298,7 @@
             // bMasaKapat
             // 
             this.bMasaKapat.Enabled = false;
-            this.bMasaKapat.Location = new System.Drawing.Point(12, 197);
+            this.bMasaKapat.Location = new System.Drawing.Point(12, 218);
             this.bMasaKapat.Name = "bMasaKapat";
             this.bMasaKapat.Size = new System.Drawing.Size(112, 44);
             this.bMasaKapat.TabIndex = 16;
@@ -283,7 +308,7 @@
             // 
             // bIptal
             // 
-            this.bIptal.Location = new System.Drawing.Point(361, 197);
+            this.bIptal.Location = new System.Drawing.Point(371, 218);
             this.bIptal.Name = "bIptal";
             this.bIptal.Size = new System.Drawing.Size(112, 44);
             this.bIptal.TabIndex = 17;
@@ -310,7 +335,7 @@
             this.panel2.Controls.Add(this.lKalan);
             this.panel2.Controls.Add(this.labelKalan);
             this.panel2.Controls.Add(this.lIskontoOrani);
-            this.panel2.Location = new System.Drawing.Point(0, 152);
+            this.panel2.Location = new System.Drawing.Point(0, 173);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(481, 39);
             this.panel2.TabIndex = 6;
@@ -361,10 +386,10 @@
             // 
             // pbCalculator
             // 
-            this.pbCalculator.Image = global::Restorium.Properties.Resources.Calculator_icon__1_;
-            this.pbCalculator.Location = new System.Drawing.Point(131, 198);
+            this.pbCalculator.Image = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.pbCalculator.Location = new System.Drawing.Point(320, 222);
             this.pbCalculator.Name = "pbCalculator";
-            this.pbCalculator.Size = new System.Drawing.Size(77, 43);
+            this.pbCalculator.Size = new System.Drawing.Size(45, 36);
             this.pbCalculator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbCalculator.TabIndex = 20;
             this.pbCalculator.TabStop = false;
@@ -381,7 +406,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(482, 253);
+            this.ClientSize = new System.Drawing.Size(493, 274);
             this.Controls.Add(this.pbCalculator);
             this.Controls.Add(this.lTableName);
             this.Controls.Add(this.panel2);
@@ -445,5 +470,7 @@
         private System.Windows.Forms.CheckBox cbTL;
         private System.Windows.Forms.PictureBox pbCalculator;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.CheckBox cbTip;
+        private System.Windows.Forms.Label lTip;
     }
 }

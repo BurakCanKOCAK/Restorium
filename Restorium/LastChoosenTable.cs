@@ -26,6 +26,8 @@ namespace Restorium
         public static decimal DefinedEuro;
         public static decimal DefinedDolar;
         public static decimal DefinedGBP;
-
+        public static decimal tip;
+        public static decimal tipKredi;
+        public static decimal tipNakit;
     }
 }

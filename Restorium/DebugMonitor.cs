@@ -11,6 +11,7 @@ namespace Restorium
 {
     public partial class DebugMonitor : Form
     {
+        public static string text;
         public DebugMonitor()
         {
             InitializeComponent();
@@ -18,12 +19,18 @@ namespace Restorium
 
         private void DebugMonitor_Load(object sender, EventArgs e)
         {
-
+            lbLogs.Text = "asdasdsad";
         }
         public void User_Monitor(string monitorText)
-        {
+        {   
             lbLogs.Text += "\n"+monitorText;
 
+        }
+
+        private void eachTick(object sender, EventArgs e)
+        {
+            lbLogs.Text += text;
+            text = "";
         }
     }
 }

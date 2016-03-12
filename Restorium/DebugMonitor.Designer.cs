@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lbLogs = new System.Windows.Forms.ListBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // lbLogs
@@ -36,14 +38,19 @@
             this.lbLogs.FormattingEnabled = true;
             this.lbLogs.Location = new System.Drawing.Point(2, 4);
             this.lbLogs.Name = "lbLogs";
-            this.lbLogs.Size = new System.Drawing.Size(437, 550);
+            this.lbLogs.Size = new System.Drawing.Size(491, 550);
             this.lbLogs.TabIndex = 0;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.eachTick);
             // 
             // DebugMonitor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 561);
+            this.ClientSize = new System.Drawing.Size(497, 561);
             this.Controls.Add(this.lbLogs);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "DebugMonitor";
@@ -56,5 +63,6 @@
         #endregion
 
         private System.Windows.Forms.ListBox lbLogs;
+        private System.Windows.Forms.Timer timer1;
     }
 }

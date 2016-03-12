@@ -231,7 +231,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ShowListForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Database";
             this.Load += new System.EventHandler(this.ShowListForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             ((System.ComponentModel.ISupportInitialize)(this.dgViewStok)).EndInit();

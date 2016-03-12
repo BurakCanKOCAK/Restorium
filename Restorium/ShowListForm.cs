@@ -57,10 +57,19 @@ namespace Restorium
             {
                 dgViewWaiter.Visible = false;
                 dgViewStok.Visible = true;
-                int listCount = Convert.ToInt16(INI.Read("stokCount", "Stok"));
+                int listCount = 0;
                 try
                 {
-                    
+                    listCount = Convert.ToInt16(INI.Read("stokCount", "Stok"));
+                }
+                catch
+                {
+                    listCount = 0;
+                    UserLog.WConsole("(!) Kayitli Stok Urunu Bulunamadi !");
+                }
+                    try
+                {
+
                     for (int i = 0; i < listCount; i++)
                     {
                         string id = INI.Read("id" + i.ToString(), "Stok");
@@ -70,9 +79,12 @@ namespace Restorium
                         string birimFiyat = INI.Read("birimFiyat" + i.ToString(), "Stok");
                         string paraBirimi = INI.Read("paraBirimi" + i.ToString(), "Stok");
                         string dinamikStokKontrolu = INI.Read("dinamikStokKontrolu" + i.ToString(), "Stok");
-
+                        string menuUrunu = INI.Read("menuUrunu" + i.ToString(), "Stok");
+                        if (menuUrunu == "true")
+                        { 
                         dgViewStok.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, dinamikStokKontrolu);
                         dgViewStok.Refresh();
+                        }
                     }
                     UserLog.WConsole("Dosyadan Stok Okuma Basarili ! <<ShowListForm.cs>>");
 

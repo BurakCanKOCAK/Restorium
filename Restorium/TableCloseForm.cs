@@ -61,22 +61,51 @@ namespace Restorium
                     //Cari Entry Error//
                 }
                 decimal toplam = nakit + cari + kredi;
-                if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lTL.Text))
-                {
-                    bMasaKapat.Enabled = true;
-                    bMasaKapat.BackColor = Color.Green;
-                    labelKalan.ForeColor = Color.GreenYellow;
-                    lKalan.ForeColor = Color.GreenYellow;
-                    lKalan.Text = (Convert.ToDecimal(lTL.Text) - toplam).ToString()+ " ₺";
-                }
-                else
-                {
-                    bMasaKapat.Enabled = false;
-                    bMasaKapat.BackColor = Color.Red;
-                    labelKalan.ForeColor = Color.DarkRed;
-                    lKalan.ForeColor = Color.DarkRed;
-                    lKalan.Text = (Convert.ToDecimal(lTL.Text) - toplam).ToString() + " ₺";
-                }
+               
+                    if (cbTip.CheckState == CheckState.Checked)
+                    {
+                        lTip.Visible = true;
+                        if ((nakit + kredi) >= Convert.ToDecimal(lTL.Text))
+                        {
+                            bMasaKapat.Enabled = true;
+                            bMasaKapat.BackColor = Color.Green;
+                            labelKalan.ForeColor = Color.GreenYellow;
+                            lKalan.ForeColor = Color.GreenYellow;
+                            lKalan.Text = "0 ₺";
+                            LastChoosenTable.tip = Convert.ToDecimal((nakit + kredi) - (Convert.ToDecimal(lTL.Text)));
+                            lTip.Text = "Tip : "+LastChoosenTable.tip+ " ₺"; ;
+                        }
+                        else
+                        {
+                            lTip.Text = "Tip : 0 ₺"; ;
+                            bMasaKapat.Enabled = false;
+                            bMasaKapat.BackColor = Color.Red;
+                            labelKalan.ForeColor = Color.DarkRed;
+                            lKalan.ForeColor = Color.DarkRed;
+                            lKalan.Text = (Convert.ToDecimal(lTL.Text) - toplam).ToString() + " ₺";
+                        }
+                    }
+                    else
+                    {
+                        if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lTL.Text))
+                        {
+                            bMasaKapat.Enabled = true;
+                            bMasaKapat.BackColor = Color.Green;
+                            labelKalan.ForeColor = Color.GreenYellow;
+                            lKalan.ForeColor = Color.GreenYellow;
+                            lKalan.Text = (Convert.ToDecimal(lTL.Text) - toplam).ToString() + " ₺";
+                        }
+                        else
+                        { 
+                            lTip.Visible = false;
+                            bMasaKapat.Enabled = false;
+                            bMasaKapat.BackColor = Color.Red;
+                            labelKalan.ForeColor = Color.DarkRed;
+                            lKalan.ForeColor = Color.DarkRed;
+                            lKalan.Text = (Convert.ToDecimal(lTL.Text) - toplam).ToString() + " ₺";
+                        }
+                     }
+                
                 checkLogicSituations();
             }
             #endregion
@@ -120,22 +149,53 @@ namespace Restorium
                     //Cari Entry Error//
                 }
                 decimal toplam = nakit + cari + kredi;
-                if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lEuro.Text))
+                
+                if (cbTip.CheckState == CheckState.Checked)
                 {
-                    bMasaKapat.Enabled = true;
-                    bMasaKapat.BackColor = Color.Green;
-                    labelKalan.ForeColor = Color.GreenYellow;
-                    lKalan.ForeColor = Color.GreenYellow;
-                    lKalan.Text = (Convert.ToDecimal(lEuro.Text) - toplam).ToString() + " €";
+                    lTip.Visible = true;
+                    if ((nakit + kredi) >= Convert.ToDecimal(lEuro.Text))
+                    {
+                        bMasaKapat.Enabled = true;
+                        bMasaKapat.BackColor = Color.Green;
+                        labelKalan.ForeColor = Color.GreenYellow;
+                        lKalan.ForeColor = Color.GreenYellow;
+                        lKalan.Text = "0 €";
+                        LastChoosenTable.tip = Convert.ToDecimal((nakit + kredi) - (Convert.ToDecimal(lEuro.Text)));
+                        lTip.Text = "Tip : " + LastChoosenTable.tip + " €";
+                    }
+                    else
+                    {
+                        lTip.Text = "Tip : 0 €";
+                        bMasaKapat.Enabled = false;
+                        bMasaKapat.BackColor = Color.Red;
+                        labelKalan.ForeColor = Color.DarkRed;
+                        lKalan.ForeColor = Color.DarkRed;
+                        lKalan.Text = (Convert.ToDecimal(lEuro.Text) - toplam).ToString() + " €";
+                    }
                 }
                 else
                 {
-                    bMasaKapat.Enabled = false;
-                    bMasaKapat.BackColor = Color.Red;
-                    labelKalan.ForeColor = Color.DarkRed;
-                    lKalan.ForeColor = Color.DarkRed;
-                    lKalan.Text = (Convert.ToDecimal(lEuro.Text) - toplam).ToString() + " €";
+                    if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lEuro.Text))
+                    {
+                        lTip.Visible = false;
+                        bMasaKapat.Enabled = true;
+                        bMasaKapat.BackColor = Color.Green;
+                        labelKalan.ForeColor = Color.GreenYellow;
+                        lKalan.ForeColor = Color.GreenYellow;
+                        lKalan.Text = (Convert.ToDecimal(lEuro.Text) - toplam).ToString() + " €";
+                    }
+                    else
+                    {
+                        lTip.Visible = false;
+                        bMasaKapat.Enabled = false;
+                        bMasaKapat.BackColor = Color.Red;
+                        labelKalan.ForeColor = Color.DarkRed;
+                        lKalan.ForeColor = Color.DarkRed;
+                        lKalan.Text = (Convert.ToDecimal(lEuro.Text) - toplam).ToString() + " €";
+                    }
                 }
+
+
                 checkLogicSituations();
             }
             #endregion
@@ -179,21 +239,50 @@ namespace Restorium
                     //Cari Entry Error//
                 }
                 decimal toplam = nakit + cari + kredi;
-                if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lDolar.Text))
+                //
+                if (cbTip.CheckState == CheckState.Checked)
                 {
-                    bMasaKapat.Enabled = true;
-                    bMasaKapat.BackColor = Color.Green;
-                    labelKalan.ForeColor = Color.GreenYellow;
-                    lKalan.ForeColor = Color.GreenYellow;
-                    lKalan.Text = (Convert.ToDecimal(lDolar.Text) - toplam).ToString() + " $";
+                    lTip.Visible = true;
+                    if ((nakit + kredi) >= Convert.ToDecimal(lDolar.Text))
+                    {
+                        bMasaKapat.Enabled = true;
+                        bMasaKapat.BackColor = Color.Green;
+                        labelKalan.ForeColor = Color.GreenYellow;
+                        lKalan.ForeColor = Color.GreenYellow;
+                        lKalan.Text = "0 $";
+                        LastChoosenTable.tip = Convert.ToDecimal((nakit + kredi) - (Convert.ToDecimal(lDolar.Text)));
+                        lTip.Text = "Tip : " + LastChoosenTable.tip + " $";
+                    }
+                    else
+                    {
+                        lTip.Text = "Tip : 0 $";
+                        bMasaKapat.Enabled = false;
+                        bMasaKapat.BackColor = Color.Red;
+                        labelKalan.ForeColor = Color.DarkRed;
+                        lKalan.ForeColor = Color.DarkRed;
+                        lKalan.Text = (Convert.ToDecimal(lDolar.Text) - toplam).ToString() + " $";
+                    }
                 }
                 else
                 {
-                    bMasaKapat.Enabled = false;
-                    bMasaKapat.BackColor = Color.Red;
-                    labelKalan.ForeColor = Color.DarkRed;
-                    lKalan.ForeColor = Color.DarkRed;
-                    lKalan.Text = (Convert.ToDecimal(lDolar.Text) - toplam).ToString() + " $";
+                    if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lDolar.Text))
+                    {
+                        lTip.Visible = false;
+                        bMasaKapat.Enabled = true;
+                        bMasaKapat.BackColor = Color.Green;
+                        labelKalan.ForeColor = Color.GreenYellow;
+                        lKalan.ForeColor = Color.GreenYellow;
+                        lKalan.Text = (Convert.ToDecimal(lDolar.Text) - toplam).ToString() + " $";
+                    }
+                    else
+                    {
+                        lTip.Visible = false;
+                        bMasaKapat.Enabled = false;
+                        bMasaKapat.BackColor = Color.Red;
+                        labelKalan.ForeColor = Color.DarkRed;
+                        lKalan.ForeColor = Color.DarkRed;
+                        lKalan.Text = (Convert.ToDecimal(lDolar.Text) - toplam).ToString() + " $";
+                    }
                 }
                 checkLogicSituations();
             }
@@ -238,22 +327,54 @@ namespace Restorium
                     //Cari Entry Error//
                 }
                 decimal toplam = nakit + cari + kredi;
-                if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lGBP.Text))
+                //
+                if (cbTip.CheckState == CheckState.Checked)
                 {
-                    bMasaKapat.Enabled = true;
-                    bMasaKapat.BackColor = Color.Green;
-                    labelKalan.ForeColor = Color.GreenYellow;
-                    lKalan.ForeColor = Color.GreenYellow;
-                    lKalan.Text = (Convert.ToDecimal(lGBP.Text) - toplam).ToString() + " £";
+                    lTip.Visible = true;
+                    if ((nakit + kredi) >= Convert.ToDecimal(lGBP.Text))
+                    {
+                        bMasaKapat.Enabled = true;
+                        bMasaKapat.BackColor = Color.Green;
+                        labelKalan.ForeColor = Color.GreenYellow;
+                        lKalan.ForeColor = Color.GreenYellow;
+                        lKalan.Text = "0 £";
+                        LastChoosenTable.tip = Convert.ToDecimal((nakit + kredi) - (Convert.ToDecimal(lGBP.Text)));
+                        lTip.Text = "Tip : " + LastChoosenTable.tip + " £";
+                    }
+                    else
+                    {
+                        lTip.Text = "Tip : 0 £";
+                        bMasaKapat.Enabled = false;
+                        bMasaKapat.BackColor = Color.Red;
+                        labelKalan.ForeColor = Color.DarkRed;
+                        lKalan.ForeColor = Color.DarkRed;
+                        lKalan.Text = (Convert.ToDecimal(lGBP.Text) - toplam).ToString() + " £";
+                    }
                 }
                 else
                 {
-                    bMasaKapat.Enabled = false;
-                    bMasaKapat.BackColor = Color.Red;
-                    labelKalan.ForeColor = Color.DarkRed;
-                    lKalan.ForeColor = Color.DarkRed;
-                    lKalan.Text = (Convert.ToDecimal(lGBP.Text) - toplam).ToString() + " £";
+                    if (Convert.ToDecimal(toplam) == Convert.ToDecimal(lGBP.Text))
+                    {
+                        lTip.Visible = false;
+                        bMasaKapat.Enabled = true;
+                        bMasaKapat.BackColor = Color.Green;
+                        labelKalan.ForeColor = Color.GreenYellow;
+                        lKalan.ForeColor = Color.GreenYellow;
+                        lKalan.Text = (Convert.ToDecimal(lGBP.Text) - toplam).ToString() + " £";
+                    }
+                    else
+                    {
+                        lTip.Visible = false;
+                        bMasaKapat.Enabled = false;
+                        bMasaKapat.BackColor = Color.Red;
+                        labelKalan.ForeColor = Color.DarkRed;
+                        lKalan.ForeColor = Color.DarkRed;
+                        lKalan.Text = (Convert.ToDecimal(lGBP.Text) - toplam).ToString() + " £";
+                    }
                 }
+                //
+
+              
                 checkLogicSituations();
             }
             #endregion
@@ -429,6 +550,7 @@ namespace Restorium
                 UserLog.WConsole("Masa Adi : " + lTableName.Text);
                 UserLog.WConsole("Kredi : " + LastChoosenTable.krediKarti+ " | " + "Nakit : "+ LastChoosenTable.nakit +" | " + "Cari : "+ LastChoosenTable.cari );
                 UserLog.WConsole("Toplam Tutar : "+lTL.Text+ "TL");
+                UserLog.WConsole("Tip : "+LastChoosenTable.tip+" "+LastChoosenTable.paraBirimi);
                 UserLog.WConsole("************************************************");
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -465,6 +587,23 @@ namespace Restorium
         private void Calculator(object sender, EventArgs e)
         {
             System.Diagnostics.Process p = System.Diagnostics.Process.Start("calc.exe");
+        }
+
+        private void cbTipCheckStateChanged(object sender, EventArgs e)
+        {
+            if (cbDolar.CheckState == CheckState.Unchecked)
+            {
+                LastChoosenTable.tip = 0;
+                tbCari.Text = "0";
+                tbKredi.Text = "0";
+                tbNakit.Text = "0";
+                lTip.Visible = false;
+                bMasaKapat.Enabled = false;
+                bMasaKapat.BackColor = Color.Red;
+                labelKalan.ForeColor = Color.DarkRed;
+                lKalan.ForeColor = Color.DarkRed;
+                CalculateKalanTutar(null,null);
+            }
         }
     }
 }

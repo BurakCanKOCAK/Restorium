@@ -39,8 +39,11 @@
             this.cbBirim = new System.Windows.Forms.ComboBox();
             this.cbParaBirimi = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.bStokAdd = new System.Windows.Forms.Button();
             this.bCancel = new System.Windows.Forms.Button();
+            this.bStokAdd = new System.Windows.Forms.Button();
+            this.cbMenuUrunu = new System.Windows.Forms.CheckBox();
+            this.cbStokUrunu = new System.Windows.Forms.CheckBox();
+            this.cbDynamicStokCheckEnabled = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -157,16 +160,6 @@
             this.panel1.Size = new System.Drawing.Size(450, 59);
             this.panel1.TabIndex = 11;
             // 
-            // bStokAdd
-            // 
-            this.bStokAdd.Location = new System.Drawing.Point(25, 14);
-            this.bStokAdd.Name = "bStokAdd";
-            this.bStokAdd.Size = new System.Drawing.Size(95, 33);
-            this.bStokAdd.TabIndex = 0;
-            this.bStokAdd.Text = "Stok Ekle";
-            this.bStokAdd.UseVisualStyleBackColor = true;
-            this.bStokAdd.Click += new System.EventHandler(this.bStokAdd_Click);
-            // 
             // bCancel
             // 
             this.bCancel.Location = new System.Drawing.Point(332, 14);
@@ -177,11 +170,58 @@
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
+            // bStokAdd
+            // 
+            this.bStokAdd.Location = new System.Drawing.Point(25, 14);
+            this.bStokAdd.Name = "bStokAdd";
+            this.bStokAdd.Size = new System.Drawing.Size(95, 33);
+            this.bStokAdd.TabIndex = 0;
+            this.bStokAdd.Text = "Stok Ekle";
+            this.bStokAdd.UseVisualStyleBackColor = true;
+            this.bStokAdd.Click += new System.EventHandler(this.bStokAdd_Click);
+            // 
+            // cbMenuUrunu
+            // 
+            this.cbMenuUrunu.AutoSize = true;
+            this.cbMenuUrunu.Location = new System.Drawing.Point(104, 169);
+            this.cbMenuUrunu.Name = "cbMenuUrunu";
+            this.cbMenuUrunu.Size = new System.Drawing.Size(85, 17);
+            this.cbMenuUrunu.TabIndex = 12;
+            this.cbMenuUrunu.Text = "Menu Urunu";
+            this.cbMenuUrunu.UseVisualStyleBackColor = true;
+            this.cbMenuUrunu.CheckedChanged += new System.EventHandler(this.StokCheckLogicMenuCheckbox);
+            // 
+            // cbStokUrunu
+            // 
+            this.cbStokUrunu.AutoSize = true;
+            this.cbStokUrunu.Location = new System.Drawing.Point(16, 169);
+            this.cbStokUrunu.Name = "cbStokUrunu";
+            this.cbStokUrunu.Size = new System.Drawing.Size(80, 17);
+            this.cbStokUrunu.TabIndex = 13;
+            this.cbStokUrunu.Text = "Stok Urunu";
+            this.cbStokUrunu.UseVisualStyleBackColor = true;
+            this.cbStokUrunu.Visible = false;
+            this.cbStokUrunu.CheckedChanged += new System.EventHandler(this.StokCheckLogicStokUrunuCheckbox);
+            // 
+            // cbDynamicStokCheckEnabled
+            // 
+            this.cbDynamicStokCheckEnabled.AutoSize = true;
+            this.cbDynamicStokCheckEnabled.Enabled = false;
+            this.cbDynamicStokCheckEnabled.Location = new System.Drawing.Point(210, 169);
+            this.cbDynamicStokCheckEnabled.Name = "cbDynamicStokCheckEnabled";
+            this.cbDynamicStokCheckEnabled.Size = new System.Drawing.Size(131, 17);
+            this.cbDynamicStokCheckEnabled.TabIndex = 14;
+            this.cbDynamicStokCheckEnabled.Text = "Dinamik Stok Kontrolu";
+            this.cbDynamicStokCheckEnabled.UseVisualStyleBackColor = true;
+            // 
             // StokAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(450, 251);
+            this.Controls.Add(this.cbDynamicStokCheckEnabled);
+            this.Controls.Add(this.cbStokUrunu);
+            this.Controls.Add(this.cbMenuUrunu);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cbParaBirimi);
             this.Controls.Add(this.cbBirim);
@@ -219,5 +259,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button bCancel;
         private System.Windows.Forms.Button bStokAdd;
+        private System.Windows.Forms.CheckBox cbMenuUrunu;
+        private System.Windows.Forms.CheckBox cbStokUrunu;
+        private System.Windows.Forms.CheckBox cbDynamicStokCheckEnabled;
     }
 }

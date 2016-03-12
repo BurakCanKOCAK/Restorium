@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -45,6 +45,20 @@
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tp_Stok = new System.Windows.Forms.TabPage();
+            this.dgView = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ACIKLAMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ADET = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BIRIM = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.BIRIM_FIYAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PARA_BIRIMI = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.DINAMIK_STOK_KONTROLU = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.MENU_ITEM = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.timerReservation = new System.Windows.Forms.Timer(this.components);
             this.tp_Adisyon = new System.Windows.Forms.TabPage();
             this.gbTableDetails = new System.Windows.Forms.GroupBox();
             this.bSiparisEkle = new System.Windows.Forms.Button();
@@ -76,30 +90,31 @@
             this.lDate = new System.Windows.Forms.Label();
             this.bYeniMasa = new System.Windows.Forms.Button();
             this.bRezervasyon = new System.Windows.Forms.Button();
-            this.tp_Stok = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.bStokSil = new System.Windows.Forms.Button();
             this.bStokAdd = new System.Windows.Forms.Button();
             this.bCalculator_Stok = new System.Windows.Forms.Button();
             this.bStokAra = new System.Windows.Forms.Button();
             this.bDuzenle = new System.Windows.Forms.Button();
             this.tbSearchKey = new System.Windows.Forms.TextBox();
-            this.dgView = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ACIKLAMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ADET = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BIRIM = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.BIRIM_FIYAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PARA_BIRIMI = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.DINAMIK_STOK_KONTROLU = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tp_Kasa = new System.Windows.Forms.TabPage();
-            this.lCariToplamTL = new System.Windows.Forms.Label();
-            this.lNakitToplamTL = new System.Windows.Forms.Label();
-            this.lKrediToplamTL = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.lCariToplam = new System.Windows.Forms.Label();
-            this.lKrediToplam = new System.Windows.Forms.Label();
+            this.lTipToplam = new System.Windows.Forms.Label();
+            this.lNakitToplamTL = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
             this.lNakitToplam = new System.Windows.Forms.Label();
+            this.lCariToplamTL = new System.Windows.Forms.Label();
+            this.lKrediToplam = new System.Windows.Forms.Label();
+            this.lCariToplam = new System.Windows.Forms.Label();
+            this.lKrediToplamTL = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.lKasaToplam = new System.Windows.Forms.Label();
+            this.lBugunToplam = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.dgvKasa = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -109,12 +124,15 @@
             this.Kredi_Karti = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cari = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label13 = new System.Windows.Forms.Label();
-            this.lKasaToplam = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.bPrintKasa = new System.Windows.Forms.Button();
             this.bSendMailKasa = new System.Windows.Forms.Button();
             this.bCalculator_Kasa = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kasadanTipDusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kasadanParaAlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kasayaGirdiEkleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tp_Rapor = new System.Windows.Forms.TabPage();
             this.tcRapor = new System.Windows.Forms.TabControl();
             this.tpGrafikler = new System.Windows.Forms.TabPage();
@@ -135,6 +153,21 @@
             this.bPrintReport = new System.Windows.Forms.Button();
             this.bSendMailReport = new System.Windows.Forms.Button();
             this.tp_Rehber = new System.Windows.Forms.TabPage();
+            this.bDuzenleRehber = new System.Windows.Forms.Button();
+            this.tbSearchKayit = new System.Windows.Forms.TextBox();
+            this.bKayitAra = new System.Windows.Forms.Button();
+            this.bKayitSil = new System.Windows.Forms.Button();
+            this.bKayitEkle = new System.Windows.Forms.Button();
+            this.dgvRehber = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Vergi_No = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Vergi_Dairesi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.E_Fatura_On_Kod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tp_Ayarlar = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -161,35 +194,29 @@
             this.dgViewWaiter = new System.Windows.Forms.DataGridView();
             this.ID_WAITER = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.WAITER = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ADRES = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TC_NO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TEL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MAIL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GOREVI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.bCalculator_Settings = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.printDialog1 = new System.Windows.Forms.PrintDialog();
-            this.timerReservation = new System.Windows.Forms.Timer(this.components);
-            this.label20 = new System.Windows.Forms.Label();
-            this.lBugunToplam = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.lTipToplam = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
+            this.tp_Stok.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Adisyon.SuspendLayout();
             this.gbTableDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewSiparis)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).BeginInit();
-            this.tp_Stok.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
             this.tp_Kasa.SuspendLayout();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKasa)).BeginInit();
             this.panel2.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.tp_Rapor.SuspendLayout();
             this.tcRapor.SuspendLayout();
             this.tpGrafikler.SuspendLayout();
@@ -203,6 +230,8 @@
             this.panel13.SuspendLayout();
             this.panel4.SuspendLayout();
             this.tp_Rehber.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRehber)).BeginInit();
+            this.panel5.SuspendLayout();
             this.tp_Ayarlar.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
@@ -228,6 +257,141 @@
             this.tabControl1.Size = new System.Drawing.Size(1014, 733);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
+            // 
+            // tp_Stok
+            // 
+            this.tp_Stok.BackColor = System.Drawing.Color.Transparent;
+            this.tp_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tp_Stok.Controls.Add(this.pictureBox1);
+            this.tp_Stok.Controls.Add(this.panel3);
+            this.tp_Stok.Controls.Add(this.dgView);
+            this.tp_Stok.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tp_Stok.Location = new System.Drawing.Point(4, 28);
+            this.tp_Stok.Name = "tp_Stok";
+            this.tp_Stok.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_Stok.Size = new System.Drawing.Size(1006, 701);
+            this.tp_Stok.TabIndex = 1;
+            this.tp_Stok.Text = "Stok";
+            // 
+            // dgView
+            // 
+            this.dgView.AllowUserToAddRows = false;
+            this.dgView.AllowUserToDeleteRows = false;
+            this.dgView.AllowUserToResizeColumns = false;
+            this.dgView.AllowUserToResizeRows = false;
+            this.dgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.ACIKLAMA,
+            this.ADET,
+            this.BIRIM,
+            this.BIRIM_FIYAT,
+            this.PARA_BIRIMI,
+            this.DINAMIK_STOK_KONTROLU,
+            this.MENU_ITEM});
+            this.dgView.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.dgView.Location = new System.Drawing.Point(0, 69);
+            this.dgView.Name = "dgView";
+            this.dgView.ReadOnly = true;
+            this.dgView.Size = new System.Drawing.Size(1006, 632);
+            this.dgView.TabIndex = 0;
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // ACIKLAMA
+            // 
+            this.ACIKLAMA.HeaderText = "ACIKLAMA";
+            this.ACIKLAMA.Name = "ACIKLAMA";
+            this.ACIKLAMA.ReadOnly = true;
+            // 
+            // ADET
+            // 
+            this.ADET.HeaderText = "ADET";
+            this.ADET.Name = "ADET";
+            this.ADET.ReadOnly = true;
+            // 
+            // BIRIM
+            // 
+            this.BIRIM.HeaderText = "BIRIM";
+            this.BIRIM.Items.AddRange(new object[] {
+            "Birim",
+            "Porsiyon",
+            "Kutu",
+            "kg",
+            "gr",
+            "Kasa",
+            "Buyuk",
+            "Kucuk"});
+            this.BIRIM.Name = "BIRIM";
+            this.BIRIM.ReadOnly = true;
+            this.BIRIM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.BIRIM.Width = 75;
+            // 
+            // BIRIM_FIYAT
+            // 
+            this.BIRIM_FIYAT.HeaderText = "BIRIM FIYAT";
+            this.BIRIM_FIYAT.Name = "BIRIM_FIYAT";
+            this.BIRIM_FIYAT.ReadOnly = true;
+            // 
+            // PARA_BIRIMI
+            // 
+            this.PARA_BIRIMI.HeaderText = "PARA BIRIMI";
+            this.PARA_BIRIMI.Items.AddRange(new object[] {
+            "TL",
+            "EURO",
+            "DOLAR",
+            "GBP"});
+            this.PARA_BIRIMI.Name = "PARA_BIRIMI";
+            this.PARA_BIRIMI.ReadOnly = true;
+            this.PARA_BIRIMI.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.PARA_BIRIMI.Width = 50;
+            // 
+            // DINAMIK_STOK_KONTROLU
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Lime;
+            this.DINAMIK_STOK_KONTROLU.DefaultCellStyle = dataGridViewCellStyle4;
+            this.DINAMIK_STOK_KONTROLU.HeaderText = "DINAMIK STOK KONTROLU";
+            this.DINAMIK_STOK_KONTROLU.Name = "DINAMIK_STOK_KONTROLU";
+            this.DINAMIK_STOK_KONTROLU.ReadOnly = true;
+            this.DINAMIK_STOK_KONTROLU.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.DINAMIK_STOK_KONTROLU.Width = 75;
+            // 
+            // MENU_ITEM
+            // 
+            this.MENU_ITEM.HeaderText = "MENU URUNU";
+            this.MENU_ITEM.Name = "MENU_ITEM";
+            this.MENU_ITEM.ReadOnly = true;
+            this.MENU_ITEM.Width = 75;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.Data_Update);
+            // 
+            // printDocument1
+            // 
+            this.printDocument1.DocumentName = "Stok Raporu";
+            // 
+            // printDialog1
+            // 
+            this.printDialog1.AllowSomePages = true;
+            this.printDialog1.Document = this.printDocument1;
+            this.printDialog1.UseEXDialog = true;
+            // 
+            // timerReservation
+            // 
+            this.timerReservation.Enabled = true;
+            this.timerReservation.Interval = 5000;
+            this.timerReservation.Tick += new System.EventHandler(this.reservedTableStateChecker);
             // 
             // tp_Adisyon
             // 
@@ -629,26 +793,11 @@
             this.bRezervasyon.UseVisualStyleBackColor = false;
             this.bRezervasyon.Click += new System.EventHandler(this.bRezervasyon_Click);
             // 
-            // tp_Stok
-            // 
-            this.tp_Stok.BackColor = System.Drawing.Color.Transparent;
-            this.tp_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tp_Stok.Controls.Add(this.pictureBox1);
-            this.tp_Stok.Controls.Add(this.panel3);
-            this.tp_Stok.Controls.Add(this.dgView);
-            this.tp_Stok.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tp_Stok.Location = new System.Drawing.Point(4, 28);
-            this.tp_Stok.Name = "tp_Stok";
-            this.tp_Stok.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Stok.Size = new System.Drawing.Size(1006, 701);
-            this.tp_Stok.TabIndex = 1;
-            this.tp_Stok.Text = "Stok";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = global::Restorium.Properties.Resources.printer;
-            this.pictureBox1.Location = new System.Drawing.Point(6, 78);
+            this.pictureBox1.Location = new System.Drawing.Point(6, 87);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(29, 28);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -663,6 +812,7 @@
             this.panel3.BackColor = System.Drawing.Color.Transparent;
             this.panel3.BackgroundImage = global::Restorium.Properties.Resources.stok;
             this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel3.Controls.Add(this.bStokSil);
             this.panel3.Controls.Add(this.bStokAdd);
             this.panel3.Controls.Add(this.bCalculator_Stok);
             this.panel3.Controls.Add(this.bStokAra);
@@ -673,14 +823,26 @@
             this.panel3.Size = new System.Drawing.Size(1010, 72);
             this.panel3.TabIndex = 8;
             // 
+            // bStokSil
+            // 
+            this.bStokSil.BackColor = System.Drawing.Color.Ivory;
+            this.bStokSil.BackgroundImage = global::Restorium.Properties.Resources.cross_3_icon;
+            this.bStokSil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bStokSil.Location = new System.Drawing.Point(317, 17);
+            this.bStokSil.Name = "bStokSil";
+            this.bStokSil.Size = new System.Drawing.Size(39, 36);
+            this.bStokSil.TabIndex = 13;
+            this.bStokSil.UseVisualStyleBackColor = false;
+            this.bStokSil.Click += new System.EventHandler(this.bStokSil_Click);
+            // 
             // bStokAdd
             // 
-            this.bStokAdd.BackColor = System.Drawing.Color.LimeGreen;
-            this.bStokAdd.BackgroundImage = global::Restorium.Properties.Resources.cart_add_icon;
+            this.bStokAdd.BackColor = System.Drawing.Color.Ivory;
+            this.bStokAdd.BackgroundImage = global::Restorium.Properties.Resources.plus;
             this.bStokAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bStokAdd.Location = new System.Drawing.Point(317, 15);
+            this.bStokAdd.Location = new System.Drawing.Point(360, 17);
             this.bStokAdd.Name = "bStokAdd";
-            this.bStokAdd.Size = new System.Drawing.Size(46, 40);
+            this.bStokAdd.Size = new System.Drawing.Size(39, 36);
             this.bStokAdd.TabIndex = 12;
             this.bStokAdd.UseVisualStyleBackColor = false;
             this.bStokAdd.Click += new System.EventHandler(this.StokAdd_Click);
@@ -689,9 +851,9 @@
             // 
             this.bCalculator_Stok.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
             this.bCalculator_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.bCalculator_Stok.Location = new System.Drawing.Point(369, 15);
+            this.bCalculator_Stok.Location = new System.Drawing.Point(405, 17);
             this.bCalculator_Stok.Name = "bCalculator_Stok";
-            this.bCalculator_Stok.Size = new System.Drawing.Size(46, 40);
+            this.bCalculator_Stok.Size = new System.Drawing.Size(39, 36);
             this.bCalculator_Stok.TabIndex = 11;
             this.bCalculator_Stok.UseVisualStyleBackColor = true;
             this.bCalculator_Stok.Click += new System.EventHandler(this.bCalculator_Click);
@@ -710,9 +872,9 @@
             // bDuzenle
             // 
             this.bDuzenle.BackColor = System.Drawing.Color.Silver;
-            this.bDuzenle.Location = new System.Drawing.Point(178, 15);
+            this.bDuzenle.Location = new System.Drawing.Point(178, 17);
             this.bDuzenle.Name = "bDuzenle";
-            this.bDuzenle.Size = new System.Drawing.Size(133, 40);
+            this.bDuzenle.Size = new System.Drawing.Size(133, 36);
             this.bDuzenle.TabIndex = 1;
             this.bDuzenle.Text = "Duzenle(Kapali)";
             this.bDuzenle.UseVisualStyleBackColor = false;
@@ -725,93 +887,6 @@
             this.tbSearchKey.Name = "tbSearchKey";
             this.tbSearchKey.Size = new System.Drawing.Size(227, 27);
             this.tbSearchKey.TabIndex = 2;
-            // 
-            // dgView
-            // 
-            this.dgView.AllowUserToAddRows = false;
-            this.dgView.AllowUserToDeleteRows = false;
-            this.dgView.AllowUserToResizeColumns = false;
-            this.dgView.AllowUserToResizeRows = false;
-            this.dgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.ACIKLAMA,
-            this.ADET,
-            this.BIRIM,
-            this.BIRIM_FIYAT,
-            this.PARA_BIRIMI,
-            this.DINAMIK_STOK_KONTROLU});
-            this.dgView.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.dgView.Location = new System.Drawing.Point(0, 69);
-            this.dgView.Name = "dgView";
-            this.dgView.ReadOnly = true;
-            this.dgView.Size = new System.Drawing.Size(1006, 632);
-            this.dgView.TabIndex = 0;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // ACIKLAMA
-            // 
-            this.ACIKLAMA.HeaderText = "ACIKLAMA";
-            this.ACIKLAMA.Name = "ACIKLAMA";
-            this.ACIKLAMA.ReadOnly = true;
-            // 
-            // ADET
-            // 
-            this.ADET.HeaderText = "ADET";
-            this.ADET.Name = "ADET";
-            this.ADET.ReadOnly = true;
-            // 
-            // BIRIM
-            // 
-            this.BIRIM.HeaderText = "BIRIM";
-            this.BIRIM.Items.AddRange(new object[] {
-            "Birim",
-            "Porsiyon",
-            "Kutu",
-            "kg",
-            "gr",
-            "Kasa",
-            "Buyuk",
-            "Kucuk"});
-            this.BIRIM.Name = "BIRIM";
-            this.BIRIM.ReadOnly = true;
-            this.BIRIM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // BIRIM_FIYAT
-            // 
-            this.BIRIM_FIYAT.HeaderText = "BIRIM FIYAT";
-            this.BIRIM_FIYAT.Name = "BIRIM_FIYAT";
-            this.BIRIM_FIYAT.ReadOnly = true;
-            // 
-            // PARA_BIRIMI
-            // 
-            this.PARA_BIRIMI.HeaderText = "PARA BIRIMI";
-            this.PARA_BIRIMI.Items.AddRange(new object[] {
-            "TL",
-            "EURO",
-            "DOLAR",
-            "GBP"});
-            this.PARA_BIRIMI.Name = "PARA_BIRIMI";
-            this.PARA_BIRIMI.ReadOnly = true;
-            this.PARA_BIRIMI.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // DINAMIK_STOK_KONTROLU
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Lime;
-            this.DINAMIK_STOK_KONTROLU.DefaultCellStyle = dataGridViewCellStyle4;
-            this.DINAMIK_STOK_KONTROLU.HeaderText = "DINAMIK STOK KONTROLU";
-            this.DINAMIK_STOK_KONTROLU.Name = "DINAMIK_STOK_KONTROLU";
-            this.DINAMIK_STOK_KONTROLU.ReadOnly = true;
-            this.DINAMIK_STOK_KONTROLU.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // tp_Kasa
             // 
@@ -827,6 +902,130 @@
             this.tp_Kasa.Text = "Kasa";
             this.tp_Kasa.UseVisualStyleBackColor = true;
             // 
+            // panel8
+            // 
+            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel8.Controls.Add(this.lTipToplam);
+            this.panel8.Controls.Add(this.lNakitToplamTL);
+            this.panel8.Controls.Add(this.label14);
+            this.panel8.Controls.Add(this.label12);
+            this.panel8.Controls.Add(this.label15);
+            this.panel8.Controls.Add(this.label22);
+            this.panel8.Controls.Add(this.lNakitToplam);
+            this.panel8.Controls.Add(this.lCariToplamTL);
+            this.panel8.Controls.Add(this.lKrediToplam);
+            this.panel8.Controls.Add(this.lCariToplam);
+            this.panel8.Controls.Add(this.lKrediToplamTL);
+            this.panel8.Controls.Add(this.label13);
+            this.panel8.Controls.Add(this.lKasaToplam);
+            this.panel8.Controls.Add(this.lBugunToplam);
+            this.panel8.Controls.Add(this.label20);
+            this.panel8.Location = new System.Drawing.Point(3, 612);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(1000, 86);
+            this.panel8.TabIndex = 16;
+            // 
+            // lTipToplam
+            // 
+            this.lTipToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lTipToplam.AutoSize = true;
+            this.lTipToplam.Font = new System.Drawing.Font("Calibri", 16F, System.Drawing.FontStyle.Bold);
+            this.lTipToplam.ForeColor = System.Drawing.Color.DarkOrchid;
+            this.lTipToplam.Location = new System.Drawing.Point(510, 31);
+            this.lTipToplam.Name = "lTipToplam";
+            this.lTipToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lTipToplam.Size = new System.Drawing.Size(56, 27);
+            this.lTipToplam.TabIndex = 30;
+            this.lTipToplam.Text = "0.0 ₺";
+            this.lTipToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lNakitToplamTL
+            // 
+            this.lNakitToplamTL.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lNakitToplamTL.AutoSize = true;
+            this.lNakitToplamTL.Font = new System.Drawing.Font("Calibri", 16F, System.Drawing.FontStyle.Bold);
+            this.lNakitToplamTL.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lNakitToplamTL.Location = new System.Drawing.Point(6, 31);
+            this.lNakitToplamTL.Name = "lNakitToplamTL";
+            this.lNakitToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lNakitToplamTL.Size = new System.Drawing.Size(51, 27);
+            this.lNakitToplamTL.TabIndex = 23;
+            this.lNakitToplamTL.Text = "0.0₺";
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
+            this.label14.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label14.Location = new System.Drawing.Point(510, 12);
+            this.label14.Name = "label14";
+            this.label14.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label14.Size = new System.Drawing.Size(84, 19);
+            this.label14.TabIndex = 32;
+            this.label14.Text = "Tip Toplam";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
+            this.label12.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label12.Location = new System.Drawing.Point(174, 12);
+            this.label12.Name = "label12";
+            this.label12.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label12.Size = new System.Drawing.Size(135, 19);
+            this.label12.TabIndex = 31;
+            this.label12.Text = "Kredi Karti Toplam";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
+            this.label15.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label15.Location = new System.Drawing.Point(6, 12);
+            this.label15.Name = "label15";
+            this.label15.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label15.Size = new System.Drawing.Size(100, 19);
+            this.label15.TabIndex = 33;
+            this.label15.Text = "Nakit Toplam";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
+            this.label22.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label22.Location = new System.Drawing.Point(342, 12);
+            this.label22.Name = "label22";
+            this.label22.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label22.Size = new System.Drawing.Size(89, 19);
+            this.label22.TabIndex = 29;
+            this.label22.Text = "Cari Toplam";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lNakitToplam
+            // 
+            this.lNakitToplam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lNakitToplam.AutoSize = true;
+            this.lNakitToplam.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold);
+            this.lNakitToplam.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lNakitToplam.Location = new System.Drawing.Point(6, 61);
+            this.lNakitToplam.Name = "lNakitToplam";
+            this.lNakitToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lNakitToplam.Size = new System.Drawing.Size(103, 17);
+            this.lNakitToplam.TabIndex = 20;
+            this.lNakitToplam.Text = "0₺ + 0€ + 0$ + 0£";
+            this.lNakitToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lNakitToplam.Visible = false;
+            // 
             // lCariToplamTL
             // 
             this.lCariToplamTL.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -841,57 +1040,21 @@
             this.lCariToplamTL.Text = "0.0₺";
             this.lCariToplamTL.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // lNakitToplamTL
+            // lKrediToplam
             // 
-            this.lNakitToplamTL.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lNakitToplamTL.AutoSize = true;
-            this.lNakitToplamTL.Font = new System.Drawing.Font("Calibri", 16F, System.Drawing.FontStyle.Bold);
-            this.lNakitToplamTL.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lNakitToplamTL.Location = new System.Drawing.Point(174, 31);
-            this.lNakitToplamTL.Name = "lNakitToplamTL";
-            this.lNakitToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lNakitToplamTL.Size = new System.Drawing.Size(51, 27);
-            this.lNakitToplamTL.TabIndex = 23;
-            this.lNakitToplamTL.Text = "0.0₺";
-            // 
-            // lKrediToplamTL
-            // 
-            this.lKrediToplamTL.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lKrediToplamTL.AutoSize = true;
-            this.lKrediToplamTL.Font = new System.Drawing.Font("Calibri", 16F, System.Drawing.FontStyle.Bold);
-            this.lKrediToplamTL.ForeColor = System.Drawing.Color.OliveDrab;
-            this.lKrediToplamTL.Location = new System.Drawing.Point(6, 31);
-            this.lKrediToplamTL.Name = "lKrediToplamTL";
-            this.lKrediToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lKrediToplamTL.Size = new System.Drawing.Size(51, 27);
-            this.lKrediToplamTL.TabIndex = 24;
-            this.lKrediToplamTL.Text = "0.0₺";
-            this.lKrediToplamTL.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // panel8
-            // 
-            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel8.Controls.Add(this.lTipToplam);
-            this.panel8.Controls.Add(this.lNakitToplamTL);
-            this.panel8.Controls.Add(this.label15);
-            this.panel8.Controls.Add(this.label14);
-            this.panel8.Controls.Add(this.label12);
-            this.panel8.Controls.Add(this.label22);
-            this.panel8.Controls.Add(this.lCariToplamTL);
-            this.panel8.Controls.Add(this.lNakitToplam);
-            this.panel8.Controls.Add(this.lKrediToplam);
-            this.panel8.Controls.Add(this.lCariToplam);
-            this.panel8.Controls.Add(this.lKrediToplamTL);
-            this.panel8.Controls.Add(this.label13);
-            this.panel8.Controls.Add(this.lKasaToplam);
-            this.panel8.Controls.Add(this.lBugunToplam);
-            this.panel8.Controls.Add(this.label20);
-            this.panel8.Location = new System.Drawing.Point(3, 612);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(1000, 86);
-            this.panel8.TabIndex = 16;
+            this.lKrediToplam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lKrediToplam.AutoSize = true;
+            this.lKrediToplam.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold);
+            this.lKrediToplam.ForeColor = System.Drawing.Color.OliveDrab;
+            this.lKrediToplam.Location = new System.Drawing.Point(174, 61);
+            this.lKrediToplam.Name = "lKrediToplam";
+            this.lKrediToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lKrediToplam.Size = new System.Drawing.Size(103, 17);
+            this.lKrediToplam.TabIndex = 21;
+            this.lKrediToplam.Text = "0₺ + 0€ + 0$ + 0£";
+            this.lKrediToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lKrediToplam.Visible = false;
             // 
             // lCariToplam
             // 
@@ -909,37 +1072,75 @@
             this.lCariToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.lCariToplam.Visible = false;
             // 
-            // lKrediToplam
+            // lKrediToplamTL
             // 
-            this.lKrediToplam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.lKrediToplam.AutoSize = true;
-            this.lKrediToplam.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold);
-            this.lKrediToplam.ForeColor = System.Drawing.Color.OliveDrab;
-            this.lKrediToplam.Location = new System.Drawing.Point(7, 61);
-            this.lKrediToplam.Name = "lKrediToplam";
-            this.lKrediToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lKrediToplam.Size = new System.Drawing.Size(103, 17);
-            this.lKrediToplam.TabIndex = 21;
-            this.lKrediToplam.Text = "0₺ + 0€ + 0$ + 0£";
-            this.lKrediToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lKrediToplam.Visible = false;
+            this.lKrediToplamTL.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lKrediToplamTL.AutoSize = true;
+            this.lKrediToplamTL.Font = new System.Drawing.Font("Calibri", 16F, System.Drawing.FontStyle.Bold);
+            this.lKrediToplamTL.ForeColor = System.Drawing.Color.OliveDrab;
+            this.lKrediToplamTL.Location = new System.Drawing.Point(174, 31);
+            this.lKrediToplamTL.Name = "lKrediToplamTL";
+            this.lKrediToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lKrediToplamTL.Size = new System.Drawing.Size(51, 27);
+            this.lKrediToplamTL.TabIndex = 24;
+            this.lKrediToplamTL.Text = "0.0₺";
+            this.lKrediToplamTL.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // lNakitToplam
+            // label13
             // 
-            this.lNakitToplam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.lNakitToplam.AutoSize = true;
-            this.lNakitToplam.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold);
-            this.lNakitToplam.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lNakitToplam.Location = new System.Drawing.Point(175, 61);
-            this.lNakitToplam.Name = "lNakitToplam";
-            this.lNakitToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lNakitToplam.Size = new System.Drawing.Size(103, 17);
-            this.lNakitToplam.TabIndex = 20;
-            this.lNakitToplam.Text = "0₺ + 0€ + 0$ + 0£";
-            this.lNakitToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lNakitToplam.Visible = false;
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold);
+            this.label13.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label13.Location = new System.Drawing.Point(837, 4);
+            this.label13.Name = "label13";
+            this.label13.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label13.Size = new System.Drawing.Size(144, 29);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Kasa Toplam ";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lKasaToplam
+            // 
+            this.lKasaToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lKasaToplam.AutoSize = true;
+            this.lKasaToplam.Font = new System.Drawing.Font("Calibri", 25F, System.Drawing.FontStyle.Bold);
+            this.lKasaToplam.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lKasaToplam.Location = new System.Drawing.Point(835, 33);
+            this.lKasaToplam.Name = "lKasaToplam";
+            this.lKasaToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lKasaToplam.Size = new System.Drawing.Size(86, 41);
+            this.lKasaToplam.TabIndex = 11;
+            this.lKasaToplam.Text = "0.0 ₺";
+            this.lKasaToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lBugunToplam
+            // 
+            this.lBugunToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lBugunToplam.AutoSize = true;
+            this.lBugunToplam.Font = new System.Drawing.Font("Calibri", 25F, System.Drawing.FontStyle.Bold);
+            this.lBugunToplam.ForeColor = System.Drawing.Color.SlateGray;
+            this.lBugunToplam.Location = new System.Drawing.Point(651, 33);
+            this.lBugunToplam.Name = "lBugunToplam";
+            this.lBugunToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lBugunToplam.Size = new System.Drawing.Size(86, 41);
+            this.lBugunToplam.TabIndex = 28;
+            this.lBugunToplam.Text = "0.0 ₺";
+            this.lBugunToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold);
+            this.label20.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label20.Location = new System.Drawing.Point(653, 4);
+            this.label20.Name = "label20";
+            this.label20.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label20.Size = new System.Drawing.Size(155, 29);
+            this.label20.TabIndex = 27;
+            this.label20.Text = "Bugun Toplam";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // dgvKasa
             // 
@@ -959,7 +1160,7 @@
             this.Cari,
             this.Tutar});
             this.dgvKasa.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.dgvKasa.Location = new System.Drawing.Point(3, 78);
+            this.dgvKasa.Location = new System.Drawing.Point(3, 75);
             this.dgvKasa.Name = "dgvKasa";
             this.dgvKasa.ReadOnly = true;
             this.dgvKasa.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -1017,34 +1218,6 @@
             this.Tutar.Name = "Tutar";
             this.Tutar.ReadOnly = true;
             // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold);
-            this.label13.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label13.Location = new System.Drawing.Point(837, 4);
-            this.label13.Name = "label13";
-            this.label13.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label13.Size = new System.Drawing.Size(144, 29);
-            this.label13.TabIndex = 12;
-            this.label13.Text = "Kasa Toplam ";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // lKasaToplam
-            // 
-            this.lKasaToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lKasaToplam.AutoSize = true;
-            this.lKasaToplam.Font = new System.Drawing.Font("Calibri", 25F, System.Drawing.FontStyle.Bold);
-            this.lKasaToplam.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lKasaToplam.Location = new System.Drawing.Point(835, 33);
-            this.lKasaToplam.Name = "lKasaToplam";
-            this.lKasaToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lKasaToplam.Size = new System.Drawing.Size(86, 41);
-            this.lKasaToplam.TabIndex = 11;
-            this.lKasaToplam.Text = "0.0 ₺";
-            this.lKasaToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1055,6 +1228,7 @@
             this.panel2.Controls.Add(this.bPrintKasa);
             this.panel2.Controls.Add(this.bSendMailKasa);
             this.panel2.Controls.Add(this.bCalculator_Kasa);
+            this.panel2.Controls.Add(this.menuStrip1);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1010, 72);
@@ -1067,7 +1241,7 @@
             this.bPrintKasa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bPrintKasa.Location = new System.Drawing.Point(802, 16);
             this.bPrintKasa.Name = "bPrintKasa";
-            this.bPrintKasa.Size = new System.Drawing.Size(39, 36);
+            this.bPrintKasa.Size = new System.Drawing.Size(39, 35);
             this.bPrintKasa.TabIndex = 28;
             this.bPrintKasa.UseVisualStyleBackColor = true;
             // 
@@ -1078,9 +1252,10 @@
             this.bSendMailKasa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bSendMailKasa.Location = new System.Drawing.Point(847, 16);
             this.bSendMailKasa.Name = "bSendMailKasa";
-            this.bSendMailKasa.Size = new System.Drawing.Size(39, 36);
+            this.bSendMailKasa.Size = new System.Drawing.Size(39, 35);
             this.bSendMailKasa.TabIndex = 27;
             this.bSendMailKasa.UseVisualStyleBackColor = true;
+            this.bSendMailKasa.Click += new System.EventHandler(this.bSendMailKasa_Click);
             // 
             // bCalculator_Kasa
             // 
@@ -1093,6 +1268,50 @@
             this.bCalculator_Kasa.TabIndex = 10;
             this.bCalculator_Kasa.UseVisualStyleBackColor = true;
             this.bCalculator_Kasa.Click += new System.EventHandler(this.bCalculator_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(697, 16);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(97, 33);
+            this.menuStrip1.TabIndex = 30;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // menuToolStripMenuItem
+            // 
+            this.menuToolStripMenuItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.kasadanTipDusToolStripMenuItem,
+            this.kasadanParaAlToolStripMenuItem,
+            this.kasayaGirdiEkleToolStripMenuItem});
+            this.menuToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 14F);
+            this.menuToolStripMenuItem.Image = global::Restorium.Properties.Resources.pencil_icon;
+            this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
+            this.menuToolStripMenuItem.Size = new System.Drawing.Size(89, 29);
+            this.menuToolStripMenuItem.Text = "Menu";
+            // 
+            // kasadanTipDusToolStripMenuItem
+            // 
+            this.kasadanTipDusToolStripMenuItem.Name = "kasadanTipDusToolStripMenuItem";
+            this.kasadanTipDusToolStripMenuItem.Size = new System.Drawing.Size(227, 30);
+            this.kasadanTipDusToolStripMenuItem.Text = "Kasadan Tip Dus";
+            this.kasadanTipDusToolStripMenuItem.Click += new System.EventHandler(this.kasadanTipDusToolStripMenuItem_Click);
+            // 
+            // kasadanParaAlToolStripMenuItem
+            // 
+            this.kasadanParaAlToolStripMenuItem.Name = "kasadanParaAlToolStripMenuItem";
+            this.kasadanParaAlToolStripMenuItem.Size = new System.Drawing.Size(227, 30);
+            this.kasadanParaAlToolStripMenuItem.Text = "Kasadan Para Al";
+            // 
+            // kasayaGirdiEkleToolStripMenuItem
+            // 
+            this.kasayaGirdiEkleToolStripMenuItem.Name = "kasayaGirdiEkleToolStripMenuItem";
+            this.kasayaGirdiEkleToolStripMenuItem.Size = new System.Drawing.Size(227, 30);
+            this.kasayaGirdiEkleToolStripMenuItem.Text = "Kasaya Girdi Ekle";
             // 
             // tp_Rapor
             // 
@@ -1135,7 +1354,7 @@
             // 
             // panel10
             // 
-            this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel10.Controls.Add(this.chartDaily);
@@ -1146,13 +1365,13 @@
             // 
             // chartDaily
             // 
-            this.chartDaily.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.chartDaily.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             chartArea1.Name = "ChartArea1";
             this.chartDaily.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chartDaily.Legends.Add(legend1);
-            this.chartDaily.Location = new System.Drawing.Point(-2, 13);
+            this.chartDaily.Location = new System.Drawing.Point(-2, 16);
             this.chartDaily.Name = "chartDaily";
             this.chartDaily.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
             series1.BorderColor = System.Drawing.Color.Transparent;
@@ -1178,7 +1397,7 @@
             // 
             // panel12
             // 
-            this.panel12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel12.Controls.Add(this.chart1);
@@ -1189,13 +1408,13 @@
             // 
             // chart1
             // 
-            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             chartArea2.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chart1.Legends.Add(legend2);
-            this.chart1.Location = new System.Drawing.Point(-2, 0);
+            this.chart1.Location = new System.Drawing.Point(-2, -2);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
             series2.BorderWidth = 3;
@@ -1217,7 +1436,7 @@
             // 
             // panel11
             // 
-            this.panel11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel11.Controls.Add(this.chartWeekly);
@@ -1228,7 +1447,7 @@
             // 
             // chartWeekly
             // 
-            this.chartWeekly.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.chartWeekly.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             chartArea3.Name = "ChartArea1";
             this.chartWeekly.ChartAreas.Add(chartArea3);
@@ -1265,6 +1484,8 @@
             // 
             // panel13
             // 
+            this.panel13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel13.BackColor = System.Drawing.Color.Silver;
             this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel13.Controls.Add(this.label16);
@@ -1365,6 +1586,7 @@
             // tp_Rehber
             // 
             this.tp_Rehber.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Rehber.Controls.Add(this.dgvRehber);
             this.tp_Rehber.Controls.Add(this.panel5);
             this.tp_Rehber.Location = new System.Drawing.Point(4, 28);
             this.tp_Rehber.Name = "tp_Rehber";
@@ -1373,6 +1595,152 @@
             this.tp_Rehber.Text = "Rehber";
             this.tp_Rehber.UseVisualStyleBackColor = true;
             // 
+            // bDuzenleRehber
+            // 
+            this.bDuzenleRehber.BackColor = System.Drawing.Color.LightSlateGray;
+            this.bDuzenleRehber.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bDuzenleRehber.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bDuzenleRehber.Location = new System.Drawing.Point(262, 19);
+            this.bDuzenleRehber.Name = "bDuzenleRehber";
+            this.bDuzenleRehber.Size = new System.Drawing.Size(94, 39);
+            this.bDuzenleRehber.TabIndex = 21;
+            this.bDuzenleRehber.Text = "Duzenle";
+            this.bDuzenleRehber.UseVisualStyleBackColor = false;
+            this.bDuzenleRehber.Click += new System.EventHandler(this.bDuzenleRehber_Click);
+            // 
+            // tbSearchKayit
+            // 
+            this.tbSearchKayit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSearchKayit.Location = new System.Drawing.Point(617, 26);
+            this.tbSearchKayit.Name = "tbSearchKayit";
+            this.tbSearchKayit.Size = new System.Drawing.Size(278, 27);
+            this.tbSearchKayit.TabIndex = 20;
+            // 
+            // bKayitAra
+            // 
+            this.bKayitAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bKayitAra.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.bKayitAra.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bKayitAra.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bKayitAra.Location = new System.Drawing.Point(901, 19);
+            this.bKayitAra.Name = "bKayitAra";
+            this.bKayitAra.Size = new System.Drawing.Size(94, 39);
+            this.bKayitAra.TabIndex = 19;
+            this.bKayitAra.Text = "Kayit Ara";
+            this.bKayitAra.UseVisualStyleBackColor = false;
+            // 
+            // bKayitSil
+            // 
+            this.bKayitSil.BackColor = System.Drawing.Color.Red;
+            this.bKayitSil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bKayitSil.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bKayitSil.Location = new System.Drawing.Point(362, 19);
+            this.bKayitSil.Name = "bKayitSil";
+            this.bKayitSil.Size = new System.Drawing.Size(94, 39);
+            this.bKayitSil.TabIndex = 18;
+            this.bKayitSil.Text = "Kayit Sil";
+            this.bKayitSil.UseVisualStyleBackColor = false;
+            this.bKayitSil.Click += new System.EventHandler(this.bKayitSil_Click);
+            // 
+            // bKayitEkle
+            // 
+            this.bKayitEkle.BackColor = System.Drawing.Color.YellowGreen;
+            this.bKayitEkle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bKayitEkle.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bKayitEkle.Location = new System.Drawing.Point(162, 19);
+            this.bKayitEkle.Name = "bKayitEkle";
+            this.bKayitEkle.Size = new System.Drawing.Size(94, 39);
+            this.bKayitEkle.TabIndex = 17;
+            this.bKayitEkle.Text = "Kayit Ekle";
+            this.bKayitEkle.UseVisualStyleBackColor = false;
+            this.bKayitEkle.Click += new System.EventHandler(this.bKayitEkle_Click);
+            // 
+            // dgvRehber
+            // 
+            this.dgvRehber.AllowUserToAddRows = false;
+            this.dgvRehber.AllowUserToDeleteRows = false;
+            this.dgvRehber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvRehber.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRehber.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn9,
+            this.Vergi_No,
+            this.Vergi_Dairesi,
+            this.E_Fatura_On_Kod});
+            this.dgvRehber.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.dgvRehber.Location = new System.Drawing.Point(0, 85);
+            this.dgvRehber.Name = "dgvRehber";
+            this.dgvRehber.ReadOnly = true;
+            this.dgvRehber.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvRehber.Size = new System.Drawing.Size(1006, 616);
+            this.dgvRehber.TabIndex = 16;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Isim Soyisim / Sirket Adi";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "Adres";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            this.dataGridViewTextBoxColumn8.Width = 255;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "Mail";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Telefon";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "Fax";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            this.dataGridViewTextBoxColumn7.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.HeaderText = "Iskonto Orani";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 60;
+            // 
+            // Vergi_No
+            // 
+            this.Vergi_No.HeaderText = "Vergi No";
+            this.Vergi_No.Name = "Vergi_No";
+            this.Vergi_No.ReadOnly = true;
+            // 
+            // Vergi_Dairesi
+            // 
+            this.Vergi_Dairesi.HeaderText = "Vergi Dairesi";
+            this.Vergi_Dairesi.Name = "Vergi_Dairesi";
+            this.Vergi_Dairesi.ReadOnly = true;
+            // 
+            // E_Fatura_On_Kod
+            // 
+            this.E_Fatura_On_Kod.HeaderText = "E-Fatura On Kod";
+            this.E_Fatura_On_Kod.Name = "E_Fatura_On_Kod";
+            this.E_Fatura_On_Kod.ReadOnly = true;
+            // 
             // panel5
             // 
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1380,6 +1748,11 @@
             this.panel5.BackColor = System.Drawing.Color.Transparent;
             this.panel5.BackgroundImage = global::Restorium.Properties.Resources.rehber;
             this.panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel5.Controls.Add(this.tbSearchKayit);
+            this.panel5.Controls.Add(this.bDuzenleRehber);
+            this.panel5.Controls.Add(this.bKayitAra);
+            this.panel5.Controls.Add(this.bKayitEkle);
+            this.panel5.Controls.Add(this.bKayitSil);
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(1010, 72);
@@ -1640,6 +2013,10 @@
             this.dgViewWaiter.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID_WAITER,
             this.WAITER,
+            this.ADRES,
+            this.TC_NO,
+            this.TEL,
+            this.MAIL,
             this.GOREVI});
             this.dgViewWaiter.Location = new System.Drawing.Point(11, 112);
             this.dgViewWaiter.Name = "dgViewWaiter";
@@ -1659,6 +2036,30 @@
             this.WAITER.HeaderText = "PERSONEL ADI";
             this.WAITER.Name = "WAITER";
             this.WAITER.ReadOnly = true;
+            // 
+            // ADRES
+            // 
+            this.ADRES.HeaderText = "ADRES";
+            this.ADRES.Name = "ADRES";
+            this.ADRES.ReadOnly = true;
+            // 
+            // TC_NO
+            // 
+            this.TC_NO.HeaderText = "TC Kimlik No";
+            this.TC_NO.Name = "TC_NO";
+            this.TC_NO.ReadOnly = true;
+            // 
+            // TEL
+            // 
+            this.TEL.HeaderText = "TELEFON";
+            this.TEL.Name = "TEL";
+            this.TEL.ReadOnly = true;
+            // 
+            // MAIL
+            // 
+            this.MAIL.HeaderText = "MAIL";
+            this.MAIL.Name = "MAIL";
+            this.MAIL.ReadOnly = true;
             // 
             // GOREVI
             // 
@@ -1691,126 +2092,6 @@
             this.bCalculator_Settings.UseVisualStyleBackColor = true;
             this.bCalculator_Settings.Click += new System.EventHandler(this.bCalculator_Click);
             // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.Data_Update);
-            // 
-            // printDocument1
-            // 
-            this.printDocument1.DocumentName = "Stok Raporu";
-            // 
-            // printDialog1
-            // 
-            this.printDialog1.AllowSomePages = true;
-            this.printDialog1.Document = this.printDocument1;
-            this.printDialog1.UseEXDialog = true;
-            // 
-            // timerReservation
-            // 
-            this.timerReservation.Enabled = true;
-            this.timerReservation.Interval = 5000;
-            this.timerReservation.Tick += new System.EventHandler(this.reservedTableStateChecker);
-            // 
-            // label20
-            // 
-            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold);
-            this.label20.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label20.Location = new System.Drawing.Point(653, 4);
-            this.label20.Name = "label20";
-            this.label20.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label20.Size = new System.Drawing.Size(155, 29);
-            this.label20.TabIndex = 27;
-            this.label20.Text = "Bugun Toplam";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // lBugunToplam
-            // 
-            this.lBugunToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lBugunToplam.AutoSize = true;
-            this.lBugunToplam.Font = new System.Drawing.Font("Calibri", 25F, System.Drawing.FontStyle.Bold);
-            this.lBugunToplam.ForeColor = System.Drawing.Color.SlateGray;
-            this.lBugunToplam.Location = new System.Drawing.Point(651, 33);
-            this.lBugunToplam.Name = "lBugunToplam";
-            this.lBugunToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lBugunToplam.Size = new System.Drawing.Size(86, 41);
-            this.lBugunToplam.TabIndex = 28;
-            this.lBugunToplam.Text = "0.0 ₺";
-            this.lBugunToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label22
-            // 
-            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
-            this.label22.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label22.Location = new System.Drawing.Point(342, 12);
-            this.label22.Name = "label22";
-            this.label22.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label22.Size = new System.Drawing.Size(89, 19);
-            this.label22.TabIndex = 29;
-            this.label22.Text = "Cari Toplam";
-            this.label22.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // lTipToplam
-            // 
-            this.lTipToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lTipToplam.AutoSize = true;
-            this.lTipToplam.Font = new System.Drawing.Font("Calibri", 16F, System.Drawing.FontStyle.Bold);
-            this.lTipToplam.ForeColor = System.Drawing.Color.DarkOrchid;
-            this.lTipToplam.Location = new System.Drawing.Point(510, 31);
-            this.lTipToplam.Name = "lTipToplam";
-            this.lTipToplam.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lTipToplam.Size = new System.Drawing.Size(56, 27);
-            this.lTipToplam.TabIndex = 30;
-            this.lTipToplam.Text = "0.0 ₺";
-            this.lTipToplam.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label12
-            // 
-            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
-            this.label12.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label12.Location = new System.Drawing.Point(7, 12);
-            this.label12.Name = "label12";
-            this.label12.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label12.Size = new System.Drawing.Size(135, 19);
-            this.label12.TabIndex = 31;
-            this.label12.Text = "Kredi Karti Toplam";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label14
-            // 
-            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
-            this.label14.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label14.Location = new System.Drawing.Point(510, 12);
-            this.label14.Name = "label14";
-            this.label14.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label14.Size = new System.Drawing.Size(84, 19);
-            this.label14.TabIndex = 32;
-            this.label14.Text = "Tip Toplam";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label15
-            // 
-            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
-            this.label15.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label15.Location = new System.Drawing.Point(174, 12);
-            this.label15.Name = "label15";
-            this.label15.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label15.Size = new System.Drawing.Size(100, 19);
-            this.label15.TabIndex = 33;
-            this.label15.Text = "Nakit Toplam";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1818,6 +2099,7 @@
             this.ClientSize = new System.Drawing.Size(1008, 729);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(1024, 768);
             this.Name = "MainForm";
             this.Text = "Restorium";
@@ -1825,6 +2107,8 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             this.tabControl1.ResumeLayout(false);
+            this.tp_Stok.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Adisyon.ResumeLayout(false);
             this.gbTableDetails.ResumeLayout(false);
             this.gbTableDetails.PerformLayout();
@@ -1834,16 +2118,17 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWifi)).EndInit();
-            this.tp_Stok.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();
             this.tp_Kasa.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKasa)).EndInit();
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.tp_Rapor.ResumeLayout(false);
             this.tcRapor.ResumeLayout(false);
             this.tpGrafikler.ResumeLayout(false);
@@ -1858,6 +2143,9 @@
             this.panel13.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.tp_Rehber.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRehber)).EndInit();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.tp_Ayarlar.ResumeLayout(false);
             this.tp_Ayarlar.PerformLayout();
             this.panel7.ResumeLayout(false);
@@ -1896,9 +2184,6 @@
         private System.Windows.Forms.DataGridView dgViewWaiter;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button bPersonelDuzenle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID_WAITER;
-        private System.Windows.Forms.DataGridViewTextBoxColumn WAITER;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GOREVI;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintDialog printDialog1;
@@ -1919,13 +2204,6 @@
         private System.Windows.Forms.Button bCalculator_Settings;
         private System.Windows.Forms.Button bCalculator_Kasa;
         private System.Windows.Forms.Button bCalculator_Stok;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ACIKLAMA;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ADET;
-        private System.Windows.Forms.DataGridViewComboBoxColumn BIRIM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BIRIM_FIYAT;
-        private System.Windows.Forms.DataGridViewComboBoxColumn PARA_BIRIMI;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn DINAMIK_STOK_KONTROLU;
         private System.Windows.Forms.Button bStokAdd;
         private System.Windows.Forms.GroupBox gbTableDetails;
         private System.Windows.Forms.Label lTableCounter;
@@ -1985,7 +2263,6 @@
         private System.Windows.Forms.Button bSendMailKasa;
         private System.Windows.Forms.Button bPrintKasa;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartDaily;
-        private System.Windows.Forms.Button bPrintReport;
         private System.Windows.Forms.Button bSendMailReport;
         private System.Windows.Forms.TextBox tbMail;
         private System.Windows.Forms.Label label17;
@@ -2001,5 +2278,42 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem kasadanTipDusToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem kasadanParaAlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem kasayaGirdiEkleToolStripMenuItem;
+        private System.Windows.Forms.Button bKayitEkle;
+        private System.Windows.Forms.DataGridView dgvRehber;
+        private System.Windows.Forms.Button bKayitSil;
+        private System.Windows.Forms.TextBox tbSearchKayit;
+        private System.Windows.Forms.Button bKayitAra;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Vergi_No;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Vergi_Dairesi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn E_Fatura_On_Kod;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID_WAITER;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WAITER;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ADRES;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TC_NO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TEL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MAIL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GOREVI;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ACIKLAMA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ADET;
+        private System.Windows.Forms.DataGridViewComboBoxColumn BIRIM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BIRIM_FIYAT;
+        private System.Windows.Forms.DataGridViewComboBoxColumn PARA_BIRIMI;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn DINAMIK_STOK_KONTROLU;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn MENU_ITEM;
+        private System.Windows.Forms.Button bDuzenleRehber;
+        private System.Windows.Forms.Button bStokSil;
+        private System.Windows.Forms.Button bPrintReport;
     }
 }
