@@ -52,7 +52,7 @@ namespace Restorium
         public static int dailyTableCounter = 0;
         public static int databaseDayCounter = 0;
         public static bool[] emptyTableList = new bool[200];
-        public static string[,] tableDetails = new string[300, 10];
+        public static string[,] tableDetails = new string[300, 20];
         public static string[,] kasaToplamArray = new string[360, 2];
         public static string[] database = new string[14];
         public static string[,] hourlySum = new string[24,2];
@@ -1328,10 +1328,33 @@ namespace Restorium
             {
                 using (var tableClose = new TableCloseForm())
                 {
+                    UserLog.WConsole("LastChoosen Table Index : " + findTableOrder(LastChoosenTable.TableNumber));
+                    UserLog.WConsole("LastChoosen Table Name : " +LastChoosenTable.TableNumber);
                     //stokAdd.ListName = "Personel";
                     var result = tableClose.ShowDialog();
                     if (result == DialogResult.OK)
                     {
+                        ///Urunleri Stoktan Dus ----------------------------------------------------------------------
+                        //tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 2] = toplamTutar.ToString(); // Tutar
+                        //tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 4] = dgViewSiparis.RowCount.ToString(); // Toplam urun siparis cesidi
+                        for (int k = 0; k < dgViewSiparis.RowCount; k++)
+                        {
+                            for (int m = 0; m < dgView.RowCount; m++)
+                            {
+                                if (dgView.Rows[m].Cells[0].Value.ToString() == tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 1, k])
+                                {
+                                  
+                                    if(dgView.Rows[m].Cells[6].Value.ToString()=="Checked")
+                                    {
+                                        dgView.Rows[m].Cells[2].Value = Convert.ToInt32(dgView.Rows[m].Cells[2].Value) - Convert.ToInt32(tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 2, k]);
+                                        UserLog.WConsole("Stoktan urun dusuldu !");
+                                        saveStokToFile();
+                                    }
+                                }
+                            }
+                            //tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 1, k] = dgViewSiparis.Rows[k].Cells[0].Value.ToString(); // Urun id si
+                            //tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 2, k] = dgViewSiparis.Rows[k].Cells[2].Value.ToString(); // Urun adedi
+                        }
                         ///Nakit Toplam  -----------------------------------------------------------------------------
                         string[] nakitDizi = lNakitToplam.Text.Split('+');
                         switch (LastChoosenTable.paraBirimi)

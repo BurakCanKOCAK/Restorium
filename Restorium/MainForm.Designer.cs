@@ -2121,6 +2121,7 @@
             // 
             // bDeletePersonel
             // 
+            this.bDeletePersonel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bDeletePersonel.BackColor = System.Drawing.Color.Ivory;
             this.bDeletePersonel.BackgroundImage = global::Restorium.Properties.Resources.sign_error_icon;
             this.bDeletePersonel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
