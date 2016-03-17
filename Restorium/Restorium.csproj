@@ -109,10 +109,10 @@
     <Compile Include="ContactAdd.Designer.cs">
       <DependentUpon>ContactAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataSet_Stok.Designer.cs">
+    <Compile Include="StokDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet_Stok.xsd</DependentUpon>
+      <DependentUpon>StokDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="DebugMonitor.cs">
       <SubType>Form</SubType>
@@ -198,16 +198,17 @@
     <EmbeddedResource Include="TableOpenForm.resx">
       <DependentUpon>TableOpenForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="DataSet_Stok.xsc">
-      <DependentUpon>DataSet_Stok.xsd</DependentUpon>
+    <None Include="app.config" />
+    <None Include="StokDataSet.xsc">
+      <DependentUpon>StokDataSet.xsd</DependentUpon>
     </None>
-    <None Include="DataSet_Stok.xsd">
-      <SubType>Designer</SubType>
+    <None Include="StokDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet_Stok.Designer.cs</LastGenOutput>
+      <LastGenOutput>StokDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
-    <None Include="DataSet_Stok.xss">
-      <DependentUpon>DataSet_Stok.xsd</DependentUpon>
+    <None Include="StokDataSet.xss">
+      <DependentUpon>StokDataSet.xsd</DependentUpon>
     </None>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -253,6 +254,13 @@
     <None Include="Resources\settings.png" />
     <None Include="Resources\settings2.png" />
     <None Include="Resources\printer.png" />
+    <Content Include="Database\Database_Stok.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Database\Database_Stok_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>Database_Stok.mdf</DependentUpon>
+    </Content>
     <Content Include="Graphicloads-Polygon-Restaurant.ico" />
     <None Include="Resources\Calculator-icon %281%29.png" />
     <None Include="Resources\Apps-Calculator-Metro-icon.png" />
@@ -261,6 +269,10 @@
     <None Include="Resources\plus.png" />
     <None Include="Resources\cross-3-icon.png" />
     <None Include="Resources\plus-icon %281%29.png2.png" />
+    <None Include="Resources\cross-3-icon1.png" />
+    <None Include="Resources\plus1.png" />
+    <None Include="Resources\add-1-icon.png" />
+    <None Include="Resources\Other-Search-Metro-icon.png" />
     <Content Include="Resources\ReportDatabase.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -270,6 +282,21 @@
     <None Include="Resources\printer-icon.png" />
     <None Include="Resources\pencil-icon.png" />
     <None Include="Resources\check-icon.png" />
+    <None Include="Resources\sign-error-icon.png" />
+    <None Include="Resources\sign-add-icon %281%29.png" />
+    <None Include="Resources\sign-sync-icon.png" />
+    <None Include="Resources\switch-off-icon.png" />
+    <None Include="Resources\Shopping-basket-remove-icon.png" />
+    <None Include="Resources\Shopping-basket-add-icon.png" />
+    <None Include="Resources\Shopping-basket-remove-icon1.png" />
+    <None Include="Resources\search-engine-icon.png" />
+    <None Include="Resources\Search-icon.png" />
+    <None Include="Resources\switch-on-icon.png" />
+    <None Include="Resources\Search-icon1.png" />
+    <None Include="Resources\uiswitch_off_2x.png" />
+    <None Include="Resources\uiswitch_on_2x.png" />
+    <None Include="Resources\switch_off.png" />
+    <None Include="Resources\switch_on.png" />
     <Content Include="Resources\Untitled-1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -288,12 +315,18 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SqlServer.SqlLocalDB.11.1">
+      <Visible>False</Visible>
+      <ProductName>SQL Server 2012 Express LocalDB</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
       <Visible>False</Visible>
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

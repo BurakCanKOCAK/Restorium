@@ -153,11 +153,6 @@
             this.bPrintReport = new System.Windows.Forms.Button();
             this.bSendMailReport = new System.Windows.Forms.Button();
             this.tp_Rehber = new System.Windows.Forms.TabPage();
-            this.bDuzenleRehber = new System.Windows.Forms.Button();
-            this.tbSearchKayit = new System.Windows.Forms.TextBox();
-            this.bKayitAra = new System.Windows.Forms.Button();
-            this.bKayitSil = new System.Windows.Forms.Button();
-            this.bKayitEkle = new System.Windows.Forms.Button();
             this.dgvRehber = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -169,6 +164,11 @@
             this.Vergi_Dairesi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.E_Fatura_On_Kod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.tbSearchKayit = new System.Windows.Forms.TextBox();
+            this.bDuzenleRehber = new System.Windows.Forms.Button();
+            this.bKayitAra = new System.Windows.Forms.Button();
+            this.bKayitEkle = new System.Windows.Forms.Button();
+            this.bKayitSil = new System.Windows.Forms.Button();
             this.tp_Ayarlar = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.cbAutoMail = new System.Windows.Forms.CheckBox();
@@ -201,6 +201,7 @@
             this.GOREVI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.bCalculator_Settings = new System.Windows.Forms.Button();
+            this.bDeletePersonel = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tp_Stok.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
@@ -826,11 +827,12 @@
             // bStokSil
             // 
             this.bStokSil.BackColor = System.Drawing.Color.Ivory;
-            this.bStokSil.BackgroundImage = global::Restorium.Properties.Resources.cross_3_icon;
+            this.bStokSil.BackgroundImage = global::Restorium.Properties.Resources.sign_error_icon;
             this.bStokSil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bStokSil.Location = new System.Drawing.Point(317, 17);
+            this.bStokSil.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bStokSil.Location = new System.Drawing.Point(359, 17);
             this.bStokSil.Name = "bStokSil";
-            this.bStokSil.Size = new System.Drawing.Size(39, 36);
+            this.bStokSil.Size = new System.Drawing.Size(39, 39);
             this.bStokSil.TabIndex = 13;
             this.bStokSil.UseVisualStyleBackColor = false;
             this.bStokSil.Click += new System.EventHandler(this.bStokSil_Click);
@@ -838,11 +840,11 @@
             // bStokAdd
             // 
             this.bStokAdd.BackColor = System.Drawing.Color.Ivory;
-            this.bStokAdd.BackgroundImage = global::Restorium.Properties.Resources.plus;
+            this.bStokAdd.BackgroundImage = global::Restorium.Properties.Resources.sign_add_icon__1_;
             this.bStokAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bStokAdd.Location = new System.Drawing.Point(360, 17);
+            this.bStokAdd.Location = new System.Drawing.Point(402, 17);
             this.bStokAdd.Name = "bStokAdd";
-            this.bStokAdd.Size = new System.Drawing.Size(39, 36);
+            this.bStokAdd.Size = new System.Drawing.Size(39, 39);
             this.bStokAdd.TabIndex = 12;
             this.bStokAdd.UseVisualStyleBackColor = false;
             this.bStokAdd.Click += new System.EventHandler(this.StokAdd_Click);
@@ -851,9 +853,9 @@
             // 
             this.bCalculator_Stok.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
             this.bCalculator_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.bCalculator_Stok.Location = new System.Drawing.Point(405, 17);
+            this.bCalculator_Stok.Location = new System.Drawing.Point(447, 17);
             this.bCalculator_Stok.Name = "bCalculator_Stok";
-            this.bCalculator_Stok.Size = new System.Drawing.Size(39, 36);
+            this.bCalculator_Stok.Size = new System.Drawing.Size(39, 39);
             this.bCalculator_Stok.TabIndex = 11;
             this.bCalculator_Stok.UseVisualStyleBackColor = true;
             this.bCalculator_Stok.Click += new System.EventHandler(this.bCalculator_Click);
@@ -861,32 +863,42 @@
             // bStokAra
             // 
             this.bStokAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bStokAra.Location = new System.Drawing.Point(931, 19);
+            this.bStokAra.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.bStokAra.Image = global::Restorium.Properties.Resources.Search_icon;
+            this.bStokAra.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bStokAra.Location = new System.Drawing.Point(913, 17);
             this.bStokAra.Name = "bStokAra";
-            this.bStokAra.Size = new System.Drawing.Size(64, 33);
+            this.bStokAra.Size = new System.Drawing.Size(82, 39);
             this.bStokAra.TabIndex = 3;
-            this.bStokAra.Text = "Ara";
+            this.bStokAra.Text = "Ara          ";
+            this.bStokAra.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bStokAra.UseVisualStyleBackColor = true;
             this.bStokAra.Click += new System.EventHandler(this.bStokAra_Click);
             // 
             // bDuzenle
             // 
-            this.bDuzenle.BackColor = System.Drawing.Color.Silver;
-            this.bDuzenle.Location = new System.Drawing.Point(178, 17);
+            this.bDuzenle.BackColor = System.Drawing.Color.White;
+            this.bDuzenle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bDuzenle.ForeColor = System.Drawing.Color.Red;
+            this.bDuzenle.Image = global::Restorium.Properties.Resources.switch_off;
+            this.bDuzenle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bDuzenle.Location = new System.Drawing.Point(196, 17);
             this.bDuzenle.Name = "bDuzenle";
-            this.bDuzenle.Size = new System.Drawing.Size(133, 36);
+            this.bDuzenle.Size = new System.Drawing.Size(147, 39);
             this.bDuzenle.TabIndex = 1;
-            this.bDuzenle.Text = "Duzenle(Kapali)";
+            this.bDuzenle.Text = "Duzenle";
+            this.bDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bDuzenle.UseVisualStyleBackColor = false;
             this.bDuzenle.Click += new System.EventHandler(this.bDuzenle_Click);
             // 
             // tbSearchKey
             // 
             this.tbSearchKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSearchKey.Location = new System.Drawing.Point(698, 23);
+            this.tbSearchKey.Location = new System.Drawing.Point(680, 23);
             this.tbSearchKey.Name = "tbSearchKey";
             this.tbSearchKey.Size = new System.Drawing.Size(227, 27);
             this.tbSearchKey.TabIndex = 2;
+            this.tbSearchKey.TextChanged += new System.EventHandler(this.StokSearchBoxTextChanged);
             // 
             // tp_Kasa
             // 
@@ -1567,7 +1579,7 @@
             this.bPrintReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bPrintReport.Location = new System.Drawing.Point(887, 16);
             this.bPrintReport.Name = "bPrintReport";
-            this.bPrintReport.Size = new System.Drawing.Size(39, 36);
+            this.bPrintReport.Size = new System.Drawing.Size(39, 39);
             this.bPrintReport.TabIndex = 30;
             this.bPrintReport.UseVisualStyleBackColor = true;
             // 
@@ -1578,7 +1590,7 @@
             this.bSendMailReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bSendMailReport.Location = new System.Drawing.Point(932, 16);
             this.bSendMailReport.Name = "bSendMailReport";
-            this.bSendMailReport.Size = new System.Drawing.Size(39, 36);
+            this.bSendMailReport.Size = new System.Drawing.Size(39, 39);
             this.bSendMailReport.TabIndex = 29;
             this.bSendMailReport.UseVisualStyleBackColor = true;
             this.bSendMailReport.Click += new System.EventHandler(this.bSendMailReport_Click);
@@ -1594,66 +1606,6 @@
             this.tp_Rehber.TabIndex = 5;
             this.tp_Rehber.Text = "Rehber";
             this.tp_Rehber.UseVisualStyleBackColor = true;
-            // 
-            // bDuzenleRehber
-            // 
-            this.bDuzenleRehber.BackColor = System.Drawing.Color.LightSlateGray;
-            this.bDuzenleRehber.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bDuzenleRehber.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bDuzenleRehber.Location = new System.Drawing.Point(262, 19);
-            this.bDuzenleRehber.Name = "bDuzenleRehber";
-            this.bDuzenleRehber.Size = new System.Drawing.Size(94, 39);
-            this.bDuzenleRehber.TabIndex = 21;
-            this.bDuzenleRehber.Text = "Duzenle";
-            this.bDuzenleRehber.UseVisualStyleBackColor = false;
-            this.bDuzenleRehber.Click += new System.EventHandler(this.bDuzenleRehber_Click);
-            // 
-            // tbSearchKayit
-            // 
-            this.tbSearchKayit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSearchKayit.Location = new System.Drawing.Point(617, 26);
-            this.tbSearchKayit.Name = "tbSearchKayit";
-            this.tbSearchKayit.Size = new System.Drawing.Size(278, 27);
-            this.tbSearchKayit.TabIndex = 20;
-            // 
-            // bKayitAra
-            // 
-            this.bKayitAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bKayitAra.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.bKayitAra.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bKayitAra.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bKayitAra.Location = new System.Drawing.Point(901, 19);
-            this.bKayitAra.Name = "bKayitAra";
-            this.bKayitAra.Size = new System.Drawing.Size(94, 39);
-            this.bKayitAra.TabIndex = 19;
-            this.bKayitAra.Text = "Kayit Ara";
-            this.bKayitAra.UseVisualStyleBackColor = false;
-            // 
-            // bKayitSil
-            // 
-            this.bKayitSil.BackColor = System.Drawing.Color.Red;
-            this.bKayitSil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bKayitSil.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bKayitSil.Location = new System.Drawing.Point(362, 19);
-            this.bKayitSil.Name = "bKayitSil";
-            this.bKayitSil.Size = new System.Drawing.Size(94, 39);
-            this.bKayitSil.TabIndex = 18;
-            this.bKayitSil.Text = "Kayit Sil";
-            this.bKayitSil.UseVisualStyleBackColor = false;
-            this.bKayitSil.Click += new System.EventHandler(this.bKayitSil_Click);
-            // 
-            // bKayitEkle
-            // 
-            this.bKayitEkle.BackColor = System.Drawing.Color.YellowGreen;
-            this.bKayitEkle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bKayitEkle.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bKayitEkle.Location = new System.Drawing.Point(162, 19);
-            this.bKayitEkle.Name = "bKayitEkle";
-            this.bKayitEkle.Size = new System.Drawing.Size(94, 39);
-            this.bKayitEkle.TabIndex = 17;
-            this.bKayitEkle.Text = "Kayit Ekle";
-            this.bKayitEkle.UseVisualStyleBackColor = false;
-            this.bKayitEkle.Click += new System.EventHandler(this.bKayitEkle_Click);
             // 
             // dgvRehber
             // 
@@ -1758,9 +1710,78 @@
             this.panel5.Size = new System.Drawing.Size(1010, 72);
             this.panel5.TabIndex = 11;
             // 
+            // tbSearchKayit
+            // 
+            this.tbSearchKayit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSearchKayit.Location = new System.Drawing.Point(617, 26);
+            this.tbSearchKayit.Name = "tbSearchKayit";
+            this.tbSearchKayit.Size = new System.Drawing.Size(278, 27);
+            this.tbSearchKayit.TabIndex = 20;
+            // 
+            // bDuzenleRehber
+            // 
+            this.bDuzenleRehber.BackColor = System.Drawing.Color.DodgerBlue;
+            this.bDuzenleRehber.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bDuzenleRehber.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bDuzenleRehber.Image = global::Restorium.Properties.Resources.sign_sync_icon;
+            this.bDuzenleRehber.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bDuzenleRehber.Location = new System.Drawing.Point(262, 19);
+            this.bDuzenleRehber.Name = "bDuzenleRehber";
+            this.bDuzenleRehber.Size = new System.Drawing.Size(94, 39);
+            this.bDuzenleRehber.TabIndex = 21;
+            this.bDuzenleRehber.Text = "Duzenle";
+            this.bDuzenleRehber.UseVisualStyleBackColor = false;
+            this.bDuzenleRehber.Click += new System.EventHandler(this.bDuzenleRehber_Click);
+            // 
+            // bKayitAra
+            // 
+            this.bKayitAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bKayitAra.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.bKayitAra.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bKayitAra.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bKayitAra.Image = global::Restorium.Properties.Resources.Search_icon1;
+            this.bKayitAra.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bKayitAra.Location = new System.Drawing.Point(901, 19);
+            this.bKayitAra.Name = "bKayitAra";
+            this.bKayitAra.Size = new System.Drawing.Size(94, 39);
+            this.bKayitAra.TabIndex = 19;
+            this.bKayitAra.Text = "Ara        ";
+            this.bKayitAra.UseVisualStyleBackColor = false;
+            // 
+            // bKayitEkle
+            // 
+            this.bKayitEkle.BackColor = System.Drawing.Color.YellowGreen;
+            this.bKayitEkle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bKayitEkle.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bKayitEkle.Image = global::Restorium.Properties.Resources.sign_add_icon__1_;
+            this.bKayitEkle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bKayitEkle.Location = new System.Drawing.Point(162, 19);
+            this.bKayitEkle.Name = "bKayitEkle";
+            this.bKayitEkle.Size = new System.Drawing.Size(94, 39);
+            this.bKayitEkle.TabIndex = 17;
+            this.bKayitEkle.Text = "Kayit Ekle";
+            this.bKayitEkle.UseVisualStyleBackColor = false;
+            this.bKayitEkle.Click += new System.EventHandler(this.bKayitEkle_Click);
+            // 
+            // bKayitSil
+            // 
+            this.bKayitSil.BackColor = System.Drawing.Color.Red;
+            this.bKayitSil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bKayitSil.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bKayitSil.Image = global::Restorium.Properties.Resources.sign_error_icon;
+            this.bKayitSil.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bKayitSil.Location = new System.Drawing.Point(362, 19);
+            this.bKayitSil.Name = "bKayitSil";
+            this.bKayitSil.Size = new System.Drawing.Size(94, 39);
+            this.bKayitSil.TabIndex = 18;
+            this.bKayitSil.Text = "Kayit Sil";
+            this.bKayitSil.UseVisualStyleBackColor = false;
+            this.bKayitSil.Click += new System.EventHandler(this.bKayitSil_Click);
+            // 
             // tp_Ayarlar
             // 
             this.tp_Ayarlar.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Ayarlar.Controls.Add(this.bDeletePersonel);
             this.tp_Ayarlar.Controls.Add(this.panel7);
             this.tp_Ayarlar.Controls.Add(this.bPersonelDuzenle);
             this.tp_Ayarlar.Controls.Add(this.label1);
@@ -1819,11 +1840,14 @@
             this.bAyarlarDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bAyarlarDuzenle.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Italic);
             this.bAyarlarDuzenle.ForeColor = System.Drawing.Color.Red;
-            this.bAyarlarDuzenle.Location = new System.Drawing.Point(902, 4);
+            this.bAyarlarDuzenle.Image = global::Restorium.Properties.Resources.switch_off;
+            this.bAyarlarDuzenle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bAyarlarDuzenle.Location = new System.Drawing.Point(837, 4);
             this.bAyarlarDuzenle.Name = "bAyarlarDuzenle";
-            this.bAyarlarDuzenle.Size = new System.Drawing.Size(74, 28);
+            this.bAyarlarDuzenle.Size = new System.Drawing.Size(139, 28);
             this.bAyarlarDuzenle.TabIndex = 17;
             this.bAyarlarDuzenle.Text = "Duzenle";
+            this.bAyarlarDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bAyarlarDuzenle.UseVisualStyleBackColor = true;
             this.bAyarlarDuzenle.Click += new System.EventHandler(this.bAyarlarDuzenle_Click);
             // 
@@ -1984,11 +2008,14 @@
             // 
             this.bPersonelDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bPersonelDuzenle.ForeColor = System.Drawing.Color.Red;
-            this.bPersonelDuzenle.Location = new System.Drawing.Point(920, 78);
+            this.bPersonelDuzenle.Image = global::Restorium.Properties.Resources.switch_off;
+            this.bPersonelDuzenle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bPersonelDuzenle.Location = new System.Drawing.Point(856, 78);
             this.bPersonelDuzenle.Name = "bPersonelDuzenle";
-            this.bPersonelDuzenle.Size = new System.Drawing.Size(75, 28);
+            this.bPersonelDuzenle.Size = new System.Drawing.Size(139, 28);
             this.bPersonelDuzenle.TabIndex = 15;
             this.bPersonelDuzenle.Text = "Duzenle";
+            this.bPersonelDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bPersonelDuzenle.UseVisualStyleBackColor = true;
             this.bPersonelDuzenle.Click += new System.EventHandler(this.bPersonelDuzenle_Click);
             // 
@@ -2087,10 +2114,23 @@
             this.bCalculator_Settings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bCalculator_Settings.Location = new System.Drawing.Point(920, 16);
             this.bCalculator_Settings.Name = "bCalculator_Settings";
-            this.bCalculator_Settings.Size = new System.Drawing.Size(39, 36);
+            this.bCalculator_Settings.Size = new System.Drawing.Size(39, 39);
             this.bCalculator_Settings.TabIndex = 10;
             this.bCalculator_Settings.UseVisualStyleBackColor = true;
             this.bCalculator_Settings.Click += new System.EventHandler(this.bCalculator_Click);
+            // 
+            // bDeletePersonel
+            // 
+            this.bDeletePersonel.BackColor = System.Drawing.Color.Ivory;
+            this.bDeletePersonel.BackgroundImage = global::Restorium.Properties.Resources.sign_error_icon;
+            this.bDeletePersonel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bDeletePersonel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bDeletePersonel.Location = new System.Drawing.Point(822, 78);
+            this.bDeletePersonel.Name = "bDeletePersonel";
+            this.bDeletePersonel.Size = new System.Drawing.Size(28, 28);
+            this.bDeletePersonel.TabIndex = 17;
+            this.bDeletePersonel.UseVisualStyleBackColor = false;
+            this.bDeletePersonel.Click += new System.EventHandler(this.bDeletePersonel_Click);
             // 
             // MainForm
             // 
@@ -2315,5 +2355,6 @@
         private System.Windows.Forms.Button bDuzenleRehber;
         private System.Windows.Forms.Button bStokSil;
         private System.Windows.Forms.Button bPrintReport;
+        private System.Windows.Forms.Button bDeletePersonel;
     }
 }

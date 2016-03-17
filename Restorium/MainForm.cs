@@ -15,6 +15,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Net;
 using System.Net.Mail;
 using System.Globalization;
+using System.Threading;
 
 namespace Restorium
 {
@@ -46,7 +47,7 @@ namespace Restorium
         public static string[] menuID = new string[500];
         public static decimal[] menuPrice = new decimal[500];
         public static string[] tableNumbers = new string[200];
-        int[] matchedIndexList = new int[5000];
+        int[] matchedStokIndexList = new int[5000];
         public static int tableCounter = 0;
         public static int dailyTableCounter = 0;
         public static int databaseDayCounter = 0;
@@ -78,6 +79,7 @@ namespace Restorium
         private bool ayarlarDuzenlemeModu = false;
         private bool mailSentFlag = false;
         private bool rehberDuzenleFlag = false;
+        private bool searchModeOnStok = false;
         int countOfTables = 1;
         bool tableFlag = false;
         private Bitmap bitmap;
@@ -92,7 +94,7 @@ namespace Restorium
         {
             if (DateTime.UtcNow.ToLocalTime().Month >= 2 )
             {
-                if (DateTime.UtcNow.ToLocalTime().Day > 15)
+                if (DateTime.UtcNow.ToLocalTime().Day > 20)
                 {
                     Environment.Exit(0);
                 }
@@ -101,6 +103,7 @@ namespace Restorium
             User = INI.Read("LoggedUser", "Login");
             SetExchangeValues();
             StokDataSet();
+            //GetStokFromDB();
             RehberDataSet();
             SettingsDataSet();
             SiparisScreenInitialSet();
@@ -110,6 +113,23 @@ namespace Restorium
             FirstLoadDataFromXml();
             KasaLoad();
         }
+
+/// ////////////////////////////////////////
+        private void GetStokFromDB()
+        {
+            SqlConnection con;
+            SqlDataAdapter da;
+            SqlCommand cmd;
+            DataSet ds;
+            con = new SqlConnection("server=.; Initial Catalog=Database/Database_Stok;Integrated Security=SSPI");
+            da = new SqlDataAdapter("Select *From TableStok", con);
+            ds = new DataSet();
+            con.Open();
+            da.Fill(ds, "TableStok");
+            dgView.DataSource = ds.Tables["TableStok"];
+            con.Close();
+        }
+/// ////////////////////////////////////////
 
         private void RehberDataSet()
         {
@@ -371,6 +391,8 @@ namespace Restorium
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'database_StokDataSet1.TableStok' table. You can move, or remove it, as needed.
+            //  this.tableStokTableAdapter.Fill(this.database_StokDataSet1.TableStok);
             lDate.Text = DateTime.UtcNow.ToLocalTime().ToString();
             this.dgvKasa.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
@@ -485,8 +507,11 @@ namespace Restorium
                 dgView.AllowDrop = true;
                 dgView.ReadOnly = false;
                 dgView.Refresh();
-                bDuzenle.BackColor = Color.Green;
-                bDuzenle.Text = "Duzenle(Acik)";
+                //bDuzenle.BackColor = Color.Green;
+                bDuzenle.Image = Properties.Resources.switch_on;
+                bDuzenle.Text = "Duzenle";
+                bDuzenle.ForeColor = Color.Green;
+                bStokSil.Visible = false;
                 dgView.SelectionMode = DataGridViewSelectionMode.CellSelect;
 
             }
@@ -499,8 +524,11 @@ namespace Restorium
                 dgView.AllowDrop = false;
                 dgView.ReadOnly = true;
                 dgView.Refresh();
-                bDuzenle.BackColor = Color.Silver;
-                bDuzenle.Text = "Duzenle(Kapali)";
+                //bDuzenle.BackColor = Color.Silver;
+                bDuzenle.Image = Properties.Resources.switch_off;
+                bDuzenle.Text = "Duzenle";
+                bDuzenle.ForeColor = Color.Red;
+                bStokSil.Visible = true;
                 dgView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 saveStokToFile();
 
@@ -511,51 +539,108 @@ namespace Restorium
         #region STOK DATA SAVE / LOAD / SEARCH FROM FILE
         private void saveStokToFile()
         {
-            int stokCount = dgView.RowCount;
+            if(searchModeOnStok== false)
+            {
+            stokCount = dgView.Rows.Count;
             INI.DeleteSection("Stok");
             INI.Write("stokCount", stokCount.ToString(), "Stok");
-            for (int i = 0; i < stokCount; i++)
-            {
-                INI.Write("id" + i.ToString(), dgView.Rows[i].Cells[0].Value.ToString(), "Stok");
-                INI.Write("aciklama" + i.ToString(), dgView.Rows[i].Cells[1].Value.ToString(), "Stok");
-                INI.Write("adet" + i.ToString(), dgView.Rows[i].Cells[2].Value.ToString(), "Stok");
-                INI.Write("birim" + i.ToString(), dgView.Rows[i].Cells[3].Value.ToString(), "Stok");
-                INI.Write("birimFiyat" + i.ToString(), dgView.Rows[i].Cells[4].Value.ToString(), "Stok");
-                INI.Write("paraBirimi" + i.ToString(), dgView.Rows[i].Cells[5].Value.ToString(), "Stok");
-                // UserLog.WConsole(dgView.Rows[i].Cells[6].Value.ToString());
-                //dinamikStokKontrolu
-                bool checkBoxStatusMenuUrunu = Convert.ToBoolean(dgView.Rows[i].Cells[7].Value);
-                if (checkBoxStatusMenuUrunu == false)
+            }
+            /////
+            
+                if (searchModeOnStok==true)
                 {
-                    INI.Write("menuUrunu" + i.ToString(), "false", "Stok");
-                    INI.Write("dinamikStokKontrolu" + i.ToString(), "false", "Stok");
-                    dgView.Rows[i].Cells[7].Value = CheckState.Unchecked;
-                    dgView.Refresh();
+                    for (int j = 0; j < countSearchIndexList; j++)
+                    {
+                        
+                            ////
+                            INI.Write("id" + matchedStokIndexList[j], dgView.Rows[j].Cells[0].Value.ToString(), "Stok");
+                            INI.Write("aciklama" + matchedStokIndexList[j], dgView.Rows[j].Cells[1].Value.ToString(), "Stok");
+                            INI.Write("adet" + matchedStokIndexList[j], dgView.Rows[j].Cells[2].Value.ToString(), "Stok");
+                            INI.Write("birim" + matchedStokIndexList[j], dgView.Rows[j].Cells[3].Value.ToString(), "Stok");
+                            INI.Write("birimFiyat" + matchedStokIndexList[j], dgView.Rows[j].Cells[4].Value.ToString(), "Stok");
+                            INI.Write("paraBirimi" + matchedStokIndexList[j], dgView.Rows[j].Cells[5].Value.ToString(), "Stok");
+                            bool checkBoxStatusMenuUrunu = Convert.ToBoolean(dgView.Rows[j].Cells[7].Value);
+                            if (checkBoxStatusMenuUrunu == false)
+                            {
+                                INI.Write("menuUrunu" + matchedStokIndexList[j], "false", "Stok");
+                                INI.Write("dinamikStokKontrolu" + matchedStokIndexList[j], "false", "Stok");
+                                dgView.Rows[j].Cells[7].Value = CheckState.Unchecked;
+                                dgView.Refresh();
+                            }
+                            else
+                            {
+                                INI.Write("menuUrunu" + matchedStokIndexList[j], "true", "Stok");
+                                bool checkBoxStatus = Convert.ToBoolean(dgView.Rows[j].Cells[6].Value);
+                                if (checkBoxStatus == false)
+                                {
+                                    INI.Write("dinamikStokKontrolu" + matchedStokIndexList[j], "false", "Stok");
+                                }
+                                else
+                                {
+                                    INI.Write("dinamikStokKontrolu" + matchedStokIndexList[j], "true", "Stok");
+                                }
+                            }
+                            ////
+                        
+                    }     
                 }
                 else
                 {
-                    INI.Write("menuUrunu" + i.ToString(), "true", "Stok");
-                    bool checkBoxStatus = Convert.ToBoolean(dgView.Rows[i].Cells[6].Value);
-                    if (checkBoxStatus == false)
+                    for (int i = 0; i < stokCount; i++)
                     {
-                        INI.Write("dinamikStokKontrolu" + i.ToString(), "false", "Stok");
-                    }
-                    else
-                    {
-                        INI.Write("dinamikStokKontrolu" + i.ToString(), "true", "Stok");
-                    }
-                }
-                
-                //menuUrunu
-               
 
-            }
+                        INI.Write("id" + i.ToString(), dgView.Rows[i].Cells[0].Value.ToString(), "Stok");
+                        INI.Write("aciklama" + i.ToString(), dgView.Rows[i].Cells[1].Value.ToString(), "Stok");
+                        INI.Write("adet" + i.ToString(), dgView.Rows[i].Cells[2].Value.ToString(), "Stok");
+                        INI.Write("birim" + i.ToString(), dgView.Rows[i].Cells[3].Value.ToString(), "Stok");
+                        INI.Write("birimFiyat" + i.ToString(), dgView.Rows[i].Cells[4].Value.ToString(), "Stok");
+                        INI.Write("paraBirimi" + i.ToString(), dgView.Rows[i].Cells[5].Value.ToString(), "Stok");
+                        // UserLog.WConsole(dgView.Rows[i].Cells[6].Value.ToString());
+                        //dinamikStokKontrolu
+                        bool checkBoxStatusMenuUrunu = Convert.ToBoolean(dgView.Rows[i].Cells[7].Value);
+                        if (checkBoxStatusMenuUrunu == false)
+                        {
+                            INI.Write("menuUrunu" + i.ToString(), "false", "Stok");
+                            INI.Write("dinamikStokKontrolu" + i.ToString(), "false", "Stok");
+                            dgView.Rows[i].Cells[7].Value = CheckState.Unchecked;
+                            dgView.Refresh();
+                        }
+                        else
+                        {
+                            INI.Write("menuUrunu" + i.ToString(), "true", "Stok");
+                            bool checkBoxStatus = Convert.ToBoolean(dgView.Rows[i].Cells[6].Value);
+                            if (checkBoxStatus == false)
+                            {
+                                INI.Write("dinamikStokKontrolu" + i.ToString(), "false", "Stok");
+                            }
+                            else
+                            {
+                                INI.Write("dinamikStokKontrolu" + i.ToString(), "true", "Stok");
+                            }
+                        }
+                    }
+                //menuUrunu
+                 }
             UserLog.WConsole("Stok Listesi Kaydetme Basarili");
 
         }
 
         private void getStokFromFile()
         {//Dosyadan Stok Datasini alik gdView'a set eder
+            int countOfRowsStok = dgView.RowCount;
+            stokCount = countOfRowsStok;
+            for (int i = countOfRowsStok-1; i >=0 ; i--)
+            {
+                try
+                { 
+                    dgView.Rows.RemoveAt(i);
+                }
+                catch
+                {
+                    UserLog.WConsole("KAYIT BULAMADI !!!");
+                }
+            }
+            dgView.Refresh();
             try
             {
                 stokCount = Convert.ToInt32(INI.Read("stokCount", "Stok"));
@@ -612,7 +697,11 @@ namespace Restorium
         private void bStokAra_Click(object sender, EventArgs e)
         {
             //tbSearchKey'de yazani al ona gore DGView'de arama yap.
-          
+            countSearchIndexList = 0;
+            if (searchModeOnStok == true)
+            {
+                getStokFromFile();
+            }
             string searchKey = tbSearchKey.Text.ToString();
            
             for(int i = 0; i < dgView.RowCount; i++)
@@ -621,7 +710,7 @@ namespace Restorium
                 {
                     if (dgView.Rows[i].Cells[j].Value.ToString().ToUpper().Contains(searchKey.ToUpper()))
                     {
-                        matchedIndexList[countSearchIndexList] = i;
+                        matchedStokIndexList[countSearchIndexList] = i;
                         countSearchIndexList++;
                     }
                 }
@@ -634,7 +723,7 @@ namespace Restorium
             {
                 for (int j = 0; j < countSearchIndexList; j++)
                 {
-                    if (i == matchedIndexList[j])
+                    if (i == matchedStokIndexList[j])
                     {
                         rowFoundFlag = true;
                     }
@@ -642,12 +731,11 @@ namespace Restorium
                 ///
                 if (rowFoundFlag == false)
                 {
-                    UserLog.WConsole("a");
                     dgView.Rows.RemoveAt(i);
-                    UserLog.WConsole("b");
                 }
                 rowFoundFlag = false;
             }
+            searchModeOnStok = true;
             dgView.Refresh();
             ////
 
@@ -830,6 +918,8 @@ namespace Restorium
                 dgViewWaiter.SelectionMode = DataGridViewSelectionMode.CellSelect;
                 //dgViewWaiter.ForeColor = Color.Black;
                 bPersonelDuzenle.ForeColor = Color.Green;
+                bPersonelDuzenle.Image = Properties.Resources.switch_on;
+                bDeletePersonel.Visible = false;
             }
             else
             {
@@ -842,6 +932,8 @@ namespace Restorium
                 dgViewWaiter.Refresh();
                 //dgViewWaiter.ForeColor = Color.Gray;
                 bPersonelDuzenle.ForeColor = Color.Red;
+                bPersonelDuzenle.Image = Properties.Resources.switch_off;
+                bDeletePersonel.Visible = true;
                 savePersonnelToFile();
             }
 
@@ -2377,6 +2469,7 @@ namespace Restorium
             if (ayarlarDuzenlemeModu == true)
             {
                 bAyarlarDuzenle.ForeColor = Color.Green;
+                bAyarlarDuzenle.Image = Properties.Resources.switch_on;
                 tbDefaultIskontoValue.Enabled = true;
                 dtpDukkanKapanisTime.Enabled = true;
                 cbAutoMail.Enabled = true;
@@ -2388,6 +2481,7 @@ namespace Restorium
             else
             {
                 bAyarlarDuzenle.ForeColor = Color.Red;
+                bAyarlarDuzenle.Image = Properties.Resources.switch_off;
                 tbDefaultIskontoValue.Enabled = false;
                 dtpDukkanKapanisTime.Enabled = false;
                 cbAutoMail.Enabled = false;
@@ -2673,6 +2767,29 @@ namespace Restorium
                 dgView.ReadOnly = true;
                 dgView.Refresh();
             }
+            }
+        }
+
+        private void StokSearchBoxTextChanged(object sender, EventArgs e)
+        {
+            if (tbSearchKey.Text == "")
+            {
+                getStokFromFile();
+                searchModeOnStok = false;
+                countSearchIndexList = 0;
+                //Thread thread = new Thread(new ThreadStart(getStokFromFile));
+                //thread.Start();
+            }
+        }
+
+        private void bDeletePersonel_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show(dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[0].Value + "\n" + dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[1].Value + "\n" + dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[2].Value + "\n" + dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[3].Value + "\n" + dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[4].Value + "\n" + dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[5].Value + "\n" + dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[6].Value  + "\n", "Ilgili personel kaydini silmek istediginizden emin misiniz ? ", MessageBoxButtons.YesNo);
+            //
+            if (dialogResult == DialogResult.Yes)
+            {
+                dgViewWaiter.Rows.RemoveAt(dgViewWaiter.SelectedRows[0].Index);
+                savePersonnelToFile();
             }
         }
         //AYARLAR +
