@@ -20,6 +20,7 @@ namespace Restorium
         public static string AdetTuru { get; set; }
         public static bool menuUrunu { get; set; }
         public static bool dinamikStokKontrolu { get; set; }
+        AutoCompleteStringCollection col2 = new AutoCompleteStringCollection();
         public StokAdd()
         {
             InitializeComponent();
@@ -53,7 +54,7 @@ namespace Restorium
             //----------------------//
             tbAciklama.AutoCompleteMode = AutoCompleteMode.Suggest;
             tbAciklama.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            AutoCompleteStringCollection col2 = new AutoCompleteStringCollection();
+           
             for (int i = 0; i < countOfItems; i++)
             {
                 col2.Add(MainForm.menuAciklama[i]);
@@ -73,11 +74,15 @@ namespace Restorium
                 {
                     tbAciklama.Text = MainForm.menuAciklama[i];
                     tbBirimFiyat.Text = MainForm.menuPrice[i].ToString();
+                    lStatusUrun.Text = "Stokta Mecvut Urun";
+                    lStatusUrun.ForeColor = Color.Red;
                     break;
                 }
                 else
                 {
                     i++;
+                    lStatusUrun.Text = "Yeni Stok Urunu";
+                    lStatusUrun.ForeColor = Color.Green;
                 }
             }
         }
@@ -86,17 +91,21 @@ namespace Restorium
         {
             string aciklama = tbAciklama.Text;
             int i = 0;
-            foreach (string menuaciklama in MainForm.menuID)
+            foreach (string menuaciklama in MainForm.menuAciklama)
             {
                 if (tbAciklama.Text == MainForm.menuAciklama[i])
                 {
                     tbID.Text = MainForm.menuID[i];
                     tbBirimFiyat.Text = MainForm.menuPrice[i].ToString();
+                    lStatusUrun.Text = "Stokta Mecvut Urun";
+                    lStatusUrun.ForeColor = Color.Red;
                     break;
                 }
                 else
                 {
                     i++;
+                    lStatusUrun.Text = "Yeni Stok Urunu";
+                    lStatusUrun.ForeColor = Color.Green;
                 }
             }
         }
@@ -106,7 +115,7 @@ namespace Restorium
             
             if (tbAciklama.Text != "" && tbAdet.Text != "" && tbBirimFiyat.Text != "" && tbID.Text != "")
             {
-                if (System.Text.RegularExpressions.Regex.IsMatch(tbAdet.Text, "[ ^ 0-9]") && System.Text.RegularExpressions.Regex.IsMatch(tbBirimFiyat.Text, "[ ^ 0-9]"))
+                if (System.Text.RegularExpressions.Regex.IsMatch(tbAdet.Text, "[^ 0-9]") && System.Text.RegularExpressions.Regex.IsMatch(tbBirimFiyat.Text, "[^ 0-9]"))
                 {
                     //valid item
                     Aciklama = tbAciklama.Text;
@@ -132,6 +141,7 @@ namespace Restorium
                         dinamikStokKontrolu = false;
                     }
                     this.DialogResult = DialogResult.OK;
+                    col2.Clear();
                     this.Close();
                 }
                 else
@@ -150,6 +160,7 @@ namespace Restorium
         private void bCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+            col2.Clear();
             this.Close();
         }
 

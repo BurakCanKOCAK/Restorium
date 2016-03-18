@@ -434,11 +434,13 @@
             // 
             this.bSiparisEkle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bSiparisEkle.Enabled = false;
-            this.bSiparisEkle.Location = new System.Drawing.Point(376, 141);
+            this.bSiparisEkle.Image = global::Restorium.Properties.Resources.sign_add_icon__1_;
+            this.bSiparisEkle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bSiparisEkle.Location = new System.Drawing.Point(337, 141);
             this.bSiparisEkle.Name = "bSiparisEkle";
-            this.bSiparisEkle.Size = new System.Drawing.Size(94, 30);
+            this.bSiparisEkle.Size = new System.Drawing.Size(133, 30);
             this.bSiparisEkle.TabIndex = 6;
-            this.bSiparisEkle.Text = "Sipariş Ekle";
+            this.bSiparisEkle.Text = "Sipariş Ekle (S)";
             this.bSiparisEkle.UseVisualStyleBackColor = true;
             this.bSiparisEkle.Click += new System.EventHandler(this.bSiparisEkle_Click);
             // 
@@ -2146,7 +2148,7 @@
             this.Text = "Restorium";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Shutdown);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.key_press);
             this.tabControl1.ResumeLayout(false);
             this.tp_Stok.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).EndInit();

@@ -44,6 +44,7 @@
             this.cbMenuUrunu = new System.Windows.Forms.CheckBox();
             this.cbStokUrunu = new System.Windows.Forms.CheckBox();
             this.cbDynamicStokCheckEnabled = new System.Windows.Forms.CheckBox();
+            this.lStatusUrun = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -214,11 +215,21 @@
             this.cbDynamicStokCheckEnabled.Text = "Dinamik Stok Kontrolu";
             this.cbDynamicStokCheckEnabled.UseVisualStyleBackColor = true;
             // 
+            // lStatusUrun
+            // 
+            this.lStatusUrun.AutoSize = true;
+            this.lStatusUrun.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lStatusUrun.Location = new System.Drawing.Point(227, 22);
+            this.lStatusUrun.Name = "lStatusUrun";
+            this.lStatusUrun.Size = new System.Drawing.Size(0, 15);
+            this.lStatusUrun.TabIndex = 15;
+            // 
             // StokAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(450, 251);
+            this.Controls.Add(this.lStatusUrun);
             this.Controls.Add(this.cbDynamicStokCheckEnabled);
             this.Controls.Add(this.cbStokUrunu);
             this.Controls.Add(this.cbMenuUrunu);
@@ -262,5 +273,6 @@
         private System.Windows.Forms.CheckBox cbMenuUrunu;
         private System.Windows.Forms.CheckBox cbStokUrunu;
         private System.Windows.Forms.CheckBox cbDynamicStokCheckEnabled;
+        private System.Windows.Forms.Label lStatusUrun;
     }
 }

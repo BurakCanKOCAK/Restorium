@@ -312,6 +312,8 @@ namespace Restorium
                     bLeft.BackColor = Color.Red;
                     bLeft.Size = new Size(80, 80);
                     bLeft.Click += new EventHandler(masa_click);
+                    bLeft.DoubleClick += new EventHandler(masa_doubleClick);
+                    bLeft.MouseDoubleClick += new MouseEventHandler(masa_MouseDoubleClick);
                     lMasaNo.Text = MasaNo.ToString();
                     lMasaNo.ForeColor = Color.Red;
                     //Button Right
@@ -365,6 +367,7 @@ namespace Restorium
                     bSiparisEkle.Enabled = true;
                     bTableClose.Enabled = true;
                     //                 
+                    lToplamTutar.Text = "0 ₺";
                 }
             }
             if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
@@ -382,6 +385,18 @@ namespace Restorium
             }
             
 
+        }
+
+        private void masa_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            UserLog.WConsole("ASDASDFSADSADAS");
+            bSiparisEkle_Click(sender, e);
+        }
+
+        private void masa_doubleClick(object sender, EventArgs e)
+        {
+            UserLog.WConsole("ASDASDFSADSADAS");
+            bSiparisEkle_Click(sender, e);
         }
 
         private void bMasaTasi_Click(object sender, EventArgs e)
@@ -827,6 +842,7 @@ namespace Restorium
                     LastChoosenTable.TableNumber = MasaNo.ToString();
                     bSiparisEkle.Enabled = true;
                     bTableClose.Enabled = true;
+                    lToplamTutar.Text = "0 ₺";
                 }
             }
             if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
@@ -1018,7 +1034,7 @@ namespace Restorium
                     if (result == DialogResult.OK)
                     {
                         clearSiparisTable();
-                        UserLog.WConsole("<<F4 Pressed>> Opening Table ");
+                        UserLog.WConsole("<<F4 Pressed>>");
                         dailyTableCounter++; // dailyTableCounter -> Bugun acilan kacinci masa oldugunu gosteriyor
                         tableCounter++;  // countOfTables -> Su anda  mevcut kac tane acik masa oldugunu gosteriyor
                         if (tableCounter >= maxCountOfTables)
@@ -1038,6 +1054,8 @@ namespace Restorium
                         bLeft.BackColor = Color.Red;
                         bLeft.Size = new Size(80, 80);
                         bLeft.Click += new EventHandler(masa_click);
+                        bLeft.DoubleClick += new EventHandler(masa_doubleClick);
+                        bLeft.MouseDoubleClick += new MouseEventHandler(masa_MouseDoubleClick);
                         lMasaNo.Text = MasaNo.ToString();
                         lMasaNo.ForeColor = Color.Red;
                         //Button Right
@@ -1058,8 +1076,8 @@ namespace Restorium
                         tableDetails[TableOpenForm.lastTablePlace * 3, 5] = tableOpenForm.Iskonto.ToString(); //0,5 -> Iskonto
                         tableDetails[TableOpenForm.lastTablePlace * 3, 6] = tableOpenForm.Musteri.ToString(); //0,6 -> Musteri Adi
                         tableDetails[TableOpenForm.lastTablePlace * 3, 7] = "N";                              //0,7 -> R:Rezervasyon - N:Normal
-                        tableDetails[TableOpenForm.lastTablePlace * 3, 8] = "";                               //0,8 -> Rezervasyon Tarihi
-                        //Detaylari masa acilirken anlik olarak ekrana yazdirma
+                        tableDetails[TableOpenForm.lastTablePlace * 3, 8] = "";                               //0,8 -> Rezervasyon Tarihi  
+                                                                                                              //Detaylari masa acilirken anlik olarak ekrana yazdirma
                         lTableCounter.Text = "Bugun acilan " + tableDetails[TableOpenForm.lastTablePlace * 3, 1] + ". masa";
                         if (tableDetails[TableOpenForm.lastTablePlace * 3, 7] == "R")
                         {
@@ -1071,7 +1089,7 @@ namespace Restorium
                         }
                         lPersonel.Text = "Personel : " + tableDetails[TableOpenForm.lastTablePlace * 3, 3];
                         lIskonto.Text = "Iskonto Orani : " + tableDetails[TableOpenForm.lastTablePlace * 3, 5] + "%";
-                        lMusteriAdi.Text = "Musteri : " + tableDetails[TableOpenForm.lastTablePlace * 3, 6];
+                        lMusteriAdi.Text = "Müşteri : " + tableDetails[TableOpenForm.lastTablePlace * 3, 6];
                         //
                         if (tableFlag == false)
                         {
@@ -1088,20 +1106,10 @@ namespace Restorium
                             tableFlag = false;
                         }
                         LastChoosenTable.TableNumber = MasaNo.ToString();
-                        if (tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 7] == "R")
-                        {
-                            bActiveEt.Visible = true;
-                            bActiveEt.Enabled = true;
-                            bSiparisEkle.Enabled = false;
-                            bTableClose.Text = "R. Iptal";
-                        }
-                        else
-                        {
-                            bActiveEt.Visible = false;
-                            bActiveEt.Enabled = false;
-                            bTableClose.Text = "Masa Kapat";
-                        }
-                        
+                        bSiparisEkle.Enabled = true;
+                        bTableClose.Enabled = true;
+                        //                
+                        lToplamTutar.Text = "0 ₺";  
                     }
                 }
             }
@@ -1199,14 +1207,22 @@ namespace Restorium
                             bActiveEt.Enabled = false;
                             bTableClose.Text = "Masa Kapat";
                         }
+                        lToplamTutar.Text = "0 ₺";
                     }
                 }
-            }if (e.KeyCode == Keys.F1)
+            }
+            if (e.KeyCode == Keys.F1)
             {
                 AboutBox about = new AboutBox();
                 about.Show();
             }
-
+            if (e.KeyCode == Keys.S) //Siparis Ekle
+            {
+                if (tabControl1.SelectedIndex == 0 && lMasaNo.Text != "-")
+                {
+                    bSiparisEkle_Click(null, null);
+                }
+            }
         }
 
         private void ExchangeValuesChanged(object sender, EventArgs e)
@@ -2553,26 +2569,28 @@ namespace Restorium
                 // dgvKasa to BitMap End :::::::::::::::::::::::::::::::::::::
 
                 MailMessage msg = new MailMessage();
-                msg.From = new MailAddress("burak.c.kocak@gmail.com");
+                msg.From = new MailAddress("bebckho@gmail.com","Restorium Services");
                 //msg.To.Add("hozmen6024@gmail.com");
                 //msg.To.Add("bilalertkn@gmail.com");
                 //msg.To.Add("Mahone0619@gmail.com");
                 //msg.To.Add("burak.c.kocak@gmail.com");
+
                 msg.To.Add(tbMail.Text);
                 msg.Subject = "Restorium Daily Report " + DateTime.Now.ToString();
                 msg.Body = "Daily Report :" + System.DateTime.Now.ToLongDateString() + "   " + System.DateTime.Now.ToLocalTime().ToLongTimeString();
                 SmtpClient client = new SmtpClient();
-                client.Host = "smtp.live.com";
+                //client.Host = "smtp.live.com";
                 msg.Attachments.Add(new Attachment("Daily_Chart.png"));
                 msg.Attachments.Add(new Attachment("Weekly_Chart.png"));
                 msg.Attachments.Add(new Attachment("Kasa.png"));
-                client.Port = 25;
-                //client.Host = "smtp.gmail.com";
-                //client.Port = 587;
+                //client.Port = 25;
+                client.Host = "smtp.gmail.com";
+                client.Port = 587;
                 client.EnableSsl = true;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential("bbhmbbhm@outlook.com", "bilalburakhuseyinmahmut1");
+                client.Credentials = new NetworkCredential("bebckho@gmail.com", "bilalburakhuseyin");
+                //client.Credentials = new NetworkCredential("bbhmbbhm@outlook.com", "bilalburakhuseyinmahmut1");
                 client.Timeout = 20000;
                 try
                 {

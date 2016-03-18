@@ -26,6 +26,7 @@ namespace Restorium
         private void TableOpenForm_Load(object sender, EventArgs e)
         {
             //----------------------//
+            this.ActiveControl = tbMasaNo;
             UserLog.WConsole("<<< TableOpenForm (Form)>>>");
             UserLog.WConsole("Personel Okundu  (" + MainForm.personelCount.ToString() + ")");
             rSaat.Format = DateTimePickerFormat.Custom;
