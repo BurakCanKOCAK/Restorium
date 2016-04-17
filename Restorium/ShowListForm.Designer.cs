@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.tbSearch = new System.Windows.Forms.TextBox();
-            this.bAra = new System.Windows.Forms.Button();
-            this.bOK = new System.Windows.Forms.Button();
-            this.bCancel = new System.Windows.Forms.Button();
             this.dgViewStok = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ACIKLAMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,47 +41,21 @@
             this.ID_WAITER = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.WAITER = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GOREVI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bCancel = new System.Windows.Forms.Button();
+            this.bOK = new System.Windows.Forms.Button();
+            this.bAra = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewStok)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
             this.SuspendLayout();
             // 
             // tbSearch
             // 
-            this.tbSearch.Location = new System.Drawing.Point(445, 414);
+            this.tbSearch.Location = new System.Drawing.Point(444, 424);
             this.tbSearch.Name = "tbSearch";
             this.tbSearch.Size = new System.Drawing.Size(193, 20);
             this.tbSearch.TabIndex = 1;
             this.tbSearch.TextChanged += new System.EventHandler(this.tSearchTextChanged);
             this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
-            // 
-            // bAra
-            // 
-            this.bAra.Location = new System.Drawing.Point(644, 411);
-            this.bAra.Name = "bAra";
-            this.bAra.Size = new System.Drawing.Size(75, 23);
-            this.bAra.TabIndex = 2;
-            this.bAra.Text = "Ara";
-            this.bAra.UseVisualStyleBackColor = true;
-            // 
-            // bOK
-            // 
-            this.bOK.Location = new System.Drawing.Point(1, 414);
-            this.bOK.Name = "bOK";
-            this.bOK.Size = new System.Drawing.Size(79, 31);
-            this.bOK.TabIndex = 3;
-            this.bOK.Text = "Tamam";
-            this.bOK.UseVisualStyleBackColor = true;
-            this.bOK.Click += new System.EventHandler(this.bOK_Click);
-            // 
-            // bCancel
-            // 
-            this.bCancel.Location = new System.Drawing.Point(112, 414);
-            this.bCancel.Name = "bCancel";
-            this.bCancel.Size = new System.Drawing.Size(79, 31);
-            this.bCancel.TabIndex = 4;
-            this.bCancel.Text = "Iptal";
-            this.bCancel.UseVisualStyleBackColor = true;
-            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
             // dgViewStok
             // 
@@ -105,11 +76,11 @@
             this.PARA_BIRIMI,
             this.DINAMIK_STOK_KONTROLU});
             this.dgViewStok.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.dgViewStok.Location = new System.Drawing.Point(1, 2);
+            this.dgViewStok.Location = new System.Drawing.Point(1, 0);
             this.dgViewStok.Name = "dgViewStok";
             this.dgViewStok.ReadOnly = true;
             this.dgViewStok.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgViewStok.Size = new System.Drawing.Size(718, 403);
+            this.dgViewStok.Size = new System.Drawing.Size(718, 410);
             this.dgViewStok.TabIndex = 5;
             // 
             // ID
@@ -188,11 +159,11 @@
             this.WAITER,
             this.GOREVI});
             this.dgViewWaiter.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.dgViewWaiter.Location = new System.Drawing.Point(1, 2);
+            this.dgViewWaiter.Location = new System.Drawing.Point(1, 0);
             this.dgViewWaiter.Name = "dgViewWaiter";
             this.dgViewWaiter.ReadOnly = true;
             this.dgViewWaiter.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgViewWaiter.Size = new System.Drawing.Size(718, 403);
+            this.dgViewWaiter.Size = new System.Drawing.Size(718, 410);
             this.dgViewWaiter.TabIndex = 14;
             this.dgViewWaiter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
@@ -217,11 +188,55 @@
             this.GOREVI.ReadOnly = true;
             this.GOREVI.Width = 270;
             // 
+            // bCancel
+            // 
+            this.bCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bCancel.Image = global::Restorium.Properties.Resources.circle__7_;
+            this.bCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bCancel.Location = new System.Drawing.Point(99, 414);
+            this.bCancel.Name = "bCancel";
+            this.bCancel.Size = new System.Drawing.Size(92, 42);
+            this.bCancel.TabIndex = 4;
+            this.bCancel.Text = "Iptal";
+            this.bCancel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.bCancel.UseVisualStyleBackColor = true;
+            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
+            // 
+            // bOK
+            // 
+            this.bOK.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bOK.Image = global::Restorium.Properties.Resources.check__2_1;
+            this.bOK.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bOK.Location = new System.Drawing.Point(1, 414);
+            this.bOK.Name = "bOK";
+            this.bOK.Size = new System.Drawing.Size(92, 42);
+            this.bOK.TabIndex = 3;
+            this.bOK.Text = "Tamam";
+            this.bOK.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bOK.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.bOK.UseVisualStyleBackColor = true;
+            this.bOK.Click += new System.EventHandler(this.bOK_Click);
+            // 
+            // bAra
+            // 
+            this.bAra.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bAra.Image = global::Restorium.Properties.Resources.tool__22_;
+            this.bAra.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bAra.Location = new System.Drawing.Point(643, 414);
+            this.bAra.Name = "bAra";
+            this.bAra.Size = new System.Drawing.Size(76, 40);
+            this.bAra.TabIndex = 2;
+            this.bAra.Text = "Ara";
+            this.bAra.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bAra.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.bAra.UseVisualStyleBackColor = true;
+            // 
             // ShowListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(719, 451);
+            this.ClientSize = new System.Drawing.Size(719, 456);
             this.Controls.Add(this.dgViewWaiter);
             this.Controls.Add(this.dgViewStok);
             this.Controls.Add(this.bCancel);

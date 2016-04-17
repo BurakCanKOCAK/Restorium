@@ -20,7 +20,7 @@ namespace Restorium
         public static string Column6 = "";
         public static string Column7 = "";
         public static string Column8 = "";
-
+        public static bool editMode;
         public ContactAdd()
         {
             InitializeComponent();
@@ -77,6 +77,22 @@ namespace Restorium
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void ContactAdd_Load(object sender, EventArgs e)
+        {
+            if (editMode == true)
+            {
+                tbColumn0.Text = Column0;
+                tbColumn1.Text = Column1;
+                tbColumn2.Text = Column2;
+                tbColumn3.Text = Column3;
+                tbColumn4.Text = Column4;
+                tbColumn5.Text = Column5;
+                tbColumn6.Text = Column6;
+                tbColumn7.Text = Column7;
+                tbColumn8.Text = Column8;
+            }
         }
     }
 }

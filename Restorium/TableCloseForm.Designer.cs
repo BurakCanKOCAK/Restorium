@@ -50,19 +50,19 @@
             this.lEuro = new System.Windows.Forms.Label();
             this.lDolar = new System.Windows.Forms.Label();
             this.lGBP = new System.Windows.Forms.Label();
-            this.bMasaKapat = new System.Windows.Forms.Button();
-            this.bIptal = new System.Windows.Forms.Button();
-            this.lIskontoOrani = new System.Windows.Forms.Label();
+            this.lTableName = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.pbCalculator = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
             this.lKalan = new System.Windows.Forms.Label();
             this.labelKalan = new System.Windows.Forms.Label();
-            this.lTableName = new System.Windows.Forms.Label();
-            this.pbCalculator = new System.Windows.Forms.PictureBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lIskontoOrani = new System.Windows.Forms.Label();
+            this.bIptal = new System.Windows.Forms.Button();
+            this.bMasaKapat = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCalculator)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -295,36 +295,35 @@
             this.lGBP.TabIndex = 15;
             this.lGBP.Text = "-";
             // 
-            // bMasaKapat
+            // lTableName
             // 
-            this.bMasaKapat.Enabled = false;
-            this.bMasaKapat.Location = new System.Drawing.Point(12, 218);
-            this.bMasaKapat.Name = "bMasaKapat";
-            this.bMasaKapat.Size = new System.Drawing.Size(112, 44);
-            this.bMasaKapat.TabIndex = 16;
-            this.bMasaKapat.Text = "Masa Kapat";
-            this.bMasaKapat.UseVisualStyleBackColor = true;
-            this.bMasaKapat.Click += new System.EventHandler(this.bMasaKapat_Click);
+            this.lTableName.AutoSize = true;
+            this.lTableName.BackColor = System.Drawing.SystemColors.Control;
+            this.lTableName.Font = new System.Drawing.Font("Microsoft Sans Serif", 38.25F, System.Drawing.FontStyle.Bold);
+            this.lTableName.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.lTableName.Location = new System.Drawing.Point(17, 6);
+            this.lTableName.Name = "lTableName";
+            this.lTableName.Size = new System.Drawing.Size(43, 59);
+            this.lTableName.TabIndex = 19;
+            this.lTableName.Text = "-";
             // 
-            // bIptal
+            // toolTip1
             // 
-            this.bIptal.Location = new System.Drawing.Point(371, 218);
-            this.bIptal.Name = "bIptal";
-            this.bIptal.Size = new System.Drawing.Size(112, 44);
-            this.bIptal.TabIndex = 17;
-            this.bIptal.Text = " Iptal";
-            this.bIptal.UseVisualStyleBackColor = true;
-            this.bIptal.Click += new System.EventHandler(this.bIptal_Click);
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.ShowAlways = true;
             // 
-            // lIskontoOrani
+            // pbCalculator
             // 
-            this.lIskontoOrani.AutoSize = true;
-            this.lIskontoOrani.Font = new System.Drawing.Font("Calibri", 13.25F, System.Drawing.FontStyle.Bold);
-            this.lIskontoOrani.Location = new System.Drawing.Point(190, 6);
-            this.lIskontoOrani.Name = "lIskontoOrani";
-            this.lIskontoOrani.Size = new System.Drawing.Size(32, 22);
-            this.lIskontoOrani.TabIndex = 6;
-            this.lIskontoOrani.Text = "0%";
+            this.pbCalculator.BackColor = System.Drawing.Color.Transparent;
+            this.pbCalculator.Image = global::Restorium.Properties.Resources.signs__21_;
+            this.pbCalculator.Location = new System.Drawing.Point(289, 222);
+            this.pbCalculator.Name = "pbCalculator";
+            this.pbCalculator.Size = new System.Drawing.Size(45, 40);
+            this.pbCalculator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbCalculator.TabIndex = 20;
+            this.pbCalculator.TabStop = false;
+            this.pbCalculator.Click += new System.EventHandler(this.Calculator);
+            this.pbCalculator.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseClicked);
             // 
             // panel2
             // 
@@ -372,34 +371,44 @@
             this.labelKalan.TabIndex = 6;
             this.labelKalan.Text = "Kalan :";
             // 
-            // lTableName
+            // lIskontoOrani
             // 
-            this.lTableName.AutoSize = true;
-            this.lTableName.BackColor = System.Drawing.SystemColors.Control;
-            this.lTableName.Font = new System.Drawing.Font("Microsoft Sans Serif", 38.25F, System.Drawing.FontStyle.Bold);
-            this.lTableName.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.lTableName.Location = new System.Drawing.Point(17, 6);
-            this.lTableName.Name = "lTableName";
-            this.lTableName.Size = new System.Drawing.Size(43, 59);
-            this.lTableName.TabIndex = 19;
-            this.lTableName.Text = "-";
+            this.lIskontoOrani.AutoSize = true;
+            this.lIskontoOrani.Font = new System.Drawing.Font("Calibri", 13.25F, System.Drawing.FontStyle.Bold);
+            this.lIskontoOrani.Location = new System.Drawing.Point(190, 6);
+            this.lIskontoOrani.Name = "lIskontoOrani";
+            this.lIskontoOrani.Size = new System.Drawing.Size(32, 22);
+            this.lIskontoOrani.TabIndex = 6;
+            this.lIskontoOrani.Text = "0%";
             // 
-            // pbCalculator
+            // bIptal
             // 
-            this.pbCalculator.Image = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
-            this.pbCalculator.Location = new System.Drawing.Point(320, 222);
-            this.pbCalculator.Name = "pbCalculator";
-            this.pbCalculator.Size = new System.Drawing.Size(45, 36);
-            this.pbCalculator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbCalculator.TabIndex = 20;
-            this.pbCalculator.TabStop = false;
-            this.pbCalculator.Click += new System.EventHandler(this.Calculator);
-            this.pbCalculator.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseClicked);
+            this.bIptal.Image = global::Restorium.Properties.Resources.circle__7_;
+            this.bIptal.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bIptal.Location = new System.Drawing.Point(344, 222);
+            this.bIptal.Name = "bIptal";
+            this.bIptal.Size = new System.Drawing.Size(124, 40);
+            this.bIptal.TabIndex = 17;
+            this.bIptal.Text = " Iptal";
+            this.bIptal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bIptal.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.bIptal.UseVisualStyleBackColor = true;
+            this.bIptal.Click += new System.EventHandler(this.bIptal_Click);
             // 
-            // toolTip1
+            // bMasaKapat
             // 
-            this.toolTip1.IsBalloon = true;
-            this.toolTip1.ShowAlways = true;
+            this.bMasaKapat.Enabled = false;
+            this.bMasaKapat.Image = global::Restorium.Properties.Resources.check__2_1;
+            this.bMasaKapat.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bMasaKapat.Location = new System.Drawing.Point(12, 222);
+            this.bMasaKapat.Name = "bMasaKapat";
+            this.bMasaKapat.Size = new System.Drawing.Size(124, 40);
+            this.bMasaKapat.TabIndex = 16;
+            this.bMasaKapat.Text = "Masa Kapat";
+            this.bMasaKapat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bMasaKapat.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.bMasaKapat.UseVisualStyleBackColor = true;
+            this.bMasaKapat.Click += new System.EventHandler(this.bMasaKapat_Click);
             // 
             // TableCloseForm
             // 
@@ -431,9 +440,9 @@
             this.Load += new System.EventHandler(this.TableCloseForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCalculator)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbCalculator)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

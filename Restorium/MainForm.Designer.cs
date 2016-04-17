@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -39,11 +40,9 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tp_Stok = new System.Windows.Forms.TabPage();
             this.dgView = new System.Windows.Forms.DataGridView();
@@ -61,6 +60,9 @@
             this.timerReservation = new System.Windows.Forms.Timer(this.components);
             this.tp_Adisyon = new System.Windows.Forms.TabPage();
             this.gbTableDetails = new System.Windows.Forms.GroupBox();
+            this.bPrint = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.bTableDetailChange = new System.Windows.Forms.Button();
             this.bSiparisEkle = new System.Windows.Forms.Button();
             this.lMusteriAdi = new System.Windows.Forms.Label();
             this.lIskonto = new System.Windows.Forms.Label();
@@ -82,7 +84,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.lMasaNo = new System.Windows.Forms.Label();
             this.lTableCounter = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bCalculator = new System.Windows.Forms.Button();
@@ -120,10 +121,12 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Masa_Adi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MUSTERI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nakit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Kredi_Karti = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cari = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ISKONTO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.bPrintKasa = new System.Windows.Forms.Button();
             this.bSendMailKasa = new System.Windows.Forms.Button();
@@ -139,7 +142,7 @@
             this.panel10 = new System.Windows.Forms.Panel();
             this.chartDaily = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartMonthly = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel11 = new System.Windows.Forms.Panel();
             this.chartWeekly = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tbSpecificRapor = new System.Windows.Forms.TabPage();
@@ -170,25 +173,35 @@
             this.bKayitEkle = new System.Windows.Forms.Button();
             this.bKayitSil = new System.Windows.Forms.Button();
             this.tp_Ayarlar = new System.Windows.Forms.TabPage();
+            this.bPersonelEkle = new System.Windows.Forms.Button();
+            this.bDeletePersonel = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.cbAutoMail = new System.Windows.Forms.CheckBox();
-            this.bAyarlarDuzenle = new System.Windows.Forms.Button();
+            this.panel15 = new System.Windows.Forms.Panel();
+            this.bPersonelSettings = new System.Windows.Forms.Button();
+            this.bAdminSettings = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
+            this.panel14 = new System.Windows.Forms.Panel();
             this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.dtpDukkanKapanisTime = new System.Windows.Forms.DateTimePicker();
-            this.tbMail = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbEuro = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.tbDolar = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tbGBP = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tbDolar = new System.Windows.Forms.TextBox();
-            this.tbEuro = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbDefaultIskontoValue = new System.Windows.Forms.TextBox();
+            this.panel9 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.tbDefaultIskontoValue = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbAutoMail = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.tbMail = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.dtpDukkanKapanisTime = new System.Windows.Forms.DateTimePicker();
+            this.bAyarlarDuzenle = new System.Windows.Forms.Button();
             this.bPersonelDuzenle = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dgViewWaiter = new System.Windows.Forms.DataGridView();
@@ -201,7 +214,7 @@
             this.GOREVI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.bCalculator_Settings = new System.Windows.Forms.Button();
-            this.bDeletePersonel = new System.Windows.Forms.Button();
+            this.panel16 = new System.Windows.Forms.Panel();
             this.tabControl1.SuspendLayout();
             this.tp_Stok.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
@@ -224,7 +237,7 @@
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).BeginInit();
             this.panel12.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartMonthly)).BeginInit();
             this.panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartWeekly)).BeginInit();
             this.tbSpecificRapor.SuspendLayout();
@@ -235,8 +248,12 @@
             this.panel5.SuspendLayout();
             this.tp_Ayarlar.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.panel15.SuspendLayout();
+            this.panel14.SuspendLayout();
+            this.panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).BeginInit();
             this.panel6.SuspendLayout();
+            this.panel16.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -345,10 +362,7 @@
             // 
             this.PARA_BIRIMI.HeaderText = "PARA BIRIMI";
             this.PARA_BIRIMI.Items.AddRange(new object[] {
-            "TL",
-            "EURO",
-            "DOLAR",
-            "GBP"});
+            "TL"});
             this.PARA_BIRIMI.Name = "PARA_BIRIMI";
             this.PARA_BIRIMI.ReadOnly = true;
             this.PARA_BIRIMI.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -396,7 +410,7 @@
             // 
             // tp_Adisyon
             // 
-            this.tp_Adisyon.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Adisyon.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tp_Adisyon.BackgroundImage")));
             this.tp_Adisyon.Controls.Add(this.gbTableDetails);
             this.tp_Adisyon.Controls.Add(this.tableLayoutPanel1);
             this.tp_Adisyon.Controls.Add(this.panel1);
@@ -414,7 +428,8 @@
             this.gbTableDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbTableDetails.Controls.Add(this.bSiparisEkle);
+            this.gbTableDetails.Controls.Add(this.panel16);
+            this.gbTableDetails.Controls.Add(this.label21);
             this.gbTableDetails.Controls.Add(this.lMusteriAdi);
             this.gbTableDetails.Controls.Add(this.lIskonto);
             this.gbTableDetails.Controls.Add(this.lPersonel);
@@ -422,7 +437,7 @@
             this.gbTableDetails.Controls.Add(this.groupBox1);
             this.gbTableDetails.Controls.Add(this.lMasaNo);
             this.gbTableDetails.Controls.Add(this.lTableCounter);
-            this.gbTableDetails.Controls.Add(this.label9);
+            this.gbTableDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbTableDetails.Location = new System.Drawing.Point(530, 87);
             this.gbTableDetails.Name = "gbTableDetails";
             this.gbTableDetails.Size = new System.Drawing.Size(470, 603);
@@ -430,23 +445,63 @@
             this.gbTableDetails.TabStop = false;
             this.gbTableDetails.Text = "Masa Detaylari";
             // 
+            // bPrint
+            // 
+            this.bPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bPrint.BackgroundImage = global::Restorium.Properties.Resources.printer1;
+            this.bPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bPrint.Enabled = false;
+            this.bPrint.Location = new System.Drawing.Point(9, 3);
+            this.bPrint.Name = "bPrint";
+            this.bPrint.Size = new System.Drawing.Size(38, 30);
+            this.bPrint.TabIndex = 10;
+            this.bPrint.UseVisualStyleBackColor = true;
+            this.bPrint.Click += new System.EventHandler(this.bPrint_Click);
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label21.ForeColor = System.Drawing.Color.Black;
+            this.label21.Location = new System.Drawing.Point(381, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(83, 20);
+            this.label21.TabIndex = 9;
+            this.label21.Text = "Masa Adi";
+            // 
+            // bTableDetailChange
+            // 
+            this.bTableDetailChange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bTableDetailChange.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bTableDetailChange.BackgroundImage")));
+            this.bTableDetailChange.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bTableDetailChange.Enabled = false;
+            this.bTableDetailChange.Location = new System.Drawing.Point(53, 3);
+            this.bTableDetailChange.Name = "bTableDetailChange";
+            this.bTableDetailChange.Size = new System.Drawing.Size(38, 30);
+            this.bTableDetailChange.TabIndex = 8;
+            this.bTableDetailChange.UseVisualStyleBackColor = true;
+            this.bTableDetailChange.Click += new System.EventHandler(this.bTableDetailChange_Click);
+            // 
             // bSiparisEkle
             // 
             this.bSiparisEkle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bSiparisEkle.Enabled = false;
-            this.bSiparisEkle.Image = global::Restorium.Properties.Resources.sign_add_icon__1_;
+            this.bSiparisEkle.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bSiparisEkle.Image = ((System.Drawing.Image)(resources.GetObject("bSiparisEkle.Image")));
             this.bSiparisEkle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.bSiparisEkle.Location = new System.Drawing.Point(337, 141);
+            this.bSiparisEkle.Location = new System.Drawing.Point(97, 3);
             this.bSiparisEkle.Name = "bSiparisEkle";
             this.bSiparisEkle.Size = new System.Drawing.Size(133, 30);
             this.bSiparisEkle.TabIndex = 6;
-            this.bSiparisEkle.Text = "Sipariş Ekle (S)";
+            this.bSiparisEkle.Text = "Sipariş Ekle";
             this.bSiparisEkle.UseVisualStyleBackColor = true;
             this.bSiparisEkle.Click += new System.EventHandler(this.bSiparisEkle_Click);
             // 
             // lMusteriAdi
             // 
             this.lMusteriAdi.AutoSize = true;
+            this.lMusteriAdi.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lMusteriAdi.Location = new System.Drawing.Point(6, 141);
             this.lMusteriAdi.Name = "lMusteriAdi";
             this.lMusteriAdi.Size = new System.Drawing.Size(14, 19);
@@ -456,6 +511,7 @@
             // lIskonto
             // 
             this.lIskonto.AutoSize = true;
+            this.lIskonto.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lIskonto.Location = new System.Drawing.Point(6, 109);
             this.lIskonto.Name = "lIskonto";
             this.lIskonto.Size = new System.Drawing.Size(14, 19);
@@ -465,6 +521,7 @@
             // lPersonel
             // 
             this.lPersonel.AutoSize = true;
+            this.lPersonel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lPersonel.Location = new System.Drawing.Point(6, 76);
             this.lPersonel.Name = "lPersonel";
             this.lPersonel.Size = new System.Drawing.Size(14, 19);
@@ -566,6 +623,7 @@
             this.groupBox1.Controls.Add(this.lToplamTutar);
             this.groupBox1.Controls.Add(this.bTableClose);
             this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.groupBox1.Location = new System.Drawing.Point(6, 503);
             this.groupBox1.Name = "groupBox1";
@@ -648,32 +706,23 @@
             // 
             this.lMasaNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lMasaNo.AutoSize = true;
-            this.lMasaNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 50.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lMasaNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 42F, System.Drawing.FontStyle.Bold);
             this.lMasaNo.ForeColor = System.Drawing.Color.Black;
-            this.lMasaNo.Location = new System.Drawing.Point(324, 19);
+            this.lMasaNo.Location = new System.Drawing.Point(285, 19);
             this.lMasaNo.Name = "lMasaNo";
-            this.lMasaNo.Size = new System.Drawing.Size(56, 76);
+            this.lMasaNo.Size = new System.Drawing.Size(48, 64);
             this.lMasaNo.TabIndex = 2;
             this.lMasaNo.Text = "-";
             // 
             // lTableCounter
             // 
             this.lTableCounter.AutoSize = true;
+            this.lTableCounter.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lTableCounter.Location = new System.Drawing.Point(6, 42);
             this.lTableCounter.Name = "lTableCounter";
             this.lTableCounter.Size = new System.Drawing.Size(14, 19);
             this.lTableCounter.TabIndex = 1;
             this.lTableCounter.Text = "-";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(117, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(1257, 19);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "_________________________________________________________________________________" +
-    "___________________________________________________________________________";
             // 
             // tableLayoutPanel1
             // 
@@ -681,6 +730,8 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tableLayoutPanel1.AutoScroll = true;
             this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tableLayoutPanel1.BackgroundImage")));
+            this.tableLayoutPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.tableLayoutPanel1.ColumnCount = 5;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -723,7 +774,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BackgroundImage = global::Restorium.Properties.Resources._22;
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel1.Controls.Add(this.bCalculator);
             this.panel1.Controls.Add(this.pbWifi);
@@ -738,7 +789,7 @@
             // bCalculator
             // 
             this.bCalculator.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bCalculator.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.bCalculator.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bCalculator.BackgroundImage")));
             this.bCalculator.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bCalculator.Location = new System.Drawing.Point(640, 14);
             this.bCalculator.Name = "bCalculator";
@@ -751,13 +802,14 @@
             // 
             this.pbWifi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pbWifi.BackColor = System.Drawing.Color.Transparent;
-            this.pbWifi.Image = global::Restorium.Properties.Resources.no_conection_256;
+            this.pbWifi.Image = ((System.Drawing.Image)(resources.GetObject("pbWifi.Image")));
             this.pbWifi.Location = new System.Drawing.Point(973, 21);
             this.pbWifi.Name = "pbWifi";
             this.pbWifi.Size = new System.Drawing.Size(22, 19);
             this.pbWifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbWifi.TabIndex = 0;
             this.pbWifi.TabStop = false;
+            this.pbWifi.Click += new System.EventHandler(this.pbWifi_Click);
             // 
             // lDate
             // 
@@ -799,7 +851,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::Restorium.Properties.Resources.printer;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(6, 87);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(29, 28);
@@ -813,7 +865,7 @@
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.BackColor = System.Drawing.Color.Transparent;
-            this.panel3.BackgroundImage = global::Restorium.Properties.Resources.stok;
+            this.panel3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel3.BackgroundImage")));
             this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel3.Controls.Add(this.bStokSil);
             this.panel3.Controls.Add(this.bStokAdd);
@@ -829,7 +881,7 @@
             // bStokSil
             // 
             this.bStokSil.BackColor = System.Drawing.Color.Ivory;
-            this.bStokSil.BackgroundImage = global::Restorium.Properties.Resources.sign_error_icon;
+            this.bStokSil.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bStokSil.BackgroundImage")));
             this.bStokSil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bStokSil.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bStokSil.Location = new System.Drawing.Point(359, 17);
@@ -842,7 +894,7 @@
             // bStokAdd
             // 
             this.bStokAdd.BackColor = System.Drawing.Color.Ivory;
-            this.bStokAdd.BackgroundImage = global::Restorium.Properties.Resources.sign_add_icon__1_;
+            this.bStokAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bStokAdd.BackgroundImage")));
             this.bStokAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bStokAdd.Location = new System.Drawing.Point(402, 17);
             this.bStokAdd.Name = "bStokAdd";
@@ -853,7 +905,7 @@
             // 
             // bCalculator_Stok
             // 
-            this.bCalculator_Stok.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.bCalculator_Stok.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bCalculator_Stok.BackgroundImage")));
             this.bCalculator_Stok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bCalculator_Stok.Location = new System.Drawing.Point(447, 17);
             this.bCalculator_Stok.Name = "bCalculator_Stok";
@@ -866,7 +918,7 @@
             // 
             this.bStokAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bStokAra.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.bStokAra.Image = global::Restorium.Properties.Resources.Search_icon;
+            this.bStokAra.Image = ((System.Drawing.Image)(resources.GetObject("bStokAra.Image")));
             this.bStokAra.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bStokAra.Location = new System.Drawing.Point(913, 17);
             this.bStokAra.Name = "bStokAra";
@@ -882,7 +934,7 @@
             this.bDuzenle.BackColor = System.Drawing.Color.White;
             this.bDuzenle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bDuzenle.ForeColor = System.Drawing.Color.Red;
-            this.bDuzenle.Image = global::Restorium.Properties.Resources.switch_off;
+            this.bDuzenle.Image = ((System.Drawing.Image)(resources.GetObject("bDuzenle.Image")));
             this.bDuzenle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bDuzenle.Location = new System.Drawing.Point(196, 17);
             this.bDuzenle.Name = "bDuzenle";
@@ -904,7 +956,7 @@
             // 
             // tp_Kasa
             // 
-            this.tp_Kasa.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Kasa.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tp_Kasa.BackgroundImage")));
             this.tp_Kasa.Controls.Add(this.panel8);
             this.tp_Kasa.Controls.Add(this.dgvKasa);
             this.tp_Kasa.Controls.Add(this.panel2);
@@ -964,9 +1016,9 @@
             this.lNakitToplamTL.Location = new System.Drawing.Point(6, 31);
             this.lNakitToplamTL.Name = "lNakitToplamTL";
             this.lNakitToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lNakitToplamTL.Size = new System.Drawing.Size(51, 27);
+            this.lNakitToplamTL.Size = new System.Drawing.Size(56, 27);
             this.lNakitToplamTL.TabIndex = 23;
-            this.lNakitToplamTL.Text = "0.0₺";
+            this.lNakitToplamTL.Text = "0.0 ₺";
             // 
             // label14
             // 
@@ -1049,9 +1101,9 @@
             this.lCariToplamTL.Location = new System.Drawing.Point(342, 31);
             this.lCariToplamTL.Name = "lCariToplamTL";
             this.lCariToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lCariToplamTL.Size = new System.Drawing.Size(51, 27);
+            this.lCariToplamTL.Size = new System.Drawing.Size(56, 27);
             this.lCariToplamTL.TabIndex = 25;
-            this.lCariToplamTL.Text = "0.0₺";
+            this.lCariToplamTL.Text = "0.0 ₺";
             this.lCariToplamTL.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lKrediToplam
@@ -1095,9 +1147,9 @@
             this.lKrediToplamTL.Location = new System.Drawing.Point(174, 31);
             this.lKrediToplamTL.Name = "lKrediToplamTL";
             this.lKrediToplamTL.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lKrediToplamTL.Size = new System.Drawing.Size(51, 27);
+            this.lKrediToplamTL.Size = new System.Drawing.Size(56, 27);
             this.lKrediToplamTL.TabIndex = 24;
-            this.lKrediToplamTL.Text = "0.0₺";
+            this.lKrediToplamTL.Text = "0.0 ₺";
             this.lKrediToplamTL.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label13
@@ -1169,10 +1221,12 @@
             this.dataGridViewTextBoxColumn2,
             this.Masa_Adi,
             this.dataGridViewTextBoxColumn3,
+            this.MUSTERI,
             this.Nakit,
             this.Kredi_Karti,
             this.Cari,
-            this.Tutar});
+            this.Tutar,
+            this.ISKONTO});
             this.dgvKasa.Cursor = System.Windows.Forms.Cursors.Hand;
             this.dgvKasa.Location = new System.Drawing.Point(3, 75);
             this.dgvKasa.Name = "dgvKasa";
@@ -1183,61 +1237,90 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
+            this.dataGridViewTextBoxColumn1.FillWeight = 18F;
             this.dataGridViewTextBoxColumn1.HeaderText = "Zaman";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 110;
+            this.dataGridViewTextBoxColumn1.Width = 5;
             // 
             // dataGridViewTextBoxColumn2
             // 
+            this.dataGridViewTextBoxColumn2.FillWeight = 12.5F;
             this.dataGridViewTextBoxColumn2.HeaderText = "Yapilan Islem";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 180;
+            this.dataGridViewTextBoxColumn2.Width = 5;
             // 
             // Masa_Adi
             // 
+            this.Masa_Adi.FillWeight = 11F;
             this.Masa_Adi.HeaderText = "Masa Adi";
             this.Masa_Adi.Name = "Masa_Adi";
             this.Masa_Adi.ReadOnly = true;
+            this.Masa_Adi.Width = 5;
             // 
             // dataGridViewTextBoxColumn3
             // 
+            this.dataGridViewTextBoxColumn3.FillWeight = 13.5F;
             this.dataGridViewTextBoxColumn3.HeaderText = "Personel";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 200;
+            this.dataGridViewTextBoxColumn3.Width = 5;
+            // 
+            // MUSTERI
+            // 
+            this.MUSTERI.FillWeight = 13.5F;
+            this.MUSTERI.HeaderText = "Musteri";
+            this.MUSTERI.Name = "MUSTERI";
+            this.MUSTERI.ReadOnly = true;
+            this.MUSTERI.Width = 5;
             // 
             // Nakit
             // 
+            this.Nakit.FillWeight = 6F;
             this.Nakit.HeaderText = "Nakit";
             this.Nakit.Name = "Nakit";
             this.Nakit.ReadOnly = true;
+            this.Nakit.Width = 5;
             // 
             // Kredi_Karti
             // 
+            this.Kredi_Karti.FillWeight = 6F;
             this.Kredi_Karti.HeaderText = "Kredi Karti";
             this.Kredi_Karti.Name = "Kredi_Karti";
             this.Kredi_Karti.ReadOnly = true;
+            this.Kredi_Karti.Width = 5;
             // 
             // Cari
             // 
+            this.Cari.FillWeight = 6F;
             this.Cari.HeaderText = "Cari";
             this.Cari.Name = "Cari";
             this.Cari.ReadOnly = true;
+            this.Cari.Width = 5;
             // 
             // Tutar
             // 
+            this.Tutar.FillWeight = 6.5F;
             this.Tutar.HeaderText = "Tutar";
             this.Tutar.Name = "Tutar";
             this.Tutar.ReadOnly = true;
+            this.Tutar.Width = 5;
+            // 
+            // ISKONTO
+            // 
+            this.ISKONTO.FillWeight = 6F;
+            this.ISKONTO.HeaderText = "Iskonto";
+            this.ISKONTO.Name = "ISKONTO";
+            this.ISKONTO.ReadOnly = true;
+            this.ISKONTO.Width = 5;
             // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.BackgroundImage = global::Restorium.Properties.Resources.kasa1;
+            this.panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel2.BackgroundImage")));
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel2.Controls.Add(this.bPrintKasa);
             this.panel2.Controls.Add(this.bSendMailKasa);
@@ -1251,7 +1334,7 @@
             // bPrintKasa
             // 
             this.bPrintKasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bPrintKasa.BackgroundImage = global::Restorium.Properties.Resources.printer_icon;
+            this.bPrintKasa.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bPrintKasa.BackgroundImage")));
             this.bPrintKasa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bPrintKasa.Location = new System.Drawing.Point(802, 16);
             this.bPrintKasa.Name = "bPrintKasa";
@@ -1262,7 +1345,7 @@
             // bSendMailKasa
             // 
             this.bSendMailKasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSendMailKasa.BackgroundImage = global::Restorium.Properties.Resources.gmail_icon;
+            this.bSendMailKasa.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bSendMailKasa.BackgroundImage")));
             this.bSendMailKasa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bSendMailKasa.Location = new System.Drawing.Point(847, 16);
             this.bSendMailKasa.Name = "bSendMailKasa";
@@ -1274,7 +1357,7 @@
             // bCalculator_Kasa
             // 
             this.bCalculator_Kasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bCalculator_Kasa.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.bCalculator_Kasa.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bCalculator_Kasa.BackgroundImage")));
             this.bCalculator_Kasa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bCalculator_Kasa.Location = new System.Drawing.Point(920, 16);
             this.bCalculator_Kasa.Name = "bCalculator_Kasa";
@@ -1303,7 +1386,7 @@
             this.kasadanParaAlToolStripMenuItem,
             this.kasayaGirdiEkleToolStripMenuItem});
             this.menuToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 14F);
-            this.menuToolStripMenuItem.Image = global::Restorium.Properties.Resources.pencil_icon;
+            this.menuToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("menuToolStripMenuItem.Image")));
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(89, 29);
             this.menuToolStripMenuItem.Text = "Menu";
@@ -1329,7 +1412,7 @@
             // 
             // tp_Rapor
             // 
-            this.tp_Rapor.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Rapor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tp_Rapor.BackgroundImage")));
             this.tp_Rapor.Controls.Add(this.tcRapor);
             this.tp_Rapor.Controls.Add(this.panel4);
             this.tp_Rapor.ImeMode = System.Windows.Forms.ImeMode.On;
@@ -1397,7 +1480,7 @@
             series1.IsValueShownAsLabel = true;
             series1.IsXValueIndexed = true;
             series1.Label = "#VAL{D2}";
-            series1.LabelBackColor = System.Drawing.Color.Transparent;
+            series1.LabelBackColor = System.Drawing.Color.Gainsboro;
             series1.LabelToolTip = "#VAL{D2}";
             series1.Legend = "Legend1";
             series1.Name = "Saatlik Kazanc";
@@ -1414,39 +1497,39 @@
             this.panel12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel12.Controls.Add(this.chart1);
-            this.panel12.Location = new System.Drawing.Point(0, 398);
+            this.panel12.Controls.Add(this.chartMonthly);
+            this.panel12.Location = new System.Drawing.Point(0, 405);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(992, 177);
             this.panel12.TabIndex = 12;
             // 
-            // chart1
+            // chartMonthly
             // 
-            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.chartMonthly.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            this.chartMonthly.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
-            this.chart1.Location = new System.Drawing.Point(-2, -2);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+            this.chartMonthly.Legends.Add(legend2);
+            this.chartMonthly.Location = new System.Drawing.Point(-2, -2);
+            this.chartMonthly.Name = "chartMonthly";
+            this.chartMonthly.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
             series2.BorderWidth = 3;
             series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedArea;
+            series2.Color = System.Drawing.Color.RoyalBlue;
+            series2.CustomProperties = "LabelStyle=Bottom";
+            series2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold);
+            series2.IsValueShownAsLabel = true;
+            series2.IsXValueIndexed = true;
+            series2.LabelBackColor = System.Drawing.Color.Gainsboro;
+            series2.LabelToolTip = "#VAL{D}";
             series2.Legend = "Legend1";
-            series2.Name = "Aylik Kazanc";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series3.BorderWidth = 3;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedArea;
-            series3.Legend = "Legend1";
-            series3.Name = "Kazanc Ortalamasi";
-            this.chart1.Series.Add(series2);
-            this.chart1.Series.Add(series3);
-            this.chart1.Size = new System.Drawing.Size(992, 177);
-            this.chart1.TabIndex = 2;
-            this.chart1.Text = "chart1";
+            series2.MarkerColor = System.Drawing.Color.White;
+            series2.Name = "Yillik Kazanc";
+            series2.YValuesPerPoint = 7;
+            this.chartMonthly.Series.Add(series2);
+            this.chartMonthly.Size = new System.Drawing.Size(997, 172);
+            this.chartMonthly.TabIndex = 3;
             // 
             // panel11
             // 
@@ -1454,9 +1537,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel11.Controls.Add(this.chartWeekly);
-            this.panel11.Location = new System.Drawing.Point(0, 194);
+            this.panel11.Location = new System.Drawing.Point(0, 210);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(992, 177);
+            this.panel11.Size = new System.Drawing.Size(992, 176);
             this.panel11.TabIndex = 12;
             // 
             // chartWeekly
@@ -1467,20 +1550,21 @@
             this.chartWeekly.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
             this.chartWeekly.Legends.Add(legend3);
-            this.chartWeekly.Location = new System.Drawing.Point(-2, -2);
+            this.chartWeekly.Location = new System.Drawing.Point(-2, -3);
             this.chartWeekly.Name = "chartWeekly";
             this.chartWeekly.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series4.BorderWidth = 3;
-            series4.ChartArea = "ChartArea1";
-            series4.CustomProperties = "LabelStyle=Bottom";
-            series4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold);
-            series4.IsValueShownAsLabel = true;
-            series4.IsXValueIndexed = true;
-            series4.LabelToolTip = "#VAL{D}";
-            series4.Legend = "Legend1";
-            series4.Name = "Gunluk Kazanc";
-            series4.YValuesPerPoint = 7;
-            this.chartWeekly.Series.Add(series4);
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.CustomProperties = "LabelStyle=Bottom";
+            series3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold);
+            series3.IsValueShownAsLabel = true;
+            series3.IsXValueIndexed = true;
+            series3.LabelBackColor = System.Drawing.Color.Gainsboro;
+            series3.LabelToolTip = "#VAL{D}";
+            series3.Legend = "Legend1";
+            series3.Name = "Gunluk Kazanc";
+            series3.YValuesPerPoint = 7;
+            this.chartWeekly.Series.Add(series3);
             this.chartWeekly.Size = new System.Drawing.Size(992, 177);
             this.chartWeekly.TabIndex = 1;
             this.chartWeekly.Text = "chart1";
@@ -1565,7 +1649,7 @@
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.BackColor = System.Drawing.Color.Transparent;
-            this.panel4.BackgroundImage = global::Restorium.Properties.Resources.rapor2;
+            this.panel4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel4.BackgroundImage")));
             this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel4.Controls.Add(this.bPrintReport);
             this.panel4.Controls.Add(this.bSendMailReport);
@@ -1577,7 +1661,7 @@
             // bPrintReport
             // 
             this.bPrintReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bPrintReport.BackgroundImage = global::Restorium.Properties.Resources.printer_icon;
+            this.bPrintReport.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bPrintReport.BackgroundImage")));
             this.bPrintReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bPrintReport.Location = new System.Drawing.Point(887, 16);
             this.bPrintReport.Name = "bPrintReport";
@@ -1588,7 +1672,7 @@
             // bSendMailReport
             // 
             this.bSendMailReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSendMailReport.BackgroundImage = global::Restorium.Properties.Resources.gmail_icon;
+            this.bSendMailReport.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bSendMailReport.BackgroundImage")));
             this.bSendMailReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bSendMailReport.Location = new System.Drawing.Point(932, 16);
             this.bSendMailReport.Name = "bSendMailReport";
@@ -1599,7 +1683,7 @@
             // 
             // tp_Rehber
             // 
-            this.tp_Rehber.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Rehber.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tp_Rehber.BackgroundImage")));
             this.tp_Rehber.Controls.Add(this.dgvRehber);
             this.tp_Rehber.Controls.Add(this.panel5);
             this.tp_Rehber.Location = new System.Drawing.Point(4, 28);
@@ -1700,7 +1784,7 @@
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel5.BackColor = System.Drawing.Color.Transparent;
-            this.panel5.BackgroundImage = global::Restorium.Properties.Resources.rehber;
+            this.panel5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel5.BackgroundImage")));
             this.panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel5.Controls.Add(this.tbSearchKayit);
             this.panel5.Controls.Add(this.bDuzenleRehber);
@@ -1725,7 +1809,7 @@
             this.bDuzenleRehber.BackColor = System.Drawing.Color.DodgerBlue;
             this.bDuzenleRehber.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bDuzenleRehber.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bDuzenleRehber.Image = global::Restorium.Properties.Resources.sign_sync_icon;
+            this.bDuzenleRehber.Image = ((System.Drawing.Image)(resources.GetObject("bDuzenleRehber.Image")));
             this.bDuzenleRehber.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bDuzenleRehber.Location = new System.Drawing.Point(262, 19);
             this.bDuzenleRehber.Name = "bDuzenleRehber";
@@ -1741,7 +1825,7 @@
             this.bKayitAra.BackColor = System.Drawing.Color.LightSeaGreen;
             this.bKayitAra.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bKayitAra.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bKayitAra.Image = global::Restorium.Properties.Resources.Search_icon1;
+            this.bKayitAra.Image = ((System.Drawing.Image)(resources.GetObject("bKayitAra.Image")));
             this.bKayitAra.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bKayitAra.Location = new System.Drawing.Point(901, 19);
             this.bKayitAra.Name = "bKayitAra";
@@ -1755,7 +1839,7 @@
             this.bKayitEkle.BackColor = System.Drawing.Color.YellowGreen;
             this.bKayitEkle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bKayitEkle.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bKayitEkle.Image = global::Restorium.Properties.Resources.sign_add_icon__1_;
+            this.bKayitEkle.Image = ((System.Drawing.Image)(resources.GetObject("bKayitEkle.Image")));
             this.bKayitEkle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bKayitEkle.Location = new System.Drawing.Point(162, 19);
             this.bKayitEkle.Name = "bKayitEkle";
@@ -1770,7 +1854,7 @@
             this.bKayitSil.BackColor = System.Drawing.Color.Red;
             this.bKayitSil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bKayitSil.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bKayitSil.Image = global::Restorium.Properties.Resources.sign_error_icon;
+            this.bKayitSil.Image = ((System.Drawing.Image)(resources.GetObject("bKayitSil.Image")));
             this.bKayitSil.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bKayitSil.Location = new System.Drawing.Point(362, 19);
             this.bKayitSil.Name = "bKayitSil";
@@ -1782,7 +1866,8 @@
             // 
             // tp_Ayarlar
             // 
-            this.tp_Ayarlar.BackgroundImage = global::Restorium.Properties.Resources.back_aliminium;
+            this.tp_Ayarlar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tp_Ayarlar.BackgroundImage")));
+            this.tp_Ayarlar.Controls.Add(this.bPersonelEkle);
             this.tp_Ayarlar.Controls.Add(this.bDeletePersonel);
             this.tp_Ayarlar.Controls.Add(this.panel7);
             this.tp_Ayarlar.Controls.Add(this.bPersonelDuzenle);
@@ -1796,40 +1881,270 @@
             this.tp_Ayarlar.Text = "Ayarlar";
             this.tp_Ayarlar.UseVisualStyleBackColor = true;
             // 
+            // bPersonelEkle
+            // 
+            this.bPersonelEkle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bPersonelEkle.BackColor = System.Drawing.Color.Ivory;
+            this.bPersonelEkle.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bPersonelEkle.BackgroundImage")));
+            this.bPersonelEkle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bPersonelEkle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bPersonelEkle.Location = new System.Drawing.Point(818, 77);
+            this.bPersonelEkle.Name = "bPersonelEkle";
+            this.bPersonelEkle.Size = new System.Drawing.Size(28, 28);
+            this.bPersonelEkle.TabIndex = 18;
+            this.bPersonelEkle.UseVisualStyleBackColor = false;
+            this.bPersonelEkle.Click += new System.EventHandler(this.bPersonelEkle_Click);
+            // 
+            // bDeletePersonel
+            // 
+            this.bDeletePersonel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bDeletePersonel.BackColor = System.Drawing.Color.Ivory;
+            this.bDeletePersonel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bDeletePersonel.BackgroundImage")));
+            this.bDeletePersonel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bDeletePersonel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bDeletePersonel.Location = new System.Drawing.Point(852, 77);
+            this.bDeletePersonel.Name = "bDeletePersonel";
+            this.bDeletePersonel.Size = new System.Drawing.Size(28, 28);
+            this.bDeletePersonel.TabIndex = 17;
+            this.bDeletePersonel.UseVisualStyleBackColor = false;
+            this.bDeletePersonel.Click += new System.EventHandler(this.bDeletePersonel_Click);
+            // 
             // panel7
             // 
             this.panel7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel7.BackColor = System.Drawing.Color.Transparent;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel7.Controls.Add(this.cbAutoMail);
+            this.panel7.Controls.Add(this.panel15);
+            this.panel7.Controls.Add(this.panel14);
+            this.panel7.Controls.Add(this.panel9);
             this.panel7.Controls.Add(this.bAyarlarDuzenle);
-            this.panel7.Controls.Add(this.label19);
-            this.panel7.Controls.Add(this.label18);
-            this.panel7.Controls.Add(this.dtpDukkanKapanisTime);
-            this.panel7.Controls.Add(this.tbMail);
-            this.panel7.Controls.Add(this.label17);
-            this.panel7.Controls.Add(this.label8);
-            this.panel7.Controls.Add(this.tbGBP);
-            this.panel7.Controls.Add(this.label6);
-            this.panel7.Controls.Add(this.label7);
-            this.panel7.Controls.Add(this.tbDolar);
-            this.panel7.Controls.Add(this.tbEuro);
-            this.panel7.Controls.Add(this.label5);
-            this.panel7.Controls.Add(this.label4);
-            this.panel7.Controls.Add(this.label3);
-            this.panel7.Controls.Add(this.tbDefaultIskontoValue);
-            this.panel7.Controls.Add(this.label2);
             this.panel7.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Italic);
             this.panel7.Location = new System.Drawing.Point(11, 474);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(983, 214);
             this.panel7.TabIndex = 16;
             // 
+            // panel15
+            // 
+            this.panel15.BackColor = System.Drawing.Color.Silver;
+            this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel15.Controls.Add(this.bPersonelSettings);
+            this.panel15.Controls.Add(this.bAdminSettings);
+            this.panel15.Controls.Add(this.label24);
+            this.panel15.Location = new System.Drawing.Point(521, 3);
+            this.panel15.Name = "panel15";
+            this.panel15.Size = new System.Drawing.Size(312, 69);
+            this.panel15.TabIndex = 23;
+            // 
+            // bPersonelSettings
+            // 
+            this.bPersonelSettings.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Italic);
+            this.bPersonelSettings.Image = global::Restorium.Properties.Resources.people__1_;
+            this.bPersonelSettings.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.bPersonelSettings.Location = new System.Drawing.Point(156, 27);
+            this.bPersonelSettings.Name = "bPersonelSettings";
+            this.bPersonelSettings.Size = new System.Drawing.Size(149, 30);
+            this.bPersonelSettings.TabIndex = 21;
+            this.bPersonelSettings.Text = "Personel Ayarlari";
+            this.bPersonelSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bPersonelSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.bPersonelSettings.UseVisualStyleBackColor = true;
+            this.bPersonelSettings.Click += new System.EventHandler(this.bPersonelSettings_Click);
+            // 
+            // bAdminSettings
+            // 
+            this.bAdminSettings.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Italic);
+            this.bAdminSettings.Image = global::Restorium.Properties.Resources.admin1;
+            this.bAdminSettings.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.bAdminSettings.Location = new System.Drawing.Point(3, 26);
+            this.bAdminSettings.Name = "bAdminSettings";
+            this.bAdminSettings.Size = new System.Drawing.Size(149, 30);
+            this.bAdminSettings.TabIndex = 20;
+            this.bAdminSettings.Text = "Admin Ayarlari";
+            this.bAdminSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bAdminSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.bAdminSettings.UseVisualStyleBackColor = true;
+            this.bAdminSettings.Click += new System.EventHandler(this.bAdminSettings_Click);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.label24.Location = new System.Drawing.Point(3, 4);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(122, 19);
+            this.label24.TabIndex = 19;
+            this.label24.Text = "Kullanici Ayarlari";
+            // 
+            // panel14
+            // 
+            this.panel14.BackColor = System.Drawing.Color.Silver;
+            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel14.Controls.Add(this.label19);
+            this.panel14.Controls.Add(this.label5);
+            this.panel14.Controls.Add(this.tbEuro);
+            this.panel14.Controls.Add(this.label23);
+            this.panel14.Controls.Add(this.tbDolar);
+            this.panel14.Controls.Add(this.label9);
+            this.panel14.Controls.Add(this.label7);
+            this.panel14.Controls.Add(this.label6);
+            this.panel14.Controls.Add(this.label8);
+            this.panel14.Controls.Add(this.tbGBP);
+            this.panel14.Location = new System.Drawing.Point(4, 143);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(513, 64);
+            this.panel14.TabIndex = 22;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.label19.Location = new System.Drawing.Point(2, 2);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(102, 19);
+            this.label19.TabIndex = 19;
+            this.label19.Text = "Doviz Ayarlari";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label5.Location = new System.Drawing.Point(3, 34);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 17);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "1 TL  =";
+            // 
+            // tbEuro
+            // 
+            this.tbEuro.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbEuro.Location = new System.Drawing.Point(53, 28);
+            this.tbEuro.Name = "tbEuro";
+            this.tbEuro.Size = new System.Drawing.Size(53, 23);
+            this.tbEuro.TabIndex = 5;
+            this.tbEuro.TextChanged += new System.EventHandler(this.ExchangeValuesChanged);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label23.Location = new System.Drawing.Point(356, 34);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(41, 17);
+            this.label23.TabIndex = 20;
+            this.label23.Text = "1 TL =";
+            // 
+            // tbDolar
+            // 
+            this.tbDolar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbDolar.Location = new System.Drawing.Point(224, 28);
+            this.tbDolar.Name = "tbDolar";
+            this.tbDolar.Size = new System.Drawing.Size(53, 23);
+            this.tbDolar.TabIndex = 7;
+            this.tbDolar.TextChanged += new System.EventHandler(this.ExchangeValuesChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label9.Location = new System.Drawing.Point(177, 34);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(41, 17);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "1 TL =";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label7.Location = new System.Drawing.Point(112, 34);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(34, 17);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Euro";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label6.Location = new System.Drawing.Point(283, 34);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(42, 17);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Dolar ";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label8.Location = new System.Drawing.Point(466, 34);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(32, 17);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "GBP";
+            // 
+            // tbGBP
+            // 
+            this.tbGBP.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbGBP.Location = new System.Drawing.Point(403, 28);
+            this.tbGBP.Name = "tbGBP";
+            this.tbGBP.Size = new System.Drawing.Size(53, 23);
+            this.tbGBP.TabIndex = 10;
+            this.tbGBP.TextChanged += new System.EventHandler(this.ExchangeValuesChanged);
+            // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.Color.Silver;
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel9.Controls.Add(this.label2);
+            this.panel9.Controls.Add(this.tbDefaultIskontoValue);
+            this.panel9.Controls.Add(this.label3);
+            this.panel9.Controls.Add(this.cbAutoMail);
+            this.panel9.Controls.Add(this.label4);
+            this.panel9.Controls.Add(this.label17);
+            this.panel9.Controls.Add(this.tbMail);
+            this.panel9.Controls.Add(this.label18);
+            this.panel9.Controls.Add(this.dtpDukkanKapanisTime);
+            this.panel9.Location = new System.Drawing.Point(3, 3);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(514, 134);
+            this.panel9.TabIndex = 21;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.label2.Location = new System.Drawing.Point(3, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 19);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Genel Ayarlar";
+            // 
+            // tbDefaultIskontoValue
+            // 
+            this.tbDefaultIskontoValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbDefaultIskontoValue.Location = new System.Drawing.Point(136, 30);
+            this.tbDefaultIskontoValue.Name = "tbDefaultIskontoValue";
+            this.tbDefaultIskontoValue.Size = new System.Drawing.Size(53, 23);
+            this.tbDefaultIskontoValue.TabIndex = 1;
+            this.tbDefaultIskontoValue.TextChanged += new System.EventHandler(this.IskontoValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label3.Location = new System.Drawing.Point(6, 36);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(129, 17);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Iskonto Orani            :  ";
+            // 
             // cbAutoMail
             // 
             this.cbAutoMail.AutoSize = true;
             this.cbAutoMail.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
-            this.cbAutoMail.Location = new System.Drawing.Point(292, 117);
+            this.cbAutoMail.Location = new System.Drawing.Point(278, 104);
             this.cbAutoMail.Name = "cbAutoMail";
             this.cbAutoMail.Size = new System.Drawing.Size(217, 21);
             this.cbAutoMail.TabIndex = 18;
@@ -1837,38 +2152,40 @@
             this.cbAutoMail.UseVisualStyleBackColor = true;
             this.cbAutoMail.CheckedChanged += new System.EventHandler(this.cbAutoMailChanged);
             // 
-            // bAyarlarDuzenle
+            // label4
             // 
-            this.bAyarlarDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bAyarlarDuzenle.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Italic);
-            this.bAyarlarDuzenle.ForeColor = System.Drawing.Color.Red;
-            this.bAyarlarDuzenle.Image = global::Restorium.Properties.Resources.switch_off;
-            this.bAyarlarDuzenle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.bAyarlarDuzenle.Location = new System.Drawing.Point(837, 4);
-            this.bAyarlarDuzenle.Name = "bAyarlarDuzenle";
-            this.bAyarlarDuzenle.Size = new System.Drawing.Size(139, 28);
-            this.bAyarlarDuzenle.TabIndex = 17;
-            this.bAyarlarDuzenle.Text = "Duzenle";
-            this.bAyarlarDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bAyarlarDuzenle.UseVisualStyleBackColor = true;
-            this.bAyarlarDuzenle.Click += new System.EventHandler(this.bAyarlarDuzenle_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(195, 30);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 23);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "%";
             // 
-            // label19
+            // label17
             // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
-            this.label19.Location = new System.Drawing.Point(0, 143);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(372, 17);
-            this.label19.TabIndex = 16;
-            this.label19.Text = "---------------------------------------------------------------------------------" +
-    "----------";
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
+            this.label17.Location = new System.Drawing.Point(4, 67);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(123, 17);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "Mail Adresi                :";
+            // 
+            // tbMail
+            // 
+            this.tbMail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbMail.Enabled = false;
+            this.tbMail.Location = new System.Drawing.Point(133, 61);
+            this.tbMail.Name = "tbMail";
+            this.tbMail.Size = new System.Drawing.Size(265, 23);
+            this.tbMail.TabIndex = 13;
+            this.tbMail.TextChanged += new System.EventHandler(this.tbMailChanged);
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
-            this.label18.Location = new System.Drawing.Point(8, 121);
+            this.label18.Location = new System.Drawing.Point(4, 108);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(128, 17);
             this.label18.TabIndex = 15;
@@ -1878,143 +2195,40 @@
             // 
             this.dtpDukkanKapanisTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtpDukkanKapanisTime.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dtpDukkanKapanisTime.Location = new System.Drawing.Point(137, 112);
+            this.dtpDukkanKapanisTime.Location = new System.Drawing.Point(136, 96);
             this.dtpDukkanKapanisTime.Name = "dtpDukkanKapanisTime";
             this.dtpDukkanKapanisTime.ShowUpDown = true;
             this.dtpDukkanKapanisTime.Size = new System.Drawing.Size(111, 30);
             this.dtpDukkanKapanisTime.TabIndex = 14;
             this.dtpDukkanKapanisTime.ValueChanged += new System.EventHandler(this.dtpDukkanKapanisTimeChanged);
             // 
-            // tbMail
+            // bAyarlarDuzenle
             // 
-            this.tbMail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbMail.Enabled = false;
-            this.tbMail.Location = new System.Drawing.Point(137, 80);
-            this.tbMail.Name = "tbMail";
-            this.tbMail.Size = new System.Drawing.Size(265, 23);
-            this.tbMail.TabIndex = 13;
-            this.tbMail.TextChanged += new System.EventHandler(this.tbMailChanged);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
-            this.label17.Location = new System.Drawing.Point(8, 82);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(123, 17);
-            this.label17.TabIndex = 12;
-            this.label17.Text = "Mail Adresi                :";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
-            this.label8.Location = new System.Drawing.Point(323, 170);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(32, 17);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "GBP";
-            // 
-            // tbGBP
-            // 
-            this.tbGBP.Location = new System.Drawing.Point(264, 161);
-            this.tbGBP.Name = "tbGBP";
-            this.tbGBP.Size = new System.Drawing.Size(53, 30);
-            this.tbGBP.TabIndex = 10;
-            this.tbGBP.TextChanged += new System.EventHandler(this.ExchangeValuesChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
-            this.label6.Location = new System.Drawing.Point(217, 170);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(52, 17);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Dolar = ";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
-            this.label7.Location = new System.Drawing.Point(108, 170);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(44, 17);
-            this.label7.TabIndex = 8;
-            this.label7.Text = "Euro =";
-            // 
-            // tbDolar
-            // 
-            this.tbDolar.Location = new System.Drawing.Point(158, 161);
-            this.tbDolar.Name = "tbDolar";
-            this.tbDolar.Size = new System.Drawing.Size(53, 30);
-            this.tbDolar.TabIndex = 7;
-            this.tbDolar.TextChanged += new System.EventHandler(this.ExchangeValuesChanged);
-            // 
-            // tbEuro
-            // 
-            this.tbEuro.Location = new System.Drawing.Point(49, 161);
-            this.tbEuro.Name = "tbEuro";
-            this.tbEuro.Size = new System.Drawing.Size(53, 30);
-            this.tbEuro.TabIndex = 5;
-            this.tbEuro.TextChanged += new System.EventHandler(this.ExchangeValuesChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
-            this.label5.Location = new System.Drawing.Point(8, 170);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 17);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "1 TL  =  ";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(196, 40);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 23);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "%";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
-            this.label3.Location = new System.Drawing.Point(8, 46);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(129, 17);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Iskonto Orani            :  ";
-            // 
-            // tbDefaultIskontoValue
-            // 
-            this.tbDefaultIskontoValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbDefaultIskontoValue.Location = new System.Drawing.Point(137, 40);
-            this.tbDefaultIskontoValue.Name = "tbDefaultIskontoValue";
-            this.tbDefaultIskontoValue.Size = new System.Drawing.Size(53, 23);
-            this.tbDefaultIskontoValue.TabIndex = 1;
-            this.tbDefaultIskontoValue.TextChanged += new System.EventHandler(this.IskontoValueChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 23);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Ayarlar";
+            this.bAyarlarDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bAyarlarDuzenle.BackColor = System.Drawing.Color.Transparent;
+            this.bAyarlarDuzenle.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.bAyarlarDuzenle.ForeColor = System.Drawing.Color.Red;
+            this.bAyarlarDuzenle.Image = ((System.Drawing.Image)(resources.GetObject("bAyarlarDuzenle.Image")));
+            this.bAyarlarDuzenle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bAyarlarDuzenle.Location = new System.Drawing.Point(837, 4);
+            this.bAyarlarDuzenle.Name = "bAyarlarDuzenle";
+            this.bAyarlarDuzenle.Size = new System.Drawing.Size(139, 28);
+            this.bAyarlarDuzenle.TabIndex = 17;
+            this.bAyarlarDuzenle.Text = "Duzenle";
+            this.bAyarlarDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bAyarlarDuzenle.UseVisualStyleBackColor = false;
+            this.bAyarlarDuzenle.Click += new System.EventHandler(this.bAyarlarDuzenle_Click);
             // 
             // bPersonelDuzenle
             // 
             this.bPersonelDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bPersonelDuzenle.ForeColor = System.Drawing.Color.Red;
-            this.bPersonelDuzenle.Image = global::Restorium.Properties.Resources.switch_off;
-            this.bPersonelDuzenle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.bPersonelDuzenle.Location = new System.Drawing.Point(856, 78);
+            this.bPersonelDuzenle.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bPersonelDuzenle.ForeColor = System.Drawing.Color.Black;
+            this.bPersonelDuzenle.Image = ((System.Drawing.Image)(resources.GetObject("bPersonelDuzenle.Image")));
+            this.bPersonelDuzenle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bPersonelDuzenle.Location = new System.Drawing.Point(886, 77);
             this.bPersonelDuzenle.Name = "bPersonelDuzenle";
-            this.bPersonelDuzenle.Size = new System.Drawing.Size(139, 28);
+            this.bPersonelDuzenle.Size = new System.Drawing.Size(103, 28);
             this.bPersonelDuzenle.TabIndex = 15;
             this.bPersonelDuzenle.Text = "Duzenle";
             this.bPersonelDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2101,7 +2315,7 @@
             this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel6.BackColor = System.Drawing.Color.Transparent;
-            this.panel6.BackgroundImage = global::Restorium.Properties.Resources.settings2;
+            this.panel6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel6.BackgroundImage")));
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel6.Controls.Add(this.bCalculator_Settings);
             this.panel6.Location = new System.Drawing.Point(0, 0);
@@ -2112,7 +2326,7 @@
             // bCalculator_Settings
             // 
             this.bCalculator_Settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bCalculator_Settings.BackgroundImage = global::Restorium.Properties.Resources.Apps_Calculator_Metro_icon;
+            this.bCalculator_Settings.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bCalculator_Settings.BackgroundImage")));
             this.bCalculator_Settings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bCalculator_Settings.Location = new System.Drawing.Point(920, 16);
             this.bCalculator_Settings.Name = "bCalculator_Settings";
@@ -2121,19 +2335,17 @@
             this.bCalculator_Settings.UseVisualStyleBackColor = true;
             this.bCalculator_Settings.Click += new System.EventHandler(this.bCalculator_Click);
             // 
-            // bDeletePersonel
+            // panel16
             // 
-            this.bDeletePersonel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bDeletePersonel.BackColor = System.Drawing.Color.Ivory;
-            this.bDeletePersonel.BackgroundImage = global::Restorium.Properties.Resources.sign_error_icon;
-            this.bDeletePersonel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bDeletePersonel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.bDeletePersonel.Location = new System.Drawing.Point(822, 78);
-            this.bDeletePersonel.Name = "bDeletePersonel";
-            this.bDeletePersonel.Size = new System.Drawing.Size(28, 28);
-            this.bDeletePersonel.TabIndex = 17;
-            this.bDeletePersonel.UseVisualStyleBackColor = false;
-            this.bDeletePersonel.Click += new System.EventHandler(this.bDeletePersonel_Click);
+            this.panel16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel16.Controls.Add(this.bSiparisEkle);
+            this.panel16.Controls.Add(this.bPrint);
+            this.panel16.Controls.Add(this.bTableDetailChange);
+            this.panel16.Location = new System.Drawing.Point(227, 132);
+            this.panel16.Name = "panel16";
+            this.panel16.Size = new System.Drawing.Size(243, 38);
+            this.panel16.TabIndex = 11;
             // 
             // MainForm
             // 
@@ -2178,7 +2390,7 @@
             this.panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).EndInit();
             this.panel12.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartMonthly)).EndInit();
             this.panel11.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartWeekly)).EndInit();
             this.tbSpecificRapor.ResumeLayout(false);
@@ -2192,9 +2404,15 @@
             this.tp_Ayarlar.ResumeLayout(false);
             this.tp_Ayarlar.PerformLayout();
             this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
+            this.panel15.ResumeLayout(false);
+            this.panel15.PerformLayout();
+            this.panel14.ResumeLayout(false);
+            this.panel14.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewWaiter)).EndInit();
             this.panel6.ResumeLayout(false);
+            this.panel16.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2250,7 +2468,6 @@
         private System.Windows.Forms.Button bStokAdd;
         private System.Windows.Forms.GroupBox gbTableDetails;
         private System.Windows.Forms.Label lTableCounter;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lMasaNo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label10;
@@ -2274,14 +2491,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label lKasaToplam;
         private System.Windows.Forms.DataGridView dgvKasa;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Masa_Adi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nakit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Kredi_Karti;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cari;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tutar;
         private System.Windows.Forms.Label lCariToplamTL;
         private System.Windows.Forms.Label lNakitToplamTL;
         private System.Windows.Forms.Label lKrediToplamTL;
@@ -2300,7 +2509,6 @@
         private System.Windows.Forms.ComboBox cbRaporTercihi;
         private System.Windows.Forms.Button bReportAra;
         private System.Windows.Forms.DateTimePicker dtpReportDateStart;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.DateTimePicker dtpReportDateEnd;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button bSendMailKasa;
@@ -2309,7 +2517,6 @@
         private System.Windows.Forms.Button bSendMailReport;
         private System.Windows.Forms.TextBox tbMail;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.DateTimePicker dtpDukkanKapanisTime;
         private System.Windows.Forms.Button bAyarlarDuzenle;
@@ -2347,6 +2554,33 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TEL;
         private System.Windows.Forms.DataGridViewTextBoxColumn MAIL;
         private System.Windows.Forms.DataGridViewTextBoxColumn GOREVI;
+        private System.Windows.Forms.Button bDuzenleRehber;
+        private System.Windows.Forms.Button bStokSil;
+        private System.Windows.Forms.Button bPrintReport;
+        private System.Windows.Forms.Button bDeletePersonel;
+        private System.Windows.Forms.Button bPersonelEkle;
+        private System.Windows.Forms.Button bTableDetailChange;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartMonthly;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button bAdminSettings;
+        private System.Windows.Forms.Button bPersonelSettings;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Masa_Adi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MUSTERI;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nakit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Kredi_Karti;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cari;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tutar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ISKONTO;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn ACIKLAMA;
         private System.Windows.Forms.DataGridViewTextBoxColumn ADET;
@@ -2355,9 +2589,7 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn PARA_BIRIMI;
         private System.Windows.Forms.DataGridViewCheckBoxColumn DINAMIK_STOK_KONTROLU;
         private System.Windows.Forms.DataGridViewCheckBoxColumn MENU_ITEM;
-        private System.Windows.Forms.Button bDuzenleRehber;
-        private System.Windows.Forms.Button bStokSil;
-        private System.Windows.Forms.Button bPrintReport;
-        private System.Windows.Forms.Button bDeletePersonel;
+        private System.Windows.Forms.Button bPrint;
+        private System.Windows.Forms.Panel panel16;
     }
 }

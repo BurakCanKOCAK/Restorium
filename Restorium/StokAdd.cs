@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -28,6 +29,16 @@ namespace Restorium
 
         private void StokAdd_Load(object sender, EventArgs e)
         {
+            countOfItems = 0;
+            try
+            {
+                IniFile INI = new IniFile();
+                int stokCount = Convert.ToInt32(INI.Read("stokCount", "Stok"));
+                countOfItems = stokCount;
+            } catch
+            {
+                UserLog.WConsole("(!)Stok kayitlarindan stok sayisini okumada hata ! (StokAdd.cs)");
+            }
             cbBirim.SelectedItem= "Birim";
             cbParaBirimi.SelectedItem = "TL";
             //----------------------//
@@ -35,6 +46,8 @@ namespace Restorium
             tbID.AutoCompleteMode = AutoCompleteMode.Suggest;
             tbID.AutoCompleteSource = AutoCompleteSource.CustomSource;
             AutoCompleteStringCollection col = new AutoCompleteStringCollection();
+            
+            /*
             for (int i = 0; i < 500; i++)
             {
                 if (MainForm.menuID[i] != null)
@@ -46,6 +59,8 @@ namespace Restorium
                     break;
                 }
             }
+            */
+            UserLog.WConsole("countOfItems :" + countOfItems);
             for (int i = 0; i < countOfItems; i++)
             {
                 col.Add(MainForm.menuID[i]);
@@ -112,15 +127,19 @@ namespace Restorium
 
         private void bStokAdd_Click(object sender, EventArgs e)
         {
-            
+            CultureInfo culture = new CultureInfo("tr-TR", true);
+            if (tbBirimFiyat.Text.LastIndexOf(',') != -1)
+                culture.NumberFormat.NumberDecimalSeparator = ",";
+
             if (tbAciklama.Text != "" && tbAdet.Text != "" && tbBirimFiyat.Text != "" && tbID.Text != "")
             {
-                if (System.Text.RegularExpressions.Regex.IsMatch(tbAdet.Text, "[^ 0-9]") && System.Text.RegularExpressions.Regex.IsMatch(tbBirimFiyat.Text, "[^ 0-9]"))
+                //if(System.Text.RegularExpressions.Regex.IsMatch("^[0-9]", tbAdet.Text) && System.Text.RegularExpressions.Regex.IsMatch("^[0-9]", tbBirimFiyat.Text))
+                if (System.Text.RegularExpressions.Regex.IsMatch(tbAdet.Text, "^[0-9]") && System.Text.RegularExpressions.Regex.IsMatch(tbBirimFiyat.Text, "^[0-9]"))
                 {
                     //valid item
                     Aciklama = tbAciklama.Text;
                     ID = tbID.Text;
-                    BirimFiyat = Convert.ToDecimal(tbBirimFiyat.Text);
+                    BirimFiyat = Convert.ToDecimal(tbBirimFiyat.Text,culture);
                     ParaBirimi = cbParaBirimi.SelectedItem.ToString(); //SORUN BURDA
                     Adet = Convert.ToInt32(tbAdet.Text);
                     AdetTuru = cbBirim.SelectedItem.ToString(); // SORUN BURDA
@@ -142,6 +161,7 @@ namespace Restorium
                     }
                     this.DialogResult = DialogResult.OK;
                     col2.Clear();
+
                     this.Close();
                 }
                 else

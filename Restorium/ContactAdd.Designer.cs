@@ -303,7 +303,8 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ContactAdd";
-            this.Text = "Yeni Kayit";
+            this.Text = "Rehber";
+            this.Load += new System.EventHandler(this.ContactAdd_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

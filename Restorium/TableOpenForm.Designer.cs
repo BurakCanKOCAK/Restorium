@@ -41,6 +41,8 @@
             this.bPersonelAdiListe = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.gbRezervasyonSettings = new System.Windows.Forms.GroupBox();
+            this.rDakika = new System.Windows.Forms.DateTimePicker();
+            this.rSaat = new System.Windows.Forms.DateTimePicker();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.rLimitDakika = new System.Windows.Forms.NumericUpDown();
@@ -50,8 +52,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.rTarih = new System.Windows.Forms.DateTimePicker();
-            this.rSaat = new System.Windows.Forms.DateTimePicker();
-            this.rDakika = new System.Windows.Forms.DateTimePicker();
             this.gbRezervasyonSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rLimitDakika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rLimitSaat)).BeginInit();
@@ -59,22 +59,32 @@
             // 
             // bMasaAc
             // 
+            this.bMasaAc.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bMasaAc.Image = global::Restorium.Properties.Resources.check__2_1;
+            this.bMasaAc.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bMasaAc.Location = new System.Drawing.Point(13, 300);
             this.bMasaAc.Name = "bMasaAc";
-            this.bMasaAc.Size = new System.Drawing.Size(112, 23);
+            this.bMasaAc.Size = new System.Drawing.Size(112, 45);
             this.bMasaAc.TabIndex = 0;
-            this.bMasaAc.Text = "Masa Ac";
+            this.bMasaAc.Text = "Tamam";
+            this.bMasaAc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bMasaAc.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.bMasaAc.UseVisualStyleBackColor = true;
             this.bMasaAc.Click += new System.EventHandler(this.bMasaAc_Click);
             this.bMasaAc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             // 
             // bIptal
             // 
+            this.bIptal.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bIptal.Image = global::Restorium.Properties.Resources.circle__7_;
+            this.bIptal.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bIptal.Location = new System.Drawing.Point(329, 300);
             this.bIptal.Name = "bIptal";
-            this.bIptal.Size = new System.Drawing.Size(113, 23);
+            this.bIptal.Size = new System.Drawing.Size(113, 45);
             this.bIptal.TabIndex = 1;
             this.bIptal.Text = "Iptal";
+            this.bIptal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bIptal.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.bIptal.UseVisualStyleBackColor = true;
             this.bIptal.Click += new System.EventHandler(this.bIptal_Click);
             this.bIptal.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
@@ -188,7 +198,7 @@
             this.gbRezervasyonSettings.Controls.Add(this.label7);
             this.gbRezervasyonSettings.Controls.Add(this.label6);
             this.gbRezervasyonSettings.Controls.Add(this.rTarih);
-            this.gbRezervasyonSettings.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbRezervasyonSettings.Font = new System.Drawing.Font("Calibri", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbRezervasyonSettings.ForeColor = System.Drawing.SystemColors.ControlText;
             this.gbRezervasyonSettings.Location = new System.Drawing.Point(13, 157);
             this.gbRezervasyonSettings.Name = "gbRezervasyonSettings";
@@ -196,6 +206,32 @@
             this.gbRezervasyonSettings.TabIndex = 12;
             this.gbRezervasyonSettings.TabStop = false;
             this.gbRezervasyonSettings.Text = "Rezervasyon Ayarlari";
+            // 
+            // rDakika
+            // 
+            this.rDakika.CustomFormat = "mm";
+            this.rDakika.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.rDakika.Location = new System.Drawing.Point(136, 29);
+            this.rDakika.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
+            this.rDakika.MinDate = new System.DateTime(2015, 1, 1, 0, 0, 0, 0);
+            this.rDakika.Name = "rDakika";
+            this.rDakika.ShowUpDown = true;
+            this.rDakika.Size = new System.Drawing.Size(48, 26);
+            this.rDakika.TabIndex = 13;
+            this.rDakika.Value = new System.DateTime(2015, 12, 13, 22, 58, 2, 0);
+            // 
+            // rSaat
+            // 
+            this.rSaat.CustomFormat = "HH";
+            this.rSaat.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.rSaat.Location = new System.Drawing.Point(64, 29);
+            this.rSaat.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
+            this.rSaat.MinDate = new System.DateTime(2015, 1, 1, 0, 0, 0, 0);
+            this.rSaat.Name = "rSaat";
+            this.rSaat.ShowUpDown = true;
+            this.rSaat.Size = new System.Drawing.Size(48, 26);
+            this.rSaat.TabIndex = 12;
+            this.rSaat.Value = new System.DateTime(2015, 12, 13, 22, 58, 2, 0);
             // 
             // label11
             // 
@@ -291,37 +327,11 @@
             this.rTarih.TabIndex = 1;
             this.rTarih.Value = new System.DateTime(2015, 12, 13, 22, 58, 2, 0);
             // 
-            // rSaat
-            // 
-            this.rSaat.CustomFormat = "HH";
-            this.rSaat.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.rSaat.Location = new System.Drawing.Point(64, 29);
-            this.rSaat.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
-            this.rSaat.MinDate = new System.DateTime(2015, 1, 1, 0, 0, 0, 0);
-            this.rSaat.Name = "rSaat";
-            this.rSaat.ShowUpDown = true;
-            this.rSaat.Size = new System.Drawing.Size(48, 26);
-            this.rSaat.TabIndex = 12;
-            this.rSaat.Value = new System.DateTime(2015, 12, 13, 22, 58, 2, 0);
-            // 
-            // rDakika
-            // 
-            this.rDakika.CustomFormat = "HH";
-            this.rDakika.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.rDakika.Location = new System.Drawing.Point(136, 29);
-            this.rDakika.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
-            this.rDakika.MinDate = new System.DateTime(2015, 1, 1, 0, 0, 0, 0);
-            this.rDakika.Name = "rDakika";
-            this.rDakika.ShowUpDown = true;
-            this.rDakika.Size = new System.Drawing.Size(48, 26);
-            this.rDakika.TabIndex = 13;
-            this.rDakika.Value = new System.DateTime(2015, 12, 13, 22, 58, 2, 0);
-            // 
             // TableOpenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(454, 335);
+            this.ClientSize = new System.Drawing.Size(454, 349);
             this.Controls.Add(this.gbRezervasyonSettings);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.bPersonelAdiListe);
@@ -338,7 +348,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "TableOpenForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Yeni Masa";
+            this.Text = "Masa Detaylari";
             this.Load += new System.EventHandler(this.TableOpenForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_press);
             this.gbRezervasyonSettings.ResumeLayout(false);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -11,6 +12,7 @@ namespace Restorium
 {
     public partial class TableCloseForm : Form
     {
+        public static int iskonto;
         public TableCloseForm()
         {
             InitializeComponent();
@@ -21,6 +23,13 @@ namespace Restorium
 
         private void CalculateKalanTutar(object sender, EventArgs e)
         {
+            CultureInfo culture = new CultureInfo("tr-TR", true);
+            if (tbNakit.Text.LastIndexOf(',') != -1)
+                culture.NumberFormat.NumberDecimalSeparator = ",";
+            if (tbKredi.Text.LastIndexOf(',') != -1)
+                culture.NumberFormat.NumberDecimalSeparator = ",";
+            if (tbCari.Text.LastIndexOf(',') != -1)
+                culture.NumberFormat.NumberDecimalSeparator = ","; 
             #region TL_Calculation
             if (cbTL.CheckState == CheckState.Checked)
             {
@@ -33,7 +42,7 @@ namespace Restorium
                 //kredi
                 try
                 {
-                    kredi = Convert.ToDecimal(tbKredi.Text);
+                    kredi = Convert.ToDecimal(tbKredi.Text,culture);
                 }
                 catch
                 {
@@ -43,7 +52,7 @@ namespace Restorium
                 //Nakit
                 try
                 {
-                    nakit = Convert.ToDecimal(tbNakit.Text);
+                    nakit = Convert.ToDecimal(tbNakit.Text, culture);
                 }
                 catch
                 {
@@ -53,7 +62,7 @@ namespace Restorium
                 //Cari
                 try
                 {
-                    cari = Convert.ToDecimal(tbCari.Text);
+                    cari = Convert.ToDecimal(tbCari.Text, culture);
                 }
                 catch
                 {
@@ -121,7 +130,7 @@ namespace Restorium
                 //kredi
                 try
                 {
-                    kredi = Convert.ToDecimal(tbKredi.Text);
+                    kredi = Convert.ToDecimal(tbKredi.Text, culture);
                 }
                 catch
                 {
@@ -131,7 +140,7 @@ namespace Restorium
                 //Nakit
                 try
                 {
-                    nakit = Convert.ToDecimal(tbNakit.Text);
+                    nakit = Convert.ToDecimal(tbNakit.Text, culture);
                 }
                 catch
                 {
@@ -141,7 +150,7 @@ namespace Restorium
                 //Cari
                 try
                 {
-                    cari = Convert.ToDecimal(tbCari.Text);
+                    cari = Convert.ToDecimal(tbCari.Text, culture);
                 }
                 catch
                 {
@@ -211,7 +220,7 @@ namespace Restorium
                 //kredi
                 try
                 {
-                    kredi = Convert.ToDecimal(tbKredi.Text);
+                    kredi = Convert.ToDecimal(tbKredi.Text, culture);
                 }
                 catch
                 {
@@ -221,7 +230,7 @@ namespace Restorium
                 //Nakit
                 try
                 {
-                    nakit = Convert.ToDecimal(tbNakit.Text);
+                    nakit = Convert.ToDecimal(tbNakit.Text, culture);
                 }
                 catch
                 {
@@ -231,7 +240,7 @@ namespace Restorium
                 //Cari
                 try
                 {
-                    cari = Convert.ToDecimal(tbCari.Text);
+                    cari = Convert.ToDecimal(tbCari.Text, culture);
                 }
                 catch
                 {
@@ -299,7 +308,7 @@ namespace Restorium
                 //kredi
                 try
                 {
-                    kredi = Convert.ToDecimal(tbKredi.Text);
+                    kredi = Convert.ToDecimal(tbKredi.Text, culture);
                 }
                 catch
                 {
@@ -309,7 +318,7 @@ namespace Restorium
                 //Nakit
                 try
                 {
-                    nakit = Convert.ToDecimal(tbNakit.Text);
+                    nakit = Convert.ToDecimal(tbNakit.Text, culture);
                 }
                 catch
                 {
@@ -319,7 +328,7 @@ namespace Restorium
                 //Cari
                 try
                 {
-                    cari = Convert.ToDecimal(tbCari.Text);
+                    cari = Convert.ToDecimal(tbCari.Text, culture);
                 }
                 catch
                 {
@@ -398,17 +407,83 @@ namespace Restorium
 
         private void TableCloseForm_Load(object sender, EventArgs e)
         {
+            iskonto = LastChoosenTable.iskonto;
+            lIskontoOrani.Text = iskonto.ToString() + "%";
             bMasaKapat.Enabled = false;
             bMasaKapat.BackColor = Color.Red;
             //Masa Adi Set
              lTableName.Text = LastChoosenTable.lastClosedTableName.ToString();
+            string text = lTableName.Text;
+            switch (text.Length)
+            {
+                case 1:
+                case 2:
+                case 3:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 42f, lTableName.Font.Style);
+                    break;
+                case 4:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 37f, lTableName.Font.Style);
+                    break;
+                case 5:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 35f, lTableName.Font.Style);
+                    break;
+                case 6:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 30f, lTableName.Font.Style);
+                    break;
+                case 7:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 25f, lTableName.Font.Style);
+                    break;
+                case 8:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 22f, lTableName.Font.Style);
+                    break;
+                case 9:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 20f, lTableName.Font.Style);
+                    break;
+                case 10:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 18f, lTableName.Font.Style);
+                    break;
+                case 11:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 16f, lTableName.Font.Style);
+                    break;
+                case 12:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 15f, lTableName.Font.Style);
+                    break;
+                default:
+                    lTableName.Font = new Font(lTableName.Font.FontFamily, 8f, lTableName.Font.Style);
+                    break;
+
+            }
             //Tutar Set
-             decimal tutarConvert = LastChoosenTable.lastClosedTableTutar;
+            decimal tutarConvert = LastChoosenTable.lastClosedTableTutar;
             UserLog.WConsole("Tutar : " + LastChoosenTable.lastClosedTableTutar.ToString());
             lTL.Text    = System.Math.Round(tutarConvert,2).ToString();
-            lDolar.Text = System.Math.Round((tutarConvert * LastChoosenTable.DefinedDolar),2).ToString();
+            if (Settings.Dolar)
+            {
+                lDolar.Text = System.Math.Round((tutarConvert * LastChoosenTable.DefinedDolar), 2).ToString();
+            }
+            else
+            {
+                cbDolar.Enabled = false;
+                lDolar.Text = "-";
+            }
+            if(Settings.Euro)
+            { 
             lEuro.Text  = System.Math.Round((tutarConvert * LastChoosenTable.DefinedEuro),2).ToString();
+            }
+            else
+            {
+                cbEuro.Enabled = false;
+                lEuro.Text = "-";
+            }
+            if (Settings.GBP)
+            { 
             lGBP.Text   = System.Math.Round((tutarConvert * LastChoosenTable.DefinedGBP),2).ToString();
+            }
+            else
+            {
+                cbGBP.Enabled = false;
+                lGBP.Text = "-";
+            }
             //Kalan Set
             lKalan.Text = lTL.Text + " ₺";
         }
@@ -426,6 +501,7 @@ namespace Restorium
                 cbEuro.CheckState = CheckState.Unchecked;
                 cbGBP.CheckState = CheckState.Unchecked;
             }
+            LastChoosenTable.lastClosedTableTutar = Convert.ToDecimal(lTL.Text);
             labelKredi.Text = "Kredi Karti (₺)";
             labelCari.Text = "Cari (₺)";
             labelNakit.Text = "Nakit (₺)";
@@ -446,6 +522,7 @@ namespace Restorium
                 cbDolar.CheckState = CheckState.Unchecked;
                 cbGBP.CheckState = CheckState.Unchecked;
             }
+            LastChoosenTable.lastClosedTableTutar = Convert.ToDecimal(lEuro.Text);
             labelKredi.Text = "Kredi Karti (€)";
             labelCari.Text = "Cari (€)";
             labelNakit.Text = "Nakit (€)";
@@ -465,6 +542,7 @@ namespace Restorium
                 cbEuro.CheckState = CheckState.Unchecked;
                 cbGBP.CheckState = CheckState.Unchecked;
             }
+            LastChoosenTable.lastClosedTableTutar = Convert.ToDecimal(lDolar.Text);
             labelKredi.Text = "Kredi Karti ($)";
             labelCari.Text = "Cari ($)";
             labelNakit.Text = "Nakit ($)";
@@ -484,6 +562,7 @@ namespace Restorium
                 cbEuro.CheckState = CheckState.Unchecked;
                 cbDolar.CheckState = CheckState.Unchecked;
             }
+            LastChoosenTable.lastClosedTableTutar = Convert.ToDecimal(lGBP.Text);
             labelKredi.Text = "Kredi Karti (£)";
             labelCari.Text = "Cari (£)";
             labelNakit.Text = "Nakit (£)";
@@ -498,6 +577,13 @@ namespace Restorium
 
         private void bMasaKapat_Click(object sender, EventArgs e)
         {
+            CultureInfo culture = new CultureInfo("en-US", true);
+            if (tbNakit.Text.LastIndexOf(',') != -1)
+                culture.NumberFormat.NumberDecimalSeparator = ",";
+            if (tbKredi.Text.LastIndexOf(',') != -1)
+                culture.NumberFormat.NumberDecimalSeparator = ",";
+            if (tbCari.Text.LastIndexOf(',') != -1)
+                culture.NumberFormat.NumberDecimalSeparator = ",";
             string birim="";
             if(cbTL.CheckState == CheckState.Checked)
                 {
@@ -523,7 +609,7 @@ namespace Restorium
             {
                 try
                 {
-                    LastChoosenTable.krediKarti = Convert.ToDecimal(tbKredi.Text);
+                    LastChoosenTable.krediKarti = Convert.ToDecimal(tbKredi.Text, culture);
                 }
                 catch {
                     LastChoosenTable.krediKarti = 0;
@@ -531,7 +617,7 @@ namespace Restorium
                 //////
                 try
                 {
-                    LastChoosenTable.nakit = Convert.ToDecimal(tbNakit.Text);
+                    LastChoosenTable.nakit = Convert.ToDecimal(tbNakit.Text, culture);
                 }
                 catch {
                     LastChoosenTable.nakit = 0;
@@ -539,7 +625,7 @@ namespace Restorium
                 //////
                 try
                 {
-                    LastChoosenTable.cari = Convert.ToDecimal(tbCari.Text);
+                    LastChoosenTable.cari = Convert.ToDecimal(tbCari.Text, culture);
                 }
                 catch
                 {

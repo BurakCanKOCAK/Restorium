@@ -22,7 +22,7 @@ namespace Restorium.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Restorium.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Restorium.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Restorium.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _2 {
+        public static System.Drawing.Bitmap _2 {
             get {
                 object obj = ResourceManager.GetObject("2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +73,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _21 {
+        public static System.Drawing.Bitmap _21 {
             get {
                 object obj = ResourceManager.GetObject("21", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +83,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _22 {
+        public static System.Drawing.Bitmap _22 {
             get {
                 object obj = ResourceManager.GetObject("22", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -93,7 +93,17 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _580861_477789262242512_18934229_n {
+        public static System.Drawing.Bitmap _30_display {
+            get {
+                object obj = ResourceManager.GetObject("30_display", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap _580861_477789262242512_18934229_n {
             get {
                 object obj = ResourceManager.GetObject("580861_477789262242512_18934229_n", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +113,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap add_1_icon {
+        public static System.Drawing.Bitmap add_1_icon {
             get {
                 object obj = ResourceManager.GetObject("add-1-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +123,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap adisyon_1 {
+        public static System.Drawing.Bitmap adisyon_1 {
             get {
                 object obj = ResourceManager.GetObject("adisyon_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,7 +133,17 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Alecive_Flatwoken_Apps_File_Xml {
+        public static System.Drawing.Bitmap admin1 {
+            get {
+                object obj = ResourceManager.GetObject("admin1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Alecive_Flatwoken_Apps_File_Xml {
             get {
                 object obj = ResourceManager.GetObject("Alecive-Flatwoken-Apps-File-Xml", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -133,7 +153,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Aluminum_full {
+        public static System.Drawing.Bitmap Aluminum_full {
             get {
                 object obj = ResourceManager.GetObject("Aluminum full", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -143,7 +163,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Apps_Calculator_Metro_icon {
+        public static System.Drawing.Bitmap Apps_Calculator_Metro_icon {
             get {
                 object obj = ResourceManager.GetObject("Apps-Calculator-Metro-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -153,7 +173,77 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap back_aliminium {
+        public static System.Drawing.Bitmap BACK_3 {
+            get {
+                object obj = ResourceManager.GetObject("BACK_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap BACK_3_Fail {
+            get {
+                object obj = ResourceManager.GetObject("BACK_3_Fail", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap BACK_3_Success {
+            get {
+                object obj = ResourceManager.GetObject("BACK_3_Success", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap BACK_4 {
+            get {
+                object obj = ResourceManager.GetObject("BACK_4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap BACK_4_Fail {
+            get {
+                object obj = ResourceManager.GetObject("BACK_4_Fail", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap BACK_4_Idle {
+            get {
+                object obj = ResourceManager.GetObject("BACK_4_Idle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap BACK_4_Success {
+            get {
+                object obj = ResourceManager.GetObject("BACK_4_Success", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap back_aliminium {
             get {
                 object obj = ResourceManager.GetObject("back_aliminium", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -163,7 +253,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap blue2 {
+        public static System.Drawing.Bitmap blue2 {
             get {
                 object obj = ResourceManager.GetObject("blue2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -173,7 +263,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Calculator_icon__1_ {
+        public static System.Drawing.Bitmap Calculator_icon__1_ {
             get {
                 object obj = ResourceManager.GetObject("Calculator-icon (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -183,7 +273,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cart_add_icon {
+        public static System.Drawing.Bitmap cart_add_icon {
             get {
                 object obj = ResourceManager.GetObject("cart-add-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -193,7 +283,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cart_remove_icon {
+        public static System.Drawing.Bitmap cart_remove_icon {
             get {
                 object obj = ResourceManager.GetObject("cart-remove-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -203,7 +293,47 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap check_icon {
+        public static System.Drawing.Bitmap check__2_ {
+            get {
+                object obj = ResourceManager.GetObject("check (2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap check__2_1 {
+            get {
+                object obj = ResourceManager.GetObject("check (2)1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap check__3_ {
+            get {
+                object obj = ResourceManager.GetObject("check (3)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap check__3_1 {
+            get {
+                object obj = ResourceManager.GetObject("check (3)1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap check_icon {
             get {
                 object obj = ResourceManager.GetObject("check-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -213,7 +343,17 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap consult_icon {
+        public static System.Drawing.Bitmap circle__7_ {
+            get {
+                object obj = ResourceManager.GetObject("circle (7)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap consult_icon {
             get {
                 object obj = ResourceManager.GetObject("consult-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -223,7 +363,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cross_3_icon {
+        public static System.Drawing.Bitmap cross_3_icon {
             get {
                 object obj = ResourceManager.GetObject("cross-3-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -233,7 +373,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cross_3_icon1 {
+        public static System.Drawing.Bitmap cross_3_icon1 {
             get {
                 object obj = ResourceManager.GetObject("cross-3-icon1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -243,7 +383,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cutlery_silhouette_icons_pattern_background_312532 {
+        public static System.Drawing.Bitmap cutlery_silhouette_icons_pattern_background_312532 {
             get {
                 object obj = ResourceManager.GetObject("cutlery_silhouette_icons_pattern_background_312532", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -253,7 +393,57 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap gmail_icon {
+        public static System.Drawing.Bitmap delete {
+            get {
+                object obj = ResourceManager.GetObject("delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap delete__7_ {
+            get {
+                object obj = ResourceManager.GetObject("delete (7)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap delete1 {
+            get {
+                object obj = ResourceManager.GetObject("delete1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap exclamation__4_ {
+            get {
+                object obj = ResourceManager.GetObject("exclamation (4)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap File_edit_icon {
+            get {
+                object obj = ResourceManager.GetObject("File-edit-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap gmail_icon {
             get {
                 object obj = ResourceManager.GetObject("gmail-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -263,7 +453,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap kasa {
+        public static System.Drawing.Bitmap kasa {
             get {
                 object obj = ResourceManager.GetObject("kasa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -273,7 +463,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap kasa1 {
+        public static System.Drawing.Bitmap kasa1 {
             get {
                 object obj = ResourceManager.GetObject("kasa1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -283,7 +473,17 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap login5 {
+        public static System.Drawing.Bitmap line__3_ {
+            get {
+                object obj = ResourceManager.GetObject("line (3)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap login5 {
             get {
                 object obj = ResourceManager.GetObject("login5", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -293,7 +493,57 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap mail_icon__1_ {
+        public static System.Drawing.Bitmap logo_edi2 {
+            get {
+                object obj = ResourceManager.GetObject("logo_edi2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap logo_edi3 {
+            get {
+                object obj = ResourceManager.GetObject("logo_edi3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap logo_edit {
+            get {
+                object obj = ResourceManager.GetObject("logo_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap logo_edit4 {
+            get {
+                object obj = ResourceManager.GetObject("logo_edit4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Logo5 {
+            get {
+                object obj = ResourceManager.GetObject("Logo5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap mail_icon__1_ {
             get {
                 object obj = ResourceManager.GetObject("mail-icon (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -303,7 +553,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap main4 {
+        public static System.Drawing.Bitmap main4 {
             get {
                 object obj = ResourceManager.GetObject("main4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -313,7 +563,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap main7 {
+        public static System.Drawing.Bitmap main7 {
             get {
                 object obj = ResourceManager.GetObject("main7", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -323,7 +573,17 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Network_Wifi_icon {
+        public static System.Drawing.Bitmap man_2_icon__1_ {
+            get {
+                object obj = ResourceManager.GetObject("man-2-icon (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Network_Wifi_icon {
             get {
                 object obj = ResourceManager.GetObject("Network-Wifi-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -333,7 +593,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap no_conection_256 {
+        public static System.Drawing.Bitmap no_conection_256 {
             get {
                 object obj = ResourceManager.GetObject("no-conection-256", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -343,7 +603,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap No_Network_ca_512 {
+        public static System.Drawing.Bitmap No_Network_ca_512 {
             get {
                 object obj = ResourceManager.GetObject("No_Network_ca-512", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -353,7 +613,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Other_Search_Metro_icon {
+        public static System.Drawing.Bitmap Other_Search_Metro_icon {
             get {
                 object obj = ResourceManager.GetObject("Other-Search-Metro-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -363,7 +623,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap pencil_icon {
+        public static System.Drawing.Bitmap pencil_icon {
             get {
                 object obj = ResourceManager.GetObject("pencil-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -373,7 +633,17 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap plus {
+        public static System.Drawing.Bitmap people__1_ {
+            get {
+                object obj = ResourceManager.GetObject("people (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap plus {
             get {
                 object obj = ResourceManager.GetObject("plus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -383,7 +653,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap plus_icon__1__png2 {
+        public static System.Drawing.Bitmap plus_icon__1__png2 {
             get {
                 object obj = ResourceManager.GetObject("plus-icon (1).png2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -393,7 +663,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap plus1 {
+        public static System.Drawing.Bitmap plus1 {
             get {
                 object obj = ResourceManager.GetObject("plus1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -403,7 +673,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap printer {
+        public static System.Drawing.Bitmap printer {
             get {
                 object obj = ResourceManager.GetObject("printer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -413,7 +683,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap printer_icon {
+        public static System.Drawing.Bitmap printer_icon {
             get {
                 object obj = ResourceManager.GetObject("printer-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -423,7 +693,17 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rapor {
+        public static System.Drawing.Bitmap printer1 {
+            get {
+                object obj = ResourceManager.GetObject("printer1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap rapor {
             get {
                 object obj = ResourceManager.GetObject("rapor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -433,7 +713,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rapor2 {
+        public static System.Drawing.Bitmap rapor2 {
             get {
                 object obj = ResourceManager.GetObject("rapor2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -443,7 +723,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap red {
+        public static System.Drawing.Bitmap red {
             get {
                 object obj = ResourceManager.GetObject("red", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -453,7 +733,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rehber {
+        public static System.Drawing.Bitmap rehber {
             get {
                 object obj = ResourceManager.GetObject("rehber", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -463,7 +743,47 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap restaurant_icon {
+        public static System.Drawing.Bitmap REMOTE_BLACK {
+            get {
+                object obj = ResourceManager.GetObject("REMOTE_BLACK", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap REMOTE_BLACK_CLOUD {
+            get {
+                object obj = ResourceManager.GetObject("REMOTE_BLACK_CLOUD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap REMOTE_GREEN_CLOUD {
+            get {
+                object obj = ResourceManager.GetObject("REMOTE_GREEN_CLOUD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap REMOTE_RED_CLOUD {
+            get {
+                object obj = ResourceManager.GetObject("REMOTE_RED_CLOUD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap restaurant_icon {
             get {
                 object obj = ResourceManager.GetObject("restaurant-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -473,7 +793,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap search_engine_icon {
+        public static System.Drawing.Bitmap search_engine_icon {
             get {
                 object obj = ResourceManager.GetObject("search-engine-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -483,7 +803,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Search_icon {
+        public static System.Drawing.Bitmap Search_icon {
             get {
                 object obj = ResourceManager.GetObject("Search-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -493,7 +813,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Search_icon1 {
+        public static System.Drawing.Bitmap Search_icon1 {
             get {
                 object obj = ResourceManager.GetObject("Search-icon1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -503,7 +823,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap settings {
+        public static System.Drawing.Bitmap settings {
             get {
                 object obj = ResourceManager.GetObject("settings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -513,7 +833,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap settings2 {
+        public static System.Drawing.Bitmap settings2 {
             get {
                 object obj = ResourceManager.GetObject("settings2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -523,7 +843,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Shopping_basket_add_icon {
+        public static System.Drawing.Bitmap Shopping_basket_add_icon {
             get {
                 object obj = ResourceManager.GetObject("Shopping-basket-add-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -533,7 +853,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Shopping_basket_remove_icon {
+        public static System.Drawing.Bitmap Shopping_basket_remove_icon {
             get {
                 object obj = ResourceManager.GetObject("Shopping-basket-remove-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -543,7 +863,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Shopping_basket_remove_icon1 {
+        public static System.Drawing.Bitmap Shopping_basket_remove_icon1 {
             get {
                 object obj = ResourceManager.GetObject("Shopping-basket-remove-icon1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -553,7 +873,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap sign_add_icon__1_ {
+        public static System.Drawing.Bitmap sign_add_icon__1_ {
             get {
                 object obj = ResourceManager.GetObject("sign-add-icon (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -563,7 +883,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap sign_error_icon {
+        public static System.Drawing.Bitmap sign_error_icon {
             get {
                 object obj = ResourceManager.GetObject("sign-error-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -573,7 +893,17 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap sign_sync_icon {
+        public static System.Drawing.Bitmap sign_error_icon1 {
+            get {
+                object obj = ResourceManager.GetObject("sign-error-icon1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap sign_sync_icon {
             get {
                 object obj = ResourceManager.GetObject("sign-sync-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -583,7 +913,27 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap stok {
+        public static System.Drawing.Bitmap signs__21_ {
+            get {
+                object obj = ResourceManager.GetObject("signs (21)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap squares__9_ {
+            get {
+                object obj = ResourceManager.GetObject("squares (9)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap stok {
             get {
                 object obj = ResourceManager.GetObject("stok", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -593,7 +943,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap switch_off {
+        public static System.Drawing.Bitmap switch_off {
             get {
                 object obj = ResourceManager.GetObject("switch_off", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -603,17 +953,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap switch_off_icon {
-            get {
-                object obj = ResourceManager.GetObject("switch-off-icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap switch_on {
+        public static System.Drawing.Bitmap switch_on {
             get {
                 object obj = ResourceManager.GetObject("switch_on", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -623,9 +963,9 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap switch_on_icon {
+        public static System.Drawing.Bitmap tool__22_ {
             get {
-                object obj = ResourceManager.GetObject("switch-on-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("tool (22)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -633,7 +973,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap uiswitch_off_2x {
+        public static System.Drawing.Bitmap uiswitch_off_2x {
             get {
                 object obj = ResourceManager.GetObject("uiswitch_off_2x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -643,7 +983,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap uiswitch_on_2x {
+        public static System.Drawing.Bitmap uiswitch_on_2x {
             get {
                 object obj = ResourceManager.GetObject("uiswitch_on_2x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -653,7 +993,7 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Untitled_11 {
+        public static System.Drawing.Bitmap Untitled_11 {
             get {
                 object obj = ResourceManager.GetObject("Untitled-11", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -663,9 +1003,39 @@ namespace Restorium.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Wifi_1_icon {
+        public static System.Drawing.Bitmap WIFI_BLACK {
             get {
-                object obj = ResourceManager.GetObject("Wifi-1-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("WIFI_BLACK", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap WIFI_GREEN {
+            get {
+                object obj = ResourceManager.GetObject("WIFI_GREEN", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap WIFI_RED {
+            get {
+                object obj = ResourceManager.GetObject("WIFI_RED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap WIFI_YELLOW {
+            get {
+                object obj = ResourceManager.GetObject("WIFI_YELLOW", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

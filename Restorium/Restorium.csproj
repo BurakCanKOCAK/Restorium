@@ -26,7 +26,7 @@
     <ProductName>Restorium Restaurant Automation</ProductName>
     <PublisherName>BBHM</PublisherName>
     <SuiteName>Restorium</SuiteName>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.4.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -53,7 +53,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Graphicloads-Polygon-Restaurant.ico</ApplicationIcon>
+    <ApplicationIcon>unnamed.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>C4C3DD30F99FB0224D9EA00EF19992EED3E08EE6</ManifestCertificateThumbprint>
@@ -84,6 +84,13 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net40\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetComm">
+      <HintPath>C:\Users\BurakCan\Desktop\Code\Source Codes\Libraries\NetComm.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -110,6 +117,36 @@
     </Compile>
     <Compile Include="ContactAdd.Designer.cs">
       <DependentUpon>ContactAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kasa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kasa.Designer.cs">
+      <DependentUpon>Kasa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainDisplay.Designer.cs">
+      <DependentUpon>MainDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PersonelAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PersonelAdd.Designer.cs">
+      <DependentUpon>PersonelAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="SoftwareActivation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SoftwareActivation.Designer.cs">
+      <DependentUpon>SoftwareActivation.cs</DependentUpon>
     </Compile>
     <Compile Include="StokDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -163,6 +200,14 @@
       <DependentUpon>TableOpenForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UserLog.cs" />
+    <Compile Include="UserSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserSettings.Designer.cs">
+      <DependentUpon>UserSettings.cs</DependentUpon>
+    </Compile>
+    <None Include="Resources\printer1.png" />
+    <Content Include="unnamed.ico" />
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -174,22 +219,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kasa.resx">
+      <DependentUpon>Kasa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainDisplay.resx">
+      <DependentUpon>MainDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="PersonelAdd.resx">
+      <DependentUpon>PersonelAdd.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ShowListForm.resx">
       <DependentUpon>ShowListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SoftwareActivation.resx">
+      <DependentUpon>SoftwareActivation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StokAdd.resx">
       <DependentUpon>StokAdd.cs</DependentUpon>
@@ -200,7 +253,12 @@
     <EmbeddedResource Include="TableOpenForm.resx">
       <DependentUpon>TableOpenForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserSettings.resx">
+      <DependentUpon>UserSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="ClassDiagram.cd" />
+    <None Include="packages.config" />
     <None Include="StokDataSet.xsc">
       <DependentUpon>StokDataSet.xsd</DependentUpon>
     </None>
@@ -222,6 +280,45 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\File-edit-icon.png" />
+    <None Include="Resources\check %283%29.png" />
+    <None Include="Resources\delete.png" />
+    <None Include="Resources\delete1.png" />
+    <None Include="Resources\check %283%291.png" />
+    <None Include="Resources\check %282%29.png" />
+    <None Include="Resources\delete %287%29.png" />
+    <None Include="Resources\line %283%29.png" />
+    <None Include="Resources\exclamation %284%29.png" />
+    <None Include="Resources\WIFI_YELLOW.png" />
+    <None Include="Resources\WIFI_BLACK.png" />
+    <None Include="Resources\WIFI_GREEN.png" />
+    <None Include="Resources\WIFI_RED.png" />
+    <None Include="Resources\REMOTE_BLACK.png" />
+    <None Include="Resources\squares %289%29.png" />
+    <None Include="Resources\REMOTE_BLACK_CLOUD.png" />
+    <None Include="Resources\REMOTE_RED_CLOUD.png" />
+    <None Include="Resources\REMOTE_GREEN_CLOUD.png" />
+    <None Include="Resources\Logo5.png" />
+    <None Include="Resources\logo_edit.png" />
+    <None Include="Resources\logo_edi2.png" />
+    <None Include="Resources\logo_edi3.png" />
+    <None Include="Resources\logo_edit4.png" />
+    <None Include="Resources\BACK_3.png" />
+    <None Include="Resources\BACK_3_Fail.png" />
+    <None Include="Resources\BACK_3_Success.png" />
+    <None Include="Resources\BACK_4.png" />
+    <None Include="Resources\BACK_4_Fail.png" />
+    <None Include="Resources\BACK_4_Idle.png" />
+    <None Include="Resources\BACK_4_Success.png" />
+    <None Include="Resources\man-2-icon %281%29.png" />
+    <None Include="Resources\admin1.png" />
+    <None Include="Resources\people %281%29.png" />
+    <None Include="Resources\30_display.jpg" />
+    <None Include="Resources\sign-error-icon1.png" />
+    <None Include="Resources\check %282%291.png" />
+    <None Include="Resources\circle %287%29.png" />
+    <None Include="Resources\signs %2821%29.png" />
+    <None Include="Resources\tool %2822%29.png" />
     <Content Include="Restorium_TemporaryKey.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

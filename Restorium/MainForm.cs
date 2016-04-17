@@ -42,15 +42,18 @@ namespace Restorium
     {
         #region Variables 
         IniFile INI = new IniFile();
+        CultureInfo culture = new CultureInfo("tr-TR", true);
         public static string[] personelNames = new string[100];
         public static string[] menuAciklama = new string[500];
         public static string[] menuID = new string[500];
         public static decimal[] menuPrice = new decimal[500];
+        public static decimal OldKasaToplam,oldKasaTipToplam,oldKasaCariToplam;
         public static string[] tableNumbers = new string[200];
         int[] matchedStokIndexList = new int[5000];
         public static int tableCounter = 0;
         public static int dailyTableCounter = 0;
         public static int databaseDayCounter = 0;
+        public static int NoOfRecordToday = 0;
         public static bool[] emptyTableList = new bool[200];
         public static string[,] tableDetails = new string[300, 20];
         public static string[,] kasaToplamArray = new string[360, 2];
@@ -80,6 +83,7 @@ namespace Restorium
         private bool mailSentFlag = false;
         private bool rehberDuzenleFlag = false;
         private bool searchModeOnStok = false;
+        private bool kasaReset = false;
         int countOfTables = 1;
         bool tableFlag = false;
         private Bitmap bitmap;
@@ -92,7 +96,7 @@ namespace Restorium
 
         public MainForm()
         {
-            if (DateTime.UtcNow.ToLocalTime().Month >= 2 )
+            if (DateTime.UtcNow.ToLocalTime().Month >= 3 )
             {
                 if (DateTime.UtcNow.ToLocalTime().Day > 20)
                 {
@@ -111,7 +115,10 @@ namespace Restorium
             // SaveDataToXml("Masa Kapama","",10,100,50,"Burak Can KOCAK", "A1","₺");
             // LoadDataFromXml(System.DateTime.Now, System.DateTime.Now);
             FirstLoadDataFromXml();
-            KasaLoad();
+            GetKasaFromXML();
+            MainDisplay md = new MainDisplay();
+            md.Show();
+            //KasaLoad();
         }
 
 /// ////////////////////////////////////////
@@ -173,26 +180,45 @@ namespace Restorium
 
         private void SetExchangeValues()
         {
+            decimal Dolar, Euro, GBP;
             try
             {
-                decimal Dolar = Convert.ToDecimal(INI.Read("Dolar", "Exchange"));
-                decimal Euro = Convert.ToDecimal(INI.Read("Euro", "Exchange"));
-                decimal GBP = Convert.ToDecimal(INI.Read("GBP", "Exchange"));
-
-                LastChoosenTable.DefinedDolar = Dolar;
+                Euro = Convert.ToDecimal(INI.Read("Euro", "Exchange"), culture);
                 LastChoosenTable.DefinedEuro = Euro;
-                LastChoosenTable.DefinedGBP = GBP;
-
-                tbDolar.Text = Dolar.ToString();
                 tbEuro.Text = Euro.ToString();
-                tbGBP.Text = GBP.ToString();
-                lExchange.Text = "1 ₺ = " + tbDolar.Text.ToString() + " $ = " + tbEuro.Text.ToString() + " € = " + tbGBP.Text.ToString() + " £";
-                UserLog.WConsole("Doviz kurlari basariyla okundu !");
+                Settings.Euro = true;
             }
             catch
             {
-                UserLog.WConsole("Doviz kurlari okumada hata ! (Deger girilmemis!)");
+                UserLog.WConsole("(!) Euro Degeri Okumada Hata ! (Deger girilmemis!)");
             }
+            try
+            {
+                Dolar = Convert.ToDecimal(INI.Read("Dolar", "Exchange"), culture);
+                LastChoosenTable.DefinedDolar = Dolar;
+                tbDolar.Text = Dolar.ToString();
+                Settings.Dolar = true;
+            }
+            catch
+            {
+                UserLog.WConsole("(!) Dolar Degeri Okumada Hata  (Deger girilmemis!)");
+            }
+            try
+            {
+                GBP = Convert.ToDecimal(INI.Read("GBP", "Exchange"), culture);
+                LastChoosenTable.DefinedGBP = GBP;
+                tbGBP.Text = GBP.ToString();
+                Settings.GBP = true;
+            }
+            catch
+            {
+                UserLog.WConsole("(!) GBP Degeri Okumada Hata  (Deger girilmemis!)");
+            }
+
+                lExchange.Text = "1 ₺ = " + tbDolar.Text.ToString() + " $ = " + tbEuro.Text.ToString() + " € = " + tbGBP.Text.ToString() + " £";
+                UserLog.WConsole("Doviz kurlari okuma tamamlandi !");
+
+
         }
 
         private void SettingsDataSet()
@@ -227,10 +253,19 @@ namespace Restorium
             {
                 eMail = (INI.Read("Email", "Settings")).ToString();
                 tbMail.Text = eMail;
+                if (eMail.Contains("@") == true && eMail.Contains(".") == true)
+                {
+                    Settings.useMail = true;
+                }
+                else
+                {
+                    Settings.useMail = false;
+                }
             }
             catch
             {
                 UserLog.WConsole("(!)Kayitli bir E-Mail adresi bulunamadi !");
+                Settings.useMail = false;
             }
             try
             {
@@ -254,7 +289,7 @@ namespace Restorium
             if (User == "Admin")
             {
                 dgViewWaiter.ForeColor = Color.Black;
-                bPersonelDuzenle.ForeColor = Color.Red;
+                bPersonelDuzenle.ForeColor = Color.Black;
                 tbDefaultIskontoValue.Enabled = false;
                 tbMail.Enabled = false;
                 dtpDukkanKapanisTime.Enabled = false;
@@ -266,6 +301,13 @@ namespace Restorium
             }
             else
             {
+                bPersonelEkle.Enabled = false;
+                bDeletePersonel.Enabled = false;
+                bStokAdd.Enabled = false;
+                bStokSil.Enabled = false;
+                bKayitEkle.Enabled = false;
+                bKayitSil.Enabled = false;
+                bDuzenleRehber.Enabled = false;
                 dgViewWaiter.ForeColor = Color.Gray;
                 bPersonelDuzenle.ForeColor = Color.DarkGray;
                 bPersonelDuzenle.Enabled = false;
@@ -310,12 +352,51 @@ namespace Restorium
                     bLeft.AutoSize = true;
                     bLeft.ForeColor = Color.Black;
                     bLeft.BackColor = Color.Red;
-                    bLeft.Size = new Size(80, 80);
-                    bLeft.Click += new EventHandler(masa_click);
-                    bLeft.DoubleClick += new EventHandler(masa_doubleClick);
+                    bLeft.Size = new Size(80, 80);                    
+                    bLeft.MouseDown += new MouseEventHandler(masa_click);
                     bLeft.MouseDoubleClick += new MouseEventHandler(masa_MouseDoubleClick);
                     lMasaNo.Text = MasaNo.ToString();
+                    string text = lMasaNo.Text;
+                    switch (text.Length)
+                    {
+                        case 1:
+                        case 2:
+                        case 3:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 42f, lMasaNo.Font.Style);
+                            break;
+                        case 4:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 37f, lMasaNo.Font.Style);
+                            break;
+                        case 5:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 35f, lMasaNo.Font.Style);
+                            break;
+                        case 6:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 30f, lMasaNo.Font.Style);
+                            break;
+                        case 7:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 25f, lMasaNo.Font.Style);
+                            break;
+                        case 8:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 22f, lMasaNo.Font.Style);
+                            break;
+                        case 9:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 20f, lMasaNo.Font.Style);
+                            break;
+                        case 10:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 18f, lMasaNo.Font.Style);
+                            break;
+                        case 11:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 16f, lMasaNo.Font.Style);
+                            break;
+                        case 12:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 15f, lMasaNo.Font.Style);
+                            break;
+                        default:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 8f, lMasaNo.Font.Style);
+                            break;
+                    }
                     lMasaNo.ForeColor = Color.Red;
+                    /////////////
                     //Button Right
                     /*Button bRight = new Button();
                     bRight.Font = new Font(bRight.Font.FontFamily, 8);
@@ -358,6 +439,7 @@ namespace Restorium
                     }
                     else
                     {
+                        UserLog.WConsole("LastTablePlace : " + TableOpenForm.lastTablePlace.ToString());
                         UserLog.WConsole(countOfTables.ToString());
                         tableLayoutPanel1.Controls.Add(bLeft, (TableOpenForm.lastTablePlace % 5), (TableOpenForm.lastTablePlace) / 5);
                         // tableLayoutPanel1.Controls.Add(bRight, 3, countOfTables / 2 - 1);
@@ -365,6 +447,8 @@ namespace Restorium
                     }
                     LastChoosenTable.TableNumber = MasaNo.ToString();
                     bSiparisEkle.Enabled = true;
+                    bPrint.Enabled = true;
+                    bTableDetailChange.Enabled = true;
                     bTableClose.Enabled = true;
                     //                 
                     lToplamTutar.Text = "0 ₺";
@@ -375,11 +459,14 @@ namespace Restorium
                 bActiveEt.Visible = true;
                 bActiveEt.Enabled = true;
                 bSiparisEkle.Enabled = false;
+                bPrint.Enabled = true;
+                bTableDetailChange.Enabled = true;
                 bTableClose.Text = "R. Iptal";
             }
             else
             {
                 bActiveEt.Visible = false;
+                bPrint.Enabled = true;
                 bActiveEt.Enabled = false;
                 bTableClose.Text = "Masa Kapat";
             }
@@ -389,7 +476,7 @@ namespace Restorium
 
         private void masa_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            UserLog.WConsole("ASDASDFSADSADAS");
+            
             bSiparisEkle_Click(sender, e);
         }
 
@@ -408,6 +495,7 @@ namespace Restorium
         {
             // TODO: This line of code loads data into the 'database_StokDataSet1.TableStok' table. You can move, or remove it, as needed.
             //  this.tableStokTableAdapter.Fill(this.database_StokDataSet1.TableStok);
+
             lDate.Text = DateTime.UtcNow.ToLocalTime().ToString();
             this.dgvKasa.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
@@ -416,8 +504,7 @@ namespace Restorium
         {
             //Console.WriteLine("Debug : " + DebugMonitor.text);
             lDate.Text = DateTime.UtcNow.ToLocalTime().ToString();
-            //WiFi Check
-            if (dtpDukkanKapanisTime.Checked == true)
+            if (cbAutoMail.Checked == true)
             {
                 //Dukkan kapanma saatini check et ve raporu gonder gun sonunu gerceklestir
                 if (dtpDukkanKapanisTime.Value.Hour == System.DateTime.Now.Hour && dtpDukkanKapanisTime.Value.Minute == System.DateTime.Now.Minute)
@@ -435,6 +522,40 @@ namespace Restorium
                    // UserLog.WConsole("a2 : " + mailSentFlag.ToString());
                 }
             }
+            ////////////////////////////KASA RESET   
+           /* DateTime DT = new DateTime(2015, 10, 12, 23, 59, 00);
+            if (System.DateTime.Now.AddHours(-1) >= dtpDukkanKapanisTime.Value)
+            {
+                if (System.DateTime.Now.AddHours(-1).Hour <= DT.Hour)
+                {  
+                    if (kasaReset == false)
+                    {
+                        for (int i = dgvKasa.Rows.Count - 1; i >= 0; i--)
+                        {
+                            try
+                            {
+                                dgvKasa.Rows.RemoveAt(i);
+                                dgvKasa.Refresh();
+                                kasaReset = true;
+                            }
+                            catch
+                            {
+                                UserLog.WConsole("(!)Gun Sonu Kasasi Silinirken Hata Olustu !");
+                            }
+                        }
+                        lBugunToplam.Text = "0.0 ₺";
+                        lNakitToplamTL.Text = "0.0 ₺";
+                        lKrediToplamTL.Text = "0.0 ₺";
+                        lCariToplamTL.Text = "0.0 ₺";
+                    }
+                }
+            }
+            else
+            {
+                kasaReset = false;
+            }*/
+            ////////////////////////////KASA RESET END
+            //WiFi Check
             if (isConnectedToInternet())
             {
                 pbWifi.Image = Properties.Resources.Network_Wifi_icon;
@@ -566,15 +687,19 @@ namespace Restorium
                 {
                     for (int j = 0; j < countSearchIndexList; j++)
                     {
-                        
+                            if (dgView.Rows[j].Cells[4].Value.ToString().LastIndexOf(',') != -1)
+                            culture.NumberFormat.NumberDecimalSeparator = ",";
                             ////
                             INI.Write("id" + matchedStokIndexList[j], dgView.Rows[j].Cells[0].Value.ToString(), "Stok");
                             INI.Write("aciklama" + matchedStokIndexList[j], dgView.Rows[j].Cells[1].Value.ToString(), "Stok");
                             INI.Write("adet" + matchedStokIndexList[j], dgView.Rows[j].Cells[2].Value.ToString(), "Stok");
                             INI.Write("birim" + matchedStokIndexList[j], dgView.Rows[j].Cells[3].Value.ToString(), "Stok");
-                            INI.Write("birimFiyat" + matchedStokIndexList[j], dgView.Rows[j].Cells[4].Value.ToString(), "Stok");
+                            INI.Write("birimFiyat" + matchedStokIndexList[j],(Convert.ToDecimal(dgView.Rows[j].Cells[4].Value,culture)).ToString(), "Stok");
                             INI.Write("paraBirimi" + matchedStokIndexList[j], dgView.Rows[j].Cells[5].Value.ToString(), "Stok");
                             bool checkBoxStatusMenuUrunu = Convert.ToBoolean(dgView.Rows[j].Cells[7].Value);
+
+                           dgView.Rows[j].Cells[4].Value = (Convert.ToDecimal(dgView.Rows[j].Cells[4].Value, culture)).ToString();
+                            
                             if (checkBoxStatusMenuUrunu == false)
                             {
                                 INI.Write("menuUrunu" + matchedStokIndexList[j], "false", "Stok");
@@ -596,28 +721,48 @@ namespace Restorium
                                 }
                             }
                             ////
+                        if(Convert.ToBoolean(dgView.Rows[j].Cells[6].Value) == true)
+                        {
+                            if (Convert.ToInt32(dgView.Rows[j].Cells[2].Value) < 1)
+                            {
+                                dgView.Rows[j].DefaultCellStyle.BackColor = Color.Red;
+                            }
+                            else
+                            {
+                                dgView.Rows[j].DefaultCellStyle.BackColor = Color.White;
+                            }
+                        }else
+                        {
+                        dgView.Rows[j].DefaultCellStyle.BackColor = Color.White;
                         
-                    }     
+                        }
+                    
+                }     
                 }
                 else
                 {
                     for (int i = 0; i < stokCount; i++)
                     {
+                        if (dgView.Rows[i].Cells[4].Value.ToString().LastIndexOf(',') != -1)
+                        culture.NumberFormat.NumberDecimalSeparator = ",";
 
                         INI.Write("id" + i.ToString(), dgView.Rows[i].Cells[0].Value.ToString(), "Stok");
                         INI.Write("aciklama" + i.ToString(), dgView.Rows[i].Cells[1].Value.ToString(), "Stok");
                         INI.Write("adet" + i.ToString(), dgView.Rows[i].Cells[2].Value.ToString(), "Stok");
                         INI.Write("birim" + i.ToString(), dgView.Rows[i].Cells[3].Value.ToString(), "Stok");
-                        INI.Write("birimFiyat" + i.ToString(), dgView.Rows[i].Cells[4].Value.ToString(), "Stok");
+                        INI.Write("birimFiyat" + i.ToString(),(Convert.ToDecimal(dgView.Rows[i].Cells[4].Value,culture)).ToString(), "Stok");
                         INI.Write("paraBirimi" + i.ToString(), dgView.Rows[i].Cells[5].Value.ToString(), "Stok");
-                        // UserLog.WConsole(dgView.Rows[i].Cells[6].Value.ToString());
-                        //dinamikStokKontrolu
+                    // UserLog.WConsole(dgView.Rows[i].Cells[6].Value.ToString());
+                    //dinamikStokKontrolu
+                        dgView.Rows[i].Cells[4].Value=(Convert.ToDecimal(dgView.Rows[i].Cells[4].Value, culture)).ToString();
+
                         bool checkBoxStatusMenuUrunu = Convert.ToBoolean(dgView.Rows[i].Cells[7].Value);
                         if (checkBoxStatusMenuUrunu == false)
                         {
                             INI.Write("menuUrunu" + i.ToString(), "false", "Stok");
                             INI.Write("dinamikStokKontrolu" + i.ToString(), "false", "Stok");
                             dgView.Rows[i].Cells[7].Value = CheckState.Unchecked;
+                            dgView.Rows[i].Cells[6].Value = CheckState.Unchecked;
                             dgView.Refresh();
                         }
                         else
@@ -633,10 +778,28 @@ namespace Restorium
                                 INI.Write("dinamikStokKontrolu" + i.ToString(), "true", "Stok");
                             }
                         }
+                    if (Convert.ToBoolean(dgView.Rows[i].Cells[6].Value) == true)
+                    {
+                        if (dgView.Rows[i].Cells[2].Value.ToString()=="0" || dgView.Rows[i].Cells[2].Value.ToString().Contains("-"))
+                        {
+                            dgView.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                        }
+                        else
+                        {
+                            dgView.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                        }
                     }
+                    else
+                    {
+                        dgView.Rows[i].DefaultCellStyle.BackColor = Color.White;
+
+                    }
+
+                }
                 //menuUrunu
                  }
             UserLog.WConsole("Stok Listesi Kaydetme Basarili");
+
 
         }
 
@@ -672,31 +835,42 @@ namespace Restorium
                     string menuUrunu = INI.Read("menuUrunu" + i.ToString(), "Stok");
                     menuAciklama[i] = aciklama;
                     menuID[i] = id;
-                    menuPrice[i] = Convert.ToDecimal(birimFiyat);
+                    menuPrice[i] = Convert.ToDecimal(birimFiyat, culture);
 
                     if (dinamikStokKontrolu == "true")
                     {
                         if (menuUrunu == "true")
                         {
-                            dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Checked, CheckState.Checked);
+                            dgView.Rows.Add(id, aciklama, adet, birim, (Convert.ToDecimal(birimFiyat,culture)).ToString(), paraBirimi, CheckState.Checked, CheckState.Checked);
                         }
                         else
                         {
-                            dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Checked, CheckState.Unchecked);
+                            dgView.Rows.Add(id, aciklama, adet, birim, (Convert.ToDecimal(birimFiyat, culture)).ToString(), paraBirimi, CheckState.Checked, CheckState.Unchecked);
                         }
                     }
                     else
                     {
                         if (menuUrunu == "true")
                         {
-                            dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Unchecked, CheckState.Checked);
+                            dgView.Rows.Add(id, aciklama, adet, birim, (Convert.ToDecimal(birimFiyat, culture)).ToString(), paraBirimi, CheckState.Unchecked, CheckState.Checked);
                         }
                         else
                         {
-                            dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Unchecked, CheckState.Unchecked);
+                            dgView.Rows.Add(id, aciklama, adet, birim, (Convert.ToDecimal(birimFiyat, culture)).ToString(), paraBirimi, CheckState.Unchecked, CheckState.Unchecked);
                         }
                     }
-
+                    /////////CHECK AMOUNT OF STOK
+                    if (Convert.ToBoolean(dgView.Rows[i].Cells[6].Value) == true)
+                    {
+                        if (Convert.ToInt32(dgView.Rows[i].Cells[2].Value) < 1)
+                        {
+                            dgView.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                        }
+                        else
+                        {
+                            dgView.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                        }
+                    }
                     dgView.Refresh();
                 }
                 UserLog.WConsole("Dosyadan Stok Okuma Basarili !");
@@ -789,8 +963,48 @@ namespace Restorium
                     bLeft.ForeColor = Color.Black;
                     bLeft.BackColor = Color.Turquoise;
                     bLeft.Size = new Size(80, 80);
-                    bLeft.Click += new EventHandler(masa_click);
+                    bLeft.MouseDown += new MouseEventHandler(masa_click);
                     lMasaNo.Text = MasaNo.ToString();
+                    string text = lMasaNo.Text;
+                    switch (text.Length)
+                    {
+                        case 1:
+                        case 2:
+                        case 3:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 42f, lMasaNo.Font.Style);
+                            break;
+                        case 4:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 37f, lMasaNo.Font.Style);
+                            break;
+                        case 5:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 35f, lMasaNo.Font.Style);
+                            break;
+                        case 6:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 30f, lMasaNo.Font.Style);
+                            break;
+                        case 7:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 25f, lMasaNo.Font.Style);
+                            break;
+                        case 8:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 22f, lMasaNo.Font.Style);
+                            break;
+                        case 9:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 20f, lMasaNo.Font.Style);
+                            break;
+                        case 10:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 18f, lMasaNo.Font.Style);
+                            break;
+                        case 11:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 16f, lMasaNo.Font.Style);
+                            break;
+                        case 12:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 15f, lMasaNo.Font.Style);
+                            break;
+                        default:
+                            lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 8f, lMasaNo.Font.Style);
+                            break;
+
+                    }
                     lMasaNo.ForeColor = Color.Turquoise;
                     //Button Right
                     /*Button bRight = new Button();
@@ -816,10 +1030,12 @@ namespace Restorium
                     if (tableDetails[TableOpenForm.lastTablePlace * 3, 7] == "R")
                     {
                         lMasaNo.ForeColor = Color.Turquoise;
+                        LastChoosenTable.reservation = true;
                     }
                     else
                     {
                         lMasaNo.ForeColor = Color.Red;
+                        LastChoosenTable.reservation = false;
                     }
                     lPersonel.Text = "Personel : " + tableDetails[TableOpenForm.lastTablePlace * 3, 3];
                     lIskonto.Text = "Iskonto Orani : " + tableDetails[TableOpenForm.lastTablePlace * 3, 5] + "%";
@@ -841,6 +1057,8 @@ namespace Restorium
                     }
                     LastChoosenTable.TableNumber = MasaNo.ToString();
                     bSiparisEkle.Enabled = true;
+                    bPrint.Enabled = true;
+                    bTableDetailChange.Enabled = true;
                     bTableClose.Enabled = true;
                     lToplamTutar.Text = "0 ₺";
                 }
@@ -849,27 +1067,69 @@ namespace Restorium
             {
                 bActiveEt.Visible = true;
                 bActiveEt.Enabled = true;
+                bPrint.Enabled = true;
                 bSiparisEkle.Enabled = false;
+                bTableDetailChange.Enabled = true;
                 bTableClose.Text = "R. Iptal";
             }
             else
             {
                 bActiveEt.Visible = false;
                 bActiveEt.Enabled = false;
+                bPrint.Enabled = true;
                 bTableClose.Text = "Masa Kapat";
             }
             
         }
 
-        private void masa_click(object sender, EventArgs e)
+        private void masa_click(object sender, MouseEventArgs e)
         {
-            UserLog.WConsole("<<< masa_click >>>");
             Button b = sender as Button;
             // Buton fonksiyonu
             UserLog.WConsole("Masanin ID si : " + b.Name);
             string masaNoLocal = b.Name;
             masaNoLocal = masaNoLocal.Replace("bLeft", "");
             lMasaNo.Text = masaNoLocal;
+                            string text = lMasaNo.Text;
+                            switch (text.Length)
+                            {
+                                case 1:
+                                case 2:
+                                case 3:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 42f, lMasaNo.Font.Style);
+                                    break;
+                                case 4:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 37f, lMasaNo.Font.Style);
+                                    break;
+                                case 5:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 35f, lMasaNo.Font.Style);
+                                    break;
+                                case 6:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 30f, lMasaNo.Font.Style);
+                                    break;
+                                case 7:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 25f, lMasaNo.Font.Style);
+                                    break;
+                                case 8:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 22f, lMasaNo.Font.Style);
+                                    break;
+                                case 9:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 20f, lMasaNo.Font.Style);
+                                    break;
+                                case 10:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 18f, lMasaNo.Font.Style);
+                                    break;
+                                case 11:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 16f, lMasaNo.Font.Style);
+                                    break;
+                                case 12:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 15f, lMasaNo.Font.Style);
+                                    break;
+                                default:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 8f, lMasaNo.Font.Style);
+                                    break;
+
+                            }
             //------------------------------------------------------------------
             //MaxTableIndex adinda bi degisken tut  i->MaxTableIndex e kadar tarasin. (EDIT)
             //------------------------------------------------------------------
@@ -884,15 +1144,19 @@ namespace Restorium
                     if (tableDetails[i * 3, 7] == "R")
                     {
                         lMasaNo.ForeColor = Color.Turquoise;
+                        LastChoosenTable.reservation = true;
                     }
                     else
                     {
                         lMasaNo.ForeColor = Color.Red;
+                        LastChoosenTable.reservation = false;
                     }
                     lPersonel.Text = "Personel : " + tableDetails[i * 3, 3];
+                    LastChoosenTable.Waiter = tableDetails[i * 3, 3];
                     LastChoosenTable.iskonto = Convert.ToInt16(tableDetails[i * 3, 5]);
                     lIskonto.Text = "Iskonto Orani : " + tableDetails[i * 3, 5] + "%";
-                    lMusteriAdi.Text = "Musteri : " + tableDetails[i * 3, 6];
+                    lMusteriAdi.Text = "Müşteri : " + tableDetails[i * 3, 6];
+                    LastChoosenTable.musteriAdi = tableDetails[i * 3, 6];
                     UserLog.WConsole("Masa Detayi Ekrana Yazdirildi...");
                 }
             }
@@ -903,6 +1167,7 @@ namespace Restorium
                 bActiveEt.Visible = true;
                 bActiveEt.Enabled = true;
                 bSiparisEkle.Enabled = false;
+                bTableDetailChange.Enabled = true;
                 bTableClose.Text = "R. Iptal";
             }
             else
@@ -910,18 +1175,36 @@ namespace Restorium
                 bActiveEt.Visible = false;
                 bActiveEt.Enabled = false;
                 bSiparisEkle.Enabled = true;
+                bTableDetailChange.Enabled = true;
                 bTableClose.Text = "Masa Kapat";
             }
             bTableClose.Enabled = true;
             clearSiparisTable();
             setSiparisListToTable();
+            UserLog.WConsole("<<< masa_click Event>>>");
+            if (e.Button == MouseButtons.Right)
+            {
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////Right Click
+                UserLog.WConsole("Right Click");
+                bSiparisEkle_Click(null, null);
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////RightClick End
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////Left Click 
+                UserLog.WConsole("Left Click");
+              
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////Left Click End
+            }
+
         }
         #endregion
-        
+
         #region PERSONEL PROCESSES
         private void bPersonelDuzenle_Click(object sender, EventArgs e)
         {
 
+            /*
             personelDuzenlemeModu = !personelDuzenlemeModu;
             if (personelDuzenlemeModu == true)
             {
@@ -932,7 +1215,7 @@ namespace Restorium
                 dgViewWaiter.ReadOnly = false;
                 dgViewWaiter.Refresh();
                 dgViewWaiter.SelectionMode = DataGridViewSelectionMode.CellSelect;
-                //dgViewWaiter.ForeColor = Color.Black;
+                dgViewWaiter.ForeColor = Color.Black;
                 bPersonelDuzenle.ForeColor = Color.Green;
                 bPersonelDuzenle.Image = Properties.Resources.switch_on;
                 bDeletePersonel.Visible = false;
@@ -946,20 +1229,49 @@ namespace Restorium
                 dgViewWaiter.ReadOnly = true;
                 dgViewWaiter.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dgViewWaiter.Refresh();
-                //dgViewWaiter.ForeColor = Color.Gray;
+                dgViewWaiter.ForeColor = Color.Gray;
                 bPersonelDuzenle.ForeColor = Color.Red;
                 bPersonelDuzenle.Image = Properties.Resources.switch_off;
                 bDeletePersonel.Visible = true;
                 savePersonnelToFile();
             }
-
+            */
+            using (var personelAdd = new PersonelAdd())
+            {
+                PersonelAdd.PersonelColumn0 = dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[0].Value.ToString();
+                PersonelAdd.PersonelColumn1 = dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[1].Value.ToString();
+                PersonelAdd.PersonelColumn2 = dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[2].Value.ToString();
+                PersonelAdd.PersonelColumn3 = dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[3].Value.ToString();
+                PersonelAdd.PersonelColumn4 = dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[4].Value.ToString();
+                PersonelAdd.PersonelColumn5 = dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[5].Value.ToString();
+                PersonelAdd.PersonelColumn6 = dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[6].Value.ToString();
+                PersonelAdd.personelEditMode = true;
+                var result = personelAdd.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[0].Value = PersonelAdd.PersonelColumn0;
+                    dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[1].Value = PersonelAdd.PersonelColumn1;
+                    dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[2].Value = PersonelAdd.PersonelColumn2;
+                    dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[3].Value = PersonelAdd.PersonelColumn3;
+                    dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[4].Value = PersonelAdd.PersonelColumn4;
+                    dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[5].Value = PersonelAdd.PersonelColumn5;
+                    dgViewWaiter.Rows[dgViewWaiter.SelectedRows[0].Index].Cells[6].Value = PersonelAdd.PersonelColumn6;
+                }
+            }
         }
 
         private void savePersonnelToFile()
         {//Personel Listesini duzenleme bitince dosyaya kaydeder.
             personelCount = dgViewWaiter.RowCount;
-            INI.DeleteSection("Personel");
-            INI.Write("personelCount", personelCount.ToString(), "Personel");
+            try
+            {
+                INI.DeleteSection("Personel");
+            }
+            catch
+            {
+                UserLog.WConsole("(!) Personel Section'i Silinirken Hata Olustu !");
+            }
+                INI.Write("personelCount", personelCount.ToString(), "Personel");
             for (int i = 0; i < personelCount; i++)
             {
                 INI.Write("id" + i.ToString(), dgViewWaiter.Rows[i].Cells[0].Value.ToString(), "Personel");
@@ -999,11 +1311,10 @@ namespace Restorium
             }
             catch
             {
-                UserLog.WConsole(" (HATA) Dosyadan Personel Okuma Hatasi !");
+                UserLog.WConsole("(!) Dosyadan Personel Okuma Hatasi !");
             }
         }
         #endregion
-
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             // Print Function
@@ -1053,10 +1364,48 @@ namespace Restorium
                         bLeft.ForeColor = Color.Black;
                         bLeft.BackColor = Color.Red;
                         bLeft.Size = new Size(80, 80);
-                        bLeft.Click += new EventHandler(masa_click);
-                        bLeft.DoubleClick += new EventHandler(masa_doubleClick);
+                        bLeft.MouseDown += new MouseEventHandler(masa_click);
                         bLeft.MouseDoubleClick += new MouseEventHandler(masa_MouseDoubleClick);
                         lMasaNo.Text = MasaNo.ToString();
+                        string text = lMasaNo.Text;
+                        switch (text.Length)
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 42f, lMasaNo.Font.Style);
+                                break;
+                            case 4:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 37f, lMasaNo.Font.Style);
+                                break;
+                            case 5:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 35f, lMasaNo.Font.Style);
+                                break;
+                            case 6:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 30f, lMasaNo.Font.Style);
+                                break;
+                            case 7:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 25f, lMasaNo.Font.Style);
+                                break;
+                            case 8:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 22f, lMasaNo.Font.Style);
+                                break;
+                            case 9:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 20f, lMasaNo.Font.Style);
+                                break;
+                            case 10:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 18f, lMasaNo.Font.Style);
+                                break;
+                            case 11:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 16f, lMasaNo.Font.Style);
+                                break;
+                            case 12:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 15f, lMasaNo.Font.Style);
+                                break;
+                            default:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 8f, lMasaNo.Font.Style);
+                                break;
+                        }
                         lMasaNo.ForeColor = Color.Red;
                         //Button Right
                         /*Button bRight = new Button();
@@ -1082,10 +1431,12 @@ namespace Restorium
                         if (tableDetails[TableOpenForm.lastTablePlace * 3, 7] == "R")
                         {
                             lMasaNo.ForeColor = Color.Turquoise;
+                            LastChoosenTable.reservation = true;
                         }
                         else
                         {
                             lMasaNo.ForeColor = Color.Red;
+                            LastChoosenTable.reservation = false;
                         }
                         lPersonel.Text = "Personel : " + tableDetails[TableOpenForm.lastTablePlace * 3, 3];
                         lIskonto.Text = "Iskonto Orani : " + tableDetails[TableOpenForm.lastTablePlace * 3, 5] + "%";
@@ -1107,6 +1458,8 @@ namespace Restorium
                         }
                         LastChoosenTable.TableNumber = MasaNo.ToString();
                         bSiparisEkle.Enabled = true;
+                        bPrint.Enabled = true;
+                        bTableDetailChange.Enabled = true;
                         bTableClose.Enabled = true;
                         //                
                         lToplamTutar.Text = "0 ₺";  
@@ -1143,8 +1496,47 @@ namespace Restorium
                         bLeft.ForeColor = Color.Black;
                         bLeft.BackColor = Color.Turquoise;
                         bLeft.Size = new Size(80, 80);
-                        bLeft.Click += new EventHandler(masa_click);
+                        bLeft.MouseDown += new MouseEventHandler(masa_click);
                         lMasaNo.Text = MasaNo.ToString();
+                        string text = lMasaNo.Text;
+                        switch (text.Length)
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 42f, lMasaNo.Font.Style);
+                                break;
+                            case 4:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 37f, lMasaNo.Font.Style);
+                                break;
+                            case 5:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 35f, lMasaNo.Font.Style);
+                                break;
+                            case 6:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 30f, lMasaNo.Font.Style);
+                                break;
+                            case 7:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 25f, lMasaNo.Font.Style);
+                                break;
+                            case 8:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 22f, lMasaNo.Font.Style);
+                                break;
+                            case 9:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 20f, lMasaNo.Font.Style);
+                                break;
+                            case 10:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 18f, lMasaNo.Font.Style);
+                                break;
+                            case 11:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 16f, lMasaNo.Font.Style);
+                                break;
+                            case 12:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 15f, lMasaNo.Font.Style);
+                                break;
+                            default:
+                                lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 8f, lMasaNo.Font.Style);
+                                break;
+                        }
                         lMasaNo.ForeColor = Color.Turquoise;
                         //Button Right
                         /*Button bRight = new Button();
@@ -1170,10 +1562,12 @@ namespace Restorium
                         if (tableDetails[TableOpenForm.lastTablePlace * 3, 7] == "R")
                         {
                             lMasaNo.ForeColor = Color.Turquoise;
+                            LastChoosenTable.reservation = true;
                         }
                         else
                         {
                             lMasaNo.ForeColor = Color.Red;
+                            LastChoosenTable.reservation = false;
                         }
                         lPersonel.Text = "Personel : " + tableDetails[TableOpenForm.lastTablePlace * 3, 3];
                         lIskonto.Text = "Iskonto Orani : " + tableDetails[TableOpenForm.lastTablePlace * 3, 5] + "%";
@@ -1199,11 +1593,14 @@ namespace Restorium
                             bActiveEt.Visible = true;
                             bActiveEt.Enabled = true;
                             bSiparisEkle.Enabled = false;
+                            bPrint.Enabled = true;
+                            bTableDetailChange.Enabled = true;
                             bTableClose.Text = "R. Iptal";
                         }
                         else
                         {
                             bActiveEt.Visible = false;
+                            bPrint.Enabled = true;
                             bActiveEt.Enabled = false;
                             bTableClose.Text = "Masa Kapat";
                         }
@@ -1216,6 +1613,14 @@ namespace Restorium
                 AboutBox about = new AboutBox();
                 about.Show();
             }
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (tbSearchKey.Focused)
+                {
+                    bStokAra_Click(null, null);
+                }
+            }
+            /*
             if (e.KeyCode == Keys.S) //Siparis Ekle
             {
                 if (tabControl1.SelectedIndex == 0 && lMasaNo.Text != "-")
@@ -1223,25 +1628,79 @@ namespace Restorium
                     bSiparisEkle_Click(null, null);
                 }
             }
+            */
         }
 
         private void ExchangeValuesChanged(object sender, EventArgs e)
         {
+            if (tbEuro.Text.LastIndexOf(',') != -1)
+                culture.NumberFormat.NumberDecimalSeparator = ",";
+            if (tbDolar.Text.LastIndexOf(',') != -1)
+                culture.NumberFormat.NumberDecimalSeparator = ",";
+            if (tbGBP.Text.LastIndexOf(',') != -1)
+                culture.NumberFormat.NumberDecimalSeparator = ",";
+
+            if (tbDolar.Text == "" || tbDolar.Text == "0" || tbDolar.Text == "0.0" || tbDolar.Text == "0,0")
+            {
+                Settings.Dolar = false;
+            }
+            else
+            {
+                Settings.Dolar = true;
+            }
+            if (tbEuro.Text == "" || tbEuro.Text == "0" || tbEuro.Text == "0.0" || tbEuro.Text == "0,0")
+            {
+                Settings.Euro= false;
+            }
+            else
+            {
+                Settings.Euro = true;
+            }
+            if (tbGBP.Text == "" || tbGBP.Text == "0" || tbGBP.Text == "0.0" || tbGBP.Text == "0,0")
+            {
+                Settings.GBP= false;
+            }
+            else
+            {
+                Settings.GBP = true;
+            }
             INI.Write("Dolar", tbDolar.Text.ToString(), "Exchange");
             INI.Write("Euro", tbEuro.Text.ToString(), "Exchange");
             INI.Write("GBP", tbGBP.Text.ToString(), "Exchange");
             try
             {
-                LastChoosenTable.DefinedDolar = Convert.ToDecimal(tbDolar.Text.ToString());
-                LastChoosenTable.DefinedEuro = Convert.ToDecimal(tbEuro.Text.ToString());
-                LastChoosenTable.DefinedGBP = Convert.ToDecimal(tbGBP.Text.ToString());
+                LastChoosenTable.DefinedDolar = Convert.ToDecimal(tbDolar.Text, culture);
+                UserLog.WConsole("Dolar Kuru basariyla kaydedildi !");
+                lExchange.Text = "1 ₺ = " + Convert.ToDecimal(tbDolar.Text, culture).ToString() + " $ = ";
             }
             catch
             {
-                UserLog.WConsole("Doviz Degerlerini LastChoosenTable'a Kaydetmede Hata !");
+                UserLog.WConsole("(!) Dolar Kurunu LastChoosenTable'a Kaydetmede Hata !");
+                lExchange.Text = "1 ₺ = " + ""+ " $ = ";
             }
-            lExchange.Text = "1 ₺ = " + tbDolar.Text.ToString() + " $ = " + tbEuro.Text.ToString() + " € = " + tbGBP.Text.ToString() + " £";
-            UserLog.WConsole("Doviz kurlari basariyla kaydedildi !");
+            try
+            {
+                LastChoosenTable.DefinedEuro = Convert.ToDecimal(tbEuro.Text, culture);
+                UserLog.WConsole("Euro Kuru basariyla kaydedildi !");
+                lExchange.Text += Convert.ToDecimal(tbEuro.Text, culture).ToString() + " € = ";
+            }
+            catch
+            {
+                UserLog.WConsole("(!) Euro Kurunu LastChoosenTable'a Kaydetmede Hata !");
+                lExchange.Text += "" + " € = ";
+            }
+            try
+            {
+                LastChoosenTable.DefinedGBP = Convert.ToDecimal(tbGBP.Text, culture);
+                UserLog.WConsole("GBP Kuru basariyla kaydedildi !");
+                lExchange.Text += Convert.ToDecimal(tbGBP.Text, culture).ToString() + " £";
+            }
+            catch
+            {
+                UserLog.WConsole("(!) GBP Kurunu LastChoosenTable'a Kaydetmede Hata !");
+                lExchange.Text += ""+ " £";
+            }
+            
 
         }
 
@@ -1314,6 +1773,8 @@ namespace Restorium
                             }
                             // dgView.Rows.Add(id, aciklama, adet, birim, birimFiyat, paraBirimi, CheckState.Checked);
                             saveStokToFile();
+                            getStokFromFile();
+
                             dgView.Refresh();
                             MessageBox.Show("Yeni stok eklendi ! ( " + StokAdd.Aciklama.ToString() + " )\n"+"Eklenen Miktar = "+StokAdd.Adet.ToString()+"\nSatis Fiyati = "+ StokAdd.BirimFiyat.ToString());
                         }
@@ -1333,7 +1794,7 @@ namespace Restorium
             string tableName = lMasaNo.Text;
             string masaToplam = lToplamTutar.Text.ToString();
             masaToplam = masaToplam.Replace(" ₺", "");
-            LastChoosenTable.lastClosedTableTutar = Convert.ToDecimal(masaToplam);             //Tutar
+            LastChoosenTable.lastClosedTableTutar = Convert.ToDecimal(masaToplam,culture);             //Tutar
             LastChoosenTable.lastClosedTableName = tableName;                                  //Table Name
             LastChoosenTable.lastClosedTableWaiter = lPersonel.Text.Replace("Personel :", ""); //Personel
             LastChoosenTable.lastClosedTableIskontoOrani = LastChoosenTable.iskonto;           //Iskonto Rate
@@ -1350,6 +1811,8 @@ namespace Restorium
                     var result = tableClose.ShowDialog();
                     if (result == DialogResult.OK)
                     {
+
+                        dgView.Refresh();
                         ///Urunleri Stoktan Dus ----------------------------------------------------------------------
                         //tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 2] = toplamTutar.ToString(); // Tutar
                         //tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 4] = dgViewSiparis.RowCount.ToString(); // Toplam urun siparis cesidi
@@ -1359,8 +1822,7 @@ namespace Restorium
                             {
                                 if (dgView.Rows[m].Cells[0].Value.ToString() == tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 1, k])
                                 {
-                                  
-                                    if(dgView.Rows[m].Cells[6].Value.ToString()=="Checked")
+                                    if (dgView.Rows[m].Cells[6].Value.ToString()=="Checked" || dgView.Rows[m].Cells[6].Value.ToString() == "True")
                                     {
                                         dgView.Rows[m].Cells[2].Value = Convert.ToInt32(dgView.Rows[m].Cells[2].Value) - Convert.ToInt32(tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 2, k]);
                                         UserLog.WConsole("Stoktan urun dusuldu !");
@@ -1371,29 +1833,34 @@ namespace Restorium
                             //tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 1, k] = dgViewSiparis.Rows[k].Cells[0].Value.ToString(); // Urun id si
                             //tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3 + 2, k] = dgViewSiparis.Rows[k].Cells[2].Value.ToString(); // Urun adedi
                         }
+                        decimal masa_nakit = 0, masa_kredi = 0;
                         ///Nakit Toplam  -----------------------------------------------------------------------------
                         string[] nakitDizi = lNakitToplam.Text.Split('+');
                         switch (LastChoosenTable.paraBirimi)
                         {
                             case " ₺":
-                                nakitDizi[0] = (Convert.ToDecimal(nakitDizi[0].Replace("₺", "")) + LastChoosenTable.nakit).ToString();
+                                nakitDizi[0] = (Convert.ToDecimal(nakitDizi[0].Replace("₺", ""),culture) + LastChoosenTable.nakit).ToString();
                                 lNakitToplam.Text = nakitDizi[0] + "₺ +" + nakitDizi[1] + "+" + nakitDizi[2] + "+" + nakitDizi[3];
-                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.nakit)).ToString()+ "₺";
+                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""),culture) + Convert.ToDecimal(LastChoosenTable.nakit,culture)).ToString()+ "₺";
+                                masa_nakit = Convert.ToDecimal(LastChoosenTable.nakit,culture);
                                 break;
                             case " €":
-                                nakitDizi[1] = (Convert.ToDecimal(nakitDizi[1].Replace("€", "")) + LastChoosenTable.nakit).ToString();
+                                nakitDizi[1] = (Convert.ToDecimal(nakitDizi[1].Replace("€", ""), culture) + LastChoosenTable.nakit).ToString();
                                 lNakitToplam.Text = nakitDizi[0] + "+ " + nakitDizi[1] + "€ +" + nakitDizi[2] + "+" + nakitDizi[3];
-                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.nakit) /LastChoosenTable.DefinedEuro),2)).ToString() + "₺";
+                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""), culture) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.nakit, culture) /LastChoosenTable.DefinedEuro),2)).ToString() + "₺";
+                                masa_nakit = Convert.ToDecimal(LastChoosenTable.nakit, culture) /LastChoosenTable.DefinedEuro;
                                 break;
                             case " $":
-                                nakitDizi[2] = (Convert.ToDecimal(nakitDizi[2].Replace("$", "")) + LastChoosenTable.nakit).ToString();
+                                nakitDizi[2] = (Convert.ToDecimal(nakitDizi[2].Replace("$", ""), culture) + LastChoosenTable.nakit).ToString();
                                 lNakitToplam.Text = nakitDizi[0] + "+" + nakitDizi[1] + "+ " + nakitDizi[2] + "$ +" + nakitDizi[3];
-                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.nakit) / LastChoosenTable.DefinedDolar),2)).ToString() + "₺";
+                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""), culture) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.nakit, culture) / LastChoosenTable.DefinedDolar),2)).ToString() + "₺";
+                                masa_nakit = Convert.ToDecimal(LastChoosenTable.nakit, culture) /LastChoosenTable.DefinedDolar;
                                 break;
                             case " £":
-                                nakitDizi[3] = (Convert.ToDecimal(nakitDizi[3].Replace("£", "")) + LastChoosenTable.nakit).ToString();
+                                nakitDizi[3] = (Convert.ToDecimal(nakitDizi[3].Replace("£", ""), culture) + LastChoosenTable.nakit).ToString();
                                 lNakitToplam.Text = nakitDizi[0] + "+" + nakitDizi[1] + "+" + nakitDizi[2] + "+ " + nakitDizi[3] + "£";
-                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.nakit) / LastChoosenTable.DefinedGBP),2)).ToString() + "₺";
+                                lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""), culture) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.nakit, culture) / LastChoosenTable.DefinedGBP),2)).ToString() + "₺";
+                                masa_nakit = Convert.ToDecimal(LastChoosenTable.nakit, culture) /LastChoosenTable.DefinedGBP;
                                 break;
 
                         }
@@ -1402,26 +1869,28 @@ namespace Restorium
                         switch (LastChoosenTable.paraBirimi)
                         {
                             case " ₺":
-                                krediDizi[0] = (Convert.ToDecimal(krediDizi[0].Replace("₺", "")) + LastChoosenTable.krediKarti).ToString();
+                                krediDizi[0] = (Convert.ToDecimal(krediDizi[0].Replace("₺", ""), culture) + LastChoosenTable.krediKarti).ToString();
                                 lKrediToplam.Text = krediDizi[0] + "₺ +" + krediDizi[1] + "+" + krediDizi[2] + "+" + krediDizi[3];
-                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.krediKarti)).ToString() + "₺";
+                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""), culture) + Convert.ToDecimal(LastChoosenTable.krediKarti, culture)).ToString() + "₺";
+                                masa_kredi = Convert.ToDecimal(LastChoosenTable.krediKarti, culture);
                                 break;
                             case " €":
-                                krediDizi[1] = (Convert.ToDecimal(krediDizi[1].Replace("€", "")) + LastChoosenTable.krediKarti).ToString();
+                                krediDizi[1] = (Convert.ToDecimal(krediDizi[1].Replace("€", ""), culture) + LastChoosenTable.krediKarti).ToString();
                                 lKrediToplam.Text = krediDizi[0] + "+ " + krediDizi[1] + "€ +" + krediDizi[2] + "+" + krediDizi[3];
-                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.krediKarti) / LastChoosenTable.DefinedEuro),2)).ToString() + "₺";
+                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""), culture) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.krediKarti, culture) / LastChoosenTable.DefinedEuro),2)).ToString() + "₺";
+                                masa_kredi = Convert.ToDecimal(LastChoosenTable.krediKarti, culture) /LastChoosenTable.DefinedEuro;
                                 break;
                             case " $":
-                                krediDizi[2] = (Convert.ToDecimal(krediDizi[2].Replace("$", "")) + LastChoosenTable.krediKarti).ToString();
+                                krediDizi[2] = (Convert.ToDecimal(krediDizi[2].Replace("$", ""), culture) + LastChoosenTable.krediKarti).ToString();
                                 lKrediToplam.Text = krediDizi[0] + "+" + krediDizi[1] + "+ " + krediDizi[2] + "$ +" + krediDizi[3];
-                                UserLog.WConsole("A");
-                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.krediKarti) / LastChoosenTable.DefinedDolar),2)).ToString() + "₺";
-                                UserLog.WConsole("A1");
+                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""), culture) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.krediKarti, culture) / LastChoosenTable.DefinedDolar),2)).ToString() + "₺";
+                                masa_kredi = Convert.ToDecimal(LastChoosenTable.krediKarti, culture) /LastChoosenTable.DefinedDolar;
                                 break;
                             case " £":
-                                krediDizi[3] = (Convert.ToDecimal(krediDizi[3].Replace("£", "")) + LastChoosenTable.krediKarti).ToString();
+                                krediDizi[3] = (Convert.ToDecimal(krediDizi[3].Replace("£", ""), culture) + LastChoosenTable.krediKarti).ToString();
                                 lKrediToplam.Text = krediDizi[0] + "+" + krediDizi[1] + "+" + krediDizi[2] + "+ " + krediDizi[3] + "£";
-                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.krediKarti) / LastChoosenTable.DefinedGBP),2)).ToString() + "₺";
+                                lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""), culture) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.krediKarti, culture) / LastChoosenTable.DefinedGBP),2)).ToString() + "₺";
+                                masa_kredi = Convert.ToDecimal(LastChoosenTable.krediKarti, culture) /LastChoosenTable.DefinedGBP;
                                 break;
 
                         }
@@ -1430,30 +1899,32 @@ namespace Restorium
                         switch (LastChoosenTable.paraBirimi)
                         {
                             case " ₺":
-                                cariDizi[0] = (Convert.ToDecimal(cariDizi[0].Replace("₺", "")) + LastChoosenTable.cari).ToString();
+                                cariDizi[0] = (Convert.ToDecimal(cariDizi[0].Replace("₺", ""), culture) + LastChoosenTable.cari).ToString();
                                 lCariToplam.Text = cariDizi[0] + "₺ +" + cariDizi[1] + "+" + cariDizi[2] + "+" + cariDizi[3];
-                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(LastChoosenTable.cari)).ToString() + "₺";
+                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", ""), culture) + Convert.ToDecimal(LastChoosenTable.cari, culture)).ToString() + "₺";
                                 break;
                             case " €":
-                                cariDizi[1] = (Convert.ToDecimal(cariDizi[1].Replace("€", "")) + LastChoosenTable.cari).ToString();
+                                cariDizi[1] = (Convert.ToDecimal(cariDizi[1].Replace("€", ""), culture) + LastChoosenTable.cari).ToString();
                                 lCariToplam.Text = cariDizi[0] + "+ " + cariDizi[1] + "€ +" + cariDizi[2] + "+" + cariDizi[3];
-                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.cari) / LastChoosenTable.DefinedEuro),2)).ToString() + "₺";
+                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", ""), culture) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.cari, culture) / LastChoosenTable.DefinedEuro),2)).ToString() + "₺";
                                 break;
                             case " $":
-                                cariDizi[2] = (Convert.ToDecimal(cariDizi[2].Replace("$", "")) + LastChoosenTable.cari).ToString(); /// PATLAMA NOKTASI //
+                                cariDizi[2] = (Convert.ToDecimal(cariDizi[2].Replace("$", ""), culture) + LastChoosenTable.cari).ToString(); /// PATLAMA NOKTASI //
                                 lCariToplam.Text = cariDizi[0] + "+" + cariDizi[1] + "+ " + cariDizi[2] + "$ +" + cariDizi[3];
-                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.cari) / LastChoosenTable.DefinedDolar),2)).ToString() + "₺";
+                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", ""), culture) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.cari, culture) / LastChoosenTable.DefinedDolar),2)).ToString() + "₺";
                                 break;
                             case " £":
-                                cariDizi[3] = (Convert.ToDecimal(cariDizi[3].Replace("£", "")) + LastChoosenTable.cari).ToString();
+                                cariDizi[3] = (Convert.ToDecimal(cariDizi[3].Replace("£", ""), culture) + LastChoosenTable.cari).ToString();
                                 lCariToplam.Text = cariDizi[0] + "+" + cariDizi[1] + "+" + cariDizi[2] + "+ " + cariDizi[3] + "£";
-                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.cari) / LastChoosenTable.DefinedGBP),2)).ToString() + "₺";
+                                lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", ""), culture) + System.Math.Round((Convert.ToDecimal(LastChoosenTable.cari, culture) / LastChoosenTable.DefinedGBP),2)).ToString() + "₺";
                                 break;
 
                         }
                         ////Kasa Islemleri  (Genel Toplam)   ---------------------------------------------------------
-                        lKasaToplam.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""))+ Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""))).ToString() + " ₺";
-                        lBugunToplam.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""))).ToString() + " ₺";
+                        //lKasaToplam.Text = (OldKasaToplam+Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""))+ Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""))).ToString() + " ₺";
+                        lKasaToplam.Text = (OldKasaToplam + masa_kredi + masa_nakit).ToString() + " ₺";
+                        lBugunToplam.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""), culture) + Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", ""), culture)).ToString() + " ₺";
+                        UserLog.WConsole("lKasaToplam.Text : " + lKasaToplam.Text.ToString());
                         //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
                         // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
                         //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
@@ -1462,37 +1933,39 @@ namespace Restorium
                         switch (LastChoosenTable.paraBirimi)
                         {
                             case " ₺":
-                                sonMasaToplam = Convert.ToDecimal(masaToplam);
+                                sonMasaToplam = Convert.ToDecimal(masaToplam, culture);
                                 tipToplam = LastChoosenTable.tip;
                                 break;
                             case " €":
-                                sonMasaToplam = Convert.ToDecimal(masaToplam) * LastChoosenTable.DefinedEuro;
+                                sonMasaToplam = Convert.ToDecimal(masaToplam, culture) * LastChoosenTable.DefinedEuro;
                                 tipToplam = LastChoosenTable.tip* LastChoosenTable.DefinedEuro;
                                 break;
                             case " $":
-                                sonMasaToplam = Convert.ToDecimal(masaToplam) * LastChoosenTable.DefinedDolar;
+                                sonMasaToplam = Convert.ToDecimal(masaToplam, culture) * LastChoosenTable.DefinedDolar;
                                 tipToplam = LastChoosenTable.tip * LastChoosenTable.DefinedDolar;
                                 break;
                             case " £":
-                                sonMasaToplam = Convert.ToDecimal(masaToplam) * LastChoosenTable.DefinedGBP;
+                                sonMasaToplam = Convert.ToDecimal(masaToplam, culture) * LastChoosenTable.DefinedGBP;
                                 tipToplam = LastChoosenTable.tip * LastChoosenTable.DefinedGBP;
                                 break;
 
                         }
                         //Masa cost adding to Kasa
-                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), LastChoosenTable.nakit + LastChoosenTable.paraBirimi, LastChoosenTable.krediKarti + LastChoosenTable.paraBirimi, LastChoosenTable.cari + LastChoosenTable.paraBirimi , System.Math.Round(sonMasaToplam,2) + LastChoosenTable.paraBirimi);
-                        SaveDataToXml("Masa Kapama", "Masa_Kapama_Aciklama", LastChoosenTable.nakit.ToString().Replace(".",","), LastChoosenTable.krediKarti.ToString().Replace(".", ","), LastChoosenTable.cari.ToString().Replace(".", ","), lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), LastChoosenTable.paraBirimi);
+                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToLongDateString()+" "+ DateTime.UtcNow.ToLocalTime().ToLongTimeString(), "Masa Kapama", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), lMusteriAdi.Text.Replace("Müşteri : ",""), LastChoosenTable.nakit + LastChoosenTable.paraBirimi, LastChoosenTable.krediKarti + LastChoosenTable.paraBirimi, LastChoosenTable.cari + LastChoosenTable.paraBirimi , System.Math.Round(sonMasaToplam,2) + LastChoosenTable.paraBirimi,LastChoosenTable.iskonto+"%");
+                        SaveDataToXml("Masa Kapama", "Masa_Kapama_Aciklama",(Convert.ToDecimal(LastChoosenTable.nakit, culture)).ToString(),(Convert.ToDecimal(LastChoosenTable.krediKarti,culture)).ToString(),(Convert.ToDecimal(LastChoosenTable.cari,culture)).ToString(),(Convert.ToDecimal(LastChoosenTable.lastClosedTableTutar,culture)).ToString(), lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), LastChoosenTable.paraBirimi);
                         FirstLoadDataFromXml();
                         //Tip adding to Kasa
                         if (LastChoosenTable.tip != 0)
                         { 
-                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Tip", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), "0"+ LastChoosenTable.paraBirimi, "0"+ LastChoosenTable.paraBirimi, "0"+ LastChoosenTable.paraBirimi, System.Math.Round(LastChoosenTable.tip, 2) + LastChoosenTable.paraBirimi);
-                        SaveDataToXml("Tip", "Tip_Aciklama",LastChoosenTable.tip.ToString().Replace(".", ","), "0", "0", lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), LastChoosenTable.paraBirimi);
+                        dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToLongDateString() + " " + DateTime.UtcNow.ToLocalTime().ToLongTimeString(), "Tip", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), lMusteriAdi.Text.Replace("Müşteri : ", ""), "0" + LastChoosenTable.paraBirimi, "0"+ LastChoosenTable.paraBirimi, "0"+ LastChoosenTable.paraBirimi, System.Math.Round(LastChoosenTable.tip, 2) + LastChoosenTable.paraBirimi,"0%");
+                        SaveDataToXml("Tip", "Tip_Aciklama",(Convert.ToDecimal(LastChoosenTable.tip,culture)).ToString(), "0", "0",(Convert.ToDecimal(LastChoosenTable.lastClosedTableTutar,culture)).ToString(), lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), LastChoosenTable.paraBirimi);
+                        LastChoosenTable.tip = 0;
                         FirstLoadDataFromXml();
                         }
+                        UserLog.WConsole("LastChoosenTable.tip : " + LastChoosenTable.tip);
                         dgvKasa.Refresh();
-                        lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace("₺", "")) + System.Math.Round(tipToplam,2)).ToString() + " ₺";
-                        KasaSave();
+                        lTipToplam.Text = (System.Math.Round(Convert.ToDecimal(lTipToplam.Text.Replace("₺", ""),culture),2) + System.Math.Round(tipToplam,2)).ToString() + " ₺";
+                        //KasaSave();
                         ////Kasa Islemleri END ---------------------------------------------------------
                         ////////////////////////////////////////////////////////////////////////////////
                             clearSiparisTable();
@@ -1516,6 +1989,8 @@ namespace Restorium
                                     LastChoosenTable.TableNumber = "";
                                     tableCounter--;
                                     bSiparisEkle.Enabled = false;
+                                    bPrint.Enabled = false;
+                                    bTableDetailChange.Enabled = false;
                                     bTableClose.Enabled = false;
                                     //SaveDataToXml("Masa Kapama", "Masa_Kapama_Aciklama", LastChoosenTable.nakit, LastChoosenTable.krediKarti, LastChoosenTable.cari, lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), LastChoosenTable.paraBirimi);
                                     //FirstLoadDataFromXml();
@@ -1543,6 +2018,7 @@ namespace Restorium
                 //
                 if (dialogResult == DialogResult.Yes)
                 {
+                    reservedTableCount--;
                     clearSiparisTable();
                     int i = 0;
                     foreach (string tablenames in tableNumbers)
@@ -1554,9 +2030,9 @@ namespace Restorium
                             //dgKasa ->> Zaman | Yapilan Islem | Masa Adi | Personel | Cari | Nakit | Kredi Karti | Tutar
                             // !!!!! ALTTAKI SATIR MASA KAPAMA TAMAMLANINCA ISLEME ACILACAK !!!!! 
                             //dgvKasa.Rows.Add(LastChoosenTable.lastClosedTableTime, "Masa Kapama", LastChoosenTable.lastClosedTable, LastChoosenTable.lastClosedTableWaiter, "0", "0", lToplamTutar.Text.ToString(), lToplamTutar.Text.ToString());
-                            dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToString(), "Rezervasyon Iptal", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), "-", "-", "-", "-");
+                            dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToLongDateString() + " " + DateTime.UtcNow.ToLocalTime().ToLongTimeString(), "Rezervasyon Iptal", tableName.ToString(), lPersonel.Text.Replace("Personel :", ""), lMusteriAdi.Text.Replace("Müşteri : ", ""), "-", "-", "-", "-","-");
                             dgvKasa.Refresh();
-                            KasaSave();
+                            //KasaSave();
                             ////////////////////////////////////////////////////////////////////////////////
 
                             tableNumbers[i] = "";
@@ -1572,8 +2048,10 @@ namespace Restorium
                             LastChoosenTable.TableNumber = "";
                             tableCounter--;
                             bSiparisEkle.Enabled = false;
+                            bPrint.Enabled = false;
+                            bTableDetailChange.Enabled = false;
                             bTableClose.Enabled = false;
-                            SaveDataToXml("Rezervasyon Kapama", "Rezervasyon_Aciklama", "0", "0", "0", lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), "₺");
+                            SaveDataToXml("Rezervasyon Kapama", "Rezervasyon_Aciklama", "0", "0", "0", "0",lPersonel.Text.Replace("Personel :", ""), tableName.ToString(), "₺");
                             FirstLoadDataFromXml();
                             UserLog.WConsole("Masa : " + tableName + " kapatildi...");
                             UserLog.WConsole("Acik masa sayisi ; " + tableCounter.ToString());
@@ -1592,9 +2070,12 @@ namespace Restorium
 
         private void KasaSave()
         {
-            try
+            int countNo = Convert.ToInt32(INI.Read("NoOfRows", "KasaDaily"));
+            UserLog.WConsole(" countNo 1 : " + countNo);
+            
+            /* try
             {
-                int countNo = Convert.ToInt16(INI.Read("NoOfRows", "KasaDaily"));
+                
                 for (int i = 0; i < countNo; i++)
                 {
                     for (int j = 0; j < 8; j++)
@@ -1602,64 +2083,72 @@ namespace Restorium
                         INI.DeleteKey("Sat" + i + "Sut" + j , "KasaDaily");
                     }
                 }
+                
                 INI.DeleteSection("KasaDaily");
                 INI.DeleteKey("NoOfRows", "KasaDaily");
                 UserLog.WConsole("Kasa kasyitlari basariyla silindi");
+                
             }
             catch
             {
-                UserLog.WConsole("(!)Silinecek kasa kaydi bulunamadi");
+                UserLog.WConsole("(!) Kasa kaydi bulunamadi");
             }
+            */
+            countNo++;
+            UserLog.WConsole(" countNo 2 : " + countNo);
+            INI.Write("NoOfRows", (countNo).ToString(), "KasaDaily");
+            int i = countNo - 1;
+            UserLog.WConsole(" i : " + i);
             try
-            { 
-                INI.Write("NoOfRows", dgvKasa.RowCount.ToString(), "KasaDaily");
-                for (int i = 0; i < dgvKasa.RowCount; i++)//satir
-                {
+            {
+               
                     for (int j = 0; j < 8; j++)//sutun
                     {
                         if (j > 3)
                         {
-                            if (dgvKasa.Rows[i].Cells[j].Value.ToString().Contains("₺"))
+                            if (dgvKasa.Rows[dgvKasa.RowCount-1].Cells[j].Value.ToString().Contains("₺"))
                             {
-                                INI.Write("Sat" + i + "Sut" + j , dgvKasa.Rows[i].Cells[j].Value.ToString().Replace("₺", "TL"), "KasaDaily");
+                                INI.Write("Sat" +i + "Sut" + j, (Convert.ToDecimal(dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value.ToString().Replace("₺", ""), culture)).ToString().Replace("₺", "TL"), "KasaDaily");
+                                dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value = (Convert.ToDecimal(dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value.ToString().Replace("₺", ""), culture)).ToString() + " ₺";
                             }
-                            else if (dgvKasa.Rows[i].Cells[j].Value.ToString().Contains("€"))
+                            else if (dgvKasa.Rows[dgvKasa.RowCount-1].Cells[j].Value.ToString().Contains("€"))
                             {
-                                INI.Write("Sat" + i + "Sut" + j, dgvKasa.Rows[i].Cells[j].Value.ToString().Replace("€", "EURO"), "KasaDaily");
+                                INI.Write("Sat" + i + "Sut" + j, (Convert.ToDecimal(dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value.ToString().Replace("€", ""), culture)).ToString().Replace("€", "EURO"), "KasaDaily");
+                                dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value = (Convert.ToDecimal(dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value.ToString().Replace("€", ""), culture)).ToString() + " €";
                             }
-                            else if (dgvKasa.Rows[i].Cells[j].Value.ToString().Contains("$"))
+                            else if (dgvKasa.Rows[dgvKasa.RowCount-1].Cells[j].Value.ToString().Contains("$"))
                             {
-                                INI.Write("Sat" + i + "Sut" + j, dgvKasa.Rows[i].Cells[j].Value.ToString().Replace("$", "DOLAR"), "KasaDaily");
+                                INI.Write("Sat" + i + "Sut" + j, (Convert.ToDecimal(dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value.ToString().Replace("$", ""), culture)).ToString().Replace("$", "DOLAR"), "KasaDaily");
+                                dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value = (Convert.ToDecimal(dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value.ToString().Replace("$", ""), culture)).ToString() + " $";
                             }
-                            else if (dgvKasa.Rows[i].Cells[j].Value.ToString().Contains("£"))
+                            else if (dgvKasa.Rows[dgvKasa.RowCount-1].Cells[j].Value.ToString().Contains("£"))
                             {
-                                INI.Write("Sat" + i + "Sut" + j, dgvKasa.Rows[i].Cells[j].Value.ToString().Replace("£", "GBP"), "KasaDaily");
+                                INI.Write("Sat" + i + "Sut" + j, (Convert.ToDecimal(dgvKasa.Rows[dgvKasa.RowCount-1].Cells[j].Value.ToString().Replace("£",""),culture)).ToString().Replace("£", "GBP"), "KasaDaily");
+                                dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value = (Convert.ToDecimal(dgvKasa.Rows[dgvKasa.RowCount - 1].Cells[j].Value.ToString().Replace("£", ""), culture)).ToString() + " £";
                             }
                         }
                         else
                         {
-                            INI.Write("Sat" + i + "Sut" + j, dgvKasa.Rows[i].Cells[j].Value.ToString(), "KasaDaily");
+                            INI.Write("Sat" +i + "Sut" + j, dgvKasa.Rows[dgvKasa.RowCount-1].Cells[j].Value.ToString(), "KasaDaily");
                         }
                     }
-                }
-                UserLog.WConsole("Kasa kaydedildi !");
-                }
+                UserLog.WConsole("Kasa kaydedildi ! : " + i);
+            }
             catch
             {
                 UserLog.WConsole("(!) Kasa kaydedilirken sorun olustu !");
             }
         }
 
-
         private void KasaLoad()
         {
+
             bool today = false;
             string tarih, yapilanIslem, masaAdi, personel, nakit, kredi, cari, toplam;
             dgvKasa.AllowUserToAddRows = true;
             dgvKasa.Refresh();
             DateTime date = Convert.ToDateTime(INI.Read("LoggedDate", "Login"));
-            UserLog.WConsole(date.Day.ToString());
-                try
+            try
                 {
                     int rowCount = Convert.ToInt16(INI.Read("NoOfRows", "KasaDaily"));
                     for (int i = 0; i < rowCount; i++)
@@ -1672,9 +2161,12 @@ namespace Restorium
                         kredi= INI.Read("Sat" + i + "Sut5", "KasaDaily");
                         cari= INI.Read("Sat" + i + "Sut6", "KasaDaily");
                         toplam = INI.Read("Sat" + i + "Sut7", "KasaDaily");
-                        if (Convert.ToDateTime(tarih).ToLongDateString() == System.DateTime.Now.ToLongDateString())
+                    if (Convert.ToDateTime(tarih).ToLongDateString() == System.DateTime.Now.ToLongDateString())
                         {
-                        today=true;
+                        NoOfRecordToday++;
+                        UserLog.WConsole("NoOfRecordToday : " + NoOfRecordToday);
+                        
+                        today =true;
                         }
                         if (toplam.Contains("TL"))
                             {
@@ -1682,16 +2174,17 @@ namespace Restorium
                             kredi= kredi.Replace("TL", "₺");
                             cari = cari.Replace("TL", "₺");
                             toplam= toplam.Replace("TL", "₺");
+
                             if(today)
                             { 
                                 lNakitToplamTL.Text = System.Math.Round((Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", ""))),2).ToString()+ "₺";
                                 lKrediToplamTL.Text = System.Math.Round((Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))),2).ToString() + "₺";
                                 lCariToplamTL.Text = System.Math.Round((Convert.ToDecimal(lCariToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(cari.Replace("₺", ""))),2).ToString() + "₺";
                                 lBugunToplam.Text = System.Math.Round((Convert.ToDecimal(lBugunToplam.Text.Replace("₺", ""))  + Convert.ToDecimal(toplam.Replace("₺", ""))), 2).ToString() + "₺";
-                            }
+                        }
                             if (yapilanIslem.Contains("Tip") == true)
                             {
-                                lTipToplam.Text = System.Math.Round(Convert.ToDecimal(toplam.Replace("₺","")) +(Convert.ToDecimal(lTipToplam.Text.Replace("₺", ""))), 2).ToString() + "₺";
+                            lTipToplam.Text = System.Math.Round(Convert.ToDecimal(toplam.Replace("₺","")) +(Convert.ToDecimal(lTipToplam.Text.Replace("₺", ""))), 2).ToString() + "₺";
                             }
                             lKasaToplam.Text = System.Math.Round((Convert.ToDecimal(lKasaToplam.Text.Replace("₺", "")) + Convert.ToDecimal(nakit.Replace("₺", "")) + Convert.ToDecimal(kredi.Replace("₺", ""))),2).ToString() + "₺";
                         }
@@ -1755,9 +2248,9 @@ namespace Restorium
                         if (today)
                         {
                             dgvKasa.Rows.Add(tarih, yapilanIslem, masaAdi, personel, nakit, kredi, cari, toplam);
-                            //dgvKasa.Rows.Add("a","b","c","d","e","f","g","h");
-                            dgvKasa.Refresh();
-                        }
+                        //dgvKasa.Rows.Add("a","b","c","d","e","f","g","h");
+                        dgvKasa.Refresh();
+                    }
                        
                     }
                 lBugunToplam.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace("₺", "")) + Convert.ToDecimal(lKrediToplamTL.Text.Replace("₺", ""))).ToString() + "₺";
@@ -1770,7 +2263,7 @@ namespace Restorium
                 }
                 dgvKasa.AllowUserToAddRows = false;
                 dgvKasa.Refresh();
-            dgvKasa.Refresh();
+            UserLog.WConsole("lKasaToplam.Text 1 : " + lKasaToplam.Text.ToString());
         }
 
         private void bSiparisEkle_Click(object sender, EventArgs e)
@@ -1806,15 +2299,16 @@ namespace Restorium
                     ///// IF Meal id exist on the list +1 or add new row
                     if (existedRow != dgViewSiparis.Rows.Count)
                     {
+
                         UserLog.WConsole(showListForm.Selected_Meal_ID + " (" + showListForm.Selected_Meal + ")" + " nolu siparis guncelleniyor..");
-                        int countOfElement = Convert.ToInt16(dgViewSiparis.Rows[existedRow].Cells[2].Value);
+                        int countOfElement = Convert.ToInt32(dgViewSiparis.Rows[existedRow].Cells[2].Value);
                         UserLog.WConsole(countOfElement.ToString());
                         //Adet
                         dgViewSiparis.Rows[existedRow].Cells[2].Value = (countOfElement + 1).ToString();
                         //Tutar
                         string tutar = dgViewSiparis.Rows[existedRow].Cells[5].Value.ToString();  // 5 TL
                         tutar = tutar.Replace(" ₺", "");  // 5
-                        tutar = (Convert.ToDecimal(tutar) + Convert.ToDecimal(showListForm.Selected_Meal_Price)).ToString();  // 10
+                        tutar = (Convert.ToDecimal(tutar, culture) + Convert.ToDecimal(showListForm.Selected_Meal_Price, culture)).ToString();  // 10
                         dgViewSiparis.Rows[existedRow].Cells[5].Value = tutar + " ₺";
                         dgViewSiparis.Refresh();
                         saveAdisyonToTable();
@@ -1827,7 +2321,7 @@ namespace Restorium
                         decimal mealPrice = showListForm.Selected_Meal_Price;
                         dgViewSiparis.AllowUserToAddRows = true;
                         //Sutuna ilk degeri yazdirma
-                        dgViewSiparis.Rows.Add(mealID, meal, "1", null, null, mealPrice.ToString() + " ₺", mealPrice.ToString() + " ₺");
+                        dgViewSiparis.Rows.Add(mealID, meal, "1", null, null, (Convert.ToDecimal(mealPrice, culture)).ToString() + " ₺", (Convert.ToDecimal(mealPrice, culture)).ToString() + " ₺");
                         //UserLog.WConsole("Yemek fiyati : " + mealPrice.ToString());
                         dgViewSiparis.AllowUserToAddRows = false;
                         dgViewSiparis.Refresh();
@@ -1840,7 +2334,7 @@ namespace Restorium
 
         private void dgViewSiparis_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 3) // Siparis miktarini 1 artir
+            if (e.ColumnIndex == 3 && e.RowIndex >= 0) // Siparis miktarini 1 artir
             {
                 //UserLog.WConsole(e.RowIndex.ToString());
 
@@ -1848,12 +2342,12 @@ namespace Restorium
                 dgViewSiparis.Rows[e.RowIndex].Cells[2].Value = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value) + 1).ToString();
                 int newCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
                 //tutar hesabi
-                string tutar = dgViewSiparis.Rows[e.RowIndex].Cells[5].Value.ToString(); // 5 TL
+                string tutar =(dgViewSiparis.Rows[e.RowIndex].Cells[5].Value).ToString(); // 5 TL
                 tutar = tutar.Replace(" ₺", "");
-                tutar = ((Convert.ToDecimal(tutar) / oldCount) * newCount).ToString();  // 10
+                tutar = ((Convert.ToDecimal(tutar,culture) / oldCount) * newCount).ToString();  // 10
                 dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = tutar + " ₺";
             }
-            if (e.ColumnIndex == 4) // Siparis miktarini 1 azalt
+            if (e.ColumnIndex == 4 && e.RowIndex>=0) // Siparis miktarini 1 azalt
             {
                 UserLog.WConsole((e.RowIndex + 1).ToString() + ". siradaki urune tiklandi"); // Silinmeli
                 int adet = Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value);
@@ -1863,9 +2357,9 @@ namespace Restorium
                     dgViewSiparis.Rows[e.RowIndex].Cells[2].Value = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value) - 1).ToString();
                     int newCount = (Convert.ToInt16(dgViewSiparis.Rows[e.RowIndex].Cells[2].Value));
                     //tutar hesabi
-                    string tutar = dgViewSiparis.Rows[e.RowIndex].Cells[5].Value.ToString(); // 5 TL
+                    string tutar = (dgViewSiparis.Rows[e.RowIndex].Cells[5].Value).ToString(); // 5 TL
                     tutar = tutar.Replace(" ₺", "");
-                    tutar = (((Convert.ToDecimal(tutar)) / oldCount) * newCount).ToString();
+                    tutar = (((Convert.ToDecimal(tutar,culture)) / oldCount) * newCount).ToString();
                     dgViewSiparis.Rows[e.RowIndex].Cells[5].Value = tutar + " ₺";
                 }
                 else if (adet == 0)
@@ -1901,6 +2395,7 @@ namespace Restorium
                 toplamTutar = toplamTutar + Convert.ToDecimal(tutar);
 
             }
+            toplamTutar = toplamTutar-(toplamTutar * Convert.ToInt16(lIskonto.Text.Replace("Iskonto Orani : ", "").Replace("%", "")) / 100);
             lToplamTutar.Text = toplamTutar.ToString() + " ₺";
             //Masaya kaydet
             tableDetails[findTableOrder(LastChoosenTable.TableNumber) * 3, 2] = toplamTutar.ToString(); // Tutar
@@ -2006,6 +2501,7 @@ namespace Restorium
                             }
                         }
                         bSiparisEkle.Enabled = true;
+                        bTableDetailChange.Enabled = true;
                         bActiveEt.Enabled = false;
                     }
                     i++;
@@ -2015,6 +2511,7 @@ namespace Restorium
                     bActiveEt.Visible = true;
                     bActiveEt.Enabled = true;
                     bSiparisEkle.Enabled = false;
+                    bTableDetailChange.Enabled = true;
                     bTableClose.Text = "R. Iptal";
                 }
                 else
@@ -2022,6 +2519,7 @@ namespace Restorium
                     bActiveEt.Visible = false;
                     bActiveEt.Enabled = false;
                     bSiparisEkle.Enabled = true;
+                    bTableDetailChange.Enabled = true;
                     bTableClose.Text = "Masa Kapat";
                 }
                 bTableClose.Enabled = true;
@@ -2119,7 +2617,7 @@ namespace Restorium
             }
         }
 
-        private void SaveDataToXml(string islemTuru,string Aciklama,string Nakit,string KrediKarti,string Cari,string Personel,string masaAdi,string ParaBirimi)
+        private void SaveDataToXml(string islemTuru,string Aciklama,string Nakit,string KrediKarti,string Cari,string Toplam,string Personel,string masaAdi,string ParaBirimi)
         {
             //Template of Saving Scheme
             /* <Islem>
@@ -2153,9 +2651,12 @@ namespace Restorium
                 XmlNode subNodeNakit = doc.CreateElement("Nakit");
                 XmlNode subNodeKrediKarti = doc.CreateElement("KrediKarti");
                 XmlNode subNodeCari = doc.CreateElement("Cari");
+                XmlNode subNodeToplam = doc.CreateElement("toplam");
                 XmlNode subNodePersonel = doc.CreateElement("Personel");
                 XmlNode subNodeMasaAdi = doc.CreateElement("MasaAdi");
                 XmlNode subNodeParaBirimi = doc.CreateElement("ParaBirimi");
+                XmlNode subNodeMusteri = doc.CreateElement("Musteri");
+                XmlNode subNodeIskonto = doc.CreateElement("Iskonto");
                 //add value for child nodes
                 subNodeTarih.InnerText = System.DateTime.Now.ToLongDateString();
                 subNodeZaman.InnerText = System.DateTime.Now.ToShortTimeString();
@@ -2165,9 +2666,12 @@ namespace Restorium
                 subNodeNakit.InnerText = Nakit.ToString();
                 subNodeKrediKarti.InnerText = KrediKarti.ToString();
                 subNodeCari.InnerText = Cari.ToString();
+                subNodeToplam.InnerText = Toplam;
                 subNodePersonel.InnerText = Personel;
                 subNodeMasaAdi.InnerText = masaAdi;
                 subNodeParaBirimi.InnerText = ParaBirimi;
+                subNodeMusteri.InnerText = lMusteriAdi.Text.Replace("Müşteri :", "");
+                subNodeIskonto.InnerText = lIskonto.Text.Replace("Iskonto Orani : ","").Replace("%","");
                 //add to parent node
                 node.AppendChild(subNodeTarih);//1
                 node.AppendChild(subNodeZaman);//2
@@ -2176,9 +2680,12 @@ namespace Restorium
                 node.AppendChild(subNodeNakit);//5
                 node.AppendChild(subNodeKrediKarti);//6
                 node.AppendChild(subNodeCari);//7
-                node.AppendChild(subNodePersonel);//8
-                node.AppendChild(subNodeMasaAdi);//9
-                node.AppendChild(subNodeParaBirimi);//10
+                node.AppendChild(subNodeToplam);//8
+                node.AppendChild(subNodePersonel);//9
+                node.AppendChild(subNodeMasaAdi);//10
+                node.AppendChild(subNodeParaBirimi);//11
+                node.AppendChild(subNodeMusteri);//12
+                node.AppendChild(subNodeIskonto);//13
                                                     //add to elements collection
                 doc.DocumentElement.AppendChild(node);
                 //save back
@@ -2243,6 +2750,7 @@ namespace Restorium
 
 
         }
+
         private void FirstLoadDataFromXml()
         {
             chartDaily.Series["Saatlik Kazanc"].Points.Clear();
@@ -2260,7 +2768,7 @@ namespace Restorium
 
 
                 ////////////////////////////////////////////////////////////////////////////////////////////////
-                //////////////Wekly Starts
+                //////////////Weekly Starts
                 ////////////////////////////////////////////////////////////////////////////////////////////////
                 int dayCount = 0;
                 bool firstReadFlag = false;
@@ -2271,17 +2779,17 @@ namespace Restorium
                     if (firstReadFlag == false)
                     {
                         kasaToplamArray[i, 0] = IslemElement.GetElementsByTagName("Tarih")[0].InnerText; // i,0 => Tarih 
-                        decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText.Replace(",",".")) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText.Replace(",", "."));
+                        decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText,culture) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
                         switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
                         {
-                            case "€":
-                                toplamKasa = toplamKasa * LastChoosenTable.DefinedEuro;
+                            case " €":
+                                toplamKasa = toplamKasa / LastChoosenTable.DefinedEuro;
                                 break;
-                            case "$":
-                                toplamKasa = toplamKasa * LastChoosenTable.DefinedDolar;
+                            case " $":
+                                toplamKasa = toplamKasa / LastChoosenTable.DefinedDolar;
                                 break;
-                            case "£":
-                                toplamKasa = toplamKasa * LastChoosenTable.DefinedGBP;
+                            case " £":
+                                toplamKasa = toplamKasa / LastChoosenTable.DefinedGBP;
                                 break;
                         }
                         kasaToplamArray[i, 1] = toplamKasa.ToString();  // i,1 => Tutar
@@ -2292,38 +2800,67 @@ namespace Restorium
                     {
                         if (Convert.ToDateTime(kasaToplamArray[i - 1, 0]) == Convert.ToDateTime(IslemElement.GetElementsByTagName("Tarih")[0].InnerText.ToString())) //Ayni tarih devam ise
                         {
-                            decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText.Replace(",", ".")) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText.Replace(",", ".").ToString());
+                            decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
                             switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
                             {
-                                case "€":
-                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedEuro;
+                                case " €":
+                                    toplamKasa = toplamKasa / LastChoosenTable.DefinedEuro;
                                     break;
-                                case "$":
-                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedDolar;
+                                case " $":
+                                    toplamKasa = toplamKasa / LastChoosenTable.DefinedDolar;
                                     break;
-                                case "£":
-                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedGBP;
+                                case " £":
+                                    toplamKasa = toplamKasa / LastChoosenTable.DefinedGBP;
                                     break;
                             }
-                            kasaToplamArray[i - 1, 1] = (Convert.ToDecimal(kasaToplamArray[i - 1, 1]) + toplamKasa).ToString();  // i,0 => Tutar
+                            switch (IslemElement.GetElementsByTagName("IslemTuru")[0].InnerText)
+                            {
+                                case "Tip":
+                                    //kasaToplamArray[i - 1, 1] = (Convert.ToDecimal(kasaToplamArray[i - 1, 1]) + toplamKasa).ToString();  // i,0 => Tutar
+                                    UserLog.WConsole("== TipRecord");
+                                    break;
+                                case "Masa Kapama":
+                                    kasaToplamArray[i - 1, 1] = (Convert.ToDecimal(kasaToplamArray[i - 1, 1], culture) + toplamKasa).ToString();  // i,0 => Tutar
+                                    UserLog.WConsole("== Masa Kapama Record");
+                                    break;
+                                case "Kasadan Tip Dusme":
+                                    //kasaToplamArray[i - 1, 1] = (Convert.ToDecimal(kasaToplamArray[i - 1, 1]) - toplamKasa).ToString();  // i,0 => Tutar
+                                    UserLog.WConsole("== Kasadan Tip Dusme");
+                                    break;
+                            }
+                            
                         }
-                        else
+                        else  //Sonraki Tarih
                         {
                             kasaToplamArray[i, 0] = IslemElement.GetElementsByTagName("Tarih")[0].InnerText; // i,0 => Tarih 
-                            decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText.Replace(",", ".")) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText.Replace(",", "."));
+                            decimal toplamKasa = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
                             switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
                             {
-                                case "€":
-                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedEuro;
+                                case " €":
+                                    toplamKasa = toplamKasa / LastChoosenTable.DefinedEuro;
                                     break;
-                                case "$":
-                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedDolar;
+                                case " $":
+                                    toplamKasa = toplamKasa / LastChoosenTable.DefinedDolar;
                                     break;
-                                case "£":
-                                    toplamKasa = toplamKasa * LastChoosenTable.DefinedGBP;
+                                case " £":
+                                    toplamKasa = toplamKasa / LastChoosenTable.DefinedGBP;
                                     break;
                             }
-                            kasaToplamArray[i, 1] = toplamKasa.ToString();  // i,1 => Tutar
+                            switch (IslemElement.GetElementsByTagName("IslemTuru")[0].InnerText)
+                            {
+                                case "Tip":
+                                    //kasaToplamArray[i, 1] = toplamKasa.ToString();  // i,1 => Tutar
+                                    UserLog.WConsole("== TipRecord");
+                                    break;
+                                case "Masa Kapama":
+                                    kasaToplamArray[i, 1] = toplamKasa.ToString();  // i,1 => Tutar
+                                    UserLog.WConsole("== Masa Kapama Record");
+                                    break;
+                                case "Kasadan Tip Dusme":
+                                    //kasaToplamArray[i, 1] = (Convert.ToDecimal(kasaToplamArray[i, 1])- toplamKasa).ToString();  // i,1 => Tutar
+                                    UserLog.WConsole("kasadan tip dus :"+ (0 - toplamKasa).ToString());
+                                    break;
+                            }
                             i++;
 
                         }
@@ -2344,9 +2881,10 @@ namespace Restorium
                 {
                     for (int n = 0; n < databaseDayCounter; n++)
                     {
+
                         if (System.DateTime.Now.AddDays(-pointCounter).ToLongDateString() == kasaToplamArray[n, 0])
                         {
-                            chartWeekly.Series["Gunluk Kazanc"].Points.AddXY(kasaToplamArray[n, 0], kasaToplamArray[n, 1]);
+                            chartWeekly.Series["Gunluk Kazanc"].Points.AddXY(kasaToplamArray[n, 0], Convert.ToDecimal(kasaToplamArray[n, 1],culture));
                             dayFoundFlag = true;
                         }
                     }
@@ -2372,7 +2910,7 @@ namespace Restorium
                 bool dailyFlag = false;
                 //UserLog.WConsole("Start Calculate Hourly Income...");
                 foreach (XmlNode node in IslemList)
-                {
+                {   
                     try
                     {
                         XmlElement IslemElement = (XmlElement)node;
@@ -2381,12 +2919,24 @@ namespace Restorium
                             //  UserLog.WConsole(IslemElement.GetElementsByTagName("Nakit")[0].InnerText);
                             //  UserLog.WConsole(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText);
 
-                            string sum = (Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText.Replace(",", ".")) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText.Replace(",", "."))).ToString();
+                            decimal sum = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture) + Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
+                            switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
+                            {
+                                case " €":
+                                    sum = sum / LastChoosenTable.DefinedEuro;
+                                    break;
+                                case " $":
+                                    sum = sum / LastChoosenTable.DefinedDolar;
+                                    break;
+                                case " £":
+                                    sum = sum / LastChoosenTable.DefinedGBP;
+                                    break;
+                            }
                             //  UserLog.WConsole(sum);
                             string hour = (Convert.ToDateTime(IslemElement.GetElementsByTagName("Zaman")[0].InnerText).Hour).ToString();
                             if (dailyFlag == false)//first hour 
                             {
-                                hourlySum[hourlyCounter, 1] = sum;
+                                hourlySum[hourlyCounter, 1] = sum.ToString(); ;
                                 //  UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter, 1]);
                                 hourlySum[hourlyCounter, 0] = hour;
                                 hourlyCounter++;
@@ -2396,12 +2946,12 @@ namespace Restorium
                             {
                                 if (hourlySum[hourlyCounter - 1, 0] == hour) //Bi onceki kaitla ayni saat ise
                                 {
-                                    hourlySum[hourlyCounter - 1, 1] = (Convert.ToDecimal(hourlySum[hourlyCounter - 1, 1]) + Convert.ToDecimal(sum)).ToString();
+                                    hourlySum[hourlyCounter - 1, 1] = (Convert.ToDecimal(hourlySum[hourlyCounter - 1, 1], culture) + Convert.ToDecimal(sum, culture)).ToString();
                                     //    UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter-1, 1]);
                                 }
                                 else // bi onceki kayit ile farkli saatler ise
                                 {
-                                    hourlySum[hourlyCounter, 1] = sum;
+                                    hourlySum[hourlyCounter, 1] = sum.ToString();
                                     //    UserLog.WConsole("hourly sum :" + hourlySum[hourlyCounter, 1]);
                                     hourlySum[hourlyCounter, 0] = hour;
                                     hourlyCounter++;
@@ -2457,14 +3007,28 @@ namespace Restorium
 
         private void bSendMailReport_Click(object sender, EventArgs e)
         {
-             bool result= sendMail();
-            if (!result)
-            {
-                MessageBox.Show("Mail gonderilirken sorun olustu !\nMail gonderimi basarisiz !");
+            if(Settings.useMail==true)
+            { 
+                if (tbMail.Text != ""  && tbMail.Text.Contains("@"))
+                {
+                    bool result = sendMail();
+                    if (!result)
+                    {
+                        MessageBox.Show("Mail gonderilirken sorun olustu !\nMail gonderimi basarisiz !");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Mail Basariyla :\n" + tbMail.Text + "\nMail adresine gonderildi.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Lutfen Ayarlar sekmesindeki mail adresi alanina gecerli bir mail adresi giriniz !");
+                }
             }
             else
             {
-                MessageBox.Show("Mail Basariyla :\n" + tbMail.Text + "\nMail adresine gonderildi.");
+                MessageBox.Show("Lutfen Ayarlar sekmesindeki mail adresi alanina gecerli bi mail adresi giriniz !!");
             }
         }
 
@@ -2519,6 +3083,7 @@ namespace Restorium
             }
             else
             {
+                ExchangeValuesChanged(null, null);
                 bAyarlarDuzenle.ForeColor = Color.Red;
                 bAyarlarDuzenle.Image = Properties.Resources.switch_off;
                 tbDefaultIskontoValue.Enabled = false;
@@ -2535,6 +3100,14 @@ namespace Restorium
         {
             INI.Write("Email", tbMail.Text, "Settings");
             UserLog.WConsole("Email adresi : " + tbMail.Text + " olarak kaydedildi");
+            if (tbMail.Text.Contains("@") == true && tbMail.Text.Contains(".") == true)
+            {
+                Settings.useMail = true;
+            }
+            else
+            {
+                Settings.useMail = false;
+            }
         }
 
         private void dtpDukkanKapanisTimeChanged(object sender, EventArgs e)
@@ -2548,79 +3121,109 @@ namespace Restorium
             INI.Write("AutoMail", cbAutoMail.CheckState.ToString(), "Settings");
             UserLog.WConsole("AutoMail secenegi : " + cbAutoMail.CheckState.ToString() + " olarak degistirildi");
         }
+
         private bool sendMail()
         {
-            if (tbMail.Text != "" && tbMail.Text.Contains("@"))
+            if (Settings.useMail = true)
             {
-
-                this.chartDaily.SaveImage("Daily_Chart.png", ChartImageFormat.Png);
-                this.chartWeekly.SaveImage("Weekly_Chart.png", ChartImageFormat.Png);
-
-                // dgvKasa to BitMap   :::::::::::::::::::::::::::::::::::::
-                int height = dgvKasa.Height;
-                dgvKasa.Height = (dgvKasa.RowCount + 3) * dgvKasa.RowTemplate.Height;
-                //Create a Bitmap and draw the DataGridView on it.
-                Bitmap bitmap = new Bitmap(this.dgvKasa.Width, this.dgvKasa.Height);
-                dgvKasa.DrawToBitmap(bitmap, new Rectangle(0, 0, this.dgvKasa.Width, this.dgvKasa.Height));
-                //Resize DataGridView back to original height.
-                dgvKasa.Height = height;
-                //Save the Bitmap to folder.
-                bitmap.Save("Kasa.png");
-                // dgvKasa to BitMap End :::::::::::::::::::::::::::::::::::::
-
-                MailMessage msg = new MailMessage();
-                msg.From = new MailAddress("bebckho@gmail.com","Restorium Services");
-                //msg.To.Add("hozmen6024@gmail.com");
-                //msg.To.Add("bilalertkn@gmail.com");
-                //msg.To.Add("Mahone0619@gmail.com");
-                //msg.To.Add("burak.c.kocak@gmail.com");
-
-                msg.To.Add(tbMail.Text);
-                msg.Subject = "Restorium Daily Report " + DateTime.Now.ToString();
-                msg.Body = "Daily Report :" + System.DateTime.Now.ToLongDateString() + "   " + System.DateTime.Now.ToLocalTime().ToLongTimeString();
-                SmtpClient client = new SmtpClient();
-                //client.Host = "smtp.live.com";
-                msg.Attachments.Add(new Attachment("Daily_Chart.png"));
-                msg.Attachments.Add(new Attachment("Weekly_Chart.png"));
-                msg.Attachments.Add(new Attachment("Kasa.png"));
-                //client.Port = 25;
-                client.Host = "smtp.gmail.com";
-                client.Port = 587;
-                client.EnableSsl = true;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential("bebckho@gmail.com", "bilalburakhuseyin");
-                //client.Credentials = new NetworkCredential("bbhmbbhm@outlook.com", "bilalburakhuseyinmahmut1");
-                client.Timeout = 20000;
-                try
+                if (tbMail.Text != "" && tbMail.Text.Contains("@"))
                 {
-                    client.Send(msg);
-                    UserLog.WConsole("Mail has been successfully sent! \nTo :" + tbMail.Text);
-                    msg.Dispose();
-                    mailSentFlag = true;
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    UserLog.WConsole("Fail Has error");
-                    msg.Dispose();
-                    mailSentFlag = false;
-                    return false;
-                }
 
+                    this.chartDaily.SaveImage("Daily_Chart.png", ChartImageFormat.Png);
+                    this.chartWeekly.SaveImage("Weekly_Chart.png", ChartImageFormat.Png);
+
+                    // dgvKasa to BitMap   :::::::::::::::::::::::::::::::::::::
+                    int height = dgvKasa.Height;
+                    dgvKasa.Height = (dgvKasa.RowCount + 3) * dgvKasa.RowTemplate.Height;
+                    //Create a Bitmap and draw the DataGridView on it.
+                    Bitmap bitmap = new Bitmap(this.dgvKasa.Width, this.dgvKasa.Height);
+                    dgvKasa.DrawToBitmap(bitmap, new Rectangle(0, 0, this.dgvKasa.Width, this.dgvKasa.Height));
+                    //Resize DataGridView back to original height.
+                    dgvKasa.Height = height;
+                    //Save the Bitmap to folder.
+                    bitmap.Save("Kasa.png");
+                    // dgvKasa to BitMap End :::::::::::::::::::::::::::::::::::::
+
+                    MailMessage msg = new MailMessage();
+                    msg.From = new MailAddress("bebckho@gmail.com", "Restorium Services");
+                    //msg.To.Add("hozmen6024@gmail.com");
+                    //msg.To.Add("bilalertkn@gmail.com");
+                    //msg.To.Add("Mahone0619@gmail.com");
+                    //msg.To.Add("burak.c.kocak@gmail.com");
+
+                    msg.To.Add(tbMail.Text);
+                    msg.Subject = "Restorium Gunluk Kasa Raporu : " + DateTime.Now.ToString();
+                    msg.Body = "Gunluk Kasa Raporu :" + System.DateTime.Now.ToLongDateString() + "   " + System.DateTime.Now.ToLocalTime().ToLongTimeString();
+                    msg.Body += "\n************************************************************";
+                    msg.Body += "\nBugun Kasa Toplam : " + lBugunToplam.Text.Replace(" ₺"," TL")+"\n";
+                    msg.Body += "\nGenel Kasa Toplam : " + lKasaToplam.Text.Replace(" ₺", " TL");
+                    SmtpClient client = new SmtpClient();
+                    //client.Host = "smtp.live.com";
+                    msg.Attachments.Add(new Attachment("Daily_Chart.png"));
+                    msg.Attachments.Add(new Attachment("Weekly_Chart.png"));
+                    msg.Attachments.Add(new Attachment("Kasa.png"));
+                    //client.Port = 25;
+                    client.Host = "smtp.gmail.com";
+                    client.Port = 587;
+                    client.EnableSsl = true;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential("bebckho@gmail.com", "bilalburakhuseyin");
+                    //client.Credentials = new NetworkCredential("bbhmbbhm@outlook.com", "bilalburakhuseyinmahmut1");
+                    client.Timeout = 20000;
+                    try
+                    {
+                        client.Send(msg);
+                        UserLog.WConsole("Mail has been successfully sent! \nTo :" + tbMail.Text);
+                        msg.Dispose();
+                        mailSentFlag = true;
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        UserLog.WConsole("Fail Has error");
+                        msg.Dispose();
+                        mailSentFlag = false;
+                        return false;
+                    }
+
+                }
+                return false;
             }
+            else
+            { 
             return false;
-
+            }
         }
 
         private void bSendMailKasa_Click(object sender, EventArgs e)
         {
-
+            if (Settings.useMail == true)
+            {
+                //KASAYI MAIL OLARAK GONDER
+            }
+            else
+            {
+                MessageBox.Show("Lutfen Ayarlar sekmesindeki mail adresi alanina gecerli bir mail adresi giriniz !");
+            }
         }
 
         private void kasadanTipDusToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
+            Kasa.islemAdi = "Kasadan Tip Al";
+            Kasa.totalTip =Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture);
+            using (var kasa= new Kasa())
+            {
+                var result =kasa.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) - Kasa.tutar).ToString()+ " ₺";
+                    dgvKasa.Rows.Add(DateTime.UtcNow.ToLocalTime().ToLongDateString() + " " + DateTime.UtcNow.ToLocalTime().ToLongTimeString(), "Kasadan Tip Dusme", "-", Kasa.Personel, "-", "0₺", "0₺", "0₺", Kasa.tutar+ "₺", "0 %");
+                    dgvKasa.Refresh();
+                    SaveDataToXml("Kasadan Tip Dusme",Kasa.aciklama,Kasa.tutar.ToString(),"0","0",Kasa.tutar.ToString(), Kasa.Personel,"-", "₺");
+                }
+            }
         }
 
         private void bKayitEkle_Click(object sender, EventArgs e)
@@ -2678,7 +3281,7 @@ namespace Restorium
                         INI.DeleteKey("Sat" + i + "Sut7", "ContactList");
                         INI.DeleteKey("Sat" + i + "Sut8", "ContactList");
                     }
-                    UserLog.WConsole("Inde : "+rowIndex.ToString()+" Yer Alan Kayit Rehberden Silindi");
+                    UserLog.WConsole("Index : "+rowIndex.ToString()+"de Yer Alan Kayit Rehberden Silindi");
                 }
                 catch
                 {
@@ -2715,6 +3318,7 @@ namespace Restorium
 
         private void bDuzenleRehber_Click(object sender, EventArgs e)
         {
+            /*
             if (rehberDuzenleFlag == false)
             {//duzenleme modu on
                 rehberDuzenleFlag = true;//Flag
@@ -2735,51 +3339,78 @@ namespace Restorium
                 dgvRehber.Refresh();
                 bDuzenleRehber.BackColor = Color.LightSlateGray;
                 dgvRehber.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                try
+                */
+            using (var contactAdd = new ContactAdd())
+            {
+                ContactAdd.Column0 = dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[0].Value.ToString();
+                ContactAdd.Column1 = dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[1].Value.ToString();
+                ContactAdd.Column2 = dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[2].Value.ToString();
+                ContactAdd.Column3 = dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[3].Value.ToString();
+                ContactAdd.Column4 = dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[4].Value.ToString();
+                ContactAdd.Column5 = dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[5].Value.ToString();
+                ContactAdd.Column6 = dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[6].Value.ToString();
+                ContactAdd.Column7 = dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[7].Value.ToString();
+                ContactAdd.Column8 = dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[8].Value.ToString();
+                ContactAdd.editMode = true;
+                var result = contactAdd.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    for (int i = 0; i < Convert.ToInt16(INI.Read("NoOfRecords", "ContactList")); i++)
+                    dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[0].Value = ContactAdd.Column0;
+                    dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[1].Value = ContactAdd.Column1;
+                    dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[2].Value = ContactAdd.Column2;
+                    dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[3].Value = ContactAdd.Column3;
+                    dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[4].Value = ContactAdd.Column4;
+                    dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[5].Value = ContactAdd.Column5;
+                    dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[6].Value = ContactAdd.Column6;
+                    dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[7].Value = ContactAdd.Column7;
+                    dgvRehber.Rows[dgvRehber.SelectedRows[0].Index].Cells[8].Value = ContactAdd.Column8;
+                    try
                     {
-                        INI.DeleteKey("Sat" + i + "Sut0", "ContactList");
-                        INI.DeleteKey("Sat" + i + "Sut1", "ContactList");
-                        INI.DeleteKey("Sat" + i + "Sut2", "ContactList");
-                        INI.DeleteKey("Sat" + i + "Sut3", "ContactList");
-                        INI.DeleteKey("Sat" + i + "Sut4", "ContactList");
-                        INI.DeleteKey("Sat" + i + "Sut5", "ContactList");
-                        INI.DeleteKey("Sat" + i + "Sut6", "ContactList");
-                        INI.DeleteKey("Sat" + i + "Sut7", "ContactList");
-                        INI.DeleteKey("Sat" + i + "Sut8", "ContactList");
+                        for (int i = 0; i < Convert.ToInt16(INI.Read("NoOfRecords", "ContactList")); i++)
+                        {
+                            INI.DeleteKey("Sat" + i + "Sut0", "ContactList");
+                            INI.DeleteKey("Sat" + i + "Sut1", "ContactList");
+                            INI.DeleteKey("Sat" + i + "Sut2", "ContactList");
+                            INI.DeleteKey("Sat" + i + "Sut3", "ContactList");
+                            INI.DeleteKey("Sat" + i + "Sut4", "ContactList");
+                            INI.DeleteKey("Sat" + i + "Sut5", "ContactList");
+                            INI.DeleteKey("Sat" + i + "Sut6", "ContactList");
+                            INI.DeleteKey("Sat" + i + "Sut7", "ContactList");
+                            INI.DeleteKey("Sat" + i + "Sut8", "ContactList");
+                        }
                     }
-                }
-                catch
-                {
-                    UserLog.WConsole("(!) Rehberden Kayit Silinirken Hata Olustu !");
-                }
-                ///////////
-                // SAVE
-                ///////////
-                try
-                {
-                    INI.Write("NoOfRecords", dgvRehber.Rows.Count.ToString(), "ContactList");
-                    for (int i = 0; i < dgvRehber.Rows.Count; i++)
+                    catch
                     {
-                        INI.Write("Sat" + i + "Sut0", dgvRehber.Rows[i].Cells[0].Value.ToString(), "ContactList");
-                        INI.Write("Sat" + i + "Sut1", dgvRehber.Rows[i].Cells[1].Value.ToString(), "ContactList");
-                        INI.Write("Sat" + i + "Sut2", dgvRehber.Rows[i].Cells[2].Value.ToString(), "ContactList");
-                        INI.Write("Sat" + i + "Sut3", dgvRehber.Rows[i].Cells[3].Value.ToString(), "ContactList");
-                        INI.Write("Sat" + i + "Sut4", dgvRehber.Rows[i].Cells[4].Value.ToString(), "ContactList");
-                        INI.Write("Sat" + i + "Sut5", dgvRehber.Rows[i].Cells[5].Value.ToString(), "ContactList");
-                        INI.Write("Sat" + i + "Sut6", dgvRehber.Rows[i].Cells[6].Value.ToString(), "ContactList");
-                        INI.Write("Sat" + i + "Sut7", dgvRehber.Rows[i].Cells[7].Value.ToString(), "ContactList");
-                        INI.Write("Sat" + i + "Sut8", dgvRehber.Rows[i].Cells[8].Value.ToString(), "ContactList");
+                        UserLog.WConsole("(!) Rehberden Kayit Silinirken Hata Olustu !");
                     }
-                    UserLog.WConsole("Rehber Basariyla Kaydedildi !");
-                }
-                catch
-                {
-                    UserLog.WConsole("(!) Rehber Kaydedilirken Hata Olustu !");
+                    ///////////
+                    // SAVE
+                    ///////////
+                    try
+                    {
+                        INI.Write("NoOfRecords", dgvRehber.Rows.Count.ToString(), "ContactList");
+                        for (int i = 0; i < dgvRehber.Rows.Count; i++)
+                        {
+                            INI.Write("Sat" + i + "Sut0", dgvRehber.Rows[i].Cells[0].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut1", dgvRehber.Rows[i].Cells[1].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut2", dgvRehber.Rows[i].Cells[2].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut3", dgvRehber.Rows[i].Cells[3].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut4", dgvRehber.Rows[i].Cells[4].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut5", dgvRehber.Rows[i].Cells[5].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut6", dgvRehber.Rows[i].Cells[6].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut7", dgvRehber.Rows[i].Cells[7].Value.ToString(), "ContactList");
+                            INI.Write("Sat" + i + "Sut8", dgvRehber.Rows[i].Cells[8].Value.ToString(), "ContactList");
+                        }
+                        UserLog.WConsole("Rehber Basariyla Kaydedildi !");
+                    }
+                    catch
+                    {
+                        UserLog.WConsole("(!) Rehber Kaydedilirken Hata Olustu !");
+                    }
                 }
 
             }
+            
         }
 
         private void bStokSil_Click(object sender, EventArgs e)
@@ -2788,7 +3419,7 @@ namespace Restorium
             { 
             int selectedRowIndex = dgView.SelectedRows[0].Index;
             DialogResult dialogResult = MessageBox.Show("ID : "+dgView.Rows[selectedRowIndex].Cells[0].Value.ToString() + "\n" +"ACIKLAMA : "+ dgView.Rows[selectedRowIndex].Cells[1].Value.ToString() + "\n" + "ADET : "+dgView.Rows[selectedRowIndex].Cells[2].Value.ToString() + " " + dgView.Rows[selectedRowIndex].Cells[3].Value.ToString() + "\n" +"BIRIM FIYAT : "+ dgView.Rows[selectedRowIndex].Cells[4].Value.ToString() + " " + dgView.Rows[selectedRowIndex].Cells[5].Value.ToString(), "Ilgili Urunu Stoktan Silmek Istediginize Emin Misiniz ?", MessageBoxButtons.YesNo);
-            UserLog.WConsole(selectedRowIndex.ToString());
+            UserLog.WConsole("selectedRowIndex : "+selectedRowIndex.ToString());
             if (dialogResult == DialogResult.Yes)
             {
                 try {
@@ -2798,11 +3429,14 @@ namespace Restorium
                     dgView.Rows.RemoveAt(dgView.Rows[selectedRowIndex].Index);
                     dgView.Refresh();
                     saveStokToFile();
+                    getStokFromFile();
+
+                    //getStokFromFile();
                     MessageBox.Show("Ilgili stok kaydi basariyla silindi !");
                 }
                 catch
                 {
-                    MessageBox.Show("Kayit silinirken hata olustu !");
+                    MessageBox.Show("(!) Kayit silinirken hata olustu !");
                 }
                 dgView.AllowUserToDeleteRows = true;
                 dgView.ReadOnly = true;
@@ -2832,6 +3466,380 @@ namespace Restorium
                 dgViewWaiter.Rows.RemoveAt(dgViewWaiter.SelectedRows[0].Index);
                 savePersonnelToFile();
             }
+        }
+
+        private void bPersonelEkle_Click(object sender, EventArgs e)
+        {
+            using (var personelAdd = new PersonelAdd())
+            {
+                var result = personelAdd.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    dgViewWaiter.Rows.Add(PersonelAdd.PersonelColumn0, PersonelAdd.PersonelColumn1, PersonelAdd.PersonelColumn2, PersonelAdd.PersonelColumn3, PersonelAdd.PersonelColumn4, PersonelAdd.PersonelColumn5, PersonelAdd.PersonelColumn6);
+                    dgViewWaiter.Refresh();
+                    try
+                    {
+                        savePersonnelToFile();
+                    }
+                    catch
+                    {
+                        UserLog.WConsole("(!) Rehber Kaydedilirken Hata Olustu !");
+                    }
+                }
+            }
+        }
+
+        private void pbWifi_Click(object sender, EventArgs e)
+        {
+            MainDisplay md = new MainDisplay();
+            md.Show();
+        }
+
+        private void bPersonelSettings_Click(object sender, EventArgs e)
+        {
+            using (var U_Settings = new UserSettings())
+            {
+                UserSettings.userType = "User";
+                var result = U_Settings.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    UserLog.WConsole("Admin Ayarlari Basariyla Degistirildi!");
+                }
+            }
+        }
+
+        private void bAdminSettings_Click(object sender, EventArgs e)
+        {
+            using (var U_Settings = new UserSettings())
+            {
+                UserSettings.userType = "Admin";
+                var result = U_Settings.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    UserLog.WConsole("Admin Ayarlari Basariyla Degistirildi!");
+                }
+            }
+        }
+
+        private void bPrint_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GetKasaFromXML()
+        {
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                //UserLog.WConsole("Kasa Bugun Toplam : " + lBugunToplam.Text + " Ile Acildi !");
+                doc.Load("Resources/ReportDatabase.xml");
+                XmlNodeList IslemList = doc.GetElementsByTagName("Islem");
+                decimal Nakit, Kredi, cari, toplam;
+                //////////////////////////////////////////////////////////
+                foreach (XmlNode node in IslemList)
+                {
+                    XmlElement IslemElement = (XmlElement)node;
+                    ////////////////////// MASA KAPAMA //////////////////////////////////////////
+                    if (IslemElement.GetElementsByTagName("IslemTuru")[0].InnerText == "Masa Kapama")
+                    {
+                        Nakit = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture);
+                        Kredi = Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
+                        cari = Convert.ToDecimal(IslemElement.GetElementsByTagName("Cari")[0].InnerText, culture);
+                  //      toplam = Convert.ToDecimal(IslemElement.GetElementsByTagName("Toplam")[0].InnerText.Replace(",", "."));
+                        switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
+                        {
+                            case " €":
+                                Nakit = Nakit / LastChoosenTable.DefinedEuro;
+                                Kredi = Kredi / LastChoosenTable.DefinedEuro;
+                                cari = cari / LastChoosenTable.DefinedEuro;
+                //                toplam = toplam / LastChoosenTable.DefinedEuro;
+                                break;
+                            case " $":
+                                Nakit = Nakit / LastChoosenTable.DefinedDolar;
+                                Kredi = Kredi / LastChoosenTable.DefinedDolar;
+                                cari = cari / LastChoosenTable.DefinedDolar;
+               //                 toplam = toplam / LastChoosenTable.DefinedDolar;
+                                break;
+                            case " £":
+                                Nakit = Nakit / LastChoosenTable.DefinedGBP;
+                                Kredi = Kredi / LastChoosenTable.DefinedGBP;
+                                cari = cari / LastChoosenTable.DefinedGBP;
+             //                   toplam = toplam / LastChoosenTable.DefinedGBP;
+                                break;
+                        }
+                        decimal toplamKasa = Nakit + Kredi;
+                        toplamKasa = System.Math.Round(Convert.ToDecimal(toplamKasa, culture), 2);
+                        //UserLog.WConsole("toplamKasa: " + toplamKasa + "TL Ile Acildi !");
+                        if (System.DateTime.Now.ToLongDateString() == IslemElement.GetElementsByTagName("Tarih")[0].InnerText) /////////////TODAY
+                        {
+                            ////KASAYA YAZDIR
+                            string tarih = IslemElement.GetElementsByTagName("Tarih")[0].InnerText;
+                            tarih = tarih + " " + IslemElement.GetElementsByTagName("Zaman")[0].InnerText;
+                            switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
+                            {
+                                case " ₺":
+                                    decimal tl_nakit = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText,culture);
+                                    decimal tl_kredi = Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
+                                    decimal tl_cari = Convert.ToDecimal(IslemElement.GetElementsByTagName("Cari")[0].InnerText, culture);
+                            //        decimal tl_toplam_xml = Convert.ToDecimal(IslemElement.GetElementsByTagName("Toplam")[0].InnerText.Replace(",", "."));
+                                    decimal tl_toplam = tl_nakit + tl_kredi + tl_cari;
+                                    dgvKasa.Rows.Add(tarih, "Masa Kapama", IslemElement.GetElementsByTagName("MasaAdi")[0].InnerText, IslemElement.GetElementsByTagName("Personel")[0].InnerText, IslemElement.GetElementsByTagName("Musteri")[0].InnerText, tl_nakit + " ₺", tl_kredi + " ₺", tl_cari + " ₺", tl_toplam + " ₺", IslemElement.GetElementsByTagName("Iskonto")[0].InnerText + "%");
+                                    break;
+                                case " €":
+                                    decimal euro_nakit = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture);
+                                    decimal euro_kredi = Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
+                                    decimal euro_cari = Convert.ToDecimal(IslemElement.GetElementsByTagName("Cari")[0].InnerText, culture);
+                          //          decimal euro_toplam_xml = Convert.ToDecimal(IslemElement.GetElementsByTagName("Toplam")[0].InnerText.Replace(",", "."));
+                                    decimal euro_toplam = euro_nakit + euro_kredi + euro_cari;
+                                    dgvKasa.Rows.Add(tarih, "Masa Kapama", IslemElement.GetElementsByTagName("MasaAdi")[0].InnerText, IslemElement.GetElementsByTagName("Personel")[0].InnerText, IslemElement.GetElementsByTagName("Musteri")[0].InnerText, euro_nakit + " €", euro_kredi + " €", euro_cari + " €", euro_toplam + " €", IslemElement.GetElementsByTagName("Iskonto")[0].InnerText + "%");
+                                    break;
+                                case " $":
+                                    decimal dolar_nakit = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture);
+                                    decimal dolar_kredi = Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
+                                    decimal dolar_cari = Convert.ToDecimal(IslemElement.GetElementsByTagName("Cari")[0].InnerText, culture);
+                          //          decimal dolar_toplam_xml = Convert.ToDecimal(IslemElement.GetElementsByTagName("Toplam")[0].InnerText.Replace(",", "."));
+                                    decimal dolar_toplam = dolar_nakit + dolar_kredi + dolar_cari;
+                                    dgvKasa.Rows.Add(tarih, "Masa Kapama", IslemElement.GetElementsByTagName("MasaAdi")[0].InnerText, IslemElement.GetElementsByTagName("Personel")[0].InnerText, IslemElement.GetElementsByTagName("Musteri")[0].InnerText, dolar_nakit + " $", dolar_kredi + " $", dolar_cari + " $", dolar_toplam + " $", IslemElement.GetElementsByTagName("Iskonto")[0].InnerText + "%");
+                                    break;
+                                case " £":
+                                    decimal gbp_nakit = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture);
+                                    decimal gbp_kredi = Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
+                                    decimal gbp_cari = Convert.ToDecimal(IslemElement.GetElementsByTagName("Cari")[0].InnerText, culture);
+                       //             decimal gbp_toplam_xml = Convert.ToDecimal(IslemElement.GetElementsByTagName("Toplam")[0].InnerText.Replace(",", "."));
+                                    decimal gbp_toplam = gbp_nakit + gbp_kredi + gbp_cari;
+                                    dgvKasa.Rows.Add(tarih, "Masa Kapama", IslemElement.GetElementsByTagName("MasaAdi")[0].InnerText, IslemElement.GetElementsByTagName("Personel")[0].InnerText, IslemElement.GetElementsByTagName("Musteri")[0].InnerText, gbp_nakit + " £", gbp_kredi + " £", gbp_cari + " £", gbp_toplam + " £", IslemElement.GetElementsByTagName("Iskonto")[0].InnerText + "%");
+                                    break;
+                            }
+                            ///KASAYA YAZDIR - END
+                            lNakitToplamTL.Text = (Convert.ToDecimal(lNakitToplamTL.Text.Replace(" ₺", ""), culture) + Nakit).ToString() + " ₺";
+                            lKrediToplamTL.Text = (Convert.ToDecimal(lKrediToplamTL.Text.Replace(" ₺", ""), culture) + Kredi).ToString() + " ₺";
+                            lCariToplamTL.Text = (Convert.ToDecimal(lCariToplamTL.Text.Replace(" ₺", ""), culture) + cari).ToString() + " ₺";
+                            lBugunToplam.Text = (Convert.ToDecimal(lBugunToplam.Text.Replace(" ₺", ""), culture) + toplamKasa).ToString() + " ₺";
+
+                        }
+                        OldKasaToplam = System.Math.Round(Convert.ToDecimal(OldKasaToplam, culture), 2);
+                        //UserLog.WConsole("Kasa Genel Toplam : " + OldKasaToplam + "TL Ile Acildi !");
+                        OldKasaToplam += toplamKasa;  // i,1 => Tutar
+                    }
+                    ////////////////////// TIP //////////////////////////////////////////
+                    else if (IslemElement.GetElementsByTagName("IslemTuru")[0].InnerText == "Tip")
+                    {
+
+                        string tarih = IslemElement.GetElementsByTagName("Tarih")[0].InnerText;
+                        tarih = tarih + " " + IslemElement.GetElementsByTagName("Zaman")[0].InnerText;
+                        switch (IslemElement.GetElementsByTagName("ParaBirimi")[0].InnerText.ToString())
+                        {
+                            case " ₺":
+                                decimal tl_nakit = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture);
+                                decimal tl_kredi = Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
+                                decimal tl_cari = Convert.ToDecimal(IslemElement.GetElementsByTagName("Cari")[0].InnerText, culture);
+                                decimal tl_toplam = tl_nakit + tl_kredi + tl_cari;
+                                if (System.DateTime.Now.ToLongDateString() == IslemElement.GetElementsByTagName("Tarih")[0].InnerText)
+                                {
+                                    lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) + tl_nakit).ToString() + " ₺";
+                                    dgvKasa.Rows.Add(tarih, "Tip", IslemElement.GetElementsByTagName("MasaAdi")[0].InnerText, IslemElement.GetElementsByTagName("Personel")[0].InnerText, IslemElement.GetElementsByTagName("Musteri")[0].InnerText, "0" + " ₺", "0" + " ₺", "0" + " ₺", tl_toplam + " ₺", IslemElement.GetElementsByTagName("Iskonto")[0].InnerText + "%");
+                                }
+                                else
+                                {
+                                    lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) + tl_nakit).ToString() + " ₺";
+                                }
+                                break;
+                            case " €":
+                                decimal euro_nakit = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture);
+                                decimal euro_kredi = Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
+                                decimal euro_cari = Convert.ToDecimal(IslemElement.GetElementsByTagName("Cari")[0].InnerText, culture);
+                                decimal euro_toplam = euro_nakit + euro_kredi + euro_cari;
+                                if (System.DateTime.Now.ToLongDateString() == IslemElement.GetElementsByTagName("Tarih")[0].InnerText)
+                                {
+                                    lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) + (euro_nakit / LastChoosenTable.DefinedEuro)).ToString() + " ₺";
+                                    dgvKasa.Rows.Add(tarih, "Tip", IslemElement.GetElementsByTagName("MasaAdi")[0].InnerText, IslemElement.GetElementsByTagName("Personel")[0].InnerText, IslemElement.GetElementsByTagName("Musteri")[0].InnerText, "0" + " €", "0" + " €", "0" + " €", euro_toplam + " €", IslemElement.GetElementsByTagName("Iskonto")[0].InnerText + "%");
+                                }
+                                else
+                                {
+                                    lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) + (euro_nakit / LastChoosenTable.DefinedEuro)).ToString() + " ₺";
+                                }
+                                break;
+                            case " $":
+                                decimal dolar_nakit = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture);
+                                decimal dolar_kredi = Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
+                                decimal dolar_cari = Convert.ToDecimal(IslemElement.GetElementsByTagName("Cari")[0].InnerText, culture);
+                                decimal dolar_toplam = dolar_nakit + dolar_kredi + dolar_cari;
+                                if (System.DateTime.Now.ToLongDateString() == IslemElement.GetElementsByTagName("Tarih")[0].InnerText)
+                                {
+                                    lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) + (dolar_nakit / LastChoosenTable.DefinedDolar)).ToString() + " ₺";
+                                    dgvKasa.Rows.Add(tarih, "Tip", IslemElement.GetElementsByTagName("MasaAdi")[0].InnerText, IslemElement.GetElementsByTagName("Personel")[0].InnerText, IslemElement.GetElementsByTagName("Musteri")[0].InnerText, "0" + " $", "0" + " $", "0" + " $", dolar_toplam + " $", IslemElement.GetElementsByTagName("Iskonto")[0].InnerText + "%");
+                                }
+                                else
+                                {
+                                    lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) + (dolar_nakit / LastChoosenTable.DefinedDolar)).ToString() + " ₺";
+                                }
+                                break;
+                            case " £":
+                                decimal gbp_nakit = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture);
+                                decimal gbp_kredi = Convert.ToDecimal(IslemElement.GetElementsByTagName("KrediKarti")[0].InnerText, culture);
+                                decimal gbp_cari = Convert.ToDecimal(IslemElement.GetElementsByTagName("Cari")[0].InnerText, culture);
+                                decimal gbp_toplam = gbp_nakit + gbp_kredi + gbp_cari;
+                                if (System.DateTime.Now.ToLongDateString() == IslemElement.GetElementsByTagName("Tarih")[0].InnerText)
+                                {
+                                    lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) + (gbp_nakit / LastChoosenTable.DefinedGBP)).ToString() + " ₺";
+                                    dgvKasa.Rows.Add(tarih, "Tip", IslemElement.GetElementsByTagName("MasaAdi")[0].InnerText, IslemElement.GetElementsByTagName("Personel")[0].InnerText, IslemElement.GetElementsByTagName("Musteri")[0].InnerText, "0" + " £", "0" + " £", "0" + " £", gbp_toplam + " £", IslemElement.GetElementsByTagName("Iskonto")[0].InnerText + "%");
+                                }
+                                else
+                                {
+                                    lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) + (gbp_nakit / LastChoosenTable.DefinedGBP)).ToString() + " ₺";
+                                }
+                                break;
+                        }
+
+                    }
+                    ////////////////////// KASADAN TIP DUSME//////////////////////////////////////////
+                    else if (IslemElement.GetElementsByTagName("IslemTuru")[0].InnerText == "Kasadan Tip Dusme")
+                    {
+                        string tarih = IslemElement.GetElementsByTagName("Tarih")[0].InnerText;
+                        tarih = tarih + " " + IslemElement.GetElementsByTagName("Zaman")[0].InnerText;
+                        decimal KasadanTipDusTutar = Convert.ToDecimal(IslemElement.GetElementsByTagName("Nakit")[0].InnerText, culture);
+                        if (System.DateTime.Now.ToLongDateString() == IslemElement.GetElementsByTagName("Tarih")[0].InnerText)
+                        {
+                            dgvKasa.Rows.Add(tarih, "Kasadan Tip Dusme", "-", IslemElement.GetElementsByTagName("Personel")[0].InnerText, "-", "0₺", "0₺", "0₺", -KasadanTipDusTutar+ "₺", "0 %");
+                            dgvKasa.Refresh();
+                            OldKasaToplam = OldKasaToplam - KasadanTipDusTutar;
+                            lBugunToplam.Text = (Convert.ToDecimal(lBugunToplam.Text.Replace(" ₺", ""), culture) - KasadanTipDusTutar).ToString() + " ₺";
+                            lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) - KasadanTipDusTutar).ToString()+ " ₺";
+                        }
+                        else
+                        {
+                            OldKasaToplam = OldKasaToplam - KasadanTipDusTutar;
+                            lTipToplam.Text = (Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture) - KasadanTipDusTutar).ToString() + " ₺";
+                        }
+                    }
+                    ////////////////////// REZERVASYON IPTAL//////////////////////////////////////////
+                    else if (IslemElement.GetElementsByTagName("IslemTuru")[0].InnerText == "Rezervasyon Iptal")
+                    {
+
+                    }
+                 }
+                ////// END OF FOREACH (NODE)
+                OldKasaToplam += System.Math.Round(Convert.ToDecimal(lTipToplam.Text.Replace(" ₺", ""), culture),2);
+
+            }
+            catch
+            {
+                UserLog.WConsole("(!) XML den Kasa Okunurken Sorun Olustu !");
+            }
+            finally
+            {
+                UserLog.WConsole("::::::: Kasa Okuma Tamamlandi :::::::");
+                UserLog.WConsole("Kasa Genel Toplam : " + OldKasaToplam + "TL Ile Acildi !");
+                UserLog.WConsole("Kasa Bugun Toplam : " + lBugunToplam.Text + " Ile Acildi !");
+                lKasaToplam.Text = OldKasaToplam + " ₺";
+            }
+           }
+
+        private void bTableDetailChange_Click(object sender, EventArgs e)
+        {
+            TableOpenForm.tableSettingsChange = true;
+            string tableName = lMasaNo.Text;
+            string tableCount, todaysCount;
+            int i = 0;
+            foreach (string tablenames in tableNumbers)
+            {
+                //UserLog.WConsole(tablenames);
+                //UserLog.WConsole(emptyTableList[i].ToString());
+                if (tableNumbers[i] == tableName)
+                {
+                    using (var tableOpenForm = new TableOpenForm())
+                    {
+                        //LastChoosenTable.reservation = false;
+                        var result = tableOpenForm.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            tableNumbers[i] = LastChoosenTable.TableNumber;
+                            tableDetails[i * 3, 0] = LastChoosenTable.TableNumber;
+                            tableDetails[i * 3, 3] = LastChoosenTable.Waiter;
+                            tableDetails[i * 3, 5] = LastChoosenTable.iskonto.ToString();
+                            tableDetails[i * 3, 6] = LastChoosenTable.musteriAdi;
+                            tableName = "bLeft" + tableName;
+                            tableLayoutPanel1.Controls.RemoveByKey(tableName);
+                            ///////////////
+                            tableName = "bLeft" + LastChoosenTable.TableNumber;
+                            Button bLeft = new Button();
+                            bLeft.Name = "bLeft" + LastChoosenTable.TableNumber;
+                            bLeft.Text = LastChoosenTable.TableNumber.ToString() + "\n(" + tableDetails[i*3,1] + ")";
+                            bLeft.AutoSize = true;
+                            if (tableDetails[i * 3, 7] == "N")
+                            {
+                                bLeft.ForeColor = Color.Black;
+                                bLeft.BackColor = Color.Red;
+                                lMasaNo.ForeColor = Color.Red;
+                            }
+                            else
+                            {
+                                bLeft.ForeColor = Color.Black;
+                                bLeft.BackColor = Color.Turquoise;
+                                lMasaNo.ForeColor = Color.Turquoise;
+                            }
+
+                            bLeft.Size = new Size(80, 80);
+                            bLeft.MouseDown += new MouseEventHandler(masa_click);
+                            bLeft.MouseDoubleClick += new MouseEventHandler(masa_MouseDoubleClick);
+                            lMasaNo.Text = tableDetails[i * 3, 0].ToString();
+                            string text = lMasaNo.Text;
+                            switch (text.Length)
+                            {
+                                case 1:
+                                case 2:
+                                case 3:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 42f, lMasaNo.Font.Style);
+                                    break;
+                                case 4:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 37f, lMasaNo.Font.Style);
+                                    break;
+                                case 5:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 35f, lMasaNo.Font.Style);
+                                    break;
+                                case 6:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 30f, lMasaNo.Font.Style);
+                                    break;
+                                case 7:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 25f, lMasaNo.Font.Style);
+                                    break;
+                                case 8:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 22f, lMasaNo.Font.Style);
+                                    break;
+                                case 9:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 20f, lMasaNo.Font.Style);
+                                    break;
+                                case 10:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 18f, lMasaNo.Font.Style);
+                                    break;
+                                case 11:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 16f, lMasaNo.Font.Style);
+                                    break;
+                                case 12:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 15f, lMasaNo.Font.Style);
+                                    break;
+                                default:
+                                    lMasaNo.Font = new Font(lMasaNo.Font.FontFamily, 8f, lMasaNo.Font.Style);
+                                    break;
+
+                            }
+                            lPersonel.Text = "Personel : " + tableDetails[i * 3, 3];
+                            lIskonto.Text = "Iskonto Orani : " + tableDetails[i* 3, 5] + "%";
+                            lMusteriAdi.Text = "Müşteri : " + tableDetails[i* 3, 6];
+                            ////
+                            tableLayoutPanel1.Controls.Add(bLeft, (findTableOrder(LastChoosenTable.TableNumber) % 5), (findTableOrder(LastChoosenTable.TableNumber) / 5));
+                            ////
+                            UserLog.WConsole("Masanin Adi : \"" + LastChoosenTable.TableNumber.ToString() + "\"");
+                            lTableCounter.Text = "Bugun acilan " + tableDetails[i * 3, 1] + ". masa";
+                            /////////////
+                            saveAdisyonToTable();
+                        }
+                    }
+                           
+                }
+                i++;
+            }
+            TableOpenForm.tableSettingsChange = false;
         }
         //AYARLAR +
         //Dukkan kapanma saati ve gonderilecek maili ekle+
